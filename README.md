@@ -15,9 +15,10 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 data-heavy business.
 
 ## Design
-- Editorial / magazine direction: black on white, hairline rules, generous whitespace
-- Display: Newsreader (serif) · Body/labels: Inter — no accent color, photos carry the color
-- Masthead bar, numbered sections (№ 01…), black "contact" band
+- Editorial / broadsheet direction: black on white, generous whitespace, photos carry the color
+- Display: Fraunces (serif, optical sizes) · Body/labels: Inter — no accent color
+- Skeleton: each section is a two-column spread with a sticky № label column on the left
+- Sticky topbar (brand + nav + coordinates), asymmetric ventures grid, borderless hobby masonry, black "contact" band
 
 ## Logos (`assets/img/logos/`)
 - `lucca.png` — Lucca Apartments & Villas (from their site)
