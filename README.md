@@ -15,13 +15,15 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 data-heavy business.
 
 ## Design
-- Display: Space Grotesk · Body: Inter
-- Accent: `#f76b1d` (VST orange — Alberto's brand) + deep teal `#1c5f78`
-- Light warm surfaces with dark "companies" and "contact" bands
+- Editorial / magazine direction: black on white, hairline rules, generous whitespace
+- Display: Newsreader (serif) · Body/labels: Inter — no accent color, photos carry the color
+- Masthead bar, numbered sections (№ 01…), black "contact" band
 
-## Logos
-- `assets/img/logos/trieste-villas.svg` — Trieste Villas wordmark (from triestevillas.com)
-- `assets/img/logos/vst-dark.png` — Vertical Sailing Tour
+## Logos (`assets/img/logos/`)
+- `lucca.png` — Lucca Apartments & Villas (from their site)
+- `wengen.png` — Wengen Apartments (from their site)
+- `trieste-villas.svg` — Trieste Villas wordmark (from triestevillas.com)
+- `vst-dark.png` — Vertical Sailing Tour
 - Villa Volpe — CSS text wordmark (no logo file exists)
 
 ## Local preview
