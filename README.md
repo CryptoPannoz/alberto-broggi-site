@@ -3,10 +3,10 @@
 One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pages.
 
 ## Structure
-- `index.html` — one-page site (hero, services, jobs, projects, hobbies, contact)
-- `assets/` — CSS, images (drop `portrait.jpg` here)
+- `index.html` — one-page site (hero, what-I-do, work history, projects, hobbies, contact)
+- `assets/` — CSS, `img/` (photos + video posters), `video/` (web-optimized clips)
 - `jobs/` — one detail page per job (linked from the timeline)
-- `hobbies/` — link pages (wingfoil, full link list, ...)
+- `hobbies/` — wingfoil page + full link list
 
 ## Focus
 Positioning as **vacation rental consultant** for inclusion in
@@ -21,7 +21,6 @@ python3 -m http.server 8080
 ```
 
 ## TODO
-- Add `assets/portrait.jpg`
-- Fill `jobs/*.html` detail pages
-- Fill `hobbies/links.html` with curated links
+- Add `assets/portrait.jpg` (hero portrait — currently hidden if missing)
+- Add links for treenet weaving & bread baking when ready
 - Push to GitHub + enable Pages
