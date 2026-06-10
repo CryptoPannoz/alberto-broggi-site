@@ -120,7 +120,7 @@ img, video { border-radius: var(--r); }
 
 .portrait { margin: 0; }
 .portrait img {
-  width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block;
+  width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
   border-radius: var(--r-lg);
 }
 .portrait figcaption { font-size: .78rem; color: var(--muted); margin-top: 12px; font-weight: 500; }
