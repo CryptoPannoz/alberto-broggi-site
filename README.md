@@ -20,12 +20,11 @@ data-heavy business.
 - Skeleton: each section is a two-column spread with a sticky № label column on the left
 - Sticky topbar (brand + nav + coordinates), asymmetric projects grid (new Favignana/Campo di Bonis in evidence), uniform-gutter hobby masonry, black "contact" band
 
-## Logos (`assets/img/logos/`)
-- `lucca.png` — Lucca Apartments & Villas (from their site)
-- `wengen.png` — Wengen Apartments (from their site)
-- `trieste-villas.svg` — Trieste Villas wordmark (from triestevillas.com)
-- `vst-dark.png` — Vertical Sailing Tour
-- Villa Volpe — CSS text wordmark (no logo file exists)
+## Companies section
+Three photo cards (Lucca, Wengen, Trieste Villas) with a description of the
+consulting work — photos pulled from each company's own site
+(`assets/img/company-*.jpg`). The old logo strip is gone; logo files remain
+in `assets/img/logos/` in case they're needed again.
 
 ## Local preview
 Open `index.html` in a browser, or:

@@ -52,7 +52,7 @@
         </div>
         <figure class="portrait">
           <img src="assets/portrait-2026.jpg" alt="Alberto Broggi" onerror="this.closest('.portrait').remove()"/>
-          <figcaption>Alberto Broggi — Trieste, Italy</figcaption>
+          <figcaption>Alberto Broggi</figcaption>
         </figure>
       </div>
       <ul class="meta">
@@ -125,8 +125,9 @@
         <p class="section-lead">A chronological index of what I've built. <strong>Tap any role</strong> to open the full story.</p>
 
         <ol class="timeline">
+          <li class="tl-group" aria-hidden="true">Now</li>
           <li>
-            <button class="tl-card" data-open="trieste">
+            <button class="tl-card tl-card--now" data-open="trieste">
               <span class="idx">01</span>
               <span class="role"><h3>Trieste Villas — Data &amp; Database Enrichment</h3><p>Back with the company I grew up in — now leading the data layer behind 120 properties.</p></span>
               <span class="when">2026 — Present</span>
@@ -134,7 +135,7 @@
             </button>
           </li>
           <li>
-            <button class="tl-card" data-open="lucca">
+            <button class="tl-card tl-card--now" data-open="lucca">
               <span class="idx">02</span>
               <span class="role"><h3>Lucca Apartments &amp; Villas / Wengen Apartments — Digital &amp; Data Consultant</h3><p>Databases, dashboards and internal apps for 380+ units across two leading rental companies.</p></span>
               <span class="when">2025 — Present</span>
@@ -142,13 +143,14 @@
             </button>
           </li>
           <li>
-            <button class="tl-card" data-open="vst">
+            <button class="tl-card tl-card--now" data-open="vst">
               <span class="idx">03</span>
               <span class="role"><h3>Vertical Sailing Tour — Technical Director</h3><p>Climb-and-sail expeditions in the Med. I run the tech, the data and the operation behind it.</p></span>
               <span class="when">2023 — Present</span>
               <span class="arrow" aria-hidden="true">→</span>
             </button>
           </li>
+          <li class="tl-group" aria-hidden="true">Earlier</li>
           <li>
             <button class="tl-card" data-open="ajl">
               <span class="idx">04</span>
@@ -232,7 +234,7 @@
         <p class="section-lead">The things I build, run and put my name on.</p>
 
         <div class="feature-grid">
-          <article class="feature feature--lg">
+          <article class="feature feature--full">
             <div class="feature__media"><img src="assets/img/villa-volpe.jpg" alt="Villa Volpe — lakefront on Lake Orta" loading="lazy"/></div>
             <div class="feature__body">
               <span class="role">Owner &amp; host</span>
@@ -241,22 +243,13 @@
               <a class="link" href="https://www.villa-volpe.com" target="_blank" rel="noopener">villa-volpe.com</a>
             </div>
           </article>
-          <article class="feature feature--tall">
-            <div class="feature__media"><img src="assets/img/vst-climber.webp" alt="Vertical Sailing Tour — climbing above the sea" style="object-position: top;" loading="lazy"/></div>
+          <article class="feature feature--half">
+            <div class="feature__media"><img src="assets/img/vst-eolie.jpg" alt="Vertical Sailing Tour — the crater of Vulcano over the Aeolian sea" style="object-position: 50% 60%;" loading="lazy"/></div>
             <div class="feature__body">
               <span class="role">Technical director</span>
               <h3>Vertical Sailing Tour</h3>
               <p>A tour operator running climb-and-sail expeditions across the Mediterranean.</p>
               <a class="link" href="https://verticalsailingtour.com/" target="_blank" rel="noopener">verticalsailingtour.com</a>
-            </div>
-          </article>
-          <article class="feature feature--half">
-            <div class="feature__media"><img src="assets/img/giardino-semplici.jpg" alt="Il Giardino dei Semplici — blue Sicilian kitchen under a limestone vault, Favignana" loading="lazy"/></div>
-            <div class="feature__body">
-              <span class="role">Private consulting</span>
-              <h3>Il Giardino dei Semplici — Favignana</h3>
-              <p>Holiday homes on Favignana island. Pricing strategy, automated guest messaging and the booking database behind every stay.</p>
-              <a class="link" href="https://maps.app.goo.gl/c49Qs8AfkatojL3f7" target="_blank" rel="noopener">Google Business</a>
             </div>
           </article>
           <article class="feature feature--half">
@@ -412,25 +405,42 @@
       </aside>
       <div class="sec-main">
         <h2>Companies &amp; ventures</h2>
-        <p class="section-lead">The teams and brands I've built data, tech and operations for.</p>
+        <p class="section-lead">
+          I'm a <strong>consultant specialized in tech and — above all — databases</strong>.
+          These are the companies that rely on that work today.
+        </p>
 
-        <div class="logo-row">
-          <a class="logo-card" href="https://www.luccaapartmentsandvillas.co.uk/" target="_blank" rel="noopener" aria-label="Lucca Apartments &amp; Villas">
-            <span class="logo-box"><img src="assets/img/logos/lucca.png" alt="Lucca Apartments &amp; Villas" /></span>
-            <span class="site">Lucca Apartments &amp; Villas</span>
-          </a>
-          <a class="logo-card" href="https://www.wengenapartments.com/" target="_blank" rel="noopener" aria-label="Wengen Apartments">
-            <span class="logo-box"><img class="logo--wide" src="assets/img/logos/wengen.png" alt="Wengen Apartments" /></span>
-            <span class="site">Wengen Apartments</span>
-          </a>
-          <a class="logo-card" href="https://verticalsailingtour.com/" target="_blank" rel="noopener" aria-label="Vertical Sailing Tour">
-            <span class="logo-box"><img class="logo--mark" src="assets/img/logos/vst-dark.png" alt="Vertical Sailing Tour" /></span>
-            <span class="site">Vertical Sailing Tour</span>
-          </a>
-          <a class="logo-card" href="https://www.triestevillas.com/" target="_blank" rel="noopener" aria-label="Trieste Villas">
-            <span class="logo-box"><img src="assets/img/logos/trieste-villas.svg" alt="Trieste Villas" /></span>
-            <span class="site">Trieste Villas</span>
-          </a>
+        <div class="company-grid">
+          <article class="company">
+            <a class="company__media" href="https://www.luccaapartmentsandvillas.co.uk/" target="_blank" rel="noopener" aria-label="Lucca Apartments &amp; Villas">
+              <img src="assets/img/company-lucca.jpg" alt="Lucca Apartments &amp; Villas — sunset pool terrace over the Tuscan hills" loading="lazy"/>
+            </a>
+            <div class="company__body">
+              <h3>Lucca Apartments &amp; Villas</h3>
+              <p>Digital &amp; Data Consultant — I structure and enrich the databases behind <strong>300+ luxury units in Tuscany</strong>, with dashboards, internal apps and AI automation on top.</p>
+              <a class="link" href="https://www.luccaapartmentsandvillas.co.uk/" target="_blank" rel="noopener">luccaapartmentsandvillas.co.uk</a>
+            </div>
+          </article>
+          <article class="company">
+            <a class="company__media" href="https://www.wengenapartments.com/" target="_blank" rel="noopener" aria-label="Wengen Apartments">
+              <img src="assets/img/company-wengen.jpg" alt="Wengen Apartments — the Lauterbrunnen valley under the Jungfrau" loading="lazy"/>
+            </a>
+            <div class="company__body">
+              <h3>Wengen Apartments</h3>
+              <p>Digital &amp; Data Consultant — the data layer, reporting and booking automation behind <strong>80 apartments in the Jungfrau region</strong>, Switzerland.</p>
+              <a class="link" href="https://www.wengenapartments.com/" target="_blank" rel="noopener">wengenapartments.com</a>
+            </div>
+          </article>
+          <article class="company">
+            <a class="company__media" href="https://www.triestevillas.com/" target="_blank" rel="noopener" aria-label="Trieste Villas">
+              <img src="assets/img/company-trieste.jpg" alt="Trieste Villas — residence with garden at dusk in Trieste" loading="lazy"/>
+            </a>
+            <div class="company__body">
+              <h3>Trieste Villas</h3>
+              <p>Data &amp; Database Enrichment — I lead the data layer behind <strong>120 properties</strong>: one clean source of truth for operations, channels and revenue.</p>
+              <a class="link" href="https://www.triestevillas.com/" target="_blank" rel="noopener">triestevillas.com</a>
+            </div>
+          </article>
         </div>
 
         <p class="more">
