@@ -269,6 +269,7 @@ li + .tl-group { padding-top: 40px; }
 .m-item { break-inside: avoid; margin: 0 0 24px; display: block; }
 .m-item figure, figure.m-item { margin: 0; }
 .m-item img, .m-item video { width: 100%; display: block; background: #000; }
+.m-item img { cursor: zoom-in; }
 .m-cap { padding: 12px 4px 20px; }
 .m-cap h3 { font-size: 1.05rem; margin: 0 0 .2rem; }
 .m-cap p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.55; }
@@ -394,6 +395,43 @@ footer p { margin: 0; }
 .modal__panel .ext { display: inline-block; margin-top: 1.2rem; font-size: .92rem; font-weight: 600; }
 .modal__panel .ext::after { content: " ↗"; color: var(--muted); }
 .modal__panel .ext:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Lightbox (expanded hobby photos) ---------- */
+.lightbox[hidden] { display: none; }
+.lightbox {
+  position: fixed; inset: 0; z-index: 110;
+  display: flex; align-items: center; justify-content: center;
+  padding: 5vh 5vw;
+  background: rgba(16,16,16,0.92);
+  animation: fade .2s ease;
+  cursor: zoom-out;
+}
+.lightbox__fig {
+  margin: 0; cursor: default;
+  display: flex; flex-direction: column; align-items: center;
+  max-width: 1100px; max-height: 90vh;
+}
+.lightbox__fig img {
+  max-width: 100%; max-height: 78vh; width: auto; height: auto;
+  object-fit: contain; border-radius: var(--r); background: #000;
+  animation: pop .22s cubic-bezier(.2,.8,.2,1);
+}
+.lightbox__cap { padding: 16px 4px 0; max-width: 680px; text-align: center; }
+.lightbox__cap h3 { color: var(--paper); font-size: 1.15rem; margin: 0 0 .25rem; }
+.lightbox__cap p { color: #c9c9c4; font-size: .9rem; margin: 0; line-height: 1.55; }
+.lightbox__cap p strong { color: var(--paper); font-weight: 600; }
+.lightbox__cap a { color: var(--paper); font-weight: 600; }
+.lightbox__cap a::after { content: " ↗"; color: #9b9b94; }
+.lightbox__cap a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.lightbox__close {
+  position: fixed; top: 18px; right: 18px;
+  width: 44px; height: 44px; border: 0; border-radius: 999px;
+  background: rgba(255,255,255,0.14); color: var(--paper);
+  cursor: pointer; font-size: 1.5rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s ease;
+}
+.lightbox__close:hover { background: rgba(255,255,255,0.28); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1020px) {

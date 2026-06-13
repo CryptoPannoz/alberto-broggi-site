@@ -483,6 +483,15 @@
     </div>
   </div>
 
+  <!-- ============ LIGHTBOX SHELL ============ -->
+  <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lightbox__close" data-lbclose aria-label="Close">×</button>
+    <figure class="lightbox__fig">
+      <img id="lightbox-img" src="" alt="" />
+      <figcaption class="lightbox__cap" id="lightbox-cap"></figcaption>
+    </figure>
+  </div>
+
   <!-- ============ MODAL CONTENT TEMPLATES ============ -->
   <template data-job="trieste">
     <span class="when">2026 — present</span>
@@ -673,8 +682,41 @@
     modal.querySelectorAll('[data-close]').forEach(function (el) {
       el.addEventListener('click', closeModal);
     });
+
+    // ---- Lightbox (click a hobby photo to expand) ----
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCap = document.getElementById('lightbox-cap');
+
+    function openLightbox(img) {
+      lightboxImg.src = img.currentSrc || img.src;
+      lightboxImg.alt = img.alt;
+      const fig = img.closest('.m-item');
+      const cap = fig ? fig.querySelector('.m-cap') : null;
+      lightboxCap.innerHTML = cap ? cap.innerHTML : '';
+      lightbox.hidden = false;
+      document.body.classList.add('modal-open');
+      lastFocus = document.activeElement;
+      lightbox.querySelector('.lightbox__close').focus();
+    }
+    function closeLightbox() {
+      lightbox.hidden = true;
+      document.body.classList.remove('modal-open');
+      lightboxImg.src = '';
+      if (lastFocus) lastFocus.focus();
+    }
+
+    document.querySelectorAll('.m-item img').forEach(function (img) {
+      img.addEventListener('click', function () { openLightbox(img); });
+    });
+    lightbox.addEventListener('click', function (e) {
+      if (e.target === lightbox || e.target.hasAttribute('data-lbclose')) closeLightbox();
+    });
+
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !modal.hidden) closeModal();
+      if (e.key !== 'Escape') return;
+      if (!lightbox.hidden) closeLightbox();
+      else if (!modal.hidden) closeModal();
     });
   </script>
 </body>
