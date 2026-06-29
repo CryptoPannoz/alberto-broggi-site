@@ -10,8 +10,8 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 - `hobbies/` — wingfoil page + full link list
 
 ## Focus / positioning
-**Database Enrichment & Data Engineering** — forged in vacation rental
-(Trieste Villas · 120 properties, Villa Volpe · Lake Orta) and applicable to any
+**Database Enrichment & Data Engineering** — forged in vacation rental & real estate
+(Trieste Villas · real estate agency, Villa Volpe · Lake Orta) and applicable to any
 data-heavy business.
 
 ## Design
