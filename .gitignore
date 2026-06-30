@@ -1,2 +1,8 @@
 .DS_Store
 **/.DS_Store
+
+# Documenti personali (CV, firma, preventivi) — MAI su un repo PUBBLICO → Google Drive
+CV & Bando/
+
+# Config locale Claude Code (tooling personale)
+.claude/
