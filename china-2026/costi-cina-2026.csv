@@ -1,0 +1,41 @@
+Data;Tappa;Categoria;Voce;Persone/quantità;Budget EUR;Costo effettivo EUR;Pagato da;Stato;Riferimento prenotazione;Note
+2026-11-16;Venezia-Pechino;Volo;Voli internazionali A/R;2;1384,44;;Alberto;Confermato;;Totale 2 persone: 692,22 EUR a persona · EN1927 + LH722 / LX189 + LX1664
+2026-11-17;Pechino;Hotel;Notte 1;1 camera;;;;Da prenotare;;Dongcheng / Wangfujing
+2026-11-18;Pechino;Hotel;Notte 2;1 camera;;;;Da prenotare;;Dongcheng / Wangfujing
+2026-11-19;Pechino;Hotel;Notte 3;1 camera;;;;Da prenotare;;Dongcheng / Wangfujing
+2026-11-18;Pechino;Attività;Città Proibita e Jingshan;2;;;;Da prenotare;;
+2026-11-19;Pechino;Attività;Escursione Mutianyu;2;;;;Da prenotare;;
+2026-11-20;Pechino-Xi'an;Treno;Alta velocità Beijing West-Xi'an North;2;;;;Da prenotare;;
+2026-11-20;Xi'an;Hotel;Notte 1;1 camera;;;;Da prenotare;;Bell Tower / Yongningmen
+2026-11-21;Xi'an;Hotel;Notte 2;1 camera;;;;Da prenotare;;Bell Tower / Yongningmen
+2026-11-21;Xi'an;Attività;Esercito di Terracotta;2;;;;Da prenotare;;
+2026-11-22;Xi'an-Chengdu;Treno;Alta velocità Xi'an North-Chengdu East;2;;;;Da prenotare;;
+2026-11-22;Chengdu;Hotel;Notte 1;1 camera;;;;Da prenotare;;Chunxi Road / Taikoo Li
+2026-11-23;Chengdu;Hotel;Notte 2;1 camera;;;;Da prenotare;;Chunxi Road / Taikoo Li
+2026-11-23;Chengdu;Attività;Centro dei panda;2;;;;Da prenotare;;
+2026-11-24;Chengdu-Kunming;Volo;Volo interno diretto;2;;;;Da prenotare;;
+2026-11-24;Kunming;Hotel;Notte 1;1 camera;;;;Da prenotare;;Green Lake / Wuhua
+2026-11-25;Kunming;Hotel;Notte 2;1 camera;;;;Da prenotare;;Green Lake / Wuhua
+2026-11-26;Kunming;Hotel;Notte 3;1 camera;;;;Da prenotare;;Green Lake / Wuhua
+2026-11-25;Yunnan;Attività;Foresta di Pietra / escursione;2;;;;Da definire;;
+2026-11-27;Kunming-Zhangjiajie;Treno;Alta velocità via Huaihua o Changsha;2;;;;Da verificare;;
+2026-11-27;Zhangjiajie;Hotel;Notte 1;1 camera;;;;Da prenotare;;Wulingyuan East Gate
+2026-11-28;Zhangjiajie;Hotel;Notte 2;1 camera;;;;Da prenotare;;Wulingyuan East Gate
+2026-11-28;Zhangjiajie;Attività;National Forest Park;2;;;;Da prenotare;;
+2026-11-29;Zhangjiajie-Fenghuang;Treno;Zhangjiajie West-Fenghuanggucheng;2;;;;Da prenotare;;Aggiungere transfer Old Town
+2026-11-29;Fenghuang;Hotel;Notte 1;1 camera;;;;Da prenotare;;Old Town seconda fila dal fiume
+2026-11-30;Fenghuang-Wuzhen;Treno;Treni via Changsha e Hangzhou/Tongxiang;2;;;;Da verificare;;Tratta critica
+2026-11-30;Wuzhen;Hotel;Notte 1;1 camera;;;;Da prenotare;;Dentro Xizha se possibile
+2026-12-01;Wuzhen-Suzhou;Transfer;Didi/auto diretta;1 auto;;;;Da prenotare;;Alternativa bus
+2026-12-01;Suzhou;Hotel;Notte 1;1 camera;;;;Da prenotare;;Pingjiang Road / Gusu
+2026-12-01;Suzhou;Attività;Ingresso Wuzhen / attività locali;2;;;;Da definire;;
+2026-12-02;Suzhou-Shanghai;Treno;Alta velocità per Shanghai centrale;2;;;;Da prenotare;;
+2026-12-02;Shanghai;Hotel;Notte 1;1 camera;;;;Da prenotare;;French Concession / People's Square
+2026-12-03;Shanghai;Hotel;Notte 2;1 camera;;;;Da prenotare;;French Concession / People's Square
+2026-12-04;Shanghai;Transfer;Hotel-PVG;1 auto;;;;Da prenotare;;Partenza volo 09:40
+;Tutto il viaggio;Cibo;Budget pasti;38 giornate-persona;;;;Da definire;;2 persone × 19 giorni
+;Tutto il viaggio;Trasporti locali;Metro Didi bus;2 persone;;;;Da definire;;
+;Tutto il viaggio;Connettività;eSIM VPN;2;;;;Da definire;;
+;Tutto il viaggio;Assicurazione;Assicurazione viaggio;2;;;;Da definire;;
+;Tutto il viaggio;Extra;Shopping e imprevisti;1;;;;Da definire;;
+;;;;TOTALE;=SUM(F2:F40);=SUM(G2:G40);;;;
