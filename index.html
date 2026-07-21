@@ -7,6 +7,9 @@
   <meta name="description" content="Alberto Broggi — I turn messy operational data into clean, structured, decision-ready databases. Database enrichment, dashboards, internal apps and AI automation. Technical director of Vertical Sailing Tour. Based in Trieste, Italy." />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%BD%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/style.css" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "db61b4f9c2c74ea3a63c5265be73510e"}'></script>
@@ -14,463 +17,276 @@
 
 </head>
 <body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- ============ TOPBAR ============ -->
   <div class="topbar">
-    <div class="container">
-      <a class="brand" href="#top">Alberto&nbsp;Broggi</a>
-      <nav class="topnav">
-        <a href="#services">What I do</a>
+    <div class="container topbar__inner">
+      <a class="brand" href="#top">Alberto Broggi<span class="brand__dot">.</span></a>
+      <nav class="topnav" aria-label="Primary navigation">
         <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
-        <a href="#hobbies">Off the clock</a>
-        <a href="#companies">Companies</a>
-        <a href="#contact">Contact</a>
+        <a href="#life">Off the clock</a>
       </nav>
-      <span class="loc">Trieste · 45.65° N, 13.77° E</span>
+      <a class="nav-cta" href="mailto:bebroggi@gmail.com">Let's talk <span aria-hidden="true">↗</span></a>
     </div>
   </div>
 
-  <!-- ============ HERO ============ -->
-  <header class="hero">
-    <div class="container">
-      <p class="eyebrow">Database enrichment &amp; data engineering — Trieste, Italy</p>
-      <h1>Database<br /><em>Enrichment.</em></h1>
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="tagline">Messy operational data, turned into clean, decision-ready databases.</p>
-          <p class="lead">
-            <strong>Data engineering &amp; analysis</strong> — databases, dashboards, internal apps and AI
-            automation. I sharpened this craft running the data behind <strong>Trieste Villas</strong>
-            (a real estate agency) and <strong>Villa Volpe</strong>, my own luxury rental on Lake Orta — and
-            I'm the <strong>technical director of Vertical Sailing Tour</strong>, a tour operator I help
-            run end to end. Forged in vacation rental, the same engineering applies to
-            <strong>any data-heavy business</strong>.
-          </p>
+  <main id="main">
+    <header class="hero">
+      <div class="container hero__layout">
+        <div class="hero__copy">
+          <p class="eyebrow"><span class="status-dot"></span> Data systems · Trieste, Italy</p>
+          <h1>I turn messy operations into <em>systems that work.</em></h1>
+          <p class="hero__lead">Databases, dashboards, internal apps and automation for rentals, travel and real-world businesses.</p>
           <div class="cta-row">
-            <a href="#work" class="btn btn--primary">See the work</a>
-            <a href="#contact" class="btn btn--ghost">Get in touch</a>
+            <a href="#work" class="btn btn--primary">See selected work <span aria-hidden="true">↓</span></a>
+            <a href="mailto:bebroggi@gmail.com" class="btn btn--ghost">Email me</a>
           </div>
         </div>
         <figure class="portrait">
-          <img src="assets/portrait-2026.jpg" alt="Alberto Broggi" onerror="this.closest('.portrait').remove()"/>
-          <figcaption>Alberto Broggi</figcaption>
+          <img src="assets/portrait-2026.jpg" alt="Alberto Broggi by the sea" />
+          <figcaption>
+            <span>Alberto Broggi</span>
+            <span>Full remote · CET</span>
+          </figcaption>
         </figure>
       </div>
-      <ul class="meta">
-        <li>Trieste, Italy · Full remote</li>
-        <li><a href="mailto:bebroggi@gmail.com">bebroggi@gmail.com</a></li>
-        <li><a href="https://www.linkedin.com/in/bebroggi/" target="_blank" rel="noopener">LinkedIn</a></li>
-      </ul>
-    </div>
-  </header>
 
-  <!-- ============ SERVICES ============ -->
-  <section id="services" class="section">
-    <div class="container sec">
-      <aside class="sec-side">
-        <span class="no">№ 01</span>
-        <span class="lbl">What I do</span>
-      </aside>
-      <div class="sec-main">
-        <h2>From raw data to decisions</h2>
-        <p class="section-lead">
-          The core is <strong>database enrichment</strong> — cleaning, structuring and connecting the data a
-          business runs on. Everything else is built on that clean foundation.
-        </p>
+      <div class="container proof-row" aria-label="Selected outcomes">
+        <div class="proof"><strong>380+</strong><span>managed units<br />connected by data</span></div>
+        <div class="proof"><strong>2,500+</strong><span>boats registered<br />for Barcolana</span></div>
+        <div class="proof"><strong>8 / 30</strong><span>tour stopovers<br />in under 30 days</span></div>
+      </div>
 
-        <div class="cards">
-          <div class="card">
-            <span class="num">i.</span>
-            <h3>Database Enrichment</h3>
-            <p>Cleaning, structuring, deduplicating and enriching messy data into a single source of truth.</p>
-          </div>
-          <div class="card">
-            <span class="num">ii.</span>
-            <h3>Dashboards &amp; Reporting</h3>
-            <p>Turning PMS, channel and operational data into dashboards people actually use to decide.</p>
-          </div>
-          <div class="card">
-            <span class="num">iii.</span>
-            <h3>Internal Apps</h3>
-            <p>No-code apps with AppSheet &amp; Airtable — operations, housekeeping, check-in and reporting flows.</p>
-          </div>
-          <div class="card">
-            <span class="num">iv.</span>
-            <h3>Web &amp; Automation</h3>
-            <p>Websites and internal tools shipped end to end, plus Apps Script glue between systems.</p>
-          </div>
-          <div class="card">
-            <span class="num">v.</span>
-            <h3>AI Workflows</h3>
-            <p>Agentic AI and internal copilots that remove repetitive work and surface insight on demand.</p>
-          </div>
-          <div class="card">
-            <span class="num">vi.</span>
-            <h3>Revenue &amp; Channels</h3>
-            <p>Pricing strategy, channel mix and OTA performance — the rental know-how behind the data.</p>
-          </div>
+      <div class="container logo-strip" aria-label="Companies I work with">
+        <span class="logo-strip__label">Working with</span>
+        <a href="https://www.triestevillas.com/" target="_blank" rel="noopener"><img src="assets/img/logos/trieste-villas.svg" alt="Trieste Villas" /></a>
+        <a href="https://www.luccaapartmentsandvillas.co.uk/" target="_blank" rel="noopener"><img src="assets/img/logos/lucca.png" alt="Lucca Apartments &amp; Villas" /></a>
+        <a href="https://www.wengenapartments.com/" target="_blank" rel="noopener"><img src="assets/img/logos/wengen.png" alt="Wengen Apartments" /></a>
+        <a href="https://verticalsailingtour.com/" target="_blank" rel="noopener"><img src="assets/img/logos/vst-dark.png" alt="Vertical Sailing Tour" /></a>
+      </div>
+    </header>
+
+    <section id="services" class="capability-band" aria-labelledby="capability-title">
+      <div class="container">
+        <div class="section-kicker"><span>01</span><p id="capability-title">What I build</p></div>
+        <div class="capability-grid">
+          <article>
+            <span class="capability-icon">↳</span>
+            <h2>Clean the core</h2>
+            <p>Database enrichment, deduplication and structure. One reliable source of truth.</p>
+            <ul><li>Database enrichment</li><li>Data analysis</li><li>Revenue &amp; channels</li></ul>
+          </article>
+          <article>
+            <span class="capability-icon">□</span>
+            <h2>Make it useful</h2>
+            <p>Dashboards and internal apps that turn operational data into everyday decisions.</p>
+            <ul><li>Dashboards</li><li>AppSheet</li><li>Airtable</li></ul>
+          </article>
+          <article>
+            <span class="capability-icon">✦</span>
+            <h2>Remove the busywork</h2>
+            <p>Web, Apps Script and agentic AI workflows that keep information moving.</p>
+            <ul><li>Web &amp; automation</li><li>Apps Script</li><li>AI workflows</li></ul>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ WORK HISTORY (modals) ============ -->
-  <section id="work" class="section">
-    <div class="container sec">
-      <aside class="sec-side">
-        <span class="no">№ 02</span>
-        <span class="lbl">Work history</span>
-      </aside>
-      <div class="sec-main">
-        <h2>Where I learned it</h2>
-        <p class="section-lead">A chronological index of what I've built. <strong>Tap any role</strong> to open the full story.</p>
+    <section id="work" class="section work-section">
+      <span id="companies" class="anchor-alias" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker"><span>02</span><p>Selected impact</p></div>
+          <h2>Less presentation.<br /><em>More proof.</em></h2>
+          <p>Current work across vacation rental, real estate and tour operations.</p>
+        </div>
 
-        <ol class="timeline">
-          <li class="tl-group" aria-hidden="true">Now</li>
-          <li>
-            <button class="tl-card tl-card--now" data-open="trieste">
-              <span class="idx">01</span>
-              <span class="role"><h3>Trieste Villas — Data &amp; Database Enrichment</h3><p>Back with the company I grew up in — now leading the data layer behind a real estate agency.</p></span>
-              <span class="when">2026 — Present</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card tl-card--now" data-open="lucca">
-              <span class="idx">02</span>
-              <span class="role"><h3>Lucca Apartments &amp; Villas / Wengen Apartments — Digital &amp; Data Consultant</h3><p>Databases, dashboards and internal apps for 380+ units across two leading rental companies.</p></span>
-              <span class="when">2025 — Present</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card tl-card--now" data-open="vst">
-              <span class="idx">03</span>
-              <span class="role"><h3>Vertical Sailing Tour — Technical Director</h3><p>Climb-and-sail expeditions in the Med. I run the tech, the data and the operation behind it.</p></span>
-              <span class="when">2023 — Present</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li class="tl-group" aria-hidden="true">Earlier</li>
-          <li>
-            <button class="tl-card" data-open="ajl">
-              <span class="idx">04</span>
-              <span class="role"><h3>AJL Atelier — Consultant &amp; Tech Specialist</h3><p>Data engineering, revenue consulting and process design for a vacation rental consulting firm.</p></span>
-              <span class="when">2023 — 2025</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card" data-open="seably">
-              <span class="idx">05</span>
-              <span class="role"><h3>Seably.com — Business Developer</h3><p>B2B SaaS maritime e-learning. Data pipelines, blockchain e-certificates, sponsorship (2M€/y).</p></span>
-              <span class="when">2021 — 2023</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card" data-open="nastro">
-              <span class="idx">06</span>
-              <span class="role"><h3>Marina Militare Nastro Rosa Tour — Logistic Manager</h3><p>Itinerant village logistics: 8 stopovers around Italy in under 30 days.</p></span>
-              <span class="when">2020 — 2021</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card" data-open="barcolana">
-              <span class="idx">07</span>
-              <span class="role"><h3>Barcolana — Sports Director</h3><p>The largest regatta in the world. Software registration for 2,500+ boats, on-water management.</p></span>
-              <span class="when">2018 — 2020</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card" data-open="trieste-then">
-              <span class="idx">08</span>
-              <span class="role"><h3>Trieste Villas — Revenue &amp; Channels Manager</h3><p>Property management: revenue strategy, channel mix, rental operations, a team of 10.</p></span>
-              <span class="when">2017 — 2019</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-          <li>
-            <button class="tl-card" data-open="bluewago">
-              <span class="idx">09</span>
-              <span class="role"><h3>Bluewago — Partner Manager</h3><p>Sailing tour operator: skipper network, itinerary design, bookings, lead generation.</p></span>
-              <span class="when">2016</span>
-              <span class="arrow" aria-hidden="true">→</span>
-            </button>
-          </li>
-        </ol>
-
-        <h3 class="subhead">Skills picked up along the way</h3>
-        <ul class="skills">
-          <li>Database enrichment</li>
-          <li>Data analysis &amp; reporting</li>
-          <li>Airtable</li>
-          <li>AppSheet · No-code apps</li>
-          <li>Dashboards</li>
-          <li>Web development</li>
-          <li>Apps Script</li>
-          <li>AI &amp; agentic workflows</li>
-          <li>Revenue management (STR)</li>
-          <li>Channel management</li>
-          <li>Lean / process design</li>
-          <li>Sponsorship &amp; B2B sales</li>
-          <li>Event &amp; logistics management</li>
-          <li>Blockchain / Web3</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ VENTURES ============ -->
-  <section id="projects" class="section">
-    <div class="container sec">
-      <aside class="sec-side">
-        <span class="no">№ 03</span>
-        <span class="lbl">Projects</span>
-      </aside>
-      <div class="sec-main">
-        <h2>Projects</h2>
-        <p class="section-lead">The things I build, run and put my name on.</p>
-
-        <div class="feature-grid">
-          <article class="feature feature--full">
-            <div class="feature__media"><img src="assets/img/villa-volpe.jpg" alt="Villa Volpe — lakefront on Lake Orta" loading="lazy"/></div>
-            <div class="feature__body">
-              <span class="role">Owner &amp; host</span>
-              <h3>Villa Volpe</h3>
-              <p>The highest-rated luxury villa on Lake Orta — Italy's hidden gem. Where I live the vacation-rental craft first-hand.</p>
-              <a class="link" href="https://www.villa-volpe.com" target="_blank" rel="noopener">villa-volpe.com</a>
+        <div class="impact-grid">
+          <article class="impact-card impact-card--blue">
+            <div class="impact-card__head">
+              <img src="assets/img/logos/lucca.png" alt="Lucca Apartments &amp; Villas" />
+              <img src="assets/img/logos/wengen.png" alt="Wengen Apartments" />
+            </div>
+            <div class="impact-card__body">
+              <span class="metric">380+</span>
+              <h3>Units, one data layer</h3>
+              <p>Databases, dashboards, internal apps and AI automation across 300+ luxury units in Tuscany and 80 apartments in the Jungfrau region.</p>
+              <button class="text-button" data-open="lucca">Full case study <span aria-hidden="true">↗</span></button>
             </div>
           </article>
-          <article class="feature feature--full">
-            <div class="feature__media"><img src="assets/img/vst-sardinia.jpg" alt="Vertical Sailing Tour — sailing toward an island across the Mediterranean" loading="lazy"/></div>
-            <div class="feature__body">
-              <span class="role">Technical director</span>
-              <h3>Vertical Sailing Tour</h3>
-              <p>A tour operator running climb-and-sail expeditions across the Mediterranean. I run the tech, the data and the operation behind every season.</p>
-              <a class="link" href="https://verticalsailingtour.com/" target="_blank" rel="noopener">verticalsailingtour.com</a>
+
+          <article class="impact-card impact-card--ink">
+            <div class="impact-card__head impact-card__head--light">
+              <img src="assets/img/logos/trieste-villas.svg" alt="Trieste Villas" />
+            </div>
+            <div class="impact-card__body">
+              <span class="metric">01</span>
+              <h3>Source of truth</h3>
+              <p>One clean database behind a real estate agency—connecting operations, listings, portals, leads and sales.</p>
+              <button class="text-button" data-open="trieste">Full case study <span aria-hidden="true">↗</span></button>
             </div>
           </article>
-          <article class="feature">
-            <div class="feature__media"><img src="assets/img/metrone.jpg" alt="Il Metrone — country villa in Custoza" loading="lazy"/></div>
-            <div class="feature__body">
-              <span class="role">Web &amp; bookings</span>
-              <h3>Il Metrone — Custoza</h3>
-              <p>Short-term rental in Custoza. I built the website and the booking calendar.</p>
-              <a class="link" href="https://metronecustoza.com" target="_blank" rel="noopener">metronecustoza.com</a>
-            </div>
-          </article>
-          <article class="feature">
-            <div class="feature__media"><img src="assets/img/dame-malta.jpg" alt="Dame Malta — townhouse interior in Malta" loading="lazy"/></div>
-            <div class="feature__body">
-              <span class="role">Private consulting</span>
-              <h3>Dame Malta</h3>
-              <p>Vacation rental in Malta — a private consulting project on web, distribution and data.</p>
-              <a class="link" href="https://damemalta.com/" target="_blank" rel="noopener">damemalta.com</a>
-            </div>
-          </article>
-          <article class="feature">
-            <div class="feature__media"><img src="assets/img/trips-community.jpg" alt="Alberto with Luca de Giglio at the Vacation Rental World Summit" style="object-position: 50% 30%;" loading="lazy"/></div>
-            <div class="feature__body">
-              <span class="role">Partner &amp; early investor</span>
-              <h3>Trips Community</h3>
-              <p>Web3 booking platform — minted the first Booking Hotel NFT in history.</p>
-              <a class="link" href="https://www.tripscommunity.com/" target="_blank" rel="noopener">tripscommunity.com</a>
+
+          <article class="impact-card impact-card--image">
+            <img class="impact-card__photo" src="assets/img/vst-climber.webp" alt="Climber on a Vertical Sailing Tour expedition" loading="lazy" />
+            <div class="impact-card__overlay"></div>
+            <div class="impact-card__body">
+              <img class="impact-card__logo" src="assets/img/logos/vst-white.png" alt="Vertical Sailing Tour" />
+              <span class="metric">Tech + ops</span>
+              <h3>Behind every season</h3>
+              <p>Booking, CRM, lead pipelines, brand, itineraries and the operation behind climb-and-sail expeditions.</p>
+              <button class="text-button" data-open="vst">Full case study <span aria-hidden="true">↗</span></button>
             </div>
           </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============ HOBBIES — editorial masonry ============ -->
-  <section id="hobbies" class="section">
-    <div class="container sec">
-      <aside class="sec-side">
-        <span class="no">№ 04</span>
-        <span class="lbl">Off the clock</span>
-      </aside>
-      <div class="sec-main">
-        <h2>Sport is the backbone</h2>
-        <p class="section-lead">Mountains, wind and water. A few of the things that keep me sane.</p>
-
-        <div class="masonry">
-          <figure class="m-item">
-            <video controls preload="none" poster="assets/img/sailing-prosecco.jpg">
-              <source src="assets/video/sailing.mp4" type="video/mp4" />
-            </video>
-            <figcaption class="m-cap">
-              <h3>Maxi yacht sailing</h3>
-              <p>Crew on <strong>Shockwave3 — Prosecco DOC Maxi Yacht</strong>.
-              <a href="https://pressmare.it/amp/it/team/prosecco-doc-shockwave/2026-06-05/prosecco-doc-shockwave3-inizia-stagione-40-brindisi-corfu-90542" target="_blank" rel="noopener">Read more</a></p>
-            </figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/cold-plunge.jpg" alt="Cold plunge in a barrel in the Alps" loading="lazy"/>
-            <figcaption class="m-cap">
-              <h3>Cold plunge</h3>
-              <p>A barrel of ice water in the Alps, the Wim Hof way.
-              <a href="https://www.wimhofmethod.com/ice-bath-benefits" target="_blank" rel="noopener">Why ice works</a></p>
-            </figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/corinth-canal.jpg" alt="Maxi yacht Ancilla Domini crossing the Corinth Canal" loading="lazy"/>
-            <figcaption class="m-cap">
-              <h3>Corinth Canal crossing</h3>
-              <p>Delivering <strong>Ancilla Domini</strong> through the Corinth Canal, Greece.</p>
-            </figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/arc-atlantic.jpg" alt="Crew sailing across the Atlantic during the ARC" loading="lazy"/>
-            <figcaption class="m-cap">
-              <h3>Atlantic crossing</h3>
-              <p>ARC 2016 — Las Palmas to Saint Lucia, 2,700 nm of open ocean.</p>
-            </figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/foil-barcola.jpg" alt="Wingfoiling at Barcola, Trieste" loading="lazy"/>
-            <figcaption class="m-cap">
-              <h3>Wingfoil &amp; weather</h3>
-              <p>I built a weather page for wingfoilers in Trieste.
-              <a href="https://cryptopannoz.github.io/meteo-trieste/" target="_blank" rel="noopener">Open meteo</a></p>
-            </figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/snowboard-japan.jpg" alt="Snowboard crew in deep powder, Japan" loading="lazy"/>
-            <figcaption class="m-cap">
-              <h3>Snowboard instructor</h3>
-              <p>Certified. Happiest when it's deep and steep — Japan, 2018.</p>
-            </figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/windsurf-maggiore.jpg" alt="Windsurfing on Lake Maggiore with Isola Bella in the background" loading="lazy"/>
-            <figcaption class="m-cap"><h3>Windsurf, Lake Maggiore</h3><p>Chasing gusts past Isola Bella and the Borromean Islands.</p></figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/foil-duino.png" alt="Foiling off Duino" loading="lazy"/>
-            <figcaption class="m-cap"><h3>Duino sessions</h3><p>Bora days on the Gulf of Trieste.</p></figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/snowboard-courmayeur.jpg" alt="Riders on a snowy ridge above Courmayeur, Mont Blanc massif" loading="lazy"/>
-            <figcaption class="m-cap"><h3>Courmayeur ridges</h3><p>Hiking for lines under the Mont Blanc massif.</p></figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <img src="assets/img/vst-marettimo.jpg" alt="Sail and trek on Marettimo, Aegadian Islands" loading="lazy"/>
-            <figcaption class="m-cap"><h3>Sail &amp; trek</h3><p>Climbing and hiking the islands we sail to — here on Marettimo.</p></figcaption>
-          </figure>
-
-          <figure class="m-item">
-            <video controls preload="none" poster="assets/img/treenet-friuli.jpg">
-              <source src="assets/video/treenet.mp4" type="video/mp4" />
-            </video>
-            <figcaption class="m-cap"><h3>Treenet weaver</h3><p>Slow craft, knots and trees — nets woven between the pines.</p></figcaption>
-          </figure>
-
-          <div class="m-item m-item--text">
-            <span class="tag">Rabbit holes</span>
-            <h3>Links I love</h3>
-            <p>The corners of the web I keep coming back to.
-            <a href="hobbies/links.html">See the list</a></p>
+    <section id="experience" class="section experience-section">
+      <div class="container">
+        <div class="section-heading section-heading--row">
+          <div>
+            <div class="section-kicker"><span>03</span><p>Experience</p></div>
+            <h2>Nine roles.<br /><em>One thread.</em></h2>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ COMPANIES ============ -->
-  <section id="companies" class="section">
-    <div class="container sec">
-      <aside class="sec-side">
-        <span class="no">№ 05</span>
-        <span class="lbl">Companies</span>
-      </aside>
-      <div class="sec-main">
-        <h2>Companies &amp; ventures</h2>
-        <p class="section-lead">
-          I'm a <strong>consultant specialized in tech and — above all — databases</strong>.
-          These are the companies that rely on that work today.
-        </p>
-
-        <div class="company-grid">
-          <article class="company">
-            <a class="company__media" href="https://www.luccaapartmentsandvillas.co.uk/" target="_blank" rel="noopener" aria-label="Lucca Apartments &amp; Villas">
-              <img src="assets/img/company-lucca.jpg" alt="Lucca Apartments &amp; Villas — sunset pool terrace over the Tuscan hills" loading="lazy"/>
-            </a>
-            <div class="company__body">
-              <h3>Lucca Apartments &amp; Villas</h3>
-              <p>Digital &amp; Data Consultant — I structure and enrich the databases behind <strong>300+ luxury units in Tuscany</strong>, with dashboards, internal apps and AI automation on top.</p>
-              <a class="link" href="https://www.luccaapartmentsandvillas.co.uk/" target="_blank" rel="noopener">luccaapartmentsandvillas.co.uk</a>
-            </div>
-          </article>
-          <article class="company">
-            <a class="company__media" href="https://www.wengenapartments.com/" target="_blank" rel="noopener" aria-label="Wengen Apartments">
-              <img src="assets/img/company-wengen.jpg" alt="Wengen Apartments — the Lauterbrunnen valley under the Jungfrau" loading="lazy"/>
-            </a>
-            <div class="company__body">
-              <h3>Wengen Apartments</h3>
-              <p>Digital &amp; Data Consultant — the data layer, reporting and booking automation behind <strong>80 apartments in the Jungfrau region</strong>, Switzerland.</p>
-              <a class="link" href="https://www.wengenapartments.com/" target="_blank" rel="noopener">wengenapartments.com</a>
-            </div>
-          </article>
-          <article class="company">
-            <a class="company__media" href="https://www.triestevillas.com/" target="_blank" rel="noopener" aria-label="Trieste Villas">
-              <img src="assets/img/company-trieste.jpg" alt="Trieste Villas — modern penthouse living room with sea view on the Trieste coast" loading="lazy"/>
-            </a>
-            <div class="company__body">
-              <h3>Trieste Villas</h3>
-              <p>Data &amp; Database Enrichment — I lead the data layer behind a <strong>real estate agency</strong>: one clean source of truth for operations, listings and sales.</p>
-              <a class="link" href="https://www.triestevillas.com/" target="_blank" rel="noopener">triestevillas.com</a>
-            </div>
-          </article>
+          <p>Data, operations and commercial work—built in situations where things have to work in the real world. Select any role for the full story.</p>
         </div>
 
-        <p class="more">
-          Also along the way:
-          <a href="https://www.ajlatelier.com/" target="_blank" rel="noopener">AJL Atelier</a> ·
-          <a href="https://www.seably.com/" target="_blank" rel="noopener">Seably</a> ·
-          <a href="https://www.barcolana.it/" target="_blank" rel="noopener">Barcolana</a> ·
-          <a href="https://www.nastrorosatour.it/" target="_blank" rel="noopener">Marina Militare Nastro Rosa Tour</a> ·
-          <a href="https://www.tripscommunity.com/" target="_blank" rel="noopener">Trips Community</a> ·
-          Bluewago.
-        </p>
-      </div>
-    </div>
-  </section>
+        <div class="experience-now">
+          <button class="role-card" data-open="trieste">
+            <span class="role-card__date">2026—Now</span>
+            <span class="role-card__logo"><img src="assets/img/logos/trieste-villas.svg" alt="" /></span>
+            <span class="role-card__title">Data &amp; Database Enrichment</span>
+            <span class="role-card__arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="role-card" data-open="lucca">
+            <span class="role-card__date">2025—Now</span>
+            <span class="role-card__duo"><img src="assets/img/logos/lucca.png" alt="" /><img src="assets/img/logos/wengen.png" alt="" /></span>
+            <span class="role-card__title">Digital &amp; Data Consultant</span>
+            <span class="role-card__arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="role-card" data-open="vst">
+            <span class="role-card__date">2023—Now</span>
+            <span class="role-card__logo"><img src="assets/img/logos/vst-dark.png" alt="" /></span>
+            <span class="role-card__title">Technical Director</span>
+            <span class="role-card__arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
 
-  <!-- ============ CONTACT ============ -->
-  <section id="contact" class="section contact">
-    <div class="container sec">
-      <aside class="sec-side">
-        <span class="no">№ 06</span>
-        <span class="lbl">Contact</span>
-      </aside>
-      <div class="sec-main">
-        <h2>Let's talk data.</h2>
-        <p>Sitting on messy data and need it turned into something you can decide with — in vacation rental or any other business? Write me.</p>
-        <a class="big-mail" href="mailto:bebroggi@gmail.com">bebroggi@gmail.com</a>
-        <p class="contact-lines">
+        <p class="micro-label">Earlier chapters</p>
+        <div class="experience-past">
+          <button class="past-card" data-open="ajl"><span class="past-card__mark">AJL</span><span><strong>AJL Atelier</strong><small>Consultant &amp; Tech Specialist · 2023—25</small></span><b>↗</b></button>
+          <button class="past-card" data-open="seably"><span class="past-card__mark">S</span><span><strong>Seably.com</strong><small>Business Developer · 2021—23</small></span><b>↗</b></button>
+          <button class="past-card" data-open="nastro"><span class="past-card__mark">NR</span><span><strong>Nastro Rosa Tour</strong><small>Logistic Manager · 2020—21</small></span><b>↗</b></button>
+          <button class="past-card" data-open="barcolana"><span class="past-card__mark">B</span><span><strong>Barcolana</strong><small>Sports Director · 2018—20</small></span><b>↗</b></button>
+          <button class="past-card" data-open="trieste-then"><span class="past-card__mark">TV</span><span><strong>Trieste Villas</strong><small>Revenue &amp; Channels · 2017—19</small></span><b>↗</b></button>
+          <button class="past-card" data-open="bluewago"><span class="past-card__mark">BW</span><span><strong>Bluewago</strong><small>Partner Manager · 2016</small></span><b>↗</b></button>
+        </div>
+
+        <details class="skills-drawer">
+          <summary><span>Capabilities picked up along the way</span><span>14 skills <b aria-hidden="true">＋</b></span></summary>
+          <ul class="skills">
+            <li>Database enrichment</li><li>Data analysis &amp; reporting</li><li>Airtable</li><li>AppSheet · No-code apps</li>
+            <li>Dashboards</li><li>Web development</li><li>Apps Script</li><li>AI &amp; agentic workflows</li>
+            <li>Revenue management (STR)</li><li>Channel management</li><li>Lean / process design</li>
+            <li>Sponsorship &amp; B2B sales</li><li>Event &amp; logistics management</li><li>Blockchain / Web3</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section id="projects" class="section projects-section">
+      <div class="container">
+        <div class="section-heading section-heading--row">
+          <div>
+            <div class="section-kicker"><span>04</span><p>Projects</p></div>
+            <h2>Things I put<br /><em>my name on.</em></h2>
+          </div>
+          <p>From running a lakefront villa to building booking systems and tour operations.</p>
+        </div>
+
+        <div class="project-grid">
+          <a class="project-card project-card--wide" href="https://www.villa-volpe.com" target="_blank" rel="noopener">
+            <img src="assets/img/villa-volpe.jpg" alt="Villa Volpe on Lake Orta" loading="lazy" />
+            <span class="project-card__shade"></span><span class="project-card__body"><small>Owner &amp; host</small><strong>Villa Volpe</strong><em>Highest-rated luxury villa on Lake Orta ↗</em></span>
+          </a>
+          <a class="project-card" href="https://verticalsailingtour.com/" target="_blank" rel="noopener">
+            <img src="assets/img/vst-sardinia.jpg" alt="Vertical Sailing Tour sailing in the Mediterranean" loading="lazy" />
+            <span class="project-card__shade"></span><span class="project-card__body"><small>Technical director</small><strong>Vertical Sailing Tour</strong><em>Climb-and-sail expeditions ↗</em></span>
+          </a>
+          <a class="project-card" href="https://metronecustoza.com" target="_blank" rel="noopener">
+            <img src="assets/img/metrone.jpg" alt="Il Metrone in Custoza" loading="lazy" />
+            <span class="project-card__shade"></span><span class="project-card__body"><small>Web &amp; bookings</small><strong>Il Metrone</strong><em>Website and booking calendar ↗</em></span>
+          </a>
+          <a class="project-card" href="https://damemalta.com/" target="_blank" rel="noopener">
+            <img src="assets/img/dame-malta.jpg" alt="Dame Malta townhouse interior" loading="lazy" />
+            <span class="project-card__shade"></span><span class="project-card__body"><small>Private consulting</small><strong>Dame Malta</strong><em>Web, distribution and data ↗</em></span>
+          </a>
+          <a class="project-card project-card--wide" href="https://www.tripscommunity.com/" target="_blank" rel="noopener">
+            <img src="assets/img/trips-community.jpg" alt="Alberto at the Vacation Rental World Summit" loading="lazy" />
+            <span class="project-card__shade"></span><span class="project-card__body"><small>Partner &amp; early investor</small><strong>Trips Community</strong><em>First Booking Hotel NFT in history ↗</em></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="life" class="section life-section">
+      <span id="hobbies" class="anchor-alias" aria-hidden="true"></span>
+      <div class="container">
+        <div class="section-heading section-heading--row">
+          <div>
+            <div class="section-kicker"><span>05</span><p>Off the clock</p></div>
+            <h2>Wind, water<br /><em>&amp; mountains.</em></h2>
+          </div>
+          <p>Sport is the backbone. A visual log of the things that keep me sane.</p>
+        </div>
+
+        <div class="life-grid">
+          <figure class="life-card life-card--hero">
+            <video controls preload="none" poster="assets/img/sailing-prosecco.jpg"><source src="assets/video/sailing.mp4" type="video/mp4" /></video>
+            <figcaption class="life-card__cap"><strong>Maxi yacht sailing</strong><span>Crew on Shockwave3 — Prosecco DOC Maxi Yacht. <a href="https://pressmare.it/amp/it/team/prosecco-doc-shockwave/2026-06-05/prosecco-doc-shockwave3-inizia-stagione-40-brindisi-corfu-90542" target="_blank" rel="noopener">Read more ↗</a></span></figcaption>
+          </figure>
+          <figure class="life-card"><img src="assets/img/arc-atlantic.jpg" alt="Crew sailing across the Atlantic during the ARC" loading="lazy" /><figcaption class="life-card__cap"><strong>Atlantic crossing</strong><span>ARC 2016 · 2,700 nm</span></figcaption></figure>
+          <figure class="life-card"><img src="assets/img/foil-barcola.jpg" alt="Wingfoiling at Barcola, Trieste" loading="lazy" /><figcaption class="life-card__cap"><strong>Wingfoil &amp; weather</strong><span>Built a <a href="https://cryptopannoz.github.io/meteo-trieste/" target="_blank" rel="noopener">local meteo page ↗</a></span></figcaption></figure>
+          <figure class="life-card life-card--wide"><img src="assets/img/cold-plunge.jpg" alt="Cold plunge in a barrel in the Alps" loading="lazy" /><figcaption class="life-card__cap"><strong>Cold plunge</strong><span>A barrel of ice water in the Alps, the Wim Hof way. <a href="https://www.wimhofmethod.com/ice-bath-benefits" target="_blank" rel="noopener">Why ice works ↗</a></span></figcaption></figure>
+        </div>
+
+        <details class="more-life">
+          <summary>View all off-the-clock stories <span aria-hidden="true">＋</span></summary>
+          <div class="life-grid life-grid--more">
+            <figure class="life-card"><img src="assets/img/corinth-canal.jpg" alt="Maxi yacht Ancilla Domini crossing the Corinth Canal" loading="lazy" /><figcaption class="life-card__cap"><strong>Corinth Canal crossing</strong><span>Delivering Ancilla Domini through Greece.</span></figcaption></figure>
+            <figure class="life-card"><img src="assets/img/snowboard-japan.jpg" alt="Snowboard crew in deep powder, Japan" loading="lazy" /><figcaption class="life-card__cap"><strong>Snowboard instructor</strong><span>Deep and steep · Japan 2018</span></figcaption></figure>
+            <figure class="life-card"><img src="assets/img/windsurf-maggiore.jpg" alt="Windsurfing on Lake Maggiore" loading="lazy" /><figcaption class="life-card__cap"><strong>Lake Maggiore</strong><span>Chasing gusts past Isola Bella.</span></figcaption></figure>
+            <figure class="life-card"><img src="assets/img/foil-duino.png" alt="Foiling off Duino" loading="lazy" /><figcaption class="life-card__cap"><strong>Duino sessions</strong><span>Bora days on the Gulf of Trieste.</span></figcaption></figure>
+            <figure class="life-card"><img src="assets/img/snowboard-courmayeur.jpg" alt="Riders on a snowy ridge above Courmayeur" loading="lazy" /><figcaption class="life-card__cap"><strong>Courmayeur ridges</strong><span>Hiking for lines under Mont Blanc.</span></figcaption></figure>
+            <figure class="life-card"><img src="assets/img/vst-marettimo.jpg" alt="Sail and trek on Marettimo" loading="lazy" /><figcaption class="life-card__cap"><strong>Sail &amp; trek</strong><span>Climbing the islands we sail to.</span></figcaption></figure>
+            <figure class="life-card"><video controls preload="none" poster="assets/img/treenet-friuli.jpg"><source src="assets/video/treenet.mp4" type="video/mp4" /></video><figcaption class="life-card__cap"><strong>Treenet weaver</strong><span>Slow craft, knots and trees.</span></figcaption></figure>
+            <a class="life-card life-card--links" href="hobbies/links.html"><span><small>Rabbit holes</small><strong>Links I love</strong><em>The corners of the web I keep coming back to ↗</em></span></a>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container contact__inner">
+        <div class="section-kicker section-kicker--light"><span>06</span><p>Contact</p></div>
+        <p class="contact__eyebrow">Have messy data or an operation that no longer scales?</p>
+        <h2>Let's build the<br /><em>system behind it.</em></h2>
+        <div class="contact__links">
+          <a class="big-mail" href="mailto:bebroggi@gmail.com">bebroggi@gmail.com <span aria-hidden="true">↗</span></a>
           <a href="https://www.linkedin.com/in/bebroggi/" target="_blank" rel="noopener">LinkedIn ↗</a>
-        </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer>
     <div class="container">
-      <p>© <span id="y"></span> Alberto Broggi · Trieste, Italy</p>
-      <p>Data · Rentals · Sea</p>
+      <p>© <span id="y"></span> Alberto Broggi</p>
+      <p>Trieste · 45.65° N, 13.77° E</p>
+      <a href="#top">Back to top ↑</a>
     </div>
   </footer>
 
@@ -691,8 +507,8 @@
     function openLightbox(img) {
       lightboxImg.src = img.currentSrc || img.src;
       lightboxImg.alt = img.alt;
-      const fig = img.closest('.m-item');
-      const cap = fig ? fig.querySelector('.m-cap') : null;
+      const fig = img.closest('.life-card');
+      const cap = fig ? fig.querySelector('.life-card__cap') : null;
       lightboxCap.innerHTML = cap ? cap.innerHTML : '';
       lightbox.hidden = false;
       document.body.classList.add('modal-open');
@@ -706,7 +522,7 @@
       if (lastFocus) lastFocus.focus();
     }
 
-    document.querySelectorAll('.m-item img').forEach(function (img) {
+    document.querySelectorAll('.life-card img').forEach(function (img) {
       img.addEventListener('click', function () { openLightbox(img); });
     });
     lightbox.addEventListener('click', function (e) {
