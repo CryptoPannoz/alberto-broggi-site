@@ -284,9 +284,9 @@ h1 em, h2 em { color: var(--blue); font-family: var(--serif); font-weight: 400; 
   color: #8e9692; font-family: var(--mono); font-size: .52rem; text-align: center; text-overflow: ellipsis; white-space: nowrap;
 }
 .browser-shell > img { width: 100%; display: block; object-fit: cover; object-position: top; }
-.browser-shell--vento { width: 100%; height: 455px; transform: translateX(-3%); }
-.browser-shell--vento > img { height: calc(100% - 38px); }
-.dev-feature__visual:hover .browser-shell--vento { transform: translate(-3%, -5px); box-shadow: 0 36px 90px rgba(0,0,0,.52); }
+.browser-shell--vento { width: 100%; height: auto; transform: none; }
+.browser-shell--vento > img { height: auto; aspect-ratio: 16 / 9; object-fit: contain; object-position: center top; }
+.dev-feature__visual:hover .browser-shell--vento { transform: translateY(-5px); box-shadow: 0 36px 90px rgba(0,0,0,.52); }
 .phone-shell {
   position: relative; display: block; overflow: hidden; background: #090a0b; border: 8px solid #17191b;
   border-radius: 38px; box-shadow: 0 26px 58px rgba(0,0,0,.42), inset 0 0 0 1px rgba(255,255,255,.12);
@@ -499,7 +499,7 @@ footer a { color: white; }
   .project-card, .project-card--wide, .project-card:last-child { grid-column: auto; min-height: 390px; }
   .dev-feature { grid-template-columns: 1fr; }
   .dev-feature__visual { min-height: 540px; padding: 62px 38px 46px; }
-  .browser-shell--vento { height: 400px; }
+  .browser-shell--vento { height: auto; }
   .phone-shell--mini { width: 142px; height: 286px; }
   .dev-grid { grid-template-columns: 1fr; }
   .life-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 240px; }
@@ -542,9 +542,9 @@ footer a { color: white; }
   .past-card { flex: 0 0 82vw; grid-template-columns: 48px 1fr auto; padding-inline: 12px; scroll-snap-align: start; }
   .project-card, .project-card--wide, .project-card:last-child { flex: 0 0 84vw; min-height: 390px; scroll-snap-align: start; }
   .dev-feature__visual { min-height: 430px; padding: 60px 16px 38px; }
-  .browser-shell--vento { width: 100%; height: 285px; transform: none; border-radius: 13px; }
+  .browser-shell--vento { width: 100%; height: auto; transform: none; border-radius: 13px; }
   .browser-shell--vento .browser-bar { height: 32px; }
-  .browser-shell--vento > img { height: calc(100% - 32px); }
+  .browser-shell--vento > img { height: auto; }
   .phone-shell--mini { right: 8px; bottom: 30px; width: 108px; height: 218px; border-width: 5px; border-radius: 26px; }
   .phone-shell--mini .phone-notch { top: 5px; height: 11px; }
   .device-caption { left: 16px; bottom: 17px; }

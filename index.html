@@ -248,7 +248,7 @@
             <span class="dev-live"><i></i> Live project</span>
             <span class="browser-shell browser-shell--vento">
               <span class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span><span class="browser-url">ventotrieste.info</span></span>
-              <img src="assets/img/dev-vento-trieste.png" alt="VentoTrieste.info live wind dashboard" loading="lazy" />
+              <img src="assets/img/dev-vento-trieste.png" alt="VentoTrieste.info live wind dashboard" width="1280" height="720" loading="lazy" />
             </span>
             <span class="phone-shell phone-shell--mini" aria-hidden="true">
               <span class="phone-notch"></span>
@@ -337,7 +337,7 @@
 
         <div class="life-grid">
           <figure class="life-card life-card--hero life-card--video">
-            <video controls muted loop playsinline preload="metadata" poster="assets/img/sailing-prosecco.jpg" aria-label="Maxi yacht sailing video"><source src="assets/video/sailing.mp4" type="video/mp4" /></video>
+            <video controls autoplay muted loop playsinline preload="metadata" poster="assets/img/sailing-prosecco.jpg" aria-label="Maxi yacht sailing video"><source src="assets/video/sailing.mp4" type="video/mp4" /></video>
             <figcaption class="life-card__cap"><strong>Maxi yacht sailing</strong><span>Crew on Shockwave3 — Prosecco DOC Maxi Yacht. <a href="https://pressmare.it/amp/it/team/prosecco-doc-shockwave/2026-06-05/prosecco-doc-shockwave3-inizia-stagione-40-brindisi-corfu-90542" target="_blank" rel="noopener">Read more ↗</a></span></figcaption>
           </figure>
           <figure class="life-card"><img src="assets/img/arc-atlantic.jpg" alt="Crew sailing across the Atlantic during the ARC" loading="lazy" /><figcaption class="life-card__cap"><strong>Atlantic crossing</strong><span>ARC 2016 · 2,700 nm</span></figcaption></figure>
@@ -349,7 +349,7 @@
           <figure class="life-card"><img src="assets/img/foil-duino.png" alt="Foiling off Duino" loading="lazy" /><figcaption class="life-card__cap"><strong>Duino sessions</strong><span>Bora days on the Gulf of Trieste.</span></figcaption></figure>
           <figure class="life-card"><img src="assets/img/snowboard-courmayeur.jpg" alt="Riders on a snowy ridge above Courmayeur" loading="lazy" /><figcaption class="life-card__cap"><strong>Courmayeur ridges</strong><span>Hiking for lines under Mont Blanc.</span></figcaption></figure>
           <figure class="life-card"><img src="assets/img/vst-marettimo.jpg" alt="Sail and trek on Marettimo" loading="lazy" /><figcaption class="life-card__cap"><strong>Sail &amp; trek</strong><span>Climbing the islands we sail to.</span></figcaption></figure>
-          <figure class="life-card life-card--video life-card--video-wide"><video controls muted loop playsinline preload="metadata" poster="assets/img/treenet-friuli.jpg" aria-label="Treenet weaving video"><source src="assets/video/treenet.mp4" type="video/mp4" /></video><figcaption class="life-card__cap"><strong>Treenet weaver</strong><span>Slow craft, knots and trees.</span></figcaption></figure>
+          <figure class="life-card life-card--video life-card--video-wide"><video controls autoplay muted loop playsinline preload="metadata" poster="assets/img/treenet-friuli.jpg" aria-label="Treenet weaving video"><source src="assets/video/treenet.mp4" type="video/mp4" /></video><figcaption class="life-card__cap"><strong>Treenet weaver</strong><span>Slow craft, knots and trees.</span></figcaption></figure>
           <a class="life-card life-card--links life-card--links-wide" href="hobbies/links.html"><span><small>Rabbit holes</small><strong>Links I love</strong><em>The corners of the web I keep coming back to ↗</em></span></a>
         </div>
       </div>
@@ -612,16 +612,30 @@
       img.addEventListener('click', function () { openLightbox(img); });
     });
 
-    // ---- Hobby videos: hover on desktop, native tap controls on touch ----
-    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-      document.querySelectorAll('.life-card video').forEach(function (video) {
-        const card = video.closest('.life-card');
-        card.addEventListener('mouseenter', function () {
-          video.muted = true;
-          video.play().catch(function () {});
+    // ---- Hobby videos: autoplay while visible, with native controls for taps ----
+    const hobbyVideos = document.querySelectorAll('.life-card video');
+    hobbyVideos.forEach(function (video) { video.muted = true; });
+
+    if ('IntersectionObserver' in window) {
+      const videoObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          const video = entry.target;
+          const card = video.closest('.life-card');
+          const isVisible = entry.isIntersecting && entry.intersectionRatio >= .35;
+          card.dataset.videoVisible = isVisible ? 'true' : 'false';
+          if (isVisible) video.play().catch(function () {});
+          else video.pause();
         });
+      }, { threshold: [0, .35, .75] });
+      hobbyVideos.forEach(function (video) { videoObserver.observe(video); });
+    }
+
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      hobbyVideos.forEach(function (video) {
+        const card = video.closest('.life-card');
+        card.addEventListener('mouseenter', function () { video.play().catch(function () {}); });
         card.addEventListener('mouseleave', function () {
-          video.pause();
+          if (card.dataset.videoVisible !== 'true') video.pause();
         });
       });
     }
