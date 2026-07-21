@@ -323,7 +323,25 @@ h1 em, h2 em { color: var(--blue); font-family: var(--serif); font-weight: 400; 
 .dev-card__visual { height: 480px; position: relative; overflow: hidden; display: grid; place-items: center; }
 .dev-card__visual--desideri { background: radial-gradient(circle at 50% 30%, #fbf4ff 0, #e7dcff 45%, #c8b8ff 100%); }
 .phone-shell--app { width: 218px; height: 430px; transition: transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease; }
-.phone-shell--app > img { width: 310%; max-width: none; object-position: 50% top; }
+.phone-app-ui { position: absolute; inset: 0; display: flex; flex-direction: column; overflow: hidden; color: #393149; background: linear-gradient(155deg, #fff9fc 0, #f0edff 100%); }
+.phone-app-ui__top { min-height: 58px; padding: 22px 12px 10px; display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; border-bottom: 1px solid #e0d9ec; background: rgba(255,255,255,.76); }
+.phone-app-ui__top strong { font-family: var(--serif); font-size: .78rem; white-space: nowrap; }
+.phone-app-ui__top em { padding: 5px 7px; border-radius: 999px; color: white; background: #4b3c61; font-family: var(--mono); font-size: .42rem; font-style: normal; white-space: nowrap; }
+.phone-app-ui__body { flex: 1; padding: 24px 13px 12px; display: flex; flex-direction: column; align-items: stretch; }
+.phone-app-ui__body > small { color: #8f849d; font-family: var(--mono); font-size: .42rem; text-align: center; text-transform: uppercase; letter-spacing: .08em; }
+.phone-app-ui__body > strong { margin-top: 6px; font-family: var(--serif); font-size: 1.05rem; text-align: center; }
+.phone-app-progress { height: 5px; margin: 15px 18px 5px; overflow: hidden; border-radius: 999px; background: #e4deee; }
+.phone-app-progress i { display: block; width: 18%; height: 100%; border-radius: inherit; background: #7c5aa3; }
+.phone-app-count { color: #82768f; font-size: .48rem; text-align: center; }
+.phone-app-wish { margin-top: 20px; padding: 15px 12px 12px; display: grid; grid-template-columns: auto 1fr; gap: 8px; border: 1px solid #e1d9e9; border-radius: 14px; background: rgba(255,255,255,.94); box-shadow: 0 10px 28px rgba(81,61,104,.1); }
+.phone-app-wish b { color: #7b54a2; font-family: var(--serif); font-size: .8rem; }
+.phone-app-wish > span { overflow: hidden; color: #8c8394; font-size: .46rem; text-overflow: ellipsis; white-space: nowrap; }
+.phone-app-wish small { color: #8c8394; font-size: .42rem; }
+.phone-app-wish em { justify-self: end; padding: 5px 8px; border-radius: 999px; color: white; background: #76539c; font-size: .42rem; font-style: normal; }
+.phone-app-search { margin-top: 10px; padding: 8px 10px; border: 1px solid #dfd8e8; border-radius: 999px; color: #8c8394; background: rgba(255,255,255,.72); font-size: .44rem; }
+.phone-app-empty { margin: auto 0; color: #776e82; font-family: var(--serif); font-size: .55rem; font-style: italic; text-align: center; }
+.phone-app-ui__nav { min-height: 45px; padding: 8px 10px 13px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #dfd8e8; color: #8a8094; background: rgba(255,255,255,.9); font-size: .4rem; }
+.phone-app-ui__nav strong { padding: 6px 8px; border-radius: 999px; color: white; background: #4b3c61; }
 .dev-card__visual--desideri:hover .phone-shell--app { transform: translateY(-8px) rotate(-1deg); box-shadow: 0 38px 70px rgba(72,45,117,.3); }
 .device-kicker, .device-note, .automation-pill {
   position: absolute; z-index: 4; border-radius: 999px; font-family: var(--mono); text-transform: uppercase; letter-spacing: .06em;
