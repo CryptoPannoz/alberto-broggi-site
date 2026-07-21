@@ -198,27 +198,32 @@ h1 em, h2 em { color: var(--blue); font-family: var(--serif); font-weight: 400; 
 .experience-section { background: var(--paper); }
 .experience-now { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .role-card {
-  min-height: 290px; text-align: left; position: relative; background: var(--white); border: 1px solid var(--line);
+  min-height: 320px; text-align: left; position: relative; background: var(--white); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 24px; cursor: pointer; display: flex; flex-direction: column;
   transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
 }
 .role-card:hover { transform: translateY(-5px); box-shadow: 0 20px 45px rgba(17,22,21,.08); border-color: transparent; }
 .role-card__date { font-family: var(--mono); color: var(--muted); font-size: .62rem; text-transform: uppercase; }
-.role-card__logo, .role-card__duo { display: flex; align-items: center; gap: 20px; margin: auto 0; }
-.role-card__logo img { width: 150px; max-height: 48px; object-fit: contain; object-position: left; }
-.role-card__duo img { width: calc(50% - 10px); max-height: 45px; object-fit: contain; }
+.role-card__logo, .role-card__duo { min-height: 128px; display: flex; align-items: center; justify-content: center; margin: auto 0; }
+.role-card__logo img { width: min(72%, 210px); max-height: 78px; object-fit: contain; object-position: center; }
+.role-card__logo--vst img { width: 112px; max-height: 112px; }
+.role-card__duo { flex-direction: column; gap: 22px; }
+.role-card__duo img { width: auto; max-width: 220px; max-height: 58px; object-fit: contain; }
+.role-card__duo img:first-child { width: 190px; }
+.role-card__duo img:last-child { width: 220px; }
 .role-card__title { max-width: 24ch; font-size: 1.05rem; font-weight: 650; line-height: 1.2; }
 .role-card__arrow { position: absolute; right: 24px; bottom: 22px; font-size: 1.1rem; transition: transform .2s; }
 .role-card:hover .role-card__arrow { transform: translate(3px, -3px); color: var(--blue); }
 .micro-label { margin: 54px 0 18px; }
 .experience-past { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
 .past-card {
-  width: 100%; min-height: 96px; display: grid; grid-template-columns: 54px 1fr auto; align-items: center; gap: 16px;
+  width: 100%; min-height: 112px; display: grid; grid-template-columns: 112px 1fr auto; align-items: center; gap: 18px;
   padding: 14px 18px; text-align: left; background: transparent; border: 1px solid var(--line); border-radius: 14px;
   cursor: pointer; transition: background .2s, transform .2s;
 }
 .past-card:hover { background: var(--white); transform: translateX(3px); }
-.past-card__mark { display: grid; place-items: center; width: 48px; height: 48px; background: var(--ink); color: white; border-radius: 12px; font-family: var(--mono); font-size: .67rem; }
+.past-card__logo { width: 112px; height: 64px; padding: 11px; display: grid; place-items: center; overflow: hidden; background: var(--white); border: 1px solid rgba(17,22,21,.08); border-radius: 12px; }
+.past-card__logo img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .past-card > span:nth-child(2) { display: flex; flex-direction: column; gap: 4px; }
 .past-card strong { font-size: .9rem; }
 .past-card small { color: var(--muted); font-size: .72rem; }
@@ -494,7 +499,7 @@ footer a { color: white; }
   .impact-card, .impact-card--image { grid-column: auto; min-height: 520px; }
   .impact-card__logo { bottom: calc(100% + 150px); }
   .experience-now, .experience-past { grid-template-columns: 1fr; }
-  .role-card { min-height: 260px; }
+  .role-card { min-height: 300px; }
   .project-grid { grid-template-columns: 1fr; }
   .project-card, .project-card--wide, .project-card:last-child { grid-column: auto; min-height: 390px; }
   .dev-feature { grid-template-columns: 1fr; }
@@ -538,8 +543,9 @@ footer a { color: white; }
   .impact-card { flex: 0 0 84vw; min-height: 500px; scroll-snap-align: start; }
   .impact-card__body { padding: 24px; }
   .impact-card__logo { left: 24px; }
-  .role-card { flex: 0 0 78vw; min-height: 250px; scroll-snap-align: start; }
-  .past-card { flex: 0 0 82vw; grid-template-columns: 48px 1fr auto; padding-inline: 12px; scroll-snap-align: start; }
+  .role-card { flex: 0 0 78vw; min-height: 290px; scroll-snap-align: start; }
+  .past-card { flex: 0 0 88vw; grid-template-columns: 86px 1fr auto; padding-inline: 12px; scroll-snap-align: start; }
+  .past-card__logo { width: 86px; height: 56px; padding: 9px; }
   .project-card, .project-card--wide, .project-card:last-child { flex: 0 0 84vw; min-height: 390px; scroll-snap-align: start; }
   .dev-feature__visual { min-height: 430px; padding: 60px 16px 38px; }
   .browser-shell--vento { width: 100%; height: auto; transform: none; border-radius: 13px; }
