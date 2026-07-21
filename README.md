@@ -15,16 +15,19 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 data-heavy business.
 
 ## Design
-- Simple & precise: one typeface (Inter), strict black & white chrome, no accent color — photos carry the color
-- Soft radii (14/20px), pill buttons/tags, uniform spacing scale (4/8/12…96)
-- Skeleton: each section is a two-column spread with a sticky № label column on the left
-- Sticky topbar (brand + nav + coordinates), asymmetric projects grid (new Favignana/Campo di Bonis in evidence), uniform-gutter hobby masonry, black "contact" band
+- Editorial data/operator identity: Instrument Sans + Instrument Serif, with IBM Plex Mono for metrics and metadata
+- Warm paper, ink, Adriatic blue and small lime/orange accents
+- Results and company logos appear before biography; full experience details remain available in slide-over modals
+- Compact mobile layout uses horizontal, scroll-snapping card collections instead of a very long stack
+- Projects and off-the-clock stories are image-led; secondary hobbies sit behind a native expandable control
 
-## Companies section
-Three photo cards (Lucca, Wengen, Trieste Villas) with a description of the
-consulting work — photos pulled from each company's own site
-(`assets/img/company-*.jpg`). The old logo strip is gone; logo files remain
-in `assets/img/logos/` in case they're needed again.
+## Homepage information architecture
+- Hero: positioning, three proof metrics and current-company logo strip
+- What I build: three compact capability groups
+- Selected impact: Lucca/Wengen, Trieste Villas and Vertical Sailing Tour
+- Experience: three current logo cards, six compact earlier roles, nine full modal stories
+- Projects: five visual project cards
+- Off the clock: four lead stories plus eight preserved stories in an expandable gallery
 
 ## Local preview
 Open `index.html` in a browser, or:
