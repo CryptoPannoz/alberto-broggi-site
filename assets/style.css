@@ -420,13 +420,14 @@ footer a { color: white; }
 /* Modal */
 .modal[hidden], .lightbox[hidden] { display: none; }
 .modal {
-  position: fixed; inset: 0; z-index: 100; display: flex; justify-content: flex-end;
-  padding: 12px; overflow-y: auto;
+  position: fixed; inset: 0; z-index: 100; display: flex; align-items: flex-start; justify-content: flex-end;
+  padding: 12px; overflow: hidden;
 }
 .modal__backdrop { position: fixed; inset: 0; background: rgba(17,22,21,.64); backdrop-filter: blur(6px); animation: fade .2s ease; }
 .modal__panel {
-  position: relative; z-index: 1; width: min(100%, 690px); min-height: calc(100vh - 24px);
+  position: relative; z-index: 1; width: min(100%, 690px); height: calc(100dvh - 24px); min-height: 0;
   background: var(--white); border-radius: var(--radius-lg); padding: 72px 54px 54px;
+  overflow-y: auto; overscroll-behavior: contain;
   box-shadow: -20px 0 80px rgba(0,0,0,.18); animation: slide .32s cubic-bezier(.2,.8,.2,1);
 }
 @keyframes fade { from { opacity: 0; } }
@@ -586,7 +587,7 @@ footer a { color: white; }
   .life-card--links { padding: 18px; }
   .life-card--links strong { font-size: 1.8rem; }
   .modal { padding: 0; }
-  .modal__panel { min-height: 100vh; border-radius: 0; padding: 68px 24px 36px; }
+  .modal__panel { height: 100dvh; min-height: 0; border-radius: 0; padding: 68px 24px 36px; }
   .contact h2 { font-size: 4.05rem; }
   .big-mail { font-size: 1.1rem; }
 }
