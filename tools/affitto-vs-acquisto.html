@@ -110,9 +110,29 @@
     .tornado-wrap svg { display: block; width: 100%; min-width: 620px; height: auto; }
     .scen td:first-child strong { display: block; }
     .scen td:first-child small { display: block; margin-top: 3px; color: var(--muted); font-size: .68rem; line-height: 1.35; }
-    .scen .apply { padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: .64rem; font-weight: 650; white-space: nowrap; }
+    .scen .apply { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: .64rem; font-weight: 650; white-space: nowrap; transition: background .18s ease, color .18s ease, border-color .18s ease; }
     .scen .apply:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    .scen .apply.is-on { background: var(--orange); border-color: var(--orange); color: white; }
+    .scen .apply.is-on:hover { background: var(--ink); border-color: var(--ink); }
     .scen tr.base { background: rgba(22,93,255,.06); }
+    .scen tr.on { background: rgba(255,91,53,.09); }
+    .scen tr.on td:first-child strong::before { content: "● "; color: var(--orange); }
+
+    /* Banner scenario attivo */
+    .scen-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 18px 22px; border: 1px solid var(--orange); border-radius: var(--radius-lg); background: #fff1ec; }
+    .scen-banner[hidden] { display: none; }
+    .scen-banner__body { flex: 1 1 260px; min-width: 0; }
+    .scen-banner span.tag { display: block; color: #c33f1c; font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; }
+    .scen-banner strong { display: block; margin-top: 6px; font-size: 1.05rem; font-weight: 650; letter-spacing: -.03em; }
+    .scen-banner p { margin: 6px 0 0; color: #8c3418; font-family: var(--mono); font-size: .7rem; line-height: 1.5; }
+    .scen-banner__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .scen-banner button { min-height: 38px; padding: 0 15px; border-radius: 999px; border: 1px solid var(--orange); background: transparent; color: #8c3418; cursor: pointer; font-size: .72rem; font-weight: 650; white-space: nowrap; }
+    .scen-banner button#sb-remove { background: var(--orange); border-color: var(--orange); color: white; }
+    .scen-banner button:hover { background: var(--ink); border-color: var(--ink); color: white; }
+
+    /* Campi sovrascritti dallo scenario */
+    .field.is-overridden input[type="number"] { border-color: var(--orange); background: #fff4f0; }
+    .field small.ovr { color: #c33f1c; font-family: var(--mono); font-weight: 500; }
     .drivers { list-style: none; margin: 0; padding: 0; }
     .drivers li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid var(--line); }
     .drivers li:first-child { border-top: 0; padding-top: 4px; }
@@ -200,7 +220,7 @@
           </div>
 
           <details class="adv">
-            <summary><span>Parametri avanzati</span><span>Modifica <b>+</b></span></summary>
+            <summary><span>Parametri avanzati</span><span id="adv-tag">Modifica <b>+</b></span></summary>
             <div class="adv-grid">
               <div class="field">
                 <label for="durata">Durata mutuo (anni)</label>
@@ -255,6 +275,18 @@
 
         <!-- ─────────── OUTPUT ─────────── -->
         <div class="results">
+
+          <div class="scen-banner" id="scen-banner" hidden>
+            <div class="scen-banner__body">
+              <span class="tag">Scenario attivo · stai guardando un'ipotesi, non i tuoi numeri</span>
+              <strong id="sb-name"></strong>
+              <p id="sb-changes"></p>
+            </div>
+            <div class="scen-banner__actions">
+              <button type="button" id="sb-keep">Tienilo nei parametri</button>
+              <button type="button" id="sb-remove">Rimuovi scenario ✕</button>
+            </div>
+          </div>
 
           <div class="card verdict" id="verdict">
             <small id="v-kicker">Verdetto</small>
@@ -333,9 +365,9 @@
 
           <div class="card">
             <h3>Scenari di mercato</h3>
-            <p class="note">Combinazioni realistiche di tassi, inflazione e ciclo immobiliare, sul tuo orizzonte di <span id="scen-anni"></span> anni. «Applica» riscrive i parametri nel pannello.<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
+            <p class="note">Combinazioni realistiche di tassi, inflazione e ciclo immobiliare, sul tuo orizzonte di <span id="scen-anni"></span> anni. La tabella mostra sempre il confronto partendo dai <em>tuoi</em> parametri: leggila senza toccare niente.<br /><strong>«Prova»</strong> accende lo scenario e ricalcola verdetto, grafico e sensibilità come se fosse vero — i tuoi numeri nel pannello restano intatti. Per tornare indietro, <strong>«Rimuovi»</strong>: sullo stesso pulsante, o nella barra arancione in cima ai risultati.<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
             <table class="t scen">
-              <thead><tr><th>Scenario</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th><th></th></tr></thead>
+              <thead><tr><th>Scenario</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th><th>Provalo</th></tr></thead>
               <tbody id="scen"></tbody>
             </table>
           </div>
@@ -640,6 +672,61 @@
       return q;
     }
 
+    // Scenario attivo: è una lente sopra i parametri del pannello, che non vengono mai riscritti.
+    var activeScen = -1;
+    var PARAM_LABEL = {
+      tasso: 'tasso del mutuo', rivaluta: 'rivalutazione casa', inflAffitto: 'crescita affitto',
+      rendimento: 'rendimento investimenti', manut: 'manutenzione', costiAcq: "costi d'acquisto"
+    };
+
+    // Solo i parametri che lo scenario cambia davvero: se coincidono già col pannello non sono override.
+    function changedKeys(pBase, pUsed) {
+      if (activeScen < 0) { return []; }
+      return Object.keys(SCENARI[activeScen].m).filter(function (k) {
+        return Math.abs(pBase[k] - pUsed[k]) > 1e-9;
+      });
+    }
+
+    function bannerScen(pBase, pUsed, chg) {
+      var el = $('scen-banner');
+      if (activeScen < 0) { el.hidden = true; return; }
+      var s = SCENARI[activeScen];
+      el.hidden = false;
+      $('sb-name').textContent = s.n;
+      $('sb-changes').textContent = chg.length === 0
+        ? 'Questo scenario coincide già con i parametri che hai impostato: i numeri non cambiano.'
+        : chg.map(function (k) {
+            return (PARAM_LABEL[k] || k) + ' ' + pct(pBase[k]) + ' → ' + pct(pUsed[k]);
+          }).join('  ·  ');
+    }
+
+    function markOverrides(pUsed, chg) {
+      Array.prototype.forEach.call(document.querySelectorAll('.field small.ovr'), function (e) { e.remove(); });
+      Array.prototype.forEach.call(document.querySelectorAll('.field.is-overridden'), function (e) { e.classList.remove('is-overridden'); });
+      var tag = $('adv-tag');
+      if (activeScen < 0) {
+        tag.innerHTML = 'Modifica <b>+</b>';
+        tag.style.color = '';
+        return;
+      }
+      var nascosti = 0;
+      chg.forEach(function (k) {
+        var input = $(k);
+        if (!input) { return; }
+        var f = input.parentNode;
+        f.classList.add('is-overridden');
+        var s = document.createElement('small');
+        s.className = 'ovr';
+        s.textContent = 'scenario attivo: ' + pct(pUsed[k]);
+        f.appendChild(s);
+        if (f.parentNode && f.parentNode.className === 'adv-grid') { nascosti++; }
+      });
+      tag.innerHTML = nascosti > 0
+        ? nascosti + (nascosti === 1 ? ' valore' : ' valori') + ' da scenario <b>+</b>'
+        : 'Modifica <b>+</b>';
+      tag.style.color = nascosti > 0 ? '#c33f1c' : '';
+    }
+
     /* ─────────── Lettura / scrittura parametri ─────────── */
     function read() {
       var p = {};
@@ -669,15 +756,20 @@
 
     /* ─────────── Render ─────────── */
     function render() {
-      var p = read();
-      labels(p);
+      var pBase = read();
+      labels(pBase);
+      // Lo scenario attivo sovrascrive solo il calcolo, mai il pannello.
+      var p = activeScen >= 0 ? applyScen(pBase, SCENARI[activeScen].m) : pBase;
+      var chg = changedKeys(pBase, p);
+      bannerScen(pBase, p, chg);
+      markOverrides(p, chg);
       var r = simulate(p);
       var diff = r.netBuy - r.netRent;
       var win = Math.abs(diff) < Math.max(2000, Math.abs(r.netRent) * 0.01) ? 'tie' : (diff > 0 ? 'buy' : 'rent');
 
       // Verdetto
       $('verdict').setAttribute('data-win', win);
-      $('v-kicker').textContent = 'Verdetto su ' + p.anni + ' anni';
+      $('v-kicker').textContent = 'Verdetto su ' + p.anni + ' anni' + (activeScen >= 0 ? ' · scenario «' + SCENARI[activeScen].n + '»' : '');
       if (win === 'buy') {
         $('v-title').innerHTML = 'Comprare conviene di <em>' + money(diff) + '</em>';
       } else if (win === 'rent') {
@@ -779,16 +871,22 @@
       $('tornado').innerHTML = tornado(p, diff);
 
       // Scenari di mercato
-      $('scen-anni').textContent = p.anni;
+      $('scen-anni').textContent = pBase.anni;
       var sc = '';
       SCENARI.forEach(function (s, idx) {
-        var q = applyScen(p, s.m);
-        var rr = simulate(q);
+        // Ogni riga parte sempre dai parametri del pannello, non dallo scenario acceso.
+        var rr = simulate(applyScen(pBase, s.m));
         var dd = rr.netBuy - rr.netRent;
-        sc += '<tr' + (idx === 0 ? ' class="base"' : '') + '><td><strong>' + s.n + '</strong><small>' + s.d + '</small></td>' +
+        var on = idx === activeScen || (idx === 0 && activeScen < 0);
+        var azione = idx === 0
+          ? (activeScen < 0 ? '<span class="pill pill--buy">in uso</span>' : '<button type="button" class="apply" data-scen="-1">Torna qui</button>')
+          : (activeScen === idx
+              ? '<button type="button" class="apply is-on" data-scen="-1">Attivo ✕ rimuovi</button>'
+              : '<button type="button" class="apply" data-scen="' + idx + '">Prova</button>');
+        sc += '<tr class="' + (idx === 0 ? 'base' : '') + (on && idx !== 0 ? ' on' : '') + '"><td><strong>' + s.n + '</strong><small>' + s.d + '</small></td>' +
               '<td class="num">' + money(rr.netBuy) + '</td><td class="num">' + money(rr.netRent) + '</td>' +
               '<td class="num" style="color:' + (dd >= 0 ? '#1c9a52' : '#c33f1c') + '">' + signed(dd) + '</td>' +
-              '<td>' + (idx === 0 ? '' : '<button type="button" class="apply" data-scen="' + idx + '">Applica</button>') + '</td></tr>';
+              '<td>' + azione + '</td></tr>';
       });
       $('scen').innerHTML = sc;
 
@@ -838,8 +936,8 @@
         return '<li><span aria-hidden="true">' + d[0] + '</span><div><strong>' + d[1] + '</strong><p>' + d[2] + '</p></div></li>';
       }).join('');
 
-      // Persistenza
-      try { localStorage.setItem(STORE, JSON.stringify(p)); } catch (e) { /* private mode */ }
+      // Persistenza: si salvano sempre i parametri del pannello, non lo scenario in prova
+      try { localStorage.setItem(STORE, JSON.stringify(pBase)); } catch (e) { /* private mode */ }
     }
 
     /* ─────────── Bootstrap ─────────── */
@@ -862,6 +960,9 @@
 
     write(fromQuery() || stored() || DEFAULTS);
 
+    var qScen = parseInt(new URLSearchParams(location.search).get('scen'), 10);
+    if (qScen > 0 && qScen < SCENARI.length) { activeScen = qScen; }
+
     var queued = false;
     function schedule() {
       if (queued) { return; }
@@ -880,20 +981,34 @@
       $(k + '_r').addEventListener('input', function () { $(k).value = $(k + '_r').value; schedule(); });
     });
 
+    function setScen(idx, scrollUp) {
+      activeScen = idx >= 0 && idx < SCENARI.length && idx !== 0 ? idx : -1;
+      render();
+      if (scrollUp) {
+        (activeScen >= 0 ? $('scen-banner') : $('verdict')).scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
     $('scen').addEventListener('click', function (ev) {
       var btn = ev.target.closest('.apply');
       if (!btn) { return; }
-      var s = SCENARI[parseInt(btn.getAttribute('data-scen'), 10)];
-      if (!s) { return; }
-      write(applyScen(read(), s.m));
-      render();
-      document.getElementById('verdict').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setScen(parseInt(btn.getAttribute('data-scen'), 10), true);
+    });
+
+    // «Rimuovi»: torna ai parametri del pannello, che non sono mai stati toccati.
+    $('sb-remove').addEventListener('click', function () { setScen(-1, false); });
+
+    // «Tienilo nei parametri»: solo qui lo scenario riscrive davvero il pannello.
+    $('sb-keep').addEventListener('click', function () {
+      if (activeScen < 0) { return; }
+      write(applyScen(read(), SCENARI[activeScen].m));
+      setScen(-1, false);
     });
 
     $('reset').addEventListener('click', function () {
       write(DEFAULTS);
       history.replaceState(null, '', location.pathname);
-      render();
+      setScen(-1, false);
     });
 
     $('share').addEventListener('click', function () {
@@ -901,6 +1016,7 @@
       var q = new URLSearchParams();
       NUM.forEach(function (k) { q.set(k, p[k]); });
       BOOL.forEach(function (k) { q.set(k, p[k] ? '1' : '0'); });
+      if (activeScen >= 0) { q.set('scen', activeScen); }
       var url = location.origin + location.pathname + '?' + q.toString();
       history.replaceState(null, '', '?' + q.toString());
       var btn = $('share');
@@ -908,6 +1024,12 @@
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
       } else { done(false); }
+    });
+
+    // Dopo un reload o un «indietro» il browser ripristina i campi: risincronizza i risultati.
+    window.addEventListener('pageshow', function () {
+      SLIDERS.forEach(function (k) { $(k + '_r').value = $(k).value; });
+      render();
     });
 
     render();
