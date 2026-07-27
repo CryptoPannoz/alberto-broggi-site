@@ -117,6 +117,27 @@
     .scen tr.base { background: rgba(22,93,255,.06); }
     .scen tr.on { background: rgba(255,91,53,.09); }
     .scen tr.on td:first-child strong::before { content: "● "; color: var(--orange); }
+    .scen tr.fam td { padding-top: 22px; border-bottom: 1px solid var(--ink); }
+    .scen tr.fam strong { color: var(--muted); font-family: var(--mono); font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
+    .scen tr.fam small { margin-top: 4px; }
+    .prob { display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(17,22,21,.07); color: #4a4f4a; font-family: var(--mono); font-size: .58rem; font-weight: 500; vertical-align: 1px; }
+    .prob.hi { background: rgba(50,194,103,.16); color: #157a41; }
+    .prob.lo { background: rgba(255,91,53,.13); color: #c33f1c; }
+    .preset-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+    .preset-row button { padding: 9px 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); cursor: pointer; font-size: .7rem; font-weight: 650; text-align: left; }
+    .preset-row button:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    .preset-row button small { display: block; margin-top: 2px; color: var(--muted); font-size: .6rem; font-weight: 400; }
+    .preset-row button:hover small { color: rgba(255,255,255,.7); }
+    .preset-row button.on { background: var(--ink); color: white; border-color: var(--ink); }
+    .preset-row button.on small { color: rgba(255,255,255,.7); }
+    .scen-live { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 0 0 22px; padding: 13px 16px; border: 1px solid rgba(255,91,53,.4); border-radius: 14px; background: #fff1ec; color: #8c3418; font-size: .76rem; line-height: 1.45; }
+    .scen-live[hidden] { display: none; }
+    .scen-live span { flex: 1 1 240px; min-width: 0; }
+    .scen-live b { font-family: var(--mono); font-weight: 500; }
+    .scen-live button { padding: 7px 13px; border: 1px solid var(--orange); border-radius: 999px; background: var(--orange); color: white; cursor: pointer; font-size: .68rem; font-weight: 650; white-space: nowrap; }
+    .scen-live button:hover { background: var(--ink); border-color: var(--ink); }
+    #sb-prob { margin-top: 5px; font-family: var(--sans); font-size: .74rem; color: #8c3418; }
+    #sb-prob b { font-family: var(--mono); font-weight: 500; }
 
     /* Banner scenario attivo */
     .scen-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; padding: 18px 22px; border: 1px solid var(--orange); border-radius: var(--radius-lg); background: #fff1ec; }
@@ -281,10 +302,11 @@
               <span class="tag">Scenario attivo · stai guardando un'ipotesi, non i tuoi numeri</span>
               <strong id="sb-name"></strong>
               <p id="sb-changes"></p>
+              <p id="sb-prob"></p>
             </div>
             <div class="scen-banner__actions">
               <button type="button" id="sb-keep">Tienilo nei parametri</button>
-              <button type="button" id="sb-remove">Rimuovi scenario ✕</button>
+              <button type="button" id="sb-remove">Rimuovi tutto ✕</button>
             </div>
           </div>
 
@@ -365,11 +387,15 @@
 
           <div class="card">
             <h3>Scenari di mercato</h3>
-            <p class="note">Combinazioni realistiche di tassi, inflazione e ciclo immobiliare, sul tuo orizzonte di <span id="scen-anni"></span> anni. La tabella mostra sempre il confronto partendo dai <em>tuoi</em> parametri: leggila senza toccare niente.<br /><strong>«Prova»</strong> accende lo scenario e ricalcola verdetto, grafico e sensibilità come se fosse vero — i tuoi numeri nel pannello restano intatti. Per tornare indietro, <strong>«Rimuovi»</strong>: sullo stesso pulsante, o nella barra arancione in cima ai risultati.<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
+            <p class="note">Quattro leve indipendenti, sul tuo orizzonte di <span id="scen-anni"></span> anni. <strong>Puoi accenderne più di una insieme</strong> — tassi alti <em>e</em> mattone in boom, per esempio — ma non due opposte: dentro ogni famiglia la scelta è unica, accenderne una spegne l'altra. I tuoi numeri nel pannello non vengono mai riscritti; per tornare indietro c'è «spegni» sulla riga, o «Rimuovi tutto» nella barra arancione.<br />Le cifre di ogni riga tengono già conto delle altre leve accese: leggile come «cosa succede se in questa famiglia scelgo questa».<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
+            <p class="note" style="margin-bottom:10px"><strong>Combinazioni pronte</strong> — accendono più leve insieme, poi puoi ritoccarle una a una:</p>
+            <div class="preset-row" id="presets" aria-label="Combinazioni storiche"></div>
+            <div class="scen-live" id="scen-live" hidden></div>
             <table class="t scen">
-              <thead><tr><th>Scenario</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th><th>Provalo</th></tr></thead>
+              <thead><tr><th>Leva · probabilità indicativa</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th><th>Accendi</th></tr></thead>
               <tbody id="scen"></tbody>
             </table>
+            <p class="note" style="margin:22px 0 0">Da dove vengono le percentuali: sono <strong>stime soggettive</strong> ricavate dalla frequenza storica di ciascuna condizione su orizzonti lunghi, in Italia e sui mercati sviluppati. Non sono previsioni e nessuno ha i numeri veri — servono a distinguere «raro ma possibile» da «probabile». Dentro ogni famiglia le opzioni sommano a 100%, contando anche il caso base (i tuoi parametri).<br />Quando accendi più leve, la probabilità mostrata è il <strong>prodotto</strong> delle sole condizioni accese — sulle famiglie che lasci al caso base non si sta affermando nulla, quindi non entrano nel conto. Va comunque letta con prudenza, perché le variabili sono <strong>correlate</strong>: inflazione alta e tassi alti arrivano quasi sempre insieme, quindi una combinazione coerente è più probabile di quanto dica il prodotto, e una contraddittoria molto meno. E se sposti i parametri del pannello lontano dai valori di partenza, la probabilità del «caso base» non vale più.</p>
           </div>
 
           <div class="card">
@@ -650,18 +676,51 @@
       return s;
     }
 
-    var SCENARI = [
-      { n: 'I tuoi parametri', d: 'Le ipotesi che hai impostato nel pannello', m: {} },
-      { n: 'Tassi in salita', d: 'Mutuo +1,5 punti: stretta monetaria, come nel 2022-23', m: { tasso: { add: 1.5 } } },
-      { n: 'Tassi in discesa', d: 'Mutuo −1 punto: ciclo espansivo, credito a buon mercato', m: { tasso: { add: -1 } } },
-      { n: 'Mattone fermo', d: 'Prezzi nominali piatti: lo scenario italiano 2012-2021', m: { rivaluta: { set: 0 } } },
-      { n: 'Svalutazione immobiliare', d: '−1,5%/anno nominale, affitti comunque +2,5%', m: { rivaluta: { set: -1.5 }, inflAffitto: { set: 2.5 } } },
-      { n: 'Boom immobiliare', d: '+4%/anno: ciclo tipo 2000-2007 o città in tensione', m: { rivaluta: { set: 4 } } },
-      { n: 'Inflazione alta', d: 'Affitti +4%, casa +3,5%, tassi +1,5: il debito fisso si svaluta', m: { inflAffitto: { set: 4 }, rivaluta: { set: 3.5 }, tasso: { add: 1.5 }, rendimento: { add: 1 } } },
-      { n: 'Stagnazione', d: 'Inflazione quasi zero, mercati fiacchi, mattone fermo', m: { inflAffitto: { set: 0.5 }, rivaluta: { set: 0 }, rendimento: { set: 2.5 }, tasso: { add: -0.7 } } },
-      { n: 'Borsa forte', d: 'Portafoglio al 7%: il costo-opportunità dell\'anticipo esplode', m: { rendimento: { set: 7 } } },
-      { n: 'Borsa debole', d: 'Portafoglio al 2%: investire la liquidità rende poco', m: { rendimento: { set: 2 } } }
+    // Quattro famiglie indipendenti: dentro ognuna la scelta è unica, tra famiglie si combinano.
+    // Le probabilità sono stime soggettive da frequenze storiche e sommano a 100 per famiglia.
+    var FAMIGLIE = [
+      { id: 'tassi', nome: 'Tassi del mutuo', pBase: 45, baseD: 'Il tasso resta quello che hai impostato' },
+      { id: 'casa', nome: 'Mercato immobiliare', pBase: 35, baseD: 'La casa si rivaluta come hai ipotizzato' },
+      { id: 'affitti', nome: 'Inflazione e canoni', pBase: 50, baseD: 'Gli affitti crescono come hai ipotizzato' },
+      { id: 'borsa', nome: 'Mercati finanziari', pBase: 40, baseD: 'Il portafoglio rende come hai ipotizzato' }
     ];
+
+    var SCENARI = [
+      { id: 'tassi-su', fam: 'tassi', p: 30, n: 'Tassi in salita',
+        d: 'Mutuo +1,5 punti: stretta monetaria come nel 2022-23. Conta se devi ancora accendere il mutuo o se è a tasso variabile — su un fisso già firmato non cambia nulla.', m: { tasso: { add: 1.5 } } },
+      { id: 'tassi-giu', fam: 'tassi', p: 25, n: 'Tassi in discesa',
+        d: 'Mutuo −1 punto: ciclo espansivo, credito a buon mercato. Rifinanziabile con una surroga se arriva dopo che hai firmato.', m: { tasso: { add: -1 } } },
+
+      { id: 'casa-boom', fam: 'casa', p: 15, n: 'Boom immobiliare',
+        d: '+4%/anno nominale per tutto l\'orizzonte: ciclo tipo 2000-2007, o una città in forte tensione abitativa come Milano nell\'ultimo decennio.', m: { rivaluta: { set: 4 } } },
+      { id: 'casa-fermo', fam: 'casa', p: 30, n: 'Mattone fermo',
+        d: '0%/anno nominale: lo scenario italiano 2012-2021, quando i prezzi sono rimasti sotto il picco 2008 per oltre un decennio.', m: { rivaluta: { set: 0 } } },
+      { id: 'casa-giu', fam: 'casa', p: 20, n: 'Svalutazione immobiliare',
+        d: '−1,5%/anno nominale: zone in spopolamento, classi energetiche basse penalizzate dalle direttive UE, offerta in eccesso.', m: { rivaluta: { set: -1.5 } } },
+
+      { id: 'aff-alta', fam: 'affitti', p: 20, n: 'Inflazione alta',
+        d: 'Canoni +4%/anno: l\'affitto raddoppia in 18 anni. È lo scenario che premia di più chi ha un mutuo a tasso fisso, perché la rata resta ferma mentre tutto il resto corre.', m: { inflAffitto: { set: 4 } } },
+      { id: 'aff-zero', fam: 'affitti', p: 30, n: 'Inflazione quasi zero',
+        d: 'Canoni +0,5%/anno: stagnazione, domanda debole, redditi fermi. L\'affitto di oggi resta l\'affitto di domani.', m: { inflAffitto: { set: 0.5 } } },
+
+      { id: 'borsa-forte', fam: 'borsa', p: 30, n: 'Borsa forte',
+        d: 'Portafoglio al 7%/anno: il costo-opportunità dell\'anticipo esplode, perché quei soldi altrove lavorerebbero molto.', m: { rendimento: { set: 7 } } },
+      { id: 'borsa-debole', fam: 'borsa', p: 30, n: 'Borsa debole',
+        d: 'Portafoglio al 2%/anno: investire la liquidità rende poco e l\'alternativa all\'acquisto perde attrattiva.', m: { rendimento: { set: 2 } } }
+    ];
+
+    var PRESET = [
+      { n: 'Inflazione anni \'70', d: 'tassi su · casa boom · canoni +4%', lev: ['tassi-su', 'casa-boom', 'aff-alta'] },
+      { n: 'Stagnazione', d: 'tassi giù · mattone fermo · canoni fermi · borsa debole', lev: ['tassi-giu', 'casa-fermo', 'aff-zero', 'borsa-debole'] },
+      { n: 'Italia 2012-2021', d: 'tassi giù · mattone fermo · canoni fermi · borsa forte', lev: ['tassi-giu', 'casa-fermo', 'aff-zero', 'borsa-forte'] },
+      { n: 'Il peggio per chi compra', d: 'tassi su · casa che perde valore · borsa forte', lev: ['tassi-su', 'casa-giu', 'borsa-forte'] },
+      { n: 'Il peggio per chi affitta', d: 'tassi giù · casa boom · canoni +4% · borsa debole', lev: ['tassi-giu', 'casa-boom', 'aff-alta', 'borsa-debole'] }
+    ];
+
+    var byId = function (id) {
+      for (var i = 0; i < SCENARI.length; i++) { if (SCENARI[i].id === id) { return SCENARI[i]; } }
+      return null;
+    };
 
     function applyScen(p, m) {
       var q = Object.assign({}, p);
@@ -672,39 +731,68 @@
       return q;
     }
 
-    // Scenario attivo: è una lente sopra i parametri del pannello, che non vengono mai riscritti.
-    var activeScen = -1;
+    // Leve attive: sono una lente sopra i parametri del pannello, che non vengono mai riscritti.
+    var attivi = [];
     var PARAM_LABEL = {
       tasso: 'tasso del mutuo', rivaluta: 'rivalutazione casa', inflAffitto: 'crescita affitto',
       rendimento: 'rendimento investimenti', manut: 'manutenzione', costiAcq: "costi d'acquisto"
     };
 
-    // Solo i parametri che lo scenario cambia davvero: se coincidono già col pannello non sono override.
-    function changedKeys(pBase, pUsed) {
-      if (activeScen < 0) { return []; }
-      return Object.keys(SCENARI[activeScen].m).filter(function (k) {
-        return Math.abs(pBase[k] - pUsed[k]) > 1e-9;
+    var inFam = function (fam) {
+      for (var i = 0; i < attivi.length; i++) { if (byId(attivi[i]).fam === fam) { return attivi[i]; } }
+      return null;
+    };
+
+    // Applica le leve accese; se `fam` è indicata, in quella famiglia usa `id` (anche null) invece dell'attiva.
+    function comboParams(pBase, fam, id) {
+      var q = pBase;
+      FAMIGLIE.forEach(function (f) {
+        var use = f.id === fam ? id : inFam(f.id);
+        if (use) { q = applyScen(q, byId(use).m); }
       });
+      return q;
+    }
+
+    // Probabilità congiunta delle sole condizioni accese: sulle famiglie non toccate non si sta
+    // affermando niente, quindi non entrano nel prodotto (altrimenti ogni combinazione sembrerebbe impossibile).
+    function comboProb() {
+      return attivi.reduce(function (acc, id) { return acc * byId(id).p / 100; }, 1) * 100;
+    }
+
+    var probFmt = function (v) {
+      return '~' + new Intl.NumberFormat('it-IT', { maximumFractionDigits: v >= 5 ? 0 : (v >= 1 ? 1 : 2) }).format(v) + '%';
+    };
+
+    // Solo i parametri che le leve cambiano davvero: se coincidono già col pannello non sono override.
+    function changedKeys(pBase, pUsed) {
+      var keys = [];
+      attivi.forEach(function (id) {
+        Object.keys(byId(id).m).forEach(function (k) { if (keys.indexOf(k) < 0) { keys.push(k); } });
+      });
+      return keys.filter(function (k) { return Math.abs(pBase[k] - pUsed[k]) > 1e-9; });
     }
 
     function bannerScen(pBase, pUsed, chg) {
       var el = $('scen-banner');
-      if (activeScen < 0) { el.hidden = true; return; }
-      var s = SCENARI[activeScen];
+      if (attivi.length === 0) { el.hidden = true; return; }
       el.hidden = false;
-      $('sb-name').textContent = s.n;
+      $('sb-name').textContent = attivi.map(function (id) { return byId(id).n; }).join('  +  ');
       $('sb-changes').textContent = chg.length === 0
-        ? 'Questo scenario coincide già con i parametri che hai impostato: i numeri non cambiano.'
+        ? 'Queste leve coincidono già con i parametri che hai impostato: i numeri non cambiano.'
         : chg.map(function (k) {
             return (PARAM_LABEL[k] || k) + ' ' + pct(pBase[k]) + ' → ' + pct(pUsed[k]);
           }).join('  ·  ');
+      $('sb-prob').innerHTML = 'Probabilità indicativa che si verifichino insieme le condizioni accese: <b>' + probFmt(comboProb()) + '</b>' +
+        (attivi.length > 1
+          ? ' — è il prodotto delle singole, quindi da leggere al ribasso: se le leve raccontano una storia coerente (inflazione alta e tassi alti) la probabilità vera è più alta, se si contraddicono è più bassa. Sulle famiglie che non hai toccato non si sta affermando nulla.'
+          : '. Sulle altre famiglie non si sta affermando nulla.');
     }
 
     function markOverrides(pUsed, chg) {
       Array.prototype.forEach.call(document.querySelectorAll('.field small.ovr'), function (e) { e.remove(); });
       Array.prototype.forEach.call(document.querySelectorAll('.field.is-overridden'), function (e) { e.classList.remove('is-overridden'); });
       var tag = $('adv-tag');
-      if (activeScen < 0) {
+      if (attivi.length === 0) {
         tag.innerHTML = 'Modifica <b>+</b>';
         tag.style.color = '';
         return;
@@ -759,7 +847,7 @@
       var pBase = read();
       labels(pBase);
       // Lo scenario attivo sovrascrive solo il calcolo, mai il pannello.
-      var p = activeScen >= 0 ? applyScen(pBase, SCENARI[activeScen].m) : pBase;
+      var p = comboParams(pBase);
       var chg = changedKeys(pBase, p);
       bannerScen(pBase, p, chg);
       markOverrides(p, chg);
@@ -769,7 +857,8 @@
 
       // Verdetto
       $('verdict').setAttribute('data-win', win);
-      $('v-kicker').textContent = 'Verdetto su ' + p.anni + ' anni' + (activeScen >= 0 ? ' · scenario «' + SCENARI[activeScen].n + '»' : '');
+      $('v-kicker').textContent = 'Verdetto su ' + p.anni + ' anni' +
+        (attivi.length ? ' · scenario ' + attivi.map(function (id) { return '«' + byId(id).n + '»'; }).join(' + ') : '');
       if (win === 'buy') {
         $('v-title').innerHTML = 'Comprare conviene di <em>' + money(diff) + '</em>';
       } else if (win === 'rent') {
@@ -826,27 +915,50 @@
 
       // Dove finiscono i soldi
       var bruciatoBuy = r.interessiTot + r.unaTantum + r.speseTot + r.costiVenditaTot - r.detrTot;
+      var speseDesc = pct(p.manut) + '/anno sul valore della casa'
+        + (p.imu > 0 ? ', più ' + money(p.imu) + '/anno di IMU' : '. IMU esente perché prima casa (cambiala nei parametri avanzati se è una seconda casa)')
+        + (p.altro > 0 ? ', più ' + money(p.altro) + '/mese di altre spese.' : '.')
+        + ' Copre straordinarie, caldaia, infissi, rifacimento facciata, assicurazione. Le spese condominiali ordinarie non compaiono: le pagheresti anche da inquilino, quindi si annullano.';
       var rows = [
-        ['Interessi sul mutuo', -r.interessiTot, null],
-        ['Costi d\'acquisto una tantum', -r.unaTantum, null],
-        ['Manutenzione, IMU, altre spese', -r.speseTot, null],
-        ['Costi di vendita a fine periodo', -r.costiVenditaTot, null],
-        ['Detrazione fiscale interessi', r.detrTot, null],
-        ['Affitti pagati', null, -r.affittiTot],
-        ['Capitale rimborsato (equity)', r.capitaleTot, null],
-        ['Rivalutazione dell\'immobile', r.casaFine - p.prezzo, null],
-        ['Portafoglio investito a fine periodo', r.pfB, r.pfR],
-        ['Tasse sulle plusvalenze finanziarie', -r.taxB, -r.taxR]
+        ['Interessi sul mutuo',
+         'Il prezzo del denaro preso in prestito: ' + pct(p.tasso) + ' su un debito che parte da ' + money(r.mutuo) + ' e cala a ogni rata. Nei primi anni la rata è quasi tutta interessi, alla fine quasi tutto capitale.',
+         -r.interessiTot, null],
+        ['Costi d\'acquisto una tantum',
+         pct(p.costiAcq) + ' di ' + money(p.prezzo) + ': imposta di registro (o IVA sul nuovo), notaio, provvigione d\'agenzia, imposta sostitutiva sul mutuo, perizia e istruttoria. Si pagano in contanti al rogito e non rientrano mai.',
+         -r.unaTantum, null],
+        ['Manutenzione, IMU, altre spese', speseDesc, -r.speseTot, null],
+        ['Costi di vendita a fine periodo',
+         pct(p.costiVendita) + ' del valore della casa all\'anno ' + p.anni + ' (' + money(r.casaFine) + '): provvigione dell\'agenzia immobiliare (2-4% + IVA), certificazione APE, spese notarili di cancellazione dell\'ipoteca se il mutuo è ancora aperto. Compaiono perché hai scelto «a fine orizzonte liquido tutto»: se non vendi non li paghi, ma allora quel patrimonio non è nemmeno incassabile.',
+         -r.costiVenditaTot, null],
+        ['Detrazione fiscale interessi',
+         '19% degli interessi pagati, calcolato su un massimo di 4.000 €/anno: fino a 760 €/anno di IRPEF in meno. Vale solo per l\'abitazione principale e solo se hai imposte sufficienti da cui detrarre.',
+         r.detrTot, null],
+        ['Affitti pagati',
+         'Tutti i canoni versati in ' + p.anni + ' anni, con adeguamento del ' + pct(p.inflAffitto) + '/anno: si parte da ' + money(p.affitto) + '/mese e si arriva a ' + money(r.affittoFine) + '/mese. È l\'unica voce bruciata di chi affitta — in compenso non ha nessuna delle altre.',
+         null, -r.affittiTot],
+        ['Capitale rimborsato (equity)',
+         'La parte di rata che abbatte il debito invece di pagare interessi. Non è un costo: è risparmio obbligato che si trasforma in proprietà.'
+           + (r.saldoFine > 1 ? ' A fine orizzonte restano ancora ' + money(r.saldoFine) + ' di debito da estinguere.' : ' A fine orizzonte il mutuo è chiuso.'),
+         r.capitaleTot, null],
+        ['Rivalutazione dell\'immobile',
+         'Quanto vale la casa in più (o in meno) dopo ' + p.anni + ' anni al ' + pct(p.rivaluta) + '/anno: da ' + money(p.prezzo) + ' a ' + money(r.casaFine) + '. È ricchezza sulla carta finché non vendi.',
+         r.casaFine - p.prezzo, null],
+        ['Portafoglio investito a fine periodo',
+         'Chi affitta tiene investita tutta la liquidità iniziale (' + money(p.liquidita) + '); chi compra la immobilizza nel mattone e riesce a investire solo l\'avanzo dei mesi in cui possedere costa meno che affittare. Rendimento ipotizzato: ' + pct(p.rendimento) + '/anno.',
+         r.pfB, r.pfR],
+        ['Tasse sulle plusvalenze finanziarie',
+         pct(p.tasseFin) + ' sui soli guadagni del portafoglio, non sul capitale versato, contate al disinvestimento. Sulla casa invece non c\'è nulla: sull\'abitazione principale, o comunque dopo 5 anni, la plusvalenza immobiliare non è tassata.',
+         -r.taxB, -r.taxR]
       ];
       var html = '';
       rows.forEach(function (row) {
-        if ((row[1] === null || Math.abs(row[1]) < 1) && (row[2] === null || Math.abs(row[2]) < 1)) { return; }
-        html += '<tr><td>' + row[0] + '</td><td class="num">' + (row[1] === null || Math.abs(row[1]) < 1 ? '—' : signed(row[1])) +
-                '</td><td class="num">' + (row[2] === null || Math.abs(row[2]) < 1 ? '—' : signed(row[2])) + '</td></tr>';
+        if ((row[2] === null || Math.abs(row[2]) < 1) && (row[3] === null || Math.abs(row[3]) < 1)) { return; }
+        html += '<tr><td>' + row[0] + '<small>' + row[1] + '</small></td><td class="num">' + (row[2] === null || Math.abs(row[2]) < 1 ? '—' : signed(row[2])) +
+                '</td><td class="num">' + (row[3] === null || Math.abs(row[3]) < 1 ? '—' : signed(row[3])) + '</td></tr>';
       });
-      html += '<tr class="total"><td>Totale bruciato<small>uscite senza contropartita</small></td><td class="num">' +
+      html += '<tr class="total"><td>Totale bruciato<small>Uscite senza contropartita. Per chi compra: interessi + costi d\'acquisto + manutenzione e tasse + costi di vendita, meno le detrazioni. Per chi affitta: i canoni, e basta. Confrontare queste due cifre è il modo più veloce per capire chi «butta via» di più — ma non basta a decidere, perché ignora dove finisce il capitale.</small></td><td class="num">' +
               signed(-bruciatoBuy) + '</td><td class="num">' + signed(-r.affittiTot) + '</td></tr>';
-      html += '<tr class="total" style="border-top:0"><td>Patrimonio netto finale<small>non è la somma della colonna: comprende anche l\'anticipo versato e il valore iniziale dell\'immobile</small></td><td class="num">' +
+      html += '<tr class="total" style="border-top:0"><td>Patrimonio netto finale<small>Quello che conta davvero. Non è la somma della colonna: comprende anche l\'anticipo di ' + money(r.anticipo) + ' e il valore iniziale dell\'immobile, che qui sopra non compaiono perché non sono né costi né guadagni — sono capitale che cambia forma.</small></td><td class="num">' +
               money(r.netBuy) + '</td><td class="num">' + money(r.netRent) + '</td></tr>';
       $('flow').innerHTML = html;
 
@@ -873,22 +985,44 @@
       // Scenari di mercato
       $('scen-anni').textContent = pBase.anni;
       var sc = '';
-      SCENARI.forEach(function (s, idx) {
-        // Ogni riga parte sempre dai parametri del pannello, non dallo scenario acceso.
-        var rr = simulate(applyScen(pBase, s.m));
+      var riga = function (nome, desc, prob, pTest, on, azione, cls) {
+        var rr = simulate(pTest);
         var dd = rr.netBuy - rr.netRent;
-        var on = idx === activeScen || (idx === 0 && activeScen < 0);
-        var azione = idx === 0
-          ? (activeScen < 0 ? '<span class="pill pill--buy">in uso</span>' : '<button type="button" class="apply" data-scen="-1">Torna qui</button>')
-          : (activeScen === idx
-              ? '<button type="button" class="apply is-on" data-scen="-1">Attivo ✕ rimuovi</button>'
-              : '<button type="button" class="apply" data-scen="' + idx + '">Prova</button>');
-        sc += '<tr class="' + (idx === 0 ? 'base' : '') + (on && idx !== 0 ? ' on' : '') + '"><td><strong>' + s.n + '</strong><small>' + s.d + '</small></td>' +
-              '<td class="num">' + money(rr.netBuy) + '</td><td class="num">' + money(rr.netRent) + '</td>' +
-              '<td class="num" style="color:' + (dd >= 0 ? '#1c9a52' : '#c33f1c') + '">' + signed(dd) + '</td>' +
-              '<td>' + azione + '</td></tr>';
+        var badge = '<span class="prob ' + (prob >= 30 ? 'hi' : (prob <= 15 ? 'lo' : '')) + '">' + prob + '%</span>';
+        return '<tr class="' + (cls || '') + (on ? ' on' : '') + '"><td><strong>' + nome + '</strong>' + badge + '<small>' + desc + '</small></td>' +
+               '<td class="num">' + money(rr.netBuy) + '</td><td class="num">' + money(rr.netRent) + '</td>' +
+               '<td class="num" style="color:' + (dd >= 0 ? '#1c9a52' : '#c33f1c') + '">' + signed(dd) + '</td>' +
+               '<td>' + azione + '</td></tr>';
+      };
+      FAMIGLIE.forEach(function (f) {
+        var att = inFam(f.id);
+        sc += '<tr class="fam"><td colspan="5"><strong>' + f.nome + '</strong></td></tr>';
+        // Riga "caso base": nessuna leva accesa in questa famiglia.
+        sc += riga('Come da tuoi parametri', f.baseD, f.pBase, comboParams(pBase, f.id, null), !att,
+          att ? '<button type="button" class="apply" data-lev="" data-fam="' + f.id + '">Torna qui</button>' : '<span class="pill pill--buy">in uso</span>',
+          'base');
+        SCENARI.filter(function (s) { return s.fam === f.id; }).forEach(function (s) {
+          var on = att === s.id;
+          sc += riga(s.n, s.d, s.p, comboParams(pBase, f.id, s.id), on,
+            on ? '<button type="button" class="apply is-on" data-lev="" data-fam="' + f.id + '">Accesa ✕ spegni</button>'
+               : '<button type="button" class="apply" data-lev="' + s.id + '" data-fam="' + f.id + '">Accendi</button>');
+        });
       });
       $('scen').innerHTML = sc;
+
+      $('presets').innerHTML = PRESET.map(function (pr, i) {
+        var uguale = pr.lev.length === attivi.length && pr.lev.every(function (id) { return attivi.indexOf(id) > -1; });
+        return '<button type="button" data-preset="' + i + '" class="' + (uguale ? 'on' : '') + '">' + pr.n + '<small>' + pr.d + '</small></button>';
+      }).join('');
+
+      var live = $('scen-live');
+      live.hidden = attivi.length === 0;
+      if (attivi.length) {
+        live.innerHTML = '<span>Leve accese: <strong>' + attivi.map(function (id) { return byId(id).n; }).join(' + ') +
+          '</strong> · probabilità <b>' + probFmt(comboProb()) + '</b> · verdetto: ' +
+          (diff >= 0 ? 'comprare <b>' + signed(diff) + '</b>' : 'affittare <b>' + signed(-diff) + '</b>') + '</span>' +
+          '<button type="button" id="live-clear">Rimuovi tutto ✕</button>';
+      }
 
       // Cosa sposta davvero l'ago
       var crollo = p.prezzo * 0.10;
@@ -960,8 +1094,11 @@
 
     write(fromQuery() || stored() || DEFAULTS);
 
-    var qScen = parseInt(new URLSearchParams(location.search).get('scen'), 10);
-    if (qScen > 0 && qScen < SCENARI.length) { activeScen = qScen; }
+    var qLev = (new URLSearchParams(location.search).get('lev') || '').split(',').filter(Boolean);
+    qLev.forEach(function (id) {
+      var s = byId(id);
+      if (s && !inFam(s.fam)) { attivi.push(id); }
+    });
 
     var queued = false;
     function schedule() {
@@ -981,34 +1118,61 @@
       $(k + '_r').addEventListener('input', function () { $(k).value = $(k + '_r').value; schedule(); });
     });
 
-    function setScen(idx, scrollUp) {
-      activeScen = idx >= 0 && idx < SCENARI.length && idx !== 0 ? idx : -1;
+    var famIdx = function (fam) {
+      for (var i = 0; i < FAMIGLIE.length; i++) { if (FAMIGLIE[i].id === fam) { return i; } }
+      return 99;
+    };
+
+    // Dentro una famiglia la scelta è unica: accendere una leva spegne l'altra. Tra famiglie si sommano.
+    function setLever(fam, id) {
+      attivi = attivi.filter(function (x) { return byId(x).fam !== fam; });
+      if (id && byId(id)) { attivi.push(id); }
+      attivi.sort(function (a, b) { return famIdx(byId(a).fam) - famIdx(byId(b).fam); });
       render();
-      if (scrollUp) {
-        (activeScen >= 0 ? $('scen-banner') : $('verdict')).scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    }
+
+    function setCombo(ids) {
+      attivi = (ids || []).filter(function (id) { return !!byId(id); })
+        .sort(function (a, b) { return famIdx(byId(a).fam) - famIdx(byId(b).fam); });
+      render();
     }
 
     $('scen').addEventListener('click', function (ev) {
       var btn = ev.target.closest('.apply');
       if (!btn) { return; }
-      setScen(parseInt(btn.getAttribute('data-scen'), 10), true);
+      setLever(btn.getAttribute('data-fam'), btn.getAttribute('data-lev'));
     });
 
-    // «Rimuovi»: torna ai parametri del pannello, che non sono mai stati toccati.
-    $('sb-remove').addEventListener('click', function () { setScen(-1, false); });
+    $('presets').addEventListener('click', function (ev) {
+      var btn = ev.target.closest('button[data-preset]');
+      if (!btn) { return; }
+      var pr = PRESET[parseInt(btn.getAttribute('data-preset'), 10)];
+      if (!pr) { return; }
+      var uguale = pr.lev.length === attivi.length && pr.lev.every(function (id) { return attivi.indexOf(id) > -1; });
+      setCombo(uguale ? [] : pr.lev.slice());
+    });
 
-    // «Tienilo nei parametri»: solo qui lo scenario riscrive davvero il pannello.
+    $('scen-live').addEventListener('click', function (ev) {
+      if (ev.target.closest('#live-clear')) { setCombo([]); }
+    });
+
+    // «Rimuovi tutto»: torna ai parametri del pannello, che non sono mai stati toccati.
+    $('sb-remove').addEventListener('click', function () {
+      setCombo([]);
+      $('verdict').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    // «Tienilo nei parametri»: solo qui le leve riscrivono davvero il pannello.
     $('sb-keep').addEventListener('click', function () {
-      if (activeScen < 0) { return; }
-      write(applyScen(read(), SCENARI[activeScen].m));
-      setScen(-1, false);
+      if (!attivi.length) { return; }
+      write(comboParams(read()));
+      setCombo([]);
     });
 
     $('reset').addEventListener('click', function () {
       write(DEFAULTS);
       history.replaceState(null, '', location.pathname);
-      setScen(-1, false);
+      setCombo([]);
     });
 
     $('share').addEventListener('click', function () {
@@ -1016,7 +1180,7 @@
       var q = new URLSearchParams();
       NUM.forEach(function (k) { q.set(k, p[k]); });
       BOOL.forEach(function (k) { q.set(k, p[k] ? '1' : '0'); });
-      if (activeScen >= 0) { q.set('scen', activeScen); }
+      if (attivi.length) { q.set('lev', attivi.join(',')); }
       var url = location.origin + location.pathname + '?' + q.toString();
       history.replaceState(null, '', '?' + q.toString());
       var btn = $('share');
