@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Affitto o acquisto? — Calcolatore | Alberto Broggi</title>
+  <meta name="description" content="Calcolatore affitto vs acquisto casa: valore immobile, tasso del mutuo, liquidità iniziale e orizzonte temporale. Confronta il patrimonio netto finale, l'anno di pareggio e l'affitto di indifferenza." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://bebroggi.it/tools/affitto-vs-acquisto.html" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/style.css?v=lang-2" />
+  <style>
+    body { background: var(--paper); }
+
+    /* Hero */
+    .tool-top { border-bottom: 1px solid var(--line); }
+    .tool-top__inner { min-height: 64px; display: flex; align-items: center; gap: 18px; }
+    .tool-top a { font-size: .78rem; font-weight: 650; }
+    .tool-top .brand { margin-left: auto; }
+    .tool-hero { padding: 46px 0 34px; }
+    .tool-hero h1 { margin: 0; max-width: 15ch; font-size: clamp(2.5rem, 6vw, 4.6rem); font-weight: 630; letter-spacing: -.06em; }
+    .tool-hero p.lead { max-width: 62ch; margin: 22px 0 0; color: #4d524e; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.4; }
+
+    /* Layout */
+    .calc { padding-bottom: 90px; }
+    .calc-layout { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 18px; align-items: start; }
+
+    /* Input panel */
+    .panel { position: sticky; top: 14px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 24px 22px; }
+    .panel h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 650; letter-spacing: -.03em; }
+    .panel__hint { margin: 0 0 22px; color: var(--muted); font-size: .74rem; }
+    .field + .field { margin-top: 17px; }
+    .field > label { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 7px; font-size: .74rem; font-weight: 650; letter-spacing: -.01em; }
+    .field > label output { color: var(--blue); font-family: var(--mono); font-size: .8rem; font-weight: 500; white-space: nowrap; }
+    .field input[type="number"] {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px;
+      background: var(--paper); color: var(--ink); font-family: var(--mono); font-size: .92rem; -moz-appearance: textfield;
+    }
+    .field input[type="number"]:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: var(--white); }
+    .field input[type="range"] { width: 100%; margin: 9px 0 0; accent-color: var(--blue); }
+    .field small { display: block; margin-top: 5px; color: var(--muted); font-size: .66rem; }
+
+    .adv { margin-top: 24px; border-top: 1px solid var(--line); }
+    .adv > summary { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 12px; cursor: pointer; list-style: none; font-size: .78rem; font-weight: 650; }
+    .adv > summary::-webkit-details-marker { display: none; }
+    .adv > summary span:last-child { color: var(--muted); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .07em; }
+    .adv[open] > summary span:last-child b { display: inline-block; transform: rotate(45deg); }
+    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding-bottom: 18px; }
+    .adv-grid .field { margin: 0; }
+    .adv-grid .field > label { font-size: .68rem; font-weight: 600; }
+    .adv-grid .field input[type="number"] { padding: 8px 10px; font-size: .82rem; }
+    .check { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 9px; font-size: .7rem; line-height: 1.35; color: #3f443f; }
+    .check input { margin: 2px 0 0; accent-color: var(--blue); width: 15px; height: 15px; }
+    .panel__actions { display: flex; gap: 8px; margin-top: 6px; }
+    .mini-btn { flex: 1; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: .72rem; font-weight: 650; }
+    .mini-btn:hover { background: var(--paper); }
+
+    /* Results */
+    .results { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px; }
+    .card > h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 650; letter-spacing: -.03em; }
+    .card > p.note { margin: 0 0 20px; color: var(--muted); font-size: .74rem; }
+
+    .verdict { background: var(--blue); color: white; border-color: var(--blue); padding: 34px 30px; }
+    .verdict[data-win="rent"] { background: var(--ink); border-color: var(--ink); }
+    .verdict[data-win="tie"] { background: var(--ink); border-color: var(--ink); }
+    .verdict small { display: block; color: rgba(255,255,255,.72); font-family: var(--mono); font-size: .64rem; text-transform: uppercase; letter-spacing: .09em; }
+    .verdict strong { display: block; margin: 14px 0 0; font-size: clamp(2.1rem, 4.6vw, 3.6rem); font-weight: 630; line-height: .95; letter-spacing: -.055em; }
+    .verdict strong em { font-family: var(--serif); font-style: normal; font-weight: 400; color: var(--lime); }
+    .verdict[data-win="rent"] strong em { color: var(--orange); }
+    .verdict p { margin: 18px 0 0; max-width: 58ch; color: rgba(255,255,255,.8); font-size: .9rem; }
+    .verdict-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 26px; background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius); overflow: hidden; }
+    .verdict-split div { padding: 16px 18px; background: inherit; }
+    .verdict-split span { display: block; color: rgba(255,255,255,.7); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
+    .verdict-split b { display: block; margin-top: 8px; font-size: 1.5rem; font-weight: 600; letter-spacing: -.04em; }
+
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .kpi { background: var(--white); padding: 18px 16px; }
+    .kpi span { display: block; color: var(--muted); font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .07em; line-height: 1.4; }
+    .kpi b { display: block; margin-top: 10px; font-size: 1.45rem; font-weight: 620; letter-spacing: -.04em; }
+    .kpi b.pos { color: #1c9a52; }
+    .kpi b.neg { color: var(--orange); }
+    .kpi i { display: block; margin-top: 4px; color: var(--muted); font-size: .66rem; font-style: normal; }
+
+    .warn { display: flex; gap: 10px; padding: 13px 16px; border-radius: 14px; background: #fff1ec; border: 1px solid rgba(255,91,53,.35); color: #8c3418; font-size: .76rem; line-height: 1.4; }
+    .warn[hidden] { display: none; }
+    .warn b { color: var(--orange); }
+
+    .chart-wrap { width: 100%; overflow-x: auto; }
+    .chart-wrap svg { display: block; width: 100%; min-width: 460px; height: auto; }
+    .legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; font-size: .72rem; color: #3f443f; }
+    .legend i { display: inline-block; width: 14px; height: 3px; margin-right: 7px; vertical-align: middle; border-radius: 2px; }
+
+    table.t { width: 100%; border-collapse: collapse; font-size: .8rem; }
+    table.t th, table.t td { padding: 11px 8px; text-align: right; border-bottom: 1px solid var(--line); }
+    table.t th:first-child, table.t td:first-child { text-align: left; }
+    table.t thead th { color: var(--muted); font-family: var(--mono); font-size: .6rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; }
+    table.t td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    table.t tr.total td { border-bottom: 0; border-top: 2px solid var(--ink); font-weight: 700; }
+    table.t td small { display: block; color: var(--muted); font-size: .66rem; font-weight: 400; }
+    .pill { display: inline-block; padding: 3px 9px; border-radius: 999px; font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .06em; }
+    .pill--buy { background: rgba(22,93,255,.12); color: var(--blue); }
+    .pill--rent { background: rgba(255,91,53,.14); color: #c33f1c; }
+
+    /* Tornado / scenari */
+    .tornado-wrap { width: 100%; overflow-x: auto; }
+    .tornado-wrap svg { display: block; width: 100%; min-width: 620px; height: auto; }
+    .scen td:first-child strong { display: block; }
+    .scen td:first-child small { display: block; margin-top: 3px; color: var(--muted); font-size: .68rem; line-height: 1.35; }
+    .scen .apply { padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: .64rem; font-weight: 650; white-space: nowrap; }
+    .scen .apply:hover { background: var(--ink); color: white; border-color: var(--ink); }
+    .scen tr.base { background: rgba(22,93,255,.06); }
+    .drivers { list-style: none; margin: 0; padding: 0; }
+    .drivers li { display: grid; grid-template-columns: 34px 1fr; gap: 14px; padding: 16px 0; border-top: 1px solid var(--line); }
+    .drivers li:first-child { border-top: 0; padding-top: 4px; }
+    .drivers li > span { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: white; font-family: var(--mono); font-size: .58rem; }
+    .drivers strong { display: block; margin-bottom: 5px; font-size: .88rem; font-weight: 650; letter-spacing: -.02em; }
+    .drivers p { margin: 0; color: #4a4f4a; font-size: .82rem; line-height: 1.5; }
+    .drivers p b { font-family: var(--mono); font-weight: 500; color: var(--blue); font-size: .8rem; }
+
+    .assump { background: transparent; border-style: dashed; }
+    .assump ul { margin: 0; padding-left: 18px; color: #4a4f4a; font-size: .78rem; line-height: 1.55; }
+    .assump li { margin-bottom: 7px; }
+    .assump li b { font-weight: 650; }
+
+    @media (max-width: 980px) {
+      .calc-layout { grid-template-columns: 1fr; }
+      .panel { position: static; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .card { padding: 20px 18px; }
+      .verdict { padding: 26px 20px; }
+      .verdict-split { grid-template-columns: 1fr; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      .kpi b { font-size: 1.25rem; }
+      .adv-grid { grid-template-columns: 1fr; }
+      table.t th, table.t td { padding: 9px 4px; font-size: .74rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="tool-top">
+    <div class="container tool-top__inner">
+      <a href="../index.html">← Home</a>
+      <a class="brand" href="../it/">Alberto Broggi<span class="brand__dot">.</span></a>
+    </div>
+  </div>
+
+  <main>
+    <header class="tool-hero">
+      <div class="container">
+        <p class="eyebrow"><span class="status-dot"></span> Strumento · Finanza personale</p>
+        <h1>Affitto o <em>acquisto?</em></h1>
+        <p class="lead">Il confronto giusto non è «rata contro affitto»: è <strong>quanto patrimonio netto hai in tasca</strong> alla fine dell'orizzonte temporale, nei due scenari. Chi affitta investe la liquidità che non ha usato come anticipo — e ogni euro di differenza mensile. Chi compra accumula equity nel mattone.</p>
+      </div>
+    </header>
+
+    <section class="calc">
+      <div class="container calc-layout">
+
+        <!-- ─────────── INPUT ─────────── -->
+        <form class="panel" id="form" autocomplete="off">
+          <h2>I tuoi numeri</h2>
+          <p class="panel__hint">Muovi gli slider: tutto si ricalcola in tempo reale.</p>
+
+          <div class="field">
+            <label for="prezzo">Valore immobile <output id="prezzo_o"></output></label>
+            <input type="number" id="prezzo" min="0" step="1000" inputmode="numeric" />
+            <input type="range" id="prezzo_r" min="50000" max="900000" step="5000" aria-label="Valore immobile (slider)" />
+          </div>
+
+          <div class="field">
+            <label for="tasso">Tasso del mutuo (TAN) <output id="tasso_o"></output></label>
+            <input type="number" id="tasso" min="0" max="15" step="0.05" inputmode="decimal" />
+            <input type="range" id="tasso_r" min="0" max="8" step="0.05" aria-label="Tasso del mutuo (slider)" />
+          </div>
+
+          <div class="field">
+            <label for="liquidita">Liquidità iniziale <output id="liquidita_o"></output></label>
+            <input type="number" id="liquidita" min="0" step="1000" inputmode="numeric" />
+            <input type="range" id="liquidita_r" min="0" max="500000" step="2500" aria-label="Liquidità iniziale (slider)" />
+            <small>Tutto quello che hai oggi. Nello scenario «affitto» resta investito.</small>
+          </div>
+
+          <div class="field">
+            <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
+            <input type="number" id="anni" min="1" max="40" step="1" inputmode="numeric" />
+            <input type="range" id="anni_r" min="1" max="40" step="1" aria-label="Orizzonte temporale (slider)" />
+            <small>Per quanti anni resti in questa casa prima di tirare le somme.</small>
+          </div>
+
+          <div class="field">
+            <label for="affitto">Affitto attuale (€/mese) <output id="affitto_o"></output></label>
+            <input type="number" id="affitto" min="0" step="25" inputmode="numeric" />
+            <input type="range" id="affitto_r" min="200" max="3000" step="25" aria-label="Affitto mensile (slider)" />
+          </div>
+
+          <details class="adv">
+            <summary><span>Parametri avanzati</span><span>Modifica <b>+</b></span></summary>
+            <div class="adv-grid">
+              <div class="field">
+                <label for="durata">Durata mutuo (anni)</label>
+                <input type="number" id="durata" min="1" max="40" step="1" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="costiAcq">Costi d'acquisto (%)</label>
+                <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
+              </div>
+              <div class="field">
+                <label for="manut">Manutenzione (%/anno)</label>
+                <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field">
+                <label for="imu">IMU + tasse (€/anno)</label>
+                <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="altro">Altre spese (€/mese)</label>
+                <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="rivaluta">Rivalutazione casa (%/anno)</label>
+                <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field">
+                <label for="inflAffitto">Crescita affitto (%/anno)</label>
+                <input type="number" id="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field">
+                <label for="rendimento">Rendimento investimenti (%/anno)</label>
+                <input type="number" id="rendimento" min="0" max="15" step="0.1" inputmode="decimal" />
+              </div>
+              <div class="field">
+                <label for="tasseFin">Tassa su plusvalenze (%)</label>
+                <input type="number" id="tasseFin" min="0" max="50" step="1" inputmode="numeric" />
+              </div>
+              <div class="field">
+                <label for="costiVendita">Costi di vendita (%)</label>
+                <input type="number" id="costiVendita" min="0" max="15" step="0.5" inputmode="decimal" />
+              </div>
+              <label class="check"><input type="checkbox" id="vendo" /> <span>A fine orizzonte liquido tutto (vendo casa e disinvesto): sottrae costi di vendita e tasse sul capital gain.</span></label>
+              <label class="check"><input type="checkbox" id="detrazione" /> <span>Detrazione interessi mutuo prima casa: 19% su max 4.000 €/anno di interessi (fino a 760 €/anno).</span></label>
+            </div>
+          </details>
+
+          <div class="panel__actions">
+            <button type="button" class="mini-btn" id="reset">Ripristina default</button>
+            <button type="button" class="mini-btn" id="share">Copia link</button>
+          </div>
+        </form>
+
+        <!-- ─────────── OUTPUT ─────────── -->
+        <div class="results">
+
+          <div class="card verdict" id="verdict">
+            <small id="v-kicker">Verdetto</small>
+            <strong id="v-title"></strong>
+            <p id="v-text"></p>
+            <div class="verdict-split">
+              <div><span>Patrimonio netto — acquisto</span><b id="v-buy"></b></div>
+              <div><span>Patrimonio netto — affitto</span><b id="v-rent"></b></div>
+            </div>
+          </div>
+
+          <div class="warn" id="warn" hidden><span aria-hidden="true">▲</span><span id="warn-text"></span></div>
+
+          <div class="kpis">
+            <div class="kpi"><span>Rata mensile<br />del mutuo</span><b id="k-rata"></b><i id="k-mutuo"></i></div>
+            <div class="kpi"><span>Costo mensile<br />da proprietario</span><b id="k-costo"></b><i>1° anno, tutto incluso</i></div>
+            <div class="kpi"><span>Affitto<br />oggi</span><b id="k-affitto"></b><i id="k-affitto-fine"></i></div>
+            <div class="kpi"><span>Differenza<br />mensile</span><b id="k-diff"></b><i id="k-diff-note"></i></div>
+          </div>
+
+          <div class="card">
+            <h3>Patrimonio netto nel tempo</h3>
+            <p class="note">Valore di ciò che ti resta in mano se liquidi tutto in quell'anno: casa al netto del debito residuo, più il portafoglio investito.</p>
+            <div class="chart-wrap" id="chart"></div>
+            <div class="legend">
+              <span><i style="background:var(--blue)"></i>Acquisto</span>
+              <span><i style="background:var(--orange)"></i>Affitto + investo</span>
+              <span><i style="background:#9aa09a"></i>Punto di pareggio</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Le tre soglie che contano</h3>
+            <p class="note">Con i tuoi parametri, i punti in cui la risposta si ribalta.</p>
+            <table class="t">
+              <tbody>
+                <tr>
+                  <td><strong>Anno di pareggio</strong><small>Da qui in poi comprare batte affittare</small></td>
+                  <td class="num" id="s-breakeven"></td>
+                </tr>
+                <tr>
+                  <td><strong>Affitto di indifferenza</strong><small>Sotto questa cifra ti conviene restare in affitto</small></td>
+                  <td class="num" id="s-rent"></td>
+                </tr>
+                <tr>
+                  <td><strong>Prezzo massimo sensato</strong><small>Oltre questo prezzo, comprare distrugge valore rispetto all'affitto</small></td>
+                  <td class="num" id="s-price"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>Dove finiscono i soldi</h3>
+            <p class="note">Totali sull'orizzonte scelto. «Bruciato» = uscite che non tornano indietro in nessuna forma.</p>
+            <table class="t">
+              <thead><tr><th>Voce</th><th>Acquisto</th><th>Affitto</th></tr></thead>
+              <tbody id="flow"></tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>Come cambia con l'orizzonte</h3>
+            <p class="note">Stessi parametri, solo il numero di anni cambia. È la variabile più decisiva di tutte.</p>
+            <table class="t">
+              <thead><tr><th>Orizzonte</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th></tr></thead>
+              <tbody id="sens"></tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>Quali ipotesi ribaltano il verdetto</h3>
+            <p class="note">Ogni barra muove <em>una sola</em> ipotesi tenendo ferme le altre. Più è lunga, più quella variabile decide al posto tuo. La linea nera è la parità: dove la barra la attraversa, la risposta cambia.</p>
+            <div class="tornado-wrap" id="tornado"></div>
+          </div>
+
+          <div class="card">
+            <h3>Scenari di mercato</h3>
+            <p class="note">Combinazioni realistiche di tassi, inflazione e ciclo immobiliare, sul tuo orizzonte di <span id="scen-anni"></span> anni. «Applica» riscrive i parametri nel pannello.<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
+            <table class="t scen">
+              <thead><tr><th>Scenario</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th><th></th></tr></thead>
+              <tbody id="scen"></tbody>
+            </table>
+          </div>
+
+          <div class="card">
+            <h3>Cosa sposta davvero l'ago</h3>
+            <p class="note">Le forze dietro i numeri, calcolate sui tuoi parametri.</p>
+            <ul class="drivers" id="drivers"></ul>
+          </div>
+
+          <div class="card assump">
+            <h3>Cosa assume il modello</h3>
+            <p class="note">Trasparenza sui numeri, così sai dove intervenire.</p>
+            <ul>
+              <li><b>Confronto simmetrico.</b> Entrambi gli scenari partono dalla stessa liquidità e spendono ogni mese la stessa cifra. Chi in quel mese spende meno investe la differenza al rendimento indicato: è il costo-opportunità dell'anticipo, il pezzo che i confronti «rata vs affitto» dimenticano.</li>
+              <li><b>Mutuo a tasso fisso</b>, ammortamento alla francese, rata costante. Se la durata supera l'orizzonte, il debito residuo viene sottratto dal patrimonio.</li>
+              <li><b>Costi d'acquisto</b> in percentuale sul prezzo: notaio, imposte, agenzia, istruttoria e perizia. Il 9% di default è una stima prudente per prima casa con agenzia; da privato e senza intermediario scende parecchio.</li>
+              <li><b>Spese condominiali ordinarie escluse</b>: in affitto le paghi comunque, quindi si annullano. Nella voce manutenzione rientrano straordinarie, rifacimenti e assicurazione.</li>
+              <li><b>Fisco.</b> IMU prima casa esente (default 0). Nessuna tassa sulla plusvalenza immobiliare: dopo 5 anni, o se è abitazione principale, non è dovuta. Le plusvalenze finanziarie sono tassate solo alla fine, come per un ETF ad accumulazione.</li>
+              <li><b>Detrazione interessi</b> accreditata a fine anno; presuppone capienza IRPEF sufficiente.</li>
+              <li><b>Non considera</b>: costi di trasloco, cauzione, rischio sfratto o disdetta, il valore di poter cambiare città in 30 giorni, e il fatto che una casa è un investimento concentrato e illiquido mentre un portafoglio è diversificato.</li>
+            </ul>
+            <p class="note" style="margin:20px 0 0">Strumento didattico, non consulenza finanziaria. I rendimenti passati non garantiscono quelli futuri.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="y"></span> Alberto Broggi · Trieste, Italy</p>
+      <a href="../index.html">bebroggi.it</a>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var DEFAULTS = {
+      prezzo: 240000, tasso: 3.2, liquidita: 60000, anni: 20, affitto: 850,
+      durata: 25, costiAcq: 9, manut: 1, imu: 0, altro: 0,
+      rivaluta: 1, inflAffitto: 2, rendimento: 5, tasseFin: 26, costiVendita: 3,
+      vendo: true, detrazione: true
+    };
+    var NUM = ['prezzo','tasso','liquidita','anni','affitto','durata','costiAcq','manut','imu','altro','rivaluta','inflAffitto','rendimento','tasseFin','costiVendita'];
+    var BOOL = ['vendo','detrazione'];
+    var SLIDERS = ['prezzo','tasso','liquidita','anni','affitto'];
+    var STORE = 'ab-rentbuy-v1';
+
+    var $ = function (id) { return document.getElementById(id); };
+    var eur0 = new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+    var num0 = new Intl.NumberFormat('it-IT', { maximumFractionDigits: 0 });
+    var money = function (v) { return eur0.format(Math.round(v)); };
+    var signed = function (v) { return (v >= 0 ? '+' : '−') + money(Math.abs(v)).replace('-', ''); };
+    var pct = function (v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 1 }).format(v) + '%'; };
+    // Elisione dell'articolo davanti ai numeri: l'1, l'8, l'11, l'80… ma il 18, il 20
+    var elide = function (v) { var n = Math.floor(Math.abs(v)); return n === 1 || n === 11 || String(n).charAt(0) === '8'; };
+    var il = function (v) { return elide(v) ? "l'" : 'il '; };
+
+    /* ─────────── Motore di calcolo ─────────── */
+    function simulate(p) {
+      var n = Math.max(1, Math.round(p.anni * 12));
+      var nMut = Math.max(1, Math.round(p.durata * 12));
+      var rM = p.tasso / 100 / 12;
+      var rI = Math.pow(1 + p.rendimento / 100, 1 / 12) - 1;
+      var gH = Math.pow(1 + p.rivaluta / 100, 1 / 12) - 1;
+      var tax = p.tasseFin / 100;
+      var vendPct = p.vendo ? p.costiVendita / 100 : 0;
+
+      var unaTantum = p.prezzo * p.costiAcq / 100;
+      var anticipo = Math.max(0, Math.min(p.liquidita - unaTantum, p.prezzo));
+      var mutuo = Math.max(0, p.prezzo - anticipo);
+      var ltv = p.prezzo > 0 ? mutuo / p.prezzo : 0;
+      var rata = mutuo <= 0 ? 0 : (rM === 0 ? mutuo / nMut : mutuo * rM / (1 - Math.pow(1 + rM, -nMut)));
+
+      var saldo = mutuo;
+      var casa = p.prezzo;
+      var pfB = Math.max(0, p.liquidita - unaTantum - anticipo), baseB = pfB;
+      var pfR = p.liquidita, baseR = p.liquidita;
+
+      var interessiTot = 0, interessiAnno = 0, detrTot = 0, speseTot = 0, affittiTot = 0,
+          capitaleTot = 0, versatiB = 0, versatiR = 0;
+      var costoBuy1 = 0, costoRent1 = 0;
+
+      var netTax = function (pf, base) { return p.vendo ? pf - Math.max(0, pf - base) * tax : pf; };
+      var netBuy = function () { return casa * (1 - vendPct) - saldo + netTax(pfB, baseB); };
+      var netRent = function () { return netTax(pfR, baseR); };
+
+      var serie = [{ anno: 0, buy: netBuy(), rent: netRent() }];
+
+      for (var m = 1; m <= n; m++) {
+        var rataM = 0, interessi = 0;
+        if (saldo > 0.01 && m <= nMut) {
+          interessi = saldo * rM;
+          var quota = Math.min(rata - interessi, saldo);
+          if (quota < 0) { quota = 0; }
+          rataM = interessi + quota;
+          saldo -= quota;
+          interessiTot += interessi; interessiAnno += interessi; capitaleTot += quota;
+        }
+        var spese = casa * (p.manut / 100) / 12 + p.imu / 12 + p.altro;
+        speseTot += spese;
+
+        var affitto = p.affitto * Math.pow(1 + p.inflAffitto / 100, Math.floor((m - 1) / 12));
+        affittiTot += affitto;
+
+        var costoBuy = rataM + spese;
+        var costoRent = affitto;
+        if (m === 1) { costoBuy1 = costoBuy; costoRent1 = costoRent; }
+        var budget = Math.max(costoBuy, costoRent);
+
+        var addB = budget - costoBuy, addR = budget - costoRent;
+        pfB = pfB * (1 + rI) + addB; baseB += addB; versatiB += addB;
+        pfR = pfR * (1 + rI) + addR; baseR += addR; versatiR += addR;
+
+        casa *= (1 + gH);
+
+        if (m % 12 === 0) {
+          if (p.detrazione) {
+            var d = Math.min(interessiAnno, 4000) * 0.19;
+            pfB += d; baseB += d; detrTot += d;
+          }
+          interessiAnno = 0;
+          serie.push({ anno: m / 12, buy: netBuy(), rent: netRent() });
+        }
+      }
+
+      var costiVenditaTot = casa * vendPct;
+      return {
+        taxB: pfB - netTax(pfB, baseB), taxR: pfR - netTax(pfR, baseR),
+        netBuy: netBuy(), netRent: netRent(), serie: serie,
+        rata: rata, mutuo: mutuo, anticipo: anticipo, ltv: ltv, unaTantum: unaTantum,
+        costoBuy1: costoBuy1, costoRent1: costoRent1,
+        casaFine: casa, saldoFine: saldo, pfB: pfB, pfR: pfR,
+        interessiTot: interessiTot, detrTot: detrTot, speseTot: speseTot,
+        affittiTot: affittiTot, capitaleTot: capitaleTot, costiVenditaTot: costiVenditaTot,
+        versatiB: versatiB, versatiR: versatiR,
+        affittoFine: p.affitto * Math.pow(1 + p.inflAffitto / 100, Math.max(0, p.anni - 1))
+      };
+    }
+
+    function breakEven(serie) {
+      for (var i = 1; i < serie.length; i++) {
+        var a = serie[i - 1], b = serie[i];
+        var da = a.buy - a.rent, db = b.buy - b.rent;
+        if (db >= 0 && da < 0) { return a.anno + (0 - da) / (db - da); }
+        if (i === 1 && da >= 0) { return 0; }
+      }
+      return null;
+    }
+
+    function solveFor(p, key, lo, hi) {
+      var f = function (v) { var q = Object.assign({}, p); q[key] = v; var r = simulate(q); return r.netBuy - r.netRent; };
+      var flo = f(lo), fhi = f(hi);
+      if (!isFinite(flo) || !isFinite(fhi)) { return null; }
+      if ((flo > 0) === (fhi > 0)) { return null; }
+      for (var i = 0; i < 64; i++) {
+        var mid = (lo + hi) / 2, fm = f(mid);
+        if ((fm > 0) === (flo > 0)) { lo = mid; flo = fm; } else { hi = mid; }
+      }
+      return (lo + hi) / 2;
+    }
+
+    /* ─────────── Grafico ─────────── */
+    function chart(serie, be) {
+      var W = 760, H = 330, ml = 66, mr = 16, mt = 16, mb = 34;
+      var iw = W - ml - mr, ih = H - mt - mb;
+      var lastYear = serie[serie.length - 1].anno || 1;
+      var vals = [];
+      serie.forEach(function (s) { vals.push(s.buy, s.rent); });
+      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+      if (lo > 0) { lo = 0; }
+      var span = hi - lo || 1;
+      var step = Math.pow(10, Math.floor(Math.log10(span / 4)));
+      [1, 2, 2.5, 5, 10].some(function (k) { if (step * k >= span / 4) { step = step * k; return true; } return false; });
+      lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+      var x = function (a) { return ml + (a / lastYear) * iw; };
+      var y = function (v) { return mt + ih - ((v - lo) / (hi - lo)) * ih; };
+
+      var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Patrimonio netto nel tempo: acquisto contro affitto">';
+      for (var g = lo; g <= hi + 1e-6; g += step) {
+        var yy = y(g);
+        s += '<line x1="' + ml + '" y1="' + yy.toFixed(1) + '" x2="' + (W - mr) + '" y2="' + yy.toFixed(1) + '" stroke="' + (Math.abs(g) < 1e-6 ? 'rgba(17,22,21,.34)' : 'rgba(17,22,21,.10)') + '" stroke-width="1"/>';
+        s += '<text x="' + (ml - 9) + '" y="' + (yy + 3.5).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#686d68">' + num0.format(Math.round(g / 1000)) + 'k</text>';
+      }
+      var tickStep = lastYear <= 10 ? 1 : (lastYear <= 20 ? 2 : 5);
+      for (var t = 0; t <= lastYear; t += tickStep) {
+        s += '<text x="' + x(t).toFixed(1) + '" y="' + (H - 12) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#686d68">' + t + '</text>';
+      }
+      s += '<text x="' + (W - mr) + '" y="' + (H - 12) + '" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">ANNI</text>';
+
+      var path = function (key) {
+        return serie.map(function (p, i) { return (i ? 'L' : 'M') + x(p.anno).toFixed(1) + ' ' + y(p[key]).toFixed(1); }).join(' ');
+      };
+      if (be !== null && be > 0 && be <= lastYear) {
+        s += '<line x1="' + x(be).toFixed(1) + '" y1="' + mt + '" x2="' + x(be).toFixed(1) + '" y2="' + (mt + ih) + '" stroke="#9aa09a" stroke-width="1.5" stroke-dasharray="4 4"/>';
+        s += '<text x="' + (x(be) + 7).toFixed(1) + '" y="' + (mt + 13) + '" font-family="IBM Plex Mono, monospace" font-size="10" fill="#686d68">pareggio · anno ' + be.toFixed(1).replace('.', ',') + '</text>';
+      }
+      s += '<path d="' + path('rent') + '" fill="none" stroke="#ff5b35" stroke-width="2.5" stroke-linejoin="round"/>';
+      s += '<path d="' + path('buy') + '" fill="none" stroke="#165dff" stroke-width="2.5" stroke-linejoin="round"/>';
+      var last = serie[serie.length - 1];
+      s += '<circle cx="' + x(last.anno).toFixed(1) + '" cy="' + y(last.rent).toFixed(1) + '" r="4.5" fill="#ff5b35"/>';
+      s += '<circle cx="' + x(last.anno).toFixed(1) + '" cy="' + y(last.buy).toFixed(1) + '" r="4.5" fill="#165dff"/>';
+      s += '</svg>';
+      return s;
+    }
+
+    /* ─────────── Sensibilità alle ipotesi ─────────── */
+    var pctFmt = function (v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 1 }).format(v) + '%'; };
+    var yrFmt = function (v) { return new Intl.NumberFormat('it-IT', { maximumFractionDigits: 1 }).format(v) + ' anni'; };
+
+    var VARS = [
+      { k: 'tasso',       nome: 'Tasso del mutuo',            d: 1.5, min: 0,   max: 15, lo: 0,   hi: 15, f: pctFmt, su: 'buy' },
+      { k: 'rivaluta',    nome: 'Mercato immobiliare',        d: 2,   min: -8,  max: 10, lo: -8,  hi: 12, f: pctFmt, su: 'buy' },
+      { k: 'rendimento',  nome: 'Rendimento degli investimenti', d: 2, min: 0,  max: 15, lo: 0,   hi: 15, f: pctFmt, su: 'rent' },
+      { k: 'inflAffitto', nome: 'Inflazione degli affitti',   d: 1.5, min: 0,   max: 10, lo: 0,   hi: 12, f: pctFmt, su: 'rent' },
+      { k: 'anni',        nome: 'Orizzonte temporale',        d: 5,   min: 1,   max: 40, lo: 1,   hi: 40, f: yrFmt,  su: 'buy' },
+      { k: 'costiAcq',    nome: "Costi d'acquisto",           d: 3,   min: 0,   max: 25, lo: 0,   hi: 30, f: pctFmt, su: 'buy' },
+      { k: 'manut',       nome: 'Manutenzione e tasse',       d: 0.5, min: 0,   max: 5,  lo: 0,   hi: 8,  f: pctFmt, su: 'buy' }
+    ];
+
+    function deltaWith(p, k, v) {
+      var q = Object.assign({}, p); q[k] = v;
+      var r = simulate(q);
+      return r.netBuy - r.netRent;
+    }
+
+    function tornado(p, base) {
+      var rows = VARS.map(function (v) {
+        var lo = Math.max(v.min, p[v.k] - v.d), hi = Math.min(v.max, p[v.k] + v.d);
+        return {
+          nome: v.nome, ora: v.f(p[v.k]), loV: v.f(lo), hiV: v.f(hi),
+          lo: deltaWith(p, v.k, lo), hi: deltaWith(p, v.k, hi),
+          soglia: solveFor(p, v.k, v.lo, v.hi), f: v.f
+        };
+      });
+      rows.forEach(function (r) { r.range = Math.abs(r.hi - r.lo); });
+      rows.sort(function (a, b) { return b.range - a.range; });
+
+      var W = 760, ml = 268, mr = 22, rowH = 46, top = 26, H = top + rows.length * rowH + 34;
+      var iw = W - ml - mr;
+      var vals = [0, base];
+      rows.forEach(function (r) { vals.push(r.lo, r.hi); });
+      var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+      var pad = (max - min) * 0.08 || 1000;
+      min -= pad; max += pad;
+      var x = function (v) { return ml + ((v - min) / (max - min)) * iw; };
+
+      var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Impatto delle singole ipotesi sul verdetto">';
+      s += '<text x="0" y="12" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">IPOTESI · VALORE ORA · PAREGGIO</text>';
+      s += '<text x="' + ml + '" y="12" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">AFFITTO MEGLIO</text>';
+      s += '<text x="' + (W - mr) + '" y="12" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">ACQUISTO MEGLIO</text>';
+
+      var y0 = top - 4, y1 = top + rows.length * rowH + 4;
+      s += '<line x1="' + x(base).toFixed(1) + '" y1="' + y0 + '" x2="' + x(base).toFixed(1) + '" y2="' + y1 + '" stroke="#9aa09a" stroke-width="1.5" stroke-dasharray="3 4"/>';
+      s += '<line x1="' + x(0).toFixed(1) + '" y1="' + y0 + '" x2="' + x(0).toFixed(1) + '" y2="' + y1 + '" stroke="#111615" stroke-width="1.5"/>';
+      s += '<text x="' + x(0).toFixed(1) + '" y="' + (y1 + 16) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#111615">PARITÀ</text>';
+      s += '<text x="' + x(base).toFixed(1) + '" y="' + (y1 + 29) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#686d68">oggi ' + (base >= 0 ? '+' : '−') + num0.format(Math.round(Math.abs(base) / 1000)) + 'k</text>';
+
+      rows.forEach(function (r, i) {
+        var cy = top + i * rowH + rowH / 2;
+        s += '<text x="0" y="' + (cy - 3) + '" font-family="Instrument Sans, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#111615">' + r.nome + '</text>';
+        var soglia = r.soglia === null ? 'non ribalta il verdetto' : 'pareggio a ' + r.f(r.soglia);
+        s += '<text x="0" y="' + (cy + 12) + '" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#686d68">ora ' + r.ora + ' · ' + soglia + '</text>';
+
+        var a = Math.min(r.lo, r.hi), b = Math.max(r.lo, r.hi);
+        var xa = x(a), xb = x(b), xbase = x(base);
+        var bh = 15;
+        s += '<rect x="' + Math.min(xa, xbase).toFixed(1) + '" y="' + (cy - bh / 2) + '" width="' + Math.max(1, Math.abs(xbase - xa)).toFixed(1) + '" height="' + bh + '" fill="' + (a < base ? '#ff5b35' : '#165dff') + '" opacity=".82" rx="2"/>';
+        s += '<rect x="' + Math.min(xb, xbase).toFixed(1) + '" y="' + (cy - bh / 2) + '" width="' + Math.max(1, Math.abs(xb - xbase)).toFixed(1) + '" height="' + bh + '" fill="' + (b > base ? '#165dff' : '#ff5b35') + '" opacity=".82" rx="2"/>';
+        var lab = function (v, xv, anchor, dx) {
+          return '<text x="' + (xv + dx).toFixed(1) + '" y="' + (cy + 3.5) + '" text-anchor="' + anchor + '" font-family="IBM Plex Mono, monospace" font-size="9" fill="#686d68">' + (r.lo === v ? r.loV : r.hiV) + '</text>';
+        };
+        s += lab(a, xa, 'end', -6) + lab(b, xb, 'start', 6);
+      });
+      s += '</svg>';
+      return s;
+    }
+
+    var SCENARI = [
+      { n: 'I tuoi parametri', d: 'Le ipotesi che hai impostato nel pannello', m: {} },
+      { n: 'Tassi in salita', d: 'Mutuo +1,5 punti: stretta monetaria, come nel 2022-23', m: { tasso: { add: 1.5 } } },
+      { n: 'Tassi in discesa', d: 'Mutuo −1 punto: ciclo espansivo, credito a buon mercato', m: { tasso: { add: -1 } } },
+      { n: 'Mattone fermo', d: 'Prezzi nominali piatti: lo scenario italiano 2012-2021', m: { rivaluta: { set: 0 } } },
+      { n: 'Svalutazione immobiliare', d: '−1,5%/anno nominale, affitti comunque +2,5%', m: { rivaluta: { set: -1.5 }, inflAffitto: { set: 2.5 } } },
+      { n: 'Boom immobiliare', d: '+4%/anno: ciclo tipo 2000-2007 o città in tensione', m: { rivaluta: { set: 4 } } },
+      { n: 'Inflazione alta', d: 'Affitti +4%, casa +3,5%, tassi +1,5: il debito fisso si svaluta', m: { inflAffitto: { set: 4 }, rivaluta: { set: 3.5 }, tasso: { add: 1.5 }, rendimento: { add: 1 } } },
+      { n: 'Stagnazione', d: 'Inflazione quasi zero, mercati fiacchi, mattone fermo', m: { inflAffitto: { set: 0.5 }, rivaluta: { set: 0 }, rendimento: { set: 2.5 }, tasso: { add: -0.7 } } },
+      { n: 'Borsa forte', d: 'Portafoglio al 7%: il costo-opportunità dell\'anticipo esplode', m: { rendimento: { set: 7 } } },
+      { n: 'Borsa debole', d: 'Portafoglio al 2%: investire la liquidità rende poco', m: { rendimento: { set: 2 } } }
+    ];
+
+    function applyScen(p, m) {
+      var q = Object.assign({}, p);
+      Object.keys(m).forEach(function (k) {
+        q[k] = m[k].set !== undefined ? m[k].set : q[k] + m[k].add;
+        if (k !== 'rivaluta') { q[k] = Math.max(0, q[k]); }
+      });
+      return q;
+    }
+
+    /* ─────────── Lettura / scrittura parametri ─────────── */
+    function read() {
+      var p = {};
+      NUM.forEach(function (k) {
+        var v = parseFloat($(k).value);
+        p[k] = isFinite(v) ? v : DEFAULTS[k];
+      });
+      BOOL.forEach(function (k) { p[k] = $(k).checked; });
+      p.anni = Math.min(40, Math.max(1, Math.round(p.anni)));
+      p.durata = Math.min(40, Math.max(1, Math.round(p.durata)));
+      return p;
+    }
+
+    function write(p) {
+      NUM.forEach(function (k) { $(k).value = p[k]; });
+      BOOL.forEach(function (k) { $(k).checked = !!p[k]; });
+      SLIDERS.forEach(function (k) { $(k + '_r').value = p[k]; });
+    }
+
+    function labels(p) {
+      $('prezzo_o').textContent = money(p.prezzo);
+      $('tasso_o').textContent = pct(p.tasso).replace('%', ' %');
+      $('liquidita_o').textContent = money(p.liquidita);
+      $('anni_o').textContent = p.anni + (p.anni === 1 ? ' anno' : ' anni');
+      $('affitto_o').textContent = money(p.affitto);
+    }
+
+    /* ─────────── Render ─────────── */
+    function render() {
+      var p = read();
+      labels(p);
+      var r = simulate(p);
+      var diff = r.netBuy - r.netRent;
+      var win = Math.abs(diff) < Math.max(2000, Math.abs(r.netRent) * 0.01) ? 'tie' : (diff > 0 ? 'buy' : 'rent');
+
+      // Verdetto
+      $('verdict').setAttribute('data-win', win);
+      $('v-kicker').textContent = 'Verdetto su ' + p.anni + ' anni';
+      if (win === 'buy') {
+        $('v-title').innerHTML = 'Comprare conviene di <em>' + money(diff) + '</em>';
+      } else if (win === 'rent') {
+        $('v-title').innerHTML = 'Affittare conviene di <em>' + money(-diff) + '</em>';
+      } else {
+        $('v-title').innerHTML = 'È <em>sostanzialmente pari</em>';
+      }
+      var rel = r.netRent !== 0 ? Math.abs(diff / r.netRent) * 100 : 0;
+      $('v-text').textContent = win === 'tie'
+        ? 'La differenza è dentro il margine di errore delle ipotesi: a questi parametri la scelta è più di stile di vita che di soldi.'
+        : 'Dopo ' + p.anni + ' anni chiudi con ' + money(Math.max(r.netBuy, r.netRent)) + ' invece di ' + money(Math.min(r.netBuy, r.netRent)) +
+          ': ' + pct(rel) + ' di patrimonio in più ' + (win === 'buy' ? 'comprando' : 'restando in affitto e investendo la liquidità') + '.';
+      $('v-buy').textContent = money(r.netBuy);
+      $('v-rent').textContent = money(r.netRent);
+
+      // Avvisi
+      var msgs = [];
+      if (r.ltv > 0.8) { msgs.push('Rapporto mutuo/valore: <b>' + pct(r.ltv * 100) + '</b>. Sopra l\'80% le banche chiedono garanzie extra (o il Fondo Consap under 36) e applicano tassi più alti di quello che hai impostato.'); }
+      if (p.liquidita < r.unaTantum) { msgs.push('La liquidità non copre nemmeno i <b>' + money(r.unaTantum) + '</b> di costi d\'acquisto: quelli vanno pagati in contanti, non si finanziano.'); }
+      if (r.rata > 0 && r.rata > p.affitto * 2.2) { msgs.push('La rata è più del doppio dell\'affitto attuale: verifica la sostenibilità sul reddito (le banche si fermano di solito al 30-35%).'); }
+      if (p.durata < p.anni && r.saldoFine <= 0.01) { /* mutuo estinto: nessun avviso */ }
+      $('warn').hidden = msgs.length === 0;
+      $('warn-text').innerHTML = msgs.join('<br />');
+
+      // KPI
+      $('k-rata').textContent = money(r.rata);
+      $('k-mutuo').textContent = r.mutuo > 0
+        ? 'Mutuo ' + money(r.mutuo) + ' · anticipo ' + money(r.anticipo)
+        : 'Acquisto senza mutuo';
+      $('k-costo').textContent = money(r.costoBuy1);
+      $('k-affitto').textContent = money(p.affitto);
+      $('k-affitto-fine').textContent = 'Anno ' + p.anni + ': ' + money(r.affittoFine);
+      var d1 = r.costoBuy1 - r.costoRent1;
+      var kd = $('k-diff');
+      kd.textContent = signed(-d1);
+      kd.className = d1 <= 0 ? 'pos' : 'neg';
+      $('k-diff-note').textContent = d1 > 0 ? 'in più al mese da proprietario' : 'risparmiati al mese comprando';
+
+      // Soglie
+      var be = breakEven(r.serie);
+      $('s-breakeven').innerHTML = be === null
+        ? '<span class="pill pill--rent">mai entro ' + p.anni + ' anni</span>'
+        : (be === 0 ? '<span class="pill pill--buy">subito</span>' : '<strong>' + be.toFixed(1).replace('.', ',') + ' anni</strong>');
+
+      var reIndiff = solveFor(p, 'affitto', 100, 9000);
+      $('s-rent').innerHTML = reIndiff === null
+        ? '<span class="pill pill--rent">nessuno</span>'
+        : '<strong>' + money(reIndiff) + '/mese</strong>';
+
+      var maxPrice = solveFor(p, 'prezzo', 30000, 2500000);
+      $('s-price').innerHTML = maxPrice === null
+        ? '<span class="pill pill--rent">n/d</span>'
+        : '<strong>' + money(maxPrice) + '</strong>';
+
+      // Dove finiscono i soldi
+      var bruciatoBuy = r.interessiTot + r.unaTantum + r.speseTot + r.costiVenditaTot - r.detrTot;
+      var rows = [
+        ['Interessi sul mutuo', -r.interessiTot, null],
+        ['Costi d\'acquisto una tantum', -r.unaTantum, null],
+        ['Manutenzione, IMU, altre spese', -r.speseTot, null],
+        ['Costi di vendita a fine periodo', -r.costiVenditaTot, null],
+        ['Detrazione fiscale interessi', r.detrTot, null],
+        ['Affitti pagati', null, -r.affittiTot],
+        ['Capitale rimborsato (equity)', r.capitaleTot, null],
+        ['Rivalutazione dell\'immobile', r.casaFine - p.prezzo, null],
+        ['Portafoglio investito a fine periodo', r.pfB, r.pfR],
+        ['Tasse sulle plusvalenze finanziarie', -r.taxB, -r.taxR]
+      ];
+      var html = '';
+      rows.forEach(function (row) {
+        if ((row[1] === null || Math.abs(row[1]) < 1) && (row[2] === null || Math.abs(row[2]) < 1)) { return; }
+        html += '<tr><td>' + row[0] + '</td><td class="num">' + (row[1] === null || Math.abs(row[1]) < 1 ? '—' : signed(row[1])) +
+                '</td><td class="num">' + (row[2] === null || Math.abs(row[2]) < 1 ? '—' : signed(row[2])) + '</td></tr>';
+      });
+      html += '<tr class="total"><td>Totale bruciato<small>uscite senza contropartita</small></td><td class="num">' +
+              signed(-bruciatoBuy) + '</td><td class="num">' + signed(-r.affittiTot) + '</td></tr>';
+      html += '<tr class="total" style="border-top:0"><td>Patrimonio netto finale<small>non è la somma della colonna: comprende anche l\'anticipo versato e il valore iniziale dell\'immobile</small></td><td class="num">' +
+              money(r.netBuy) + '</td><td class="num">' + money(r.netRent) + '</td></tr>';
+      $('flow').innerHTML = html;
+
+      // Sensitività sull'orizzonte
+      var hz = [3, 5, 10, 15, 20, 25, 30].filter(function (h, i, a) { return h <= 40; });
+      var sh = '';
+      hz.forEach(function (h) {
+        var q = Object.assign({}, p); q.anni = h;
+        var rr = simulate(q);
+        var dd = rr.netBuy - rr.netRent;
+        sh += '<tr' + (h === p.anni ? ' style="background:rgba(22,93,255,.06)"' : '') + '><td>' + h + ' anni' +
+              (h === p.anni ? ' <span class="pill pill--buy">tuo</span>' : '') + '</td><td class="num">' + money(rr.netBuy) +
+              '</td><td class="num">' + money(rr.netRent) + '</td><td class="num" style="color:' + (dd >= 0 ? '#1c9a52' : '#c33f1c') + '">' +
+              signed(dd) + '</td></tr>';
+      });
+      $('sens').innerHTML = sh;
+
+      // Grafico
+      $('chart').innerHTML = chart(r.serie, be);
+
+      // Ipotesi che ribaltano il verdetto
+      $('tornado').innerHTML = tornado(p, diff);
+
+      // Scenari di mercato
+      $('scen-anni').textContent = p.anni;
+      var sc = '';
+      SCENARI.forEach(function (s, idx) {
+        var q = applyScen(p, s.m);
+        var rr = simulate(q);
+        var dd = rr.netBuy - rr.netRent;
+        sc += '<tr' + (idx === 0 ? ' class="base"' : '') + '><td><strong>' + s.n + '</strong><small>' + s.d + '</small></td>' +
+              '<td class="num">' + money(rr.netBuy) + '</td><td class="num">' + money(rr.netRent) + '</td>' +
+              '<td class="num" style="color:' + (dd >= 0 ? '#1c9a52' : '#c33f1c') + '">' + signed(dd) + '</td>' +
+              '<td>' + (idx === 0 ? '' : '<button type="button" class="apply" data-scen="' + idx + '">Applica</button>') + '</td></tr>';
+      });
+      $('scen').innerHTML = sc;
+
+      // Cosa sposta davvero l'ago
+      var crollo = p.prezzo * 0.10;
+      var cashOut = Math.max(1, r.anticipo + r.unaTantum);
+      var leva = p.prezzo / cashOut;
+      var cadutaPct = crollo / cashOut * 100;
+      var rTasso1 = simulate(Object.assign({}, p, { tasso: p.tasso + 1 }));
+      var affitto4 = p.affitto * Math.pow(1.04, Math.max(0, p.anni - 1));
+      var sogliaRiv = solveFor(p, 'rivaluta', -8, 12);
+      var sogliaRend = solveFor(p, 'rendimento', 0, 15);
+      var sogliaTasso = solveFor(p, 'tasso', 0, 15);
+      var costoMeseAcq3 = r.unaTantum / 36, costoMeseAcqN = r.unaTantum / (p.anni * 12);
+      var drivers = [
+        ['↑', 'Leva finanziaria: amplifica tutto',
+         'Tiri fuori <b>' + money(cashOut) + '</b> di cassa (' + money(r.anticipo) + ' di anticipo più ' + money(r.unaTantum) + ' di costi) per controllare un bene da ' + money(p.prezzo) + ': ' +
+         'una leva di <b>' + leva.toFixed(1).replace('.', ',') + '×</b>. ' +
+         'Un calo del 10% del mercato vale <b>' + money(crollo) + '</b>, cioè ' + il(cadutaPct) + '<b>' + pct(cadutaPct) + '</b> della cassa che hai impegnato. ' +
+         'Al rialzo funziona identico, nella direzione opposta: è questo, non la rata, il vero motore del confronto.'],
+        ['%', 'Tassi: il prezzo del tempo',
+         'A ' + pct(p.tasso) + ' paghi <b>' + money(r.interessiTot) + '</b> di interessi nell\'orizzonte. Con un punto in più diventano <b>' + money(rTasso1.interessiTot) + '</b> ' +
+         'e il verdetto si sposta di <b>' + signed(rTasso1.netBuy - rTasso1.netRent - diff) + '</b>. ' +
+         (r.rata <= 0 ? 'Senza mutuo il tasso è irrilevante.'
+           : sogliaTasso === null ? 'Nel range 0-15% non esiste un tasso che ribalti il verdetto.'
+           : 'Il verdetto si capovolge a un tasso pari a <b>' + pct(sogliaTasso) + '</b>.')],
+        ['≈', 'Inflazione: erode l\'affitto, e anche il debito',
+         'Un mutuo a tasso fisso è una posizione corta sull\'inflazione: la rata resta inchiodata a <b>' + money(r.rata) + '</b> per sempre, ' +
+         'mentre l\'affitto al ' + pct(p.inflAffitto) + '/anno arriva a <b>' + money(r.affittoFine) + '</b> nell\'anno ' + p.anni + '. ' +
+         'Con inflazione al 4% sarebbe <b>' + money(affitto4) + '</b>. Più inflazione = più conviene aver comprato, purché il tasso fosse già bloccato.'],
+        ['⌂', 'Mercato immobiliare: la variabile che non controlli',
+         (sogliaRiv === null
+           ? 'Con questi parametri il verdetto non cambia nemmeno con rivalutazioni estreme: decidono altri fattori.'
+           : 'Ti serve una rivalutazione di almeno <b>' + pct(sogliaRiv) + '/anno</b> perché comprare batta affittare. Oggi stai ipotizzando ' + pct(p.rivaluta) + '.') +
+         ' Per riferimento: in Italia i prezzi nominali sono rimasti sotto il livello 2008 per oltre un decennio, mentre città come Milano hanno fatto +4-5%/anno. La media nazionale non esiste — conta il tuo quartiere.'],
+        ['◇', 'Costo-opportunità: dove sarebbero quei soldi',
+         (sogliaRend === null
+           ? 'Il rendimento alternativo non basta a ribaltare il risultato in un range plausibile (0-15%).'
+           : 'Se investendo la liquidità ottieni più di <b>' + pct(sogliaRend) + '/anno</b> netto, l\'affitto vince. Stai ipotizzando ' + pct(p.rendimento) + '.') +
+         ' È la voce più sottovalutata: l\'anticipo di ' + money(r.anticipo) + ' più i costi di ' + money(r.unaTantum) + ' smettono di lavorare altrove il giorno del rogito.'],
+        ['⏱', 'Orizzonte: il grande livellatore',
+         'I ' + money(r.unaTantum) + ' di costi d\'acquisto sono a fondo perduto e si spalmano nel tempo: ' +
+         '<b>' + money(costoMeseAcq3) + '/mese</b> se rivendi dopo 3 anni, <b>' + money(costoMeseAcqN) + '/mese</b> su ' + p.anni + ' anni. ' +
+         'Ecco perché comprare per starci meno di 5-7 anni raramente ha senso, quali che siano i tassi.']
+      ];
+      $('drivers').innerHTML = drivers.map(function (d) {
+        return '<li><span aria-hidden="true">' + d[0] + '</span><div><strong>' + d[1] + '</strong><p>' + d[2] + '</p></div></li>';
+      }).join('');
+
+      // Persistenza
+      try { localStorage.setItem(STORE, JSON.stringify(p)); } catch (e) { /* private mode */ }
+    }
+
+    /* ─────────── Bootstrap ─────────── */
+    function fromQuery() {
+      var q = new URLSearchParams(location.search);
+      if (![].concat(NUM, BOOL).some(function (k) { return q.has(k); })) { return null; }
+      var p = Object.assign({}, DEFAULTS);
+      NUM.forEach(function (k) { if (q.has(k)) { var v = parseFloat(q.get(k)); if (isFinite(v)) { p[k] = v; } } });
+      BOOL.forEach(function (k) { if (q.has(k)) { p[k] = q.get(k) === '1'; } });
+      return p;
+    }
+
+    function stored() {
+      try {
+        var raw = localStorage.getItem(STORE);
+        if (!raw) { return null; }
+        return Object.assign({}, DEFAULTS, JSON.parse(raw));
+      } catch (e) { return null; }
+    }
+
+    write(fromQuery() || stored() || DEFAULTS);
+
+    var queued = false;
+    function schedule() {
+      if (queued) { return; }
+      queued = true;
+      requestAnimationFrame(function () { queued = false; render(); });
+    }
+
+    NUM.concat(BOOL).forEach(function (k) {
+      $(k).addEventListener('input', function () {
+        if (SLIDERS.indexOf(k) > -1) { $(k + '_r').value = $(k).value; }
+        schedule();
+      });
+      $(k).addEventListener('change', schedule);
+    });
+    SLIDERS.forEach(function (k) {
+      $(k + '_r').addEventListener('input', function () { $(k).value = $(k + '_r').value; schedule(); });
+    });
+
+    $('scen').addEventListener('click', function (ev) {
+      var btn = ev.target.closest('.apply');
+      if (!btn) { return; }
+      var s = SCENARI[parseInt(btn.getAttribute('data-scen'), 10)];
+      if (!s) { return; }
+      write(applyScen(read(), s.m));
+      render();
+      document.getElementById('verdict').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    $('reset').addEventListener('click', function () {
+      write(DEFAULTS);
+      history.replaceState(null, '', location.pathname);
+      render();
+    });
+
+    $('share').addEventListener('click', function () {
+      var p = read();
+      var q = new URLSearchParams();
+      NUM.forEach(function (k) { q.set(k, p[k]); });
+      BOOL.forEach(function (k) { q.set(k, p[k] ? '1' : '0'); });
+      var url = location.origin + location.pathname + '?' + q.toString();
+      history.replaceState(null, '', '?' + q.toString());
+      var btn = $('share');
+      var done = function (ok) { btn.textContent = ok ? 'Link copiato ✓' : 'Copia dalla barra ↑'; setTimeout(function () { btn.textContent = 'Copia link'; }, 2200); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+      } else { done(false); }
+    });
+
+    render();
+    $('y').textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>

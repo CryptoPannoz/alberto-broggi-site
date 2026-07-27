@@ -8,6 +8,8 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 - `assets/` — `style.css`, `img/` (photos, posters, `img/logos/` company logos), `video/` clips
 - `jobs/` — legacy standalone detail pages (kept as deep-link fallback; no longer linked from the timeline)
 - `hobbies/` — wingfoil page + full link list
+- `tools/` — standalone interactive tools, self-contained (own `<style>`/`<script>`, only `assets/style.css` for design tokens)
+  - `affitto-vs-acquisto.html` — rent vs buy calculator: net-worth simulation over the horizon, break-even year, tornado sensitivity on the assumptions, market scenarios. State is shareable via query string and persisted in `localStorage`.
 
 ## Focus / positioning
 **Database Enrichment & Data Engineering** — forged in vacation rental & real estate
