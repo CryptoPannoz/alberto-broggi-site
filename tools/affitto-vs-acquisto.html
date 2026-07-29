@@ -16,6 +16,7 @@
     body { background: var(--paper); }
 
     /* Hero */
+    html { scroll-padding-top: 88px; }  /* lascia spazio alla barra risultato fissa */
     .tool-top { border-bottom: 1px solid var(--line); }
     .tool-top__inner { min-height: 64px; display: flex; align-items: center; gap: 18px; }
     .tool-top a { font-size: .78rem; font-weight: 650; }
@@ -29,7 +30,7 @@
     .calc-layout { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 18px; align-items: start; }
 
     /* Input panel */
-    .panel { position: sticky; top: 14px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 24px 22px; }
+    .panel { position: sticky; top: 82px; max-height: calc(100dvh - 96px); overflow-y: auto; overscroll-behavior: contain; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 24px 22px; }
     .panel h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 650; letter-spacing: -.03em; }
     .panel__hint { margin: 0 0 22px; color: var(--muted); font-size: .74rem; }
     .field + .field { margin-top: 17px; }
@@ -145,18 +146,76 @@
     .scen-live button { padding: 9px 14px; border: 1px solid var(--orange); border-radius: 999px; background: var(--orange); color: white; cursor: pointer; font-size: .7rem; font-weight: 650; white-space: nowrap; }
     .scen-live button:hover { background: var(--ink); border-color: var(--ink); }
 
-    /* Ipotesi chiave */
-    .ipotesi { border: 1px solid var(--blue); background: #f2f5ff; }
-    .ipotesi h3 { color: var(--blue); }
-    .ipotesi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0 0; }
-    .ipotesi-grid > div { padding: 16px 18px; border: 1px solid rgba(22,93,255,.3); border-radius: 14px; background: var(--white); }
-    .ipotesi-grid span { display: block; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
-    .ipotesi-grid > div > b { display: block; margin-top: 8px; font-size: clamp(1.4rem, 2.6vw, 1.95rem); letter-spacing: -.04em; }
-    .ipotesi-grid i { display: block; margin-top: 5px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
-    .ipotesi-grid i b { color: var(--ink); font-size: inherit; font-weight: 650; }
+    /* Barra risultato sempre visibile */
+    .sticky-result { position: sticky; top: 0; z-index: 60; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(16px) saturate(160%); }
+    .sticky-result__inner { min-height: 68px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; padding: 11px 0; }
+    .sr-verdict { flex: 1 1 240px; min-width: 0; display: flex; align-items: baseline; gap: 12px; }
+    .sr-verdict > span { color: var(--muted); font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
+    .sr-verdict > b { font-size: clamp(1.05rem, 2.2vw, 1.45rem); font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
+    .sr-verdict > b.buy { color: var(--blue); }
+    .sr-verdict > b.rent { color: var(--orange); }
+    .sr-nums { display: flex; gap: 22px; }
+    .sr-nums div { display: flex; flex-direction: column; }
+    .sr-nums span { color: var(--muted); font-family: var(--mono); font-size: .55rem; text-transform: uppercase; letter-spacing: .06em; }
+    .sr-nums b { margin-top: 2px; font-size: .9rem; font-weight: 650; letter-spacing: -.02em; white-space: nowrap; }
+    .sr-scen { padding: 5px 10px; border-radius: 999px; background: rgba(255,91,53,.14); color: #b04a24; font-family: var(--mono); font-size: .58rem; white-space: nowrap; }
+    .sr-scen[hidden] { display: none; }
+    @media (max-width: 700px) {
+      .sticky-result__inner { min-height: 0; gap: 2px 14px; padding: 8px 0; }
+      .sr-verdict { flex: 1 1 100%; flex-direction: column; gap: 0; }
+      .sr-verdict > span { font-size: .52rem; }
+      .sr-verdict > b { font-size: 1.02rem; }
+      .sr-nums { flex: 1 1 100%; gap: 14px; }
+      .sr-nums div { flex-direction: row; align-items: baseline; gap: 5px; }
+      .sr-nums span { font-size: .5rem; }
+      .sr-nums b { margin-top: 0; font-size: .72rem; }
+      .sr-scen { padding: 3px 8px; font-size: .52rem; }
+    }
+
+    /* Card investimenti */
+    .invest { border: 1px solid var(--blue); background: #f2f5ff; }
+    .invest h3 { color: var(--blue); }
+    .port-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; margin: 20px 0 22px; }
+    .port { padding: 13px 14px; border: 1px solid rgba(22,93,255,.28); border-radius: 14px; background: var(--white); cursor: pointer; text-align: left; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
+    .port:hover { transform: translateY(-2px); border-color: var(--blue); }
+    .port strong { display: block; font-size: .82rem; font-weight: 650; letter-spacing: -.02em; }
+    .port em { display: block; margin-top: 5px; color: var(--blue); font-family: var(--mono); font-size: 1.05rem; font-style: normal; font-weight: 500; }
+    .port small { display: block; margin-top: 5px; color: var(--muted); font-size: .66rem; line-height: 1.4; }
+    .port.on { background: var(--blue); border-color: var(--blue); }
+    .port.on strong, .port.on em { color: white; }
+    .port.on small { color: rgba(255,255,255,.78); }
+    .port.risk { border-color: rgba(255,91,53,.45); }
+    .port.risk em { color: var(--orange); }
+    .port.risk.on { background: var(--orange); border-color: var(--orange); }
+    .port.risk.on em { color: white; }
+    .invest-flows { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .invest-flows > div { padding: 16px 18px; border: 1px solid rgba(22,93,255,.3); border-radius: 14px; background: var(--white); }
+    .invest-flows span { display: block; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
+    .invest-flows > div > b { display: block; margin-top: 8px; font-size: clamp(1.4rem, 2.6vw, 1.95rem); letter-spacing: -.04em; }
+    .invest-flows i { display: block; margin-top: 5px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
+    .invest-flows i b { color: var(--ink); font-size: inherit; font-weight: 650; }
     #ip-test { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid rgba(22,93,255,.25); }
     #ip-test b { color: var(--ink); }
-    @media (max-width: 520px) { .ipotesi-grid { grid-template-columns: 1fr; } }
+    .crypto-warn { margin: 14px 0 0 !important; padding: 14px 16px; border: 1px solid rgba(255,91,53,.5); border-radius: 14px; background: #fff1ec; color: #8c3418 !important; }
+    .crypto-warn[hidden] { display: none; }
+    .crypto-warn b { color: #6f2a12; }
+    @media (max-width: 780px) { .port-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 520px) { .invest-flows { grid-template-columns: 1fr; } .port-row { grid-template-columns: 1fr; } }
+
+    /* Sezioni di approfondimento richiudibili */
+    details.deep { padding: 0; }
+    details.deep > summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; cursor: pointer; list-style: none; }
+    details.deep > summary::-webkit-details-marker { display: none; }
+    details.deep > summary h3 { margin: 0; }
+    details.deep > summary span { display: flex; align-items: center; gap: 10px; color: var(--muted); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
+    details.deep > summary span b { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid var(--line); border-radius: 50%; font-weight: 400; }
+    details.deep[open] > summary span b { transform: rotate(45deg); }
+    details.deep > summary:hover span b { background: var(--ink); color: white; border-color: var(--ink); }
+    details.deep > div { padding: 0 24px 24px; }
+    @media (max-width: 520px) {
+      details.deep > summary { padding: 18px 16px; }
+      details.deep > div { padding: 0 16px 18px; }
+    }
     #sb-prob { margin-top: 5px; font-family: var(--sans); font-size: .74rem; color: #8c3418; }
     #sb-prob b { font-family: var(--mono); font-weight: 500; }
 
@@ -213,6 +272,17 @@
   </div>
 
   <main>
+    <div class="sticky-result" id="sticky">
+      <div class="container sticky-result__inner">
+        <div class="sr-verdict"><span id="sr-label">Verdetto</span><b id="sr-title"></b></div>
+        <div class="sr-nums">
+          <div><span>Acquisto</span><b id="sr-buy"></b></div>
+          <div><span>Affitto + investo</span><b id="sr-rent"></b></div>
+        </div>
+        <span class="sr-scen" id="sr-scen" hidden></span>
+      </div>
+    </div>
+
     <header class="tool-hero">
       <div class="container">
         <p class="eyebrow"><span class="status-dot"></span> Strumento · Finanza personale</p>
@@ -294,7 +364,7 @@
               </div>
               <div class="field">
                 <label for="rendimento">Rendimento investimenti (%/anno)</label>
-                <input type="number" id="rendimento" min="0" max="15" step="0.1" inputmode="decimal" />
+                <input type="number" id="rendimento" min="0" max="40" step="0.1" inputmode="decimal" />
               </div>
               <div class="field">
                 <label for="quotaInv">Quota del surplus investita (%)</label>
@@ -347,13 +417,15 @@
 
           <div class="warn" id="warn" hidden><span aria-hidden="true">▲</span><span id="warn-text"></span></div>
 
-          <div class="card ipotesi" id="ipotesi">
-            <h3>L'ipotesi che regge tutto: chi affitta deve investire</h3>
-            <p class="note">Questo confronto funziona solo se chi resta in affitto <strong>investe davvero</strong> i soldi che non ha immobilizzato nel mattone. Sono due flussi, e vanno entrambi al rendimento che hai impostato (<span id="ip-rend"></span>):</p>
-            <div class="ipotesi-grid">
+          <div class="card invest" id="invest">
+            <h3>Dove investi la differenza</h3>
+            <p class="note">È la leva che decide il confronto più di ogni altra: chi affitta non «risparmia» e basta, deve mettere quei soldi a rendere. Scegli un portafoglio di riferimento — imposta il rendimento nel pannello, puoi sempre ritoccarlo a mano.</p>
+            <div class="port-row" id="ports"></div>
+            <div class="invest-flows">
               <div><span>Subito, in un colpo</span><b id="ip-cassa"></b><i id="ip-cassa-note"></i></div>
               <div><span>Poi, ogni mese</span><b id="ip-mese"></b><i id="ip-mese-note"></i></div>
             </div>
+            <p class="note crypto-warn" id="crypto-warn" hidden></p>
             <p class="note" id="ip-test"></p>
           </div>
 
@@ -376,51 +448,6 @@
           </div>
 
           <div class="card">
-            <h3>Le tre soglie che contano</h3>
-            <p class="note">Con i tuoi parametri, i punti in cui la risposta si ribalta.</p>
-            <table class="t">
-              <tbody>
-                <tr>
-                  <td><strong>Anno di pareggio</strong><small>Da qui in poi comprare batte affittare</small></td>
-                  <td class="num" id="s-breakeven"></td>
-                </tr>
-                <tr>
-                  <td><strong>Affitto di indifferenza</strong><small>Sotto questa cifra ti conviene restare in affitto</small></td>
-                  <td class="num" id="s-rent"></td>
-                </tr>
-                <tr>
-                  <td><strong>Prezzo massimo sensato</strong><small>Oltre questo prezzo, comprare distrugge valore rispetto all'affitto</small></td>
-                  <td class="num" id="s-price"></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="card">
-            <h3>Dove finiscono i soldi</h3>
-            <p class="note">Totali sull'orizzonte scelto. «Bruciato» = uscite che non tornano indietro in nessuna forma.</p>
-            <table class="t">
-              <thead><tr><th>Voce</th><th>Acquisto</th><th>Affitto</th></tr></thead>
-              <tbody id="flow"></tbody>
-            </table>
-          </div>
-
-          <div class="card">
-            <h3>Come cambia con l'orizzonte</h3>
-            <p class="note">Stessi parametri, solo il numero di anni cambia. È la variabile più decisiva di tutte.</p>
-            <table class="t">
-              <thead><tr><th>Orizzonte</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th></tr></thead>
-              <tbody id="sens"></tbody>
-            </table>
-          </div>
-
-          <div class="card">
-            <h3>Quali ipotesi ribaltano il verdetto</h3>
-            <p class="note">Ogni barra muove <em>una sola</em> ipotesi tenendo ferme le altre. Più è lunga, più quella variabile decide al posto tuo. La linea nera è la parità: dove la barra la attraversa, la risposta cambia.</p>
-            <div class="tornado-wrap" id="tornado"></div>
-          </div>
-
-          <div class="card">
             <h3>Scenari di mercato</h3>
             <div class="scen-live neutro" id="scen-live"></div>
             <p class="note">Cinque leve indipendenti, sul tuo orizzonte di <span id="scen-anni"></span> anni. <strong>Puoi accenderne più di una insieme</strong> — tassi alti <em>e</em> mattone in boom, per esempio — ma non due opposte: dentro ogni famiglia la scelta è unica, accenderne una spegne l'altra. Le opzioni sono ordinate <strong>dalla più probabile alla meno probabile</strong>. I tuoi numeri nel pannello non vengono mai riscritti; per tornare indietro c'è «spegni» sulla riga, o «Rimuovi tutto» qui sopra.<br />Le cifre di ogni riga tengono già conto delle altre leve accese: leggile come «cosa succede se in questa famiglia scelgo questa».<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
@@ -433,14 +460,70 @@
             <p class="note" style="margin:22px 0 0">Da dove vengono le percentuali: sono <strong>stime soggettive</strong> ricavate dalla frequenza storica di ciascuna condizione su orizzonti lunghi, in Italia e sui mercati sviluppati. Non sono previsioni e nessuno ha i numeri veri — servono a distinguere «raro ma possibile» da «probabile». Dentro ogni famiglia le opzioni sommano a 100%, contando anche il caso base (i tuoi parametri).<br />Quando accendi più leve, la probabilità mostrata è il <strong>prodotto</strong> delle sole condizioni accese — sulle famiglie che lasci al caso base non si sta affermando nulla, quindi non entrano nel conto. Va comunque letta con prudenza, perché le variabili sono <strong>correlate</strong>: inflazione alta e tassi alti arrivano quasi sempre insieme, quindi una combinazione coerente è più probabile di quanto dica il prodotto, e una contraddittoria molto meno. E se sposti i parametri del pannello lontano dai valori di partenza, la probabilità del «caso base» non vale più.</p>
           </div>
 
-          <div class="card">
-            <h3>Cosa sposta davvero l'ago</h3>
-            <p class="note">Le forze dietro i numeri, calcolate sui tuoi parametri.</p>
-            <ul class="drivers" id="drivers"></ul>
-          </div>
+          <details class="card deep">
+            <summary><h3>Le tre soglie che contano</h3><span>Pareggio, affitto e prezzo limite <b>+</b></span></summary>
+            <div>
+              <p class="note">Con i tuoi parametri, i punti esatti in cui la risposta si ribalta.</p>
+              <table class="t">
+                <tbody>
+                  <tr>
+                    <td><strong>Anno di pareggio</strong><small>Da qui in poi comprare batte affittare</small></td>
+                    <td class="num" id="s-breakeven"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Affitto di indifferenza</strong><small>Sotto questa cifra ti conviene restare in affitto</small></td>
+                    <td class="num" id="s-rent"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Prezzo massimo sensato</strong><small>Oltre questo prezzo, comprare distrugge valore rispetto all'affitto</small></td>
+                    <td class="num" id="s-price"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
 
-          <div class="card assump">
-            <h3>Cosa assume il modello</h3>
+          <details class="card deep">
+            <summary><h3>Dove finiscono i soldi</h3><span>Voce per voce, con spiegazione <b>+</b></span></summary>
+            <div>
+              <p class="note">Totali sull'orizzonte scelto. «Bruciato» = uscite che non tornano indietro in nessuna forma.</p>
+              <table class="t">
+                <thead><tr><th>Voce</th><th>Acquisto</th><th>Affitto</th></tr></thead>
+                <tbody id="flow"></tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="card deep">
+            <summary><h3>Come cambia con l'orizzonte</h3><span>Da 3 a 30 anni <b>+</b></span></summary>
+            <div>
+              <p class="note">Stessi parametri, solo il numero di anni cambia. È la variabile più decisiva di tutte.</p>
+              <table class="t">
+                <thead><tr><th>Orizzonte</th><th>Acquisto</th><th>Affitto</th><th>Differenza</th></tr></thead>
+                <tbody id="sens"></tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="card deep">
+            <summary><h3>Quali ipotesi ribaltano il verdetto</h3><span>Grafico di sensibilità <b>+</b></span></summary>
+            <div>
+              <p class="note">Ogni barra muove <em>una sola</em> ipotesi tenendo ferme le altre. Più è lunga, più quella variabile decide al posto tuo. La linea nera è la parità: dove la barra la attraversa, la risposta cambia.</p>
+              <div class="tornado-wrap" id="tornado"></div>
+            </div>
+          </details>
+
+          <details class="card deep">
+            <summary><h3>Cosa sposta davvero l'ago</h3><span>Le cinque forze in gioco <b>+</b></span></summary>
+            <div>
+              <p class="note">Le forze dietro i numeri, calcolate sui tuoi parametri.</p>
+              <ul class="drivers" id="drivers"></ul>
+            </div>
+          </details>
+
+          <details class="card deep assump">
+            <summary><h3>Cosa assume il modello</h3><span>Metodo e limiti <b>+</b></span></summary>
+            <div>
             <p class="note">Trasparenza sui numeri, così sai dove intervenire.</p>
             <ul>
               <li><b>Confronto simmetrico.</b> Entrambi gli scenari partono dalla stessa cassa (anticipo + costi d'acquisto) e spendono ogni mese la stessa cifra. Chi in quel mese spende meno investe la differenza al rendimento indicato: è il costo-opportunità dell'anticipo, il pezzo che i confronti «rata vs affitto» dimenticano. Se abbassi «quota del surplus investita» nei parametri avanzati, quella differenza viene invece consumata — da entrambe le parti, ma il capitale del mutuo resta risparmio forzoso, e lì sta il vantaggio vero di chi compra.</li>
@@ -452,7 +535,8 @@
               <li><b>Non considera</b>: costi di trasloco, cauzione, rischio sfratto o disdetta, il valore di poter cambiare città in 30 giorni, e il fatto che una casa è un investimento concentrato e illiquido mentre un portafoglio è diversificato.</li>
             </ul>
             <p class="note" style="margin:20px 0 0">Strumento didattico, non consulenza finanziaria. I rendimenti passati non garantiscono quelli futuri.</p>
-          </div>
+            </div>
+          </details>
 
         </div>
       </div>
@@ -774,6 +858,17 @@
       { n: 'Realistico italiano', d: 'mattone fermo · metà del surplus si perde per strada', lev: ['casa-fermo', 'disc-meta'] }
     ];
 
+    // Portafogli di riferimento: impostano il rendimento atteso nel pannello.
+    // Sono ipotesi nominali di lungo periodo, non previsioni.
+    var PORTAFOGLI = [
+      { id: 'deposito', n: 'Conto deposito', r: 2.5, d: 'Capitale garantito, rendimento che spesso non batte l\'inflazione.' },
+      { id: 'btp', n: 'BTP / obbligazioni', r: 3.5, d: 'Titoli di stato tenuti fino a scadenza, cedola incassata.' },
+      { id: 'p6040', n: 'Portafoglio 60/40', r: 5, d: '60% azioni globali, 40% obbligazioni. Il classico bilanciato.' },
+      { id: 'etf', n: 'ETF azionario globale', r: 7, d: 'MSCI World o ACWI ad accumulazione, media di lungo periodo.' },
+      { id: 'mix-btc', n: '50% BTP + 50% Bitcoin', r: 12, d: 'Metà difensivo, metà speculativo. Media dei due, ribilanciata.', risk: true },
+      { id: 'btc', n: 'Solo Bitcoin', r: 20, d: 'Ipotesi di crescita alta in decelerazione. Volatilità estrema.', risk: true }
+    ];
+
     var byId = function (id) {
       for (var i = 0; i < SCENARI.length; i++) { if (SCENARI[i].id === id) { return SCENARI[i]; } }
       return null;
@@ -936,9 +1031,39 @@
       $('v-buy').textContent = money(r.netBuy);
       $('v-rent').textContent = money(r.netRent);
 
+      // Barra risultato sempre visibile
+      $('sr-label').textContent = 'Verdetto · ' + p.anni + ' anni · rendimento ' + pct(p.rendimento);
+      $('sr-title').textContent = win === 'tie' ? 'sostanzialmente pari'
+        : (win === 'buy' ? 'Comprare ' + signed(diff) : 'Affittare ' + signed(-diff));
+      $('sr-title').className = win === 'tie' ? '' : (win === 'buy' ? 'buy' : 'rent');
+      $('sr-buy').textContent = money(r.netBuy);
+      $('sr-rent').textContent = money(r.netRent);
+      $('sr-scen').hidden = attivi.length === 0;
+      $('sr-scen').textContent = attivi.length === 1 ? 'scenario: ' + byId(attivi[0]).n
+        : (attivi.length > 1 ? attivi.length + ' leve accese' : '');
+
+      // Portafogli di riferimento
+      $('ports').innerHTML = PORTAFOGLI.map(function (t) {
+        var on = Math.abs(pBase.rendimento - t.r) < 0.05;
+        return '<button type="button" class="port' + (t.risk ? ' risk' : '') + (on ? ' on' : '') + '" data-port="' + t.id + '">' +
+          '<strong>' + t.n + '</strong><em>' + pct(t.r) + '/anno</em><small>' + t.d + '</small></button>';
+      }).join('');
+
+      // L'avviso parla del rendimento effettivamente in uso, non di quello nel pannello.
+      var rischioso = p.rendimento >= 10;
+      $('crypto-warn').hidden = !rischioso;
+      if (rischioso) {
+        $('crypto-warn').innerHTML = '<b>Attenzione a come leggere questo numero.</b> Il modello applica un rendimento <b>costante</b> ogni mese: ' +
+          'per un asset che ha fatto −80% più di una volta è un\'astrazione che non descrive la realtà. Due cose che il calcolo non vede: ' +
+          'il <b>rischio di sequenza</b> (se il crollo arriva nell\'anno 18 non hai quella cifra, e non la recuperi in tempo) e il fatto che ' +
+          'la casa la abiti mentre un portafoglio del genere può costringerti a vendere nel momento peggiore. ' +
+          'Il ' + pct(p.rendimento) + ' annuo composto per ' + p.anni + ' anni moltiplica il capitale per <b>' +
+          (Math.pow(1 + p.rendimento / 100, p.anni)).toFixed(1).replace('.', ',') + '×</b>: se il risultato ti sembra troppo bello, è perché lo è. ' +
+          'Verifica anche l\'aliquota fiscale — le cripto hanno un regime proprio e cambia spesso — e regolala nel campo «tassa su plusvalenze».';
+      }
+
       // Ipotesi chiave: senza investire, il confronto non regge
       var diffMese1 = r.costoBuy1 - r.costoRent1;
-      $('ip-rend').textContent = pct(p.rendimento) + '/anno';
       $('ip-cassa').textContent = money(r.cassaIniziale);
       $('ip-cassa-note').innerHTML = 'La cassa che chi compra versa al rogito (' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) +
         ' di costi). Chi affitta non la tira fuori: la investe, e in ' + p.anni + ' anni diventa <b>' +
@@ -1236,6 +1361,16 @@
       var btn = ev.target.closest('.apply');
       if (!btn) { return; }
       setLever(btn.getAttribute('data-fam'), btn.getAttribute('data-lev'));
+    });
+
+    // I portafogli scrivono davvero nel pannello: è una scelta tua, non uno scenario in prova.
+    $('ports').addEventListener('click', function (ev) {
+      var btn = ev.target.closest('.port');
+      if (!btn) { return; }
+      var t = PORTAFOGLI.filter(function (x) { return x.id === btn.getAttribute('data-port'); })[0];
+      if (!t) { return; }
+      $('rendimento').value = t.r;
+      render();
     });
 
     $('presets').addEventListener('click', function (ev) {
