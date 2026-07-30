@@ -215,7 +215,9 @@
     .verdict[data-win="rent"] strong em { color: var(--orange); }
     .verdict p { margin: 18px 0 0; max-width: 58ch; color: rgba(255,255,255,.8); font-size: .9rem; }
     .verdict-split { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 26px; background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius); overflow: hidden; }
-    .verdict-assump { display: flex; align-items: center; gap: 10px; margin: 18px 0 0; padding: 12px 16px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(255,255,255,.1); font-family: var(--mono); font-size: .68rem; line-height: 1.4; }
+    .verdict-perche { margin: 18px 0 0; padding: 14px 16px; border-left: 3px solid rgba(255,255,255,.5); background: rgba(255,255,255,.1); border-radius: 0 12px 12px 0; font-size: .82rem; line-height: 1.55; }
+    .verdict-perche b { font-weight: 650; }
+    .verdict-assump { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; padding: 12px 16px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(255,255,255,.1); font-family: var(--mono); font-size: .68rem; line-height: 1.4; }
     .verdict-assump b { font-weight: 500; color: var(--lime); }
     .verdict[data-win="rent"] .verdict-assump b, .verdict[data-win="tie"] .verdict-assump b { color: var(--orange); }
     @media (max-width: 620px) {
@@ -489,6 +491,33 @@
       table.t th, table.t td { padding: 9px 4px; font-size: .74rem; }
     }
 
+    /* ─── Le due strade affiancate: mutuo a sinistra, affitto a destra ─── */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+    @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+    .split__side { min-width: 0; padding: 16px 16px 6px; border: 1px solid var(--line); border-radius: 16px; }
+    .split__side--buy { border-color: rgba(22,93,255,.32); background: #f6f8ff; }
+    .split__side--rent { border-color: rgba(255,91,53,.32); background: #fff8f5; }
+    .split__tag { margin: 0 0 14px; font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 650; }
+    .split__side--buy .split__tag { color: var(--blue); }
+    .split__side--rent .split__tag { color: #c2481f; }
+    .split .field small { font-size: .68rem; }
+
+    /* Il ponte: rende visibile il perché l'affitto può vincere */
+    .investi-live { padding: 18px 20px; border: 1px solid var(--ink); border-radius: 16px; background: var(--ink); color: white; }
+    .il__title { margin: 0 0 14px; font-size: .92rem; font-weight: 500; line-height: 1.4; }
+    .il__title strong { font-weight: 650; }
+    .il__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 560px) { .il__grid { grid-template-columns: 1fr; } }
+    .il__grid > div { padding: 12px 14px; border: 1px solid rgba(255,255,255,.22); border-radius: 12px; }
+    .il__grid span { display: block; color: rgba(255,255,255,.66); font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .06em; line-height: 1.35; }
+    .il__grid b { display: block; margin-top: 6px; font-size: 1.5rem; font-weight: 650; letter-spacing: -.03em; }
+    .il__note { margin: 12px 0 0; color: rgba(255,255,255,.78); font-size: .74rem; line-height: 1.5; }
+    .il__note b { color: white; font-weight: 650; }
+
+    /* Blocco «altre ipotesi» dentro lo step investimenti */
+    .adv { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; padding: 0 16px; background: var(--paper); }
+    .adv__body { padding-bottom: 8px; }
+
     /* ─── Controlli live: scenari e investimenti a portata di pollice, sotto il verdetto ─── */
     .lc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); padding: 14px 0 4px; }
     .lc__row + .lc__row { margin-top: 4px; border-top: 1px solid var(--line); padding-top: 12px; }
@@ -544,6 +573,14 @@
     .sheet__acts { display: grid; gap: 8px; }
     .sheet__acts button { width: 100%; min-height: 50px; border-radius: 14px; font-size: .82rem; }
     .sheet__note { margin: 14px 0 0; color: var(--muted); font-size: .66rem; line-height: 1.45; }
+    .sheet__mail { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .sheet__mail > label { display: block; margin-bottom: 8px; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
+    .sheet__mailrow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+    .sheet__mailrow input { min-width: 0; min-height: 50px; padding: 0 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); color: var(--ink); font: .88rem var(--mono); }
+    .sheet__mailrow input:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: var(--white); }
+    .sheet__mailrow button { min-height: 50px; padding: 0 22px; border-radius: 14px; }
+    .sheet__flag { display: flex; gap: 8px; margin: 12px 0 0; padding: 10px 12px; border: 1px dashed var(--line); border-radius: 10px; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+    .sheet__flag b { color: var(--ink); font-weight: 650; }
     .sheet__status { min-height: 1.2em; margin: 10px 0 0; color: var(--blue); font-family: var(--mono); font-size: .68rem; }
     .sheet__status.is-error { color: #c33f1c; }
     .sheet__close { position: absolute; top: 12px; right: 12px; min-width: 44px; min-height: 44px; border: 0; border-radius: 999px; background: var(--paper); color: var(--muted); cursor: pointer; font-size: 1rem; }
@@ -649,12 +686,14 @@
             <input type="range" id="costiAcq_r" min="0" max="20" step="0.5" aria-label="Costi d'acquisto (slider)" />
             <small>In percentuale sul prezzo: imposte, notaio, agenzia, istruttoria. Si pagano in contanti al rogito e non rientrano mai. Da privato senza agenzia scendono parecchio.</small>
           </div>
-
-                    </section>
+          </section>
 
           <section class="wstep" data-step="2">
-            <p class="sub-step"><i>2</i> Il mutuo che ipotizzi</p><p class="panel__hint">Usa una simulazione della banca se l’hai già; altrimenti i valori iniziali sono modificabili.</p>
+            <p class="sub-step"><i>2</i> Comprarla o affittarla</p><p class="panel__hint">Le due strade a confronto. Da qui nasce il numero che conta: <strong>quanto ti resta da investire se non compri</strong>.</p>
 
+          <div class="split">
+            <div class="split__side split__side--buy">
+              <p class="split__tag">Se la compri</p>
           <div class="field">
             <label for="anticipo">Anticipo <output id="anticipo_o"></output></label>
             <input type="number" id="anticipo" min="0" step="1000" inputmode="numeric" />
@@ -685,12 +724,9 @@
             <input type="checkbox" id="detrazione" class="sr-only" />
             <small>19% degli interessi su un massimo di 4.000 &euro;/anno: fino a 760 &euro;/anno di IRPEF in meno. Vale solo per l'abitazione principale e serve capienza fiscale.</small>
           </div>
-
-                    </section>
-
-          <section class="wstep" data-step="3">
-            <p class="sub-step"><i>3</i> L’affitto di oggi</p><p class="panel__hint">Confronta immobili simili: stesso quartiere, taglio e qualità.</p>
-
+            </div>
+            <div class="split__side split__side--rent">
+              <p class="split__tag">Se resti in affitto</p>
           <div class="field">
             <label for="affitto">Affitto attuale (&euro;/mese) <output id="affitto_o"></output></label>
             <input type="number" id="affitto" min="0" step="25" inputmode="numeric" />
@@ -704,11 +740,23 @@
             <input type="range" id="inflAffitto_r" min="0" max="10" step="0.1" aria-label="Crescita affitto (slider)" />
             <small>Adeguamento annuo del canone. Pi&ugrave; corre, pi&ugrave; conviene aver bloccato una rata fissa.</small>
           </div>
+            </div>
+          </div>
 
-                    </section>
+          <!-- Il ponte fra i due scenari: i soldi che chi compra immobilizza, chi affitta li investe. -->
+          <div class="investi-live" id="investi-live">
+            <p class="il__title" id="il-title">Restando in affitto, questi soldi non li spendi: <strong>li devi investire</strong></p>
+            <div class="il__grid">
+              <div><span id="il-cassa-lab">Subito, al posto di anticipo + costi d’acquisto</span><b id="il-cassa">—</b></div>
+              <div><span id="il-mese-lab">Ogni mese, la differenza con la rata</span><b id="il-mese">—</b></div>
+            </div>
+            <p class="il__note" id="il-note"></p>
+          </div>
 
-          <section class="wstep" data-step="4">
-            <p class="sub-step"><i>4</i> Per quanto tempo la terrai</p><p class="panel__hint">Questa è la variabile più importante: indica il tuo orizzonte realistico, non la durata del mutuo.</p>
+          </section>
+
+          <section class="wstep" data-step="3">
+            <p class="sub-step"><i>3</i> Per quanto tempo la terrai</p><p class="panel__hint">È la variabile più decisiva di tutte: indica il tuo orizzonte realistico, non la durata del mutuo.</p>
 
           <div class="field">
             <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
@@ -740,54 +788,11 @@
             <input type="range" id="tasseFin_r" min="0" max="50" step="1" aria-label="Tassa su plusvalenze (slider)" />
             <small>Solo sui guadagni finanziari, non sul capitale versato. 26% per ETF e azioni; le cripto hanno un regime proprio, verificalo. Sulla casa non si paga: prima casa, o dopo 5 anni, la plusvalenza immobiliare non &egrave; tassata.</small>
           </div>
-
-                    </section>
-
-          <section class="wstep" data-step="5">
-            <p class="sub-step"><i>5</i> Personalizza le ipotesi</p><p class="panel__hint">Non sai cosa cambiare? Lascia i valori iniziali: puoi tornarci dopo il risultato.</p>
-
-          <div class="field">
-            <label for="manut">Manutenzione <output id="manut_o"></output></label>
-            <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
-            <input type="range" id="manut_r" min="0" max="3" step="0.1" aria-label="Manutenzione (slider)" />
-            <small>Del valore della casa, all'anno: straordinarie, infissi, facciata, caldaia, assicurazione. Le condominiali ordinarie non ci sono, perch&eacute; le pagheresti anche da inquilino.</small>
-          </div>
-
-          <div class="field">
-            <label for="imu">IMU + tasse <output id="imu_o"></output></label>
-            <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
-            <input type="range" id="imu_r" min="0" max="3000" step="50" aria-label="IMU e tasse (slider)" />
-            <small>Zero se &egrave; prima casa: &egrave; esente. Alzalo se stai valutando una seconda casa.</small>
-          </div>
-
-          <div class="field">
-            <label for="altro">Altre spese <output id="altro_o"></output></label>
-            <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
-            <input type="range" id="altro_r" min="0" max="500" step="5" aria-label="Altre spese (slider)" />
-            <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
-          </div>
-
-
-          <div class="field">
-            <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
-            <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
-            <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
-            <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media nazionale.</small>
-          </div>
-
-          <div class="field">
-            <label for="quotaInv">Quota del surplus investita <output id="quotaInv_o"></output></label>
-            <input type="number" id="quotaInv" min="0" max="100" step="5" inputmode="numeric" />
-            <input type="range" id="quotaInv_r" min="0" max="100" step="5" aria-label="Quota del surplus investita (slider)" />
-            <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
-          </div>
-
-
-
           </section>
 
-          <section class="wstep" data-step="6">
-            <p class="sub-step"><i>6</i> Dove investi la differenza</p>
+          <section class="wstep" data-step="4">
+            <p class="sub-step"><i>4</i> Dove investi la differenza</p><p class="panel__hint">Senza questo passaggio l’affitto perde sempre: è qui che si decide il confronto.</p>
+
           <div class="card invest-step" id="invest">
             <h3>È il punto chiave di questo calcolatore</h3>
             <p class="lead">Chi compra immobilizza due cose: l'<strong>anticipo</strong> (più i costi d'acquisto) il giorno del rogito, e ogni mese la <strong>differenza tra rata e canone</strong>. Chi resta in affitto quei soldi non li tira fuori — ma se non li investe non sta risparmiando, li sta spendendo.<br />Ed è esattamente per questo che <strong>senza investire converrebbe sempre comprare</strong>: il mutuo è un piano di accumulo obbligatorio, l'affitto no. Il rendimento che scegli qui pesa sul verdetto più del prezzo della casa, più del tasso, più della rivalutazione.</p>
@@ -830,7 +835,49 @@
           </div>
             <p class="note" id="ip-test"></p>
           </div>
+
+          <details class="adv">
+            <summary>Altre ipotesi <span>manutenzione, IMU, rivalutazione, disciplina <b>+</b></span></summary>
+            <div class="adv__body">
+          <div class="field">
+            <label for="manut">Manutenzione <output id="manut_o"></output></label>
+            <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
+            <input type="range" id="manut_r" min="0" max="3" step="0.1" aria-label="Manutenzione (slider)" />
+            <small>Del valore della casa, all'anno: straordinarie, infissi, facciata, caldaia, assicurazione. Le condominiali ordinarie non ci sono, perch&eacute; le pagheresti anche da inquilino.</small>
+          </div>
+
+          <div class="field">
+            <label for="imu">IMU + tasse <output id="imu_o"></output></label>
+            <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
+            <input type="range" id="imu_r" min="0" max="3000" step="50" aria-label="IMU e tasse (slider)" />
+            <small>Zero se &egrave; prima casa: &egrave; esente. Alzalo se stai valutando una seconda casa.</small>
+          </div>
+
+          <div class="field">
+            <label for="altro">Altre spese <output id="altro_o"></output></label>
+            <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
+            <input type="range" id="altro_r" min="0" max="500" step="5" aria-label="Altre spese (slider)" />
+            <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
+          </div>
+
+
+          <div class="field">
+            <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
+            <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
+            <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
+            <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media nazionale.</small>
+          </div>
+
+          <div class="field">
+            <label for="quotaInv">Quota del surplus investita <output id="quotaInv_o"></output></label>
+            <input type="number" id="quotaInv" min="0" max="100" step="5" inputmode="numeric" />
+            <input type="range" id="quotaInv_r" min="0" max="100" step="5" aria-label="Quota del surplus investita (slider)" />
+            <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
+          </div>
+            </div>
+          </details>
           </section>
+
 
           <div class="wnav">
             <button type="button" class="mini-btn" id="w-prev">← Indietro</button>
@@ -885,6 +932,7 @@
               <div><span>Affitto + investimenti</span><b id="v-rent"></b></div>
               <div><span>Differenza</span><b id="v-diff"></b></div>
             </div>
+            <p class="verdict-perche" id="v-perche"></p>
             <p class="verdict-assump"><span aria-hidden="true">◇</span><span>Ipotesi investimenti: <b id="v-assump"></b></span></p>
           </div>
 
@@ -1077,10 +1125,16 @@
       <p class="sheet__recap" id="sheet-recap"></p>
       <div class="sheet__acts">
         <button type="button" class="btn-primary" id="sheet-pdf">Scarica il PDF</button>
-        <button type="button" class="btn-ghost" id="sheet-mail">Mandalo ad Alberto</button>
         <button type="button" class="btn-ghost" id="sheet-link">Copia link</button>
       </div>
-      <p class="sheet__note">«Mandalo ad Alberto» apre la tua app di posta con il testo già pronto: scrivimi pure la tua situazione, rispondo io. Nessun indirizzo viene salvato o inviato da questo sito.</p>
+      <form class="sheet__mail" id="sheet-form" novalidate>
+        <label for="sheet-email">Oppure invialo per email</label>
+        <div class="sheet__mailrow">
+          <input id="sheet-email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" />
+          <button type="submit" class="btn-primary">Invia</button>
+        </div>
+        <p class="sheet__flag"><span aria-hidden="true">◇</span><span>Si apre la tua app di posta con il testo già pronto — così puoi allegare il PDF. <b>Teniamo traccia di quante email vengono preparate</b>, per capire se lo strumento è utile: non dell’indirizzo, che non passa mai da questo sito.</span></p>
+      </form>
       <p class="sheet__status" id="share-status" aria-live="polite"></p>
     </div>
   </div>
@@ -1579,9 +1633,18 @@
         ? 'La differenza è dentro il margine di errore delle ipotesi: a questi parametri la scelta è più di stile di vita che di soldi.'
         : 'Dopo ' + p.anni + ' anni chiudi con ' + money(Math.max(r.netBuy, r.netRent)) + ' invece di ' + money(Math.min(r.netBuy, r.netRent)) +
           ': ' + pct(rel) + ' di patrimonio in più ' + (win === 'buy' ? 'comprando' : 'restando in affitto e investendo anticipo e differenza mensile') + '.';
+      var diffMese1 = r.costoBuy1 - r.costoRent1;   // serve al verdetto e al ponte dello step 2
       $('v-buy').textContent = money(r.netBuy);
       $('v-rent').textContent = money(r.netRent);
       $('v-diff').textContent = Math.abs(diff) < 1 ? '—' : signed(diff);
+
+      // Perché la colonna «affitto» non è solo il canone risparmiato: è la parte che sorprende.
+      $('v-perche').innerHTML = 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
+        money(r.cassaIniziale) + '</b> investito subito — l\'anticipo e i costi d\'acquisto che non versi al rogito — ' +
+        (diffMese1 > 0
+          ? 'più <b>' + money(diffMese1) + ' al mese</b>, la differenza tra quello che costa possedere e il canone.'
+          : 'mentre il costo mensile è più alto del possedere: lì il surplus da investire ce l\'ha chi compra.') +
+        ' Se quei soldi vengono spesi invece che investiti, questo confronto non regge e comprare vince.';
 
       // Barra risultato sempre visibile
       $('sr-label').textContent = 'Verdetto · ' + p.anni + ' anni · rendimento ' + pct(p.rendimento);
@@ -1620,7 +1683,24 @@
       }
 
       // Ipotesi chiave: senza investire, il confronto non regge
-      var diffMese1 = r.costoBuy1 - r.costoRent1;
+      /* Il ponte nello step 2: chi non compra deve investire esattamente queste due cifre. */
+      $('il-cassa').textContent = money(r.cassaIniziale);
+      $('il-mese').textContent = money(Math.abs(diffMese1)) + '/mese';
+      // Di solito il surplus mensile è di chi affitta, ma se il canone supera il costo di possedere si ribalta.
+      $('il-mese-lab').textContent = diffMese1 >= 0
+        ? 'Ogni mese, quanto costa in più possedere'
+        : 'Ogni mese, il surplus è però di chi compra';
+      $('il-title').innerHTML = diffMese1 >= 0
+        ? 'Restando in affitto, questi soldi non li spendi: <strong>li devi investire</strong>'
+        : 'Con questo canone l’affitto costa di più: <strong>investire tocca a chi compra</strong>';
+      $('il-note').innerHTML = diffMese1 >= 0
+        ? 'Chi compra versa <b>' + money(r.cassaIniziale) + '</b> al rogito (' + money(r.anticipo) + ' di anticipo + ' +
+          money(r.unaTantum) + ' di costi) e poi paga <b>' + money(r.costoBuy1) + '</b> al mese, tutto incluso. ' +
+          'Chi affitta paga <b>' + money(r.costoRent1) + '</b> di canone: quei soldi non versati restano suoi, ma valgono qualcosa ' +
+          '<b>solo se finiscono investiti</b>. Se li spende, comprare vince quasi sempre.'
+        : 'Qui l\'affitto costa <b>più</b> della rata: è chi compra ad avere <b>' + money(-diffMese1) + '/mese</b> di surplus da investire. ' +
+          'La cifra iniziale resta però immobilizzata nella casa.';
+
       $('ip-cassa').textContent = money(r.cassaIniziale);
       $('ip-cassa-note').innerHTML = 'La cassa che chi compra versa al rogito (' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) +
         ' di costi). Chi affitta non la tira fuori: la investe, e in ' + p.anni + ' anni diventa <b>' +
@@ -1833,7 +1913,7 @@
         SCENARI.map(function (s) {
           var on = attivi.indexOf(s.id) > -1;
           return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-lclev="' + s.id + '" data-lcfam="' + s.fam + '">' +
-            s.n + '<small>' + s.p + '%</small></button>';
+            s.n + '</button>';
         }).join('');
 
       $('lc-presets').innerHTML = PRESET.map(function (pr, i) {
@@ -1842,7 +1922,7 @@
       }).join('');
 
       $('lc-hint').textContent = attivi.length
-        ? 'Stai guardando un\'ipotesi: ' + attivi.map(function (id) { return byId(id).n; }).join(' + ') + ' · probabilità ' + probFmt(comboProb()) + '. I tuoi parametri non sono stati toccati.'
+        ? 'Stai guardando un\'ipotesi: ' + attivi.map(function (id) { return byId(id).n; }).join(' + ') + '. I tuoi parametri non sono stati toccati.'
         : 'Tocca una leva per vedere subito come cambia il verdetto qui sopra. I tuoi parametri restano quelli che hai inserito.';
 
       // Risultato sempre in cima alla card: si accendono le leve e si vede subito l'effetto.
@@ -2192,19 +2272,23 @@
       setTimeout(function () { document.title = originalTitle; }, 300);
     }
 
-    // Mailto verso di me: il visitatore scrive dal suo client, il sito non tocca nessun indirizzo.
-    var MIA_EMAIL = 'bebroggi@gmail.com';
-    function preparaEmail() {
+    // L'email parte dal client del visitatore: l'indirizzo digitato non lascia mai il browser.
+    // Sul Worker finisce solo il nome dell'evento, così si conta quante email vengono preparate.
+    function preparaEmail(dest) {
       var e = esitoCorrente();
-      var body = 'Ciao Alberto,\n\nho usato il tuo calcolatore affitto vs acquisto ed è uscito questo:\n\n' +
-        e.frase + '\nOrizzonte: ' + e.p.anni + ' anni.\nPatrimonio finale acquisto: ' + money(e.r.netBuy) + '.\n' +
-        'Patrimonio finale affitto + investimenti: ' + money(e.r.netRent) + '.\n\n' +
-        'Il calcolo con i miei parametri:\n' + makeShareUrl() + '\n\n' +
-        '— La mia situazione (scrivila qui):\n\n\n';
+      var body = 'Ciao,\n\nti giro il confronto tra comprare casa e restare in affitto investendo la differenza.\n\n' +
+        e.frase + '\nOrizzonte: ' + e.p.anni + ' anni.\n' +
+        'Patrimonio finale comprando: ' + money(e.r.netBuy) + '.\n' +
+        'Patrimonio finale affittando e investendo: ' + money(e.r.netRent) + '.\n\n' +
+        'Nota: il secondo numero vale solo se la differenza viene investita davvero — ' +
+        money(e.r.cassaIniziale) + ' subito (l\'anticipo che non versi) più la differenza mensile con la rata.\n\n' +
+        'Il calcolo con questi parametri:\n' + makeShareUrl() + '\n\n' +
+        'Fatto con ' + location.origin + '/tools/affitto-vs-acquisto.html\n' +
+        'Simulazione orientativa, non un consiglio finanziario.';
       trackCta('prepare_email');
-      setShareStatus('Apro la tua app di posta con il testo già pronto.', false);
-      window.location.href = 'mailto:' + MIA_EMAIL +
-        '?subject=' + encodeURIComponent('Il mio confronto affitto vs acquisto') +
+      setShareStatus('Apro la tua app di posta: allega il PDF appena salvato.', false);
+      window.location.href = 'mailto:' + encodeURIComponent(dest) +
+        '?subject=' + encodeURIComponent('Comprare o restare in affitto: il confronto') +
         '&body=' + encodeURIComponent(body);
     }
 
@@ -2234,8 +2318,17 @@
       if (ev.key === 'Escape' && !sheet.hidden) { closeSheet(); }
     });
     $('sheet-pdf').addEventListener('click', salvaPdf);
-    $('sheet-mail').addEventListener('click', preparaEmail);
     $('sheet-link').addEventListener('click', function () { trackCta('copy_link'); doShare(this); });
+    $('sheet-form').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var input = $('sheet-email'), dest = input.value.trim();
+      if (!dest || !input.checkValidity()) {
+        setShareStatus('Scrivi un indirizzo email valido.', true);
+        input.focus();
+        return;
+      }
+      preparaEmail(dest);
+    });
 
     /* ─────────── Banner: una volta sola, quando il risultato è stato letto ─────────── */
     var banner = $('save-banner'), bannerFatto = false;
@@ -2276,7 +2369,7 @@
     });
 
     /* ─────────── Wizard a passi ─────────── */
-    var STEP_LABELS = ['Casa', 'Mutuo', 'Affitto', 'Orizzonte', 'Personalizza', 'Investimenti', 'Risultato'];
+    var STEP_LABELS = ['La casa', 'Compri o affitti', 'Orizzonte', 'Investimenti', 'Risultato'];
     var wsteps = Array.prototype.slice.call(document.querySelectorAll('.wstep'));
     var curStep = 1;
 
