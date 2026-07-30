@@ -117,6 +117,13 @@
     .tool-hero h1 { margin: 0; max-width: 15ch; font-size: clamp(2.5rem, 6vw, 4.6rem); font-weight: 630; letter-spacing: -.06em; }
     .tool-hero p.lead { max-width: 62ch; margin: 22px 0 0; color: #4d524e; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.4; }
 
+
+    .hero-promise { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .hero-promise span { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); color: #4d524e; font-family: var(--mono); font-size: .62rem; }
+    .hero-start { display: inline-flex; align-items: center; gap: 9px; min-height: 42px; margin-top: 20px; padding: 0 18px; border-radius: 999px; background: var(--blue); color: white; font-size: .78rem; font-weight: 650; }
+    .hero-start:hover { background: var(--ink); color: white; }
+    .hero-note { margin: 11px 0 0; color: var(--muted); font-size: .68rem; }
+
     /* Layout */
     .calc { padding-bottom: 90px; }
     .calc-layout { display: block; }
@@ -475,6 +482,38 @@
       .kpi b { font-size: 1.25rem; }
       table.t th, table.t td { padding: 9px 4px; font-size: .74rem; }
     }
+
+    /* Salvataggio e condivisione del riepilogo */
+    .share-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; border-color: #bcc8ff; background: #f5f7ff; }
+    .share-card h3 { margin-bottom: 7px; }
+    .share-card p { margin: 0; max-width: 58ch; color: #4d524e; font-size: .8rem; line-height: 1.5; }
+    .share-card__actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+    .share-card__actions button { min-height: 42px; padding: 0 15px; border: 1px solid var(--blue); border-radius: 999px; background: var(--blue); color: white; cursor: pointer; font-size: .74rem; font-weight: 650; }
+    .share-card__actions .share-secondary { background: transparent; color: var(--blue); }
+    .share-card__actions button:hover { background: var(--ink); border-color: var(--ink); color: white; }
+    .share-card__form { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding-top: 15px; border-top: 1px solid #d7defc; }
+    .share-card__form label { display: block; color: var(--muted); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .06em; }
+    .share-card__form input { display: block; box-sizing: border-box; width: 100%; min-height: 42px; margin-top: 6px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); color: var(--ink); font: .84rem var(--mono); text-transform: none; letter-spacing: normal; }
+    .share-card__form input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+    .share-card__form button { align-self: end; min-height: 42px; padding: 0 16px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: white; cursor: pointer; font-size: .74rem; font-weight: 650; }
+    .share-card__note { grid-column: 1 / -1; margin: -1px 0 0; color: var(--muted); font-size: .66rem; line-height: 1.45; }
+    .share-card__status { grid-column: 1 / -1; min-height: 1.2em; margin: 0; color: var(--blue); font-family: var(--mono); font-size: .68rem; }
+    .share-card__status.is-error { color: #c33f1c; }
+    @media (max-width: 650px) { .share-card { grid-template-columns: 1fr; gap: 16px; } .share-card__actions { justify-content: flex-start; } .share-card__form { grid-template-columns: 1fr; } }
+
+    /* Il PDF nasce dal dialogo di stampa del browser: questa è la versione leggibile da salvare. */
+    @media print {
+      @page { margin: 14mm; size: A4; }
+      body { background: white; }
+      .tool-top, .tool-hero, .sticky-result, .stepper, .panel, .recap, .scen-banner, .share-card, .wnav, .deep-head, #scenari, .faq, .footer, .site-footer { display: none !important; }
+      main, .calc, .container, .calc-layout { display: block !important; width: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
+      .results { display: flex !important; gap: 12px !important; }
+      .card, .kpis, .warn { break-inside: avoid; page-break-inside: avoid; }
+      .card { padding: 16px !important; border-radius: 8px !important; }
+      .verdict { padding: 20px !important; }
+      .chart-wrap svg { min-width: 0 !important; }
+      details.deep:not([open]) { display: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -499,9 +538,12 @@
 
     <header class="tool-hero">
       <div class="container">
-        <p class="eyebrow"><span class="status-dot"></span> Strumento · Finanza personale</p>
-        <h1>Comprare o <em>affittare casa?</em></h1>
-        <p class="lead">Il confronto giusto non è «rata contro affitto»: è <strong>quanto patrimonio netto hai in tasca</strong> alla fine dell'orizzonte temporale, nei due scenari. Chi compra accumula equity nel mattone. Chi affitta, <strong>per fare un confronto onesto, deve investire</strong> l'anticipo che non ha versato e ogni euro di differenza mensile: se se li spende, comprare vince quasi sempre.</p>
+        <p class="eyebrow"><span class="status-dot"></span> Strumento gratuito · Finanza personale</p>
+        <h1>Comprare o <em>restare in affitto?</em></h1>
+        <p class="lead">Non confrontare solo rata e canone. Inserisci pochi numeri e scopri <strong>quale scelta ti lascia più patrimonio netto</strong> all'orizzonte che scegli.</p>
+        <div class="hero-promise" aria-label="Come funziona"><span>1. I tuoi costi</span><span>2. Il tempo che resti</span><span>3. Un risultato spiegato</span></div>
+        <a class="hero-start" href="#stepper">Inizia il confronto <span aria-hidden="true">↓</span></a>
+        <p class="hero-note">Una simulazione per orientarti, non un consiglio finanziario. Puoi modificare ogni ipotesi.</p>
               </div>
     </header>
 
@@ -514,7 +556,7 @@
         <form class="panel" id="form" autocomplete="off">
 
                     <section class="wstep" data-step="1">
-            <p class="sub-step"><i>1</i> La casa</p>
+            <p class="sub-step"><i>1</i> La casa che stai confrontando</p><p class="panel__hint">Inserisci il valore di acquisto della casa equivalente a quella che affitteresti.</p>
 
           <div class="omi" id="omi">
             <p class="omi__title">Non conosci i valori della tua zona?</p>
@@ -548,7 +590,7 @@
                     </section>
 
           <section class="wstep" data-step="2">
-            <p class="sub-step"><i>2</i> Il mutuo</p>
+            <p class="sub-step"><i>2</i> Il mutuo che ipotizzi</p><p class="panel__hint">Usa una simulazione della banca se l’hai già; altrimenti i valori iniziali sono modificabili.</p>
 
           <div class="field">
             <label for="anticipo">Anticipo <output id="anticipo_o"></output></label>
@@ -584,7 +626,7 @@
                     </section>
 
           <section class="wstep" data-step="3">
-            <p class="sub-step"><i>3</i> L'affitto di oggi</p>
+            <p class="sub-step"><i>3</i> L’affitto di oggi</p><p class="panel__hint">Confronta immobili simili: stesso quartiere, taglio e qualità.</p>
 
           <div class="field">
             <label for="affitto">Affitto attuale (&euro;/mese) <output id="affitto_o"></output></label>
@@ -603,7 +645,7 @@
                     </section>
 
           <section class="wstep" data-step="4">
-            <p class="sub-step"><i>4</i> Quanto resti, e come esci</p>
+            <p class="sub-step"><i>4</i> Per quanto tempo la terrai</p><p class="panel__hint">Questa è la variabile più importante: indica il tuo orizzonte realistico, non la durata del mutuo.</p>
 
           <div class="field">
             <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
@@ -639,7 +681,7 @@
                     </section>
 
           <section class="wstep" data-step="5">
-            <p class="sub-step"><i>5</i> Costi e ipotesi di mercato</p>
+            <p class="sub-step"><i>5</i> Personalizza le ipotesi</p><p class="panel__hint">Non sai cosa cambiare? Lascia i valori iniziali: puoi tornarci dopo il risultato.</p>
 
           <div class="field">
             <label for="manut">Manutenzione <output id="manut_o"></output></label>
@@ -784,6 +826,25 @@
             </div>
             <p class="verdict-assump"><span aria-hidden="true">◇</span><span>Ipotesi investimenti: <b id="v-assump"></b></span></p>
           </div>
+
+          <section class="card share-card" aria-labelledby="share-title">
+            <div>
+              <h3 id="share-title">Salva e condividi il tuo confronto</h3>
+              <p>Genera un PDF leggibile del risultato, poi prepara un’email per te o per chi vuoi coinvolgere nella decisione. Il riepilogo contiene anche il link con i tuoi parametri.</p>
+            </div>
+            <div class="share-card__actions">
+              <button type="button" id="pdf-report">Crea PDF</button>
+              <button type="button" class="share-secondary" id="share-report">Copia link</button>
+            </div>
+            <form class="share-card__form" id="email-report" novalidate>
+              <label for="report-email">Email destinatario
+                <input id="report-email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" />
+              </label>
+              <button type="submit">Prepara email</button>
+              <p class="share-card__note">L’email si apre nel tuo client: allega il PDF appena creato. Nessun indirizzo viene salvato o inviato dal sito.</p>
+              <p class="share-card__status" id="share-status" aria-live="polite"></p>
+            </form>
+          </section>
 
           <div class="warn" id="warn" hidden><span aria-hidden="true">▲</span><span id="warn-text"></span></div>
 
@@ -1914,22 +1975,75 @@
       if (el) { el.addEventListener('click', doReset); }
     });
 
-    function doShare(btn) {
+    function makeShareUrl() {
       var p = read();
       var q = new URLSearchParams();
       NUM.forEach(function (k) { q.set(k, p[k]); });
       BOOL.forEach(function (k) { q.set(k, p[k] ? '1' : '0'); });
       if (attivi.length) { q.set('lev', attivi.join(',')); }
-      var url = location.origin + location.pathname + '?' + q.toString();
       history.replaceState(null, '', '?' + q.toString());
-      var done = function (ok) { btn.textContent = ok ? 'Link copiato ✓' : 'Copia dalla barra ↑'; setTimeout(function () { btn.textContent = 'Copia link'; }, 2200); };
+      return location.origin + location.pathname + '?' + q.toString();
+    }
+
+    function setShareStatus(message, isError) {
+      var status = $('share-status');
+      if (!status) { return; }
+      status.textContent = message;
+      status.classList.toggle('is-error', !!isError);
+    }
+
+    // Punto di aggancio per un analytics con eventi (es. Plausible o GA), senza inviare dati personali.
+    function trackCta(name) {
+      try { window.dispatchEvent(new CustomEvent('rentbuy:cta', { detail: { name: name } })); } catch (e) { /* browser datato */ }
+    }
+
+    function doShare(btn) {
+      var url = makeShareUrl();
+      var done = function (ok) {
+        btn.textContent = ok ? 'Link copiato ✓' : 'Copia dalla barra ↑';
+        setTimeout(function () { btn.textContent = 'Copia link'; }, 2200);
+        if (ok) { setShareStatus('Link copiato: puoi incollarlo dove vuoi.', false); }
+      };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
       } else { done(false); }
     }
-    ['share', 'share2'].forEach(function (id) {
+    ['share', 'share2', 'share-report'].forEach(function (id) {
       var el = $(id);
-      if (el) { el.addEventListener('click', function () { doShare(el); }); }
+      if (el) { el.addEventListener('click', function () { trackCta('copy_link'); doShare(el); }); }
+    });
+
+    $('pdf-report').addEventListener('click', function () {
+      var originalTitle = document.title;
+      var when = new Date().toLocaleDateString('it-IT');
+      document.title = 'Confronto-affitto-acquisto-' + when;
+      trackCta('create_pdf');
+      setShareStatus('Nel dialogo scegli “Salva come PDF”.', false);
+      window.print();
+      setTimeout(function () { document.title = originalTitle; }, 300);
+    });
+
+    $('email-report').addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var input = $('report-email');
+      var email = input.value.trim();
+      if (!email || !input.checkValidity()) {
+        setShareStatus('Inserisci un indirizzo email valido.', true);
+        input.focus();
+        return;
+      }
+      var p = comboParams(read());
+      var r = simulate(p);
+      var diff = r.netBuy - r.netRent;
+      var esito = Math.abs(diff) < Math.max(2000, Math.abs(r.netRent) * 0.01)
+        ? 'Il risultato è sostanzialmente in pareggio.'
+        : (diff > 0 ? 'Con questi dati, acquistare lascia circa ' + money(diff) + ' in più.' : 'Con questi dati, restare in affitto lascia circa ' + money(-diff) + ' in più.');
+      var body = 'Ciao,\n\nti mando il mio confronto tra acquisto e affitto.\n\n' +
+        esito + '\nOrizzonte: ' + p.anni + ' anni.\nPatrimonio finale acquisto: ' + money(r.netBuy) + '.\nPatrimonio finale affitto + investimenti: ' + money(r.netRent) + '.\n\nApri qui il calcolo con gli stessi parametri:\n' + makeShareUrl() +
+        '\n\nAllego anche il PDF del riepilogo.\n\nNota: è una simulazione orientativa, non un consiglio finanziario.';
+      trackCta('prepare_email');
+      setShareStatus('Apro il tuo client email: allega il PDF appena salvato.', false);
+      window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Confronto: affitto o acquisto casa') + '&body=' + encodeURIComponent(body);
     });
 
     // Dopo un reload o un «indietro» il browser ripristina i campi: risincronizza i risultati.
@@ -1939,7 +2053,7 @@
     });
 
     /* ─────────── Wizard a passi ─────────── */
-    var STEP_LABELS = ['La casa', 'Il mutuo', 'L\'affitto', 'Tempo e uscita', 'Costi e mercato', 'Investimento', 'Risultato'];
+    var STEP_LABELS = ['Casa', 'Mutuo', 'Affitto', 'Orizzonte', 'Personalizza', 'Investimenti', 'Risultato'];
     var wsteps = Array.prototype.slice.call(document.querySelectorAll('.wstep'));
     var curStep = 1;
 
