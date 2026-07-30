@@ -119,10 +119,10 @@
 
     /* Layout */
     .calc { padding-bottom: 90px; }
-    .calc-layout { display: grid; grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 18px; align-items: start; }
+    .calc-layout { display: block; }
 
     /* Input panel */
-    .panel { position: sticky; top: 82px; max-height: calc(100dvh - 96px); overflow-y: auto; overscroll-behavior: contain; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 24px 22px; }
+    .panel { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px 24px; max-width: 780px; margin: 0 auto; }
     .panel h2 { margin: 0 0 4px; font-size: 1.15rem; font-weight: 650; letter-spacing: -.03em; }
     .panel__hint { margin: 0 0 22px; color: var(--muted); font-size: .74rem; }
     .field + .field { margin-top: 17px; }
@@ -193,7 +193,8 @@
     .mini-btn:hover { background: var(--paper); }
 
     /* Results */
-    .results { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+    .results { display: none; flex-direction: column; gap: 14px; min-width: 0; }
+    .results.on { display: flex; animation: fade .22s ease; }
     .card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px; }
     .card > h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 650; letter-spacing: -.03em; }
     .card > p.note { margin: 0 0 20px; color: var(--muted); font-size: .74rem; }
@@ -358,11 +359,39 @@
     .duel__side i { display: block; margin-top: 9px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
     .duel__side i b { color: var(--ink); font-size: inherit; font-weight: 650; }
 
-    /* Navigazione a passi nell'hero */
-    .steps-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
-    .steps-nav a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); font-size: .74rem; font-weight: 650; transition: border-color .16s ease, transform .16s ease; }
-    .steps-nav a:hover { border-color: var(--ink); transform: translateY(-1px); }
-    .steps-nav i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: white; font-style: normal; font-size: .6rem; }
+    /* Wizard: stepper, passi, navigazione */
+    .stepper { display: flex; flex-wrap: wrap; gap: 6px; max-width: 780px; margin: 0 auto 16px; }
+    .stepper button { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px 0 7px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); color: var(--muted); cursor: pointer; font-size: .72rem; font-weight: 650; transition: border-color .15s ease, color .15s ease, transform .15s ease; }
+    .stepper button:hover { border-color: var(--ink); color: var(--ink); transform: translateY(-1px); }
+    .stepper button i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--paper-2); color: var(--muted); font-style: normal; font-size: .62rem; }
+    .stepper button.cur { border-color: var(--blue); background: #f2f5ff; color: var(--blue); }
+    .stepper button.cur i { background: var(--blue); color: white; }
+    .stepper button.done { color: var(--ink); }
+    .stepper button.done i { background: var(--ink); color: white; }
+    .stepper button.done i b { display: none; }
+    .stepper button.done i::before { content: "✓"; font-weight: 400; }
+    .stepper button span { white-space: nowrap; }
+    @media (max-width: 640px) { .stepper button span { display: none; } .stepper button.cur span { display: inline; } .stepper button { padding: 0 10px 0 7px; } .stepper button.cur { padding-right: 14px; } }
+
+    .wstep { display: none; }
+    .wstep.on { display: block; animation: fade .22s ease; }
+    .wstep > .sub-step { margin-top: 4px; }
+    .wnav { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 28px; }
+    #w-next { min-height: 50px; padding: 0 28px; border: 1px solid var(--blue); border-radius: 999px; background: var(--blue); color: white; cursor: pointer; font-size: .86rem; font-weight: 650; transition: background .15s ease, border-color .15s ease, transform .15s ease; }
+    #w-next:hover { background: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+
+    /* Barra di ritocco sopra i risultati: i parametri sempre a portata */
+    .recap { position: sticky; top: calc(var(--barh, 64px) + 6px); z-index: 55; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--white) 92%, transparent); backdrop-filter: blur(14px) saturate(150%); box-shadow: 0 12px 34px rgba(17,22,21,.07); }
+    .recap[hidden] { display: none; }
+    .recap__scroll { display: flex; gap: 8px; flex: 1 1 320px; min-width: 0; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+    .recap label { flex: none; display: flex; flex-direction: column; gap: 3px; color: var(--muted); font-family: var(--mono); font-size: .52rem; text-transform: uppercase; letter-spacing: .05em; }
+    .recap input { width: 86px; min-height: 36px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); font: inherit; font-size: .8rem; }
+    .recap input:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: var(--white); }
+    .recap__btns { display: flex; gap: 6px; }
+    .recap__btns button { min-height: 36px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); cursor: pointer; font-size: .68rem; font-weight: 650; white-space: nowrap; }
+    .recap__btns button:hover { border-color: var(--ink); }
+    .recap__btns #recap-all { background: var(--ink); border-color: var(--ink); color: white; }
+    .recap__btns #recap-all:hover { background: var(--blue); border-color: var(--blue); }
 
     /* Barrette di probabilità e separatori di famiglia negli scenari */
     .pmeter { display: block; max-width: 150px; height: 3px; margin-top: 7px; border-radius: 999px; background: rgba(17,22,21,.1); overflow: hidden; }
@@ -473,26 +502,19 @@
         <p class="eyebrow"><span class="status-dot"></span> Strumento · Finanza personale</p>
         <h1>Comprare o <em>affittare casa?</em></h1>
         <p class="lead">Il confronto giusto non è «rata contro affitto»: è <strong>quanto patrimonio netto hai in tasca</strong> alla fine dell'orizzonte temporale, nei due scenari. Chi compra accumula equity nel mattone. Chi affitta, <strong>per fare un confronto onesto, deve investire</strong> l'anticipo che non ha versato e ogni euro di differenza mensile: se se li spende, comprare vince quasi sempre.</p>
-        <nav class="steps-nav" aria-label="Come funziona il calcolatore">
-          <a href="#form"><i>1</i> I tuoi numeri</a>
-          <a href="#invest"><i>2</i> L'investimento</a>
-          <a href="#verdict"><i>3</i> Il verdetto</a>
-          <a href="#scenari"><i>4</i> Gli scenari</a>
-          <a href="#approfondimenti"><i>5</i> Approfondimenti</a>
-        </nav>
-      </div>
+              </div>
     </header>
 
     <section class="calc">
       <div class="container calc-layout">
 
         <!-- ─────────── INPUT ─────────── -->
-        <form class="panel" id="form" autocomplete="off">
-          <p class="step-tag"><i>1</i> I tuoi numeri</p>
-          <h2>La casa e l'affitto di oggi</h2>
-          <p class="panel__hint">Muovi gli slider: tutto si ricalcola in tempo reale.</p>
+        <div class="stepper" id="stepper" aria-label="Passi del calcolatore"></div>
 
-          <p class="sub-step"><i>1.1</i> La casa</p>
+        <form class="panel" id="form" autocomplete="off">
+
+                    <section class="wstep" data-step="1">
+            <p class="sub-step"><i>1</i> La casa</p>
 
           <div class="omi" id="omi">
             <p class="omi__title">Non conosci i valori della tua zona?</p>
@@ -523,7 +545,10 @@
             <small>In percentuale sul prezzo: imposte, notaio, agenzia, istruttoria. Si pagano in contanti al rogito e non rientrano mai. Da privato senza agenzia scendono parecchio.</small>
           </div>
 
-          <p class="sub-step"><i>1.2</i> Il mutuo</p>
+                    </section>
+
+          <section class="wstep" data-step="2">
+            <p class="sub-step"><i>2</i> Il mutuo</p>
 
           <div class="field">
             <label for="anticipo">Anticipo <output id="anticipo_o"></output></label>
@@ -556,7 +581,10 @@
             <small>19% degli interessi su un massimo di 4.000 &euro;/anno: fino a 760 &euro;/anno di IRPEF in meno. Vale solo per l'abitazione principale e serve capienza fiscale.</small>
           </div>
 
-          <p class="sub-step"><i>1.3</i> L'affitto di oggi</p>
+                    </section>
+
+          <section class="wstep" data-step="3">
+            <p class="sub-step"><i>3</i> L'affitto di oggi</p>
 
           <div class="field">
             <label for="affitto">Affitto attuale (&euro;/mese) <output id="affitto_o"></output></label>
@@ -572,7 +600,10 @@
             <small>Adeguamento annuo del canone. Pi&ugrave; corre, pi&ugrave; conviene aver bloccato una rata fissa.</small>
           </div>
 
-          <p class="sub-step"><i>1.4</i> Quanto resti, e come esci</p>
+                    </section>
+
+          <section class="wstep" data-step="4">
+            <p class="sub-step"><i>4</i> Quanto resti, e come esci</p>
 
           <div class="field">
             <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
@@ -605,7 +636,10 @@
             <small>Solo sui guadagni finanziari, non sul capitale versato. 26% per ETF e azioni; le cripto hanno un regime proprio, verificalo. Sulla casa non si paga: prima casa, o dopo 5 anni, la plusvalenza immobiliare non &egrave; tassata.</small>
           </div>
 
-          <p class="sub-step"><i>1.5</i> Cosa costa tenere la casa</p>
+                    </section>
+
+          <section class="wstep" data-step="5">
+            <p class="sub-step"><i>5</i> Costi e ipotesi di mercato</p>
 
           <div class="field">
             <label for="manut">Manutenzione <output id="manut_o"></output></label>
@@ -628,7 +662,6 @@
             <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
           </div>
 
-          <p class="sub-step"><i>1.6</i> Ipotesi di mercato</p>
 
           <div class="field">
             <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
@@ -644,37 +677,13 @@
             <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
           </div>
 
-          <div class="field">
-            <label for="rendimento">Rendimento personalizzato <output id="rendimento_o"></output></label>
-            <input type="number" id="rendimento" min="0" max="40" step="0.1" inputmode="decimal" />
-            <input type="range" id="rendimento_r" min="0" max="25" step="0.1" aria-label="Rendimento personalizzato (slider)" />
-            <small>Lo imposti scegliendo un portafoglio nel passo 2, qui puoi metterci il numero che vuoi.</small>
-          </div>
 
-          <div class="panel__actions">
-            <button type="button" class="mini-btn" id="reset">Ripristina default</button>
-            <button type="button" class="mini-btn" id="share">Copia link</button>
-          </div>
-        </form>
 
-        <!-- ─────────── OUTPUT ─────────── -->
-        <div class="results">
+          </section>
 
-          <div class="scen-banner" id="scen-banner" hidden>
-            <div class="scen-banner__body">
-              <span class="tag">Scenario attivo · stai guardando un'ipotesi, non i tuoi numeri</span>
-              <strong id="sb-name"></strong>
-              <p id="sb-changes"></p>
-              <p id="sb-prob"></p>
-            </div>
-            <div class="scen-banner__actions">
-              <button type="button" id="sb-keep">Tienilo nei parametri</button>
-              <button type="button" id="sb-remove">Rimuovi tutto ✕</button>
-            </div>
-          </div>
-
+          <section class="wstep" data-step="6">
+            <p class="sub-step"><i>6</i> Dove investi la differenza</p>
           <div class="card invest-step" id="invest">
-            <p class="step-tag"><i>2</i> Dove investi se resti in affitto?</p>
             <h3>È il punto chiave di questo calcolatore</h3>
             <p class="lead">Chi compra immobilizza due cose: l'<strong>anticipo</strong> (più i costi d'acquisto) il giorno del rogito, e ogni mese la <strong>differenza tra rata e canone</strong>. Chi resta in affitto quei soldi non li tira fuori — ma se non li investe non sta risparmiando, li sta spendendo.<br />Ed è esattamente per questo che <strong>senza investire converrebbe sempre comprare</strong>: il mutuo è un piano di accumulo obbligatorio, l'affitto no. Il rendimento che scegli qui pesa sul verdetto più del prezzo della casa, più del tasso, più della rivalutazione.</p>
             <div class="duel">
@@ -708,8 +717,61 @@
                 </details>
               </span>
             </div>
+          <div class="field">
+            <label for="rendimento">Rendimento personalizzato <output id="rendimento_o"></output></label>
+            <input type="number" id="rendimento" min="0" max="40" step="0.1" inputmode="decimal" />
+            <input type="range" id="rendimento_r" min="0" max="25" step="0.1" aria-label="Rendimento personalizzato (slider)" />
+            <small>Lo imposti scegliendo un portafoglio qui sopra, qui puoi metterci il numero che vuoi.</small>
+          </div>
             <p class="note" id="ip-test"></p>
           </div>
+          </section>
+
+          <div class="wnav">
+            <button type="button" class="mini-btn" id="w-prev">← Indietro</button>
+            <button type="button" id="w-next">Avanti →</button>
+          </div>
+
+          <div class="panel__actions">
+            <button type="button" class="mini-btn" id="reset">Ripristina default</button>
+            <button type="button" class="mini-btn" id="share">Copia link</button>
+          </div>
+        </form>
+
+        <!-- ─────────── OUTPUT ─────────── -->
+        <div class="results">
+
+          <div class="recap" id="recap" hidden>
+            <div class="recap__scroll">
+              <label><span>Valore €</span><input type="number" data-proxy="prezzo" min="0" step="1000" inputmode="numeric" /></label>
+              <label><span>Anticipo €</span><input type="number" data-proxy="anticipo" min="0" step="1000" inputmode="numeric" /></label>
+              <label><span>Tasso %</span><input type="number" data-proxy="tasso" min="0" max="15" step="0.05" inputmode="decimal" /></label>
+              <label><span>Durata anni</span><input type="number" data-proxy="durata" min="1" max="40" step="1" inputmode="numeric" /></label>
+              <label><span>Affitto €/mese</span><input type="number" data-proxy="affitto" min="0" step="25" inputmode="numeric" /></label>
+              <label><span>Orizzonte</span><input type="number" data-proxy="anni" min="1" max="40" step="1" inputmode="numeric" /></label>
+              <label><span>Rendimento %</span><input type="number" data-proxy="rendimento" min="0" max="40" step="0.1" inputmode="decimal" /></label>
+            </div>
+            <div class="recap__btns">
+              <button type="button" id="recap-all">Tutti i parametri</button>
+              <button type="button" id="share2">Copia link</button>
+              <button type="button" id="reset2">Reset</button>
+            </div>
+          </div>
+
+          <div class="scen-banner" id="scen-banner" hidden>
+            <div class="scen-banner__body">
+              <span class="tag">Scenario attivo · stai guardando un'ipotesi, non i tuoi numeri</span>
+              <strong id="sb-name"></strong>
+              <p id="sb-changes"></p>
+              <p id="sb-prob"></p>
+            </div>
+            <div class="scen-banner__actions">
+              <button type="button" id="sb-keep">Tienilo nei parametri</button>
+              <button type="button" id="sb-remove">Rimuovi tutto ✕</button>
+            </div>
+          </div>
+
+
 
           <div class="card verdict" id="verdict">
             <small id="v-kicker">Verdetto</small>
@@ -744,7 +806,7 @@
           </div>
 
           <div class="card" id="scenari">
-            <p class="step-tag"><i>4</i> Gli scenari di mercato</p>
+            <p class="step-tag">Gli scenari di mercato</p>
             <h3>E se il mercato va diversamente?</h3>
             <div class="scen-live neutro" id="scen-live"></div>
             <p class="note">Cinque leve indipendenti, sul tuo orizzonte di <span id="scen-anni"></span> anni. <strong>Puoi accenderne più di una insieme</strong> — tassi alti <em>e</em> mattone in boom, per esempio — ma non due opposte: dentro ogni famiglia la scelta è unica, accenderne una spegne l'altra. Le opzioni sono ordinate <strong>dalla più probabile alla meno probabile</strong>. I tuoi numeri nel pannello non vengono mai riscritti; per tornare indietro c'è «spegni» sulla riga, o «Rimuovi tutto» qui sopra.<br />Le cifre di ogni riga tengono già conto delle altre leve accese: leggile come «cosa succede se in questa famiglia scelgo questa».<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
@@ -758,7 +820,7 @@
           </div>
 
           <div class="deep-head" id="approfondimenti">
-            <p class="step-tag"><i>5</i> Approfondimenti</p>
+            <p class="step-tag">Approfondimenti</p>
             <p>Le soglie di pareggio, dove finiscono i soldi voce per voce, la sensibilità alle ipotesi e il metodo. Aprili solo se vuoi scavare: il verdetto non cambia.</p>
           </div>
 
@@ -1326,6 +1388,11 @@
       $('anticipo_hint').innerHTML = 'Capitale che versi sul prezzo. Servono in più <b>' + money(ut) + '</b> di costi d\'acquisto: ' +
         'la cassa da avere il giorno del rogito è <b>' + money(Math.max(0, p.anticipo) + ut) + '</b>. ' +
         'Nello scenario «affitto» è esattamente questa cifra che resta investita.';
+
+      // La barra di ritocco rispecchia sempre il pannello, tranne il campo che stai scrivendo
+      Array.prototype.forEach.call(document.querySelectorAll('[data-proxy]'), function (px) {
+        if (px !== document.activeElement) { px.value = p[px.getAttribute('data-proxy')]; }
+      });
     }
 
     /* ─────────── Render ─────────── */
@@ -1343,7 +1410,7 @@
 
       // Verdetto
       $('verdict').setAttribute('data-win', win);
-      $('v-kicker').textContent = '3 · Il verdetto' +
+      $('v-kicker').textContent = 'Il verdetto' +
         (attivi.length ? ' · scenario ' + attivi.map(function (id) { return '«' + byId(id).n + '»'; }).join(' + ') : '');
       if (win === 'buy') {
         $('v-title').innerHTML = 'Su ' + p.anni + ' anni, acquistare conviene di <em>' + money(diff) + '</em>';
@@ -1371,6 +1438,8 @@
       $('sr-scen').hidden = attivi.length === 0;
       $('sr-scen').textContent = attivi.length === 1 ? 'scenario: ' + byId(attivi[0]).n
         : (attivi.length > 1 ? attivi.length + ' leve accese' : '');
+      // La barra di ritocco si aggancia appena sotto la barra del verdetto, qualunque altezza abbia
+      document.documentElement.style.setProperty('--barh', $('sticky').offsetHeight + 'px');
 
       // Portafogli di riferimento
       $('ports').innerHTML = PORTAFOGLI.map(function (t) {
@@ -1778,7 +1847,9 @@
         $('affitto').value = Math.round(c.a * m / 25) * 25;
         SLIDERS.forEach(function (k) { $(k + '_r').value = $(k).value; });
         render();
-        $('verdict').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // niente salto di pagina: il verdetto nella barra in alto si aggiorna da solo
+        btn.textContent = 'Valori applicati ✓';
+        setTimeout(function () { btn.textContent = 'Usa questi valori'; }, 1800);
       });
 
       try {
@@ -1832,13 +1903,18 @@
       setCombo([]);
     });
 
-    $('reset').addEventListener('click', function () {
+    // Reset e condivisione esistono in due punti: nel pannello e nella barra di ritocco.
+    function doReset() {
       write(DEFAULTS);
       history.replaceState(null, '', location.pathname);
       setCombo([]);
+    }
+    ['reset', 'reset2'].forEach(function (id) {
+      var el = $(id);
+      if (el) { el.addEventListener('click', doReset); }
     });
 
-    $('share').addEventListener('click', function () {
+    function doShare(btn) {
       var p = read();
       var q = new URLSearchParams();
       NUM.forEach(function (k) { q.set(k, p[k]); });
@@ -1846,11 +1922,14 @@
       if (attivi.length) { q.set('lev', attivi.join(',')); }
       var url = location.origin + location.pathname + '?' + q.toString();
       history.replaceState(null, '', '?' + q.toString());
-      var btn = $('share');
       var done = function (ok) { btn.textContent = ok ? 'Link copiato ✓' : 'Copia dalla barra ↑'; setTimeout(function () { btn.textContent = 'Copia link'; }, 2200); };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
       } else { done(false); }
+    }
+    ['share', 'share2'].forEach(function (id) {
+      var el = $(id);
+      if (el) { el.addEventListener('click', function () { doShare(el); }); }
     });
 
     // Dopo un reload o un «indietro» il browser ripristina i campi: risincronizza i risultati.
@@ -1858,6 +1937,62 @@
       SLIDERS.forEach(function (k) { $(k + '_r').value = $(k).value; });
       render();
     });
+
+    /* ─────────── Wizard a passi ─────────── */
+    var STEP_LABELS = ['La casa', 'Il mutuo', 'L\'affitto', 'Tempo e uscita', 'Costi e mercato', 'Investimento', 'Risultato'];
+    var wsteps = Array.prototype.slice.call(document.querySelectorAll('.wstep'));
+    var curStep = 1;
+
+    $('stepper').innerHTML = STEP_LABELS.map(function (t, i) {
+      return '<button type="button" data-go="' + (i + 1) + '"><i><b>' + (i + 1) + '</b></i><span>' + t + '</span></button>';
+    }).join('');
+
+    function goStep(n, doScroll) {
+      curStep = Math.max(1, Math.min(STEP_LABELS.length, n));
+      var last = curStep === STEP_LABELS.length;
+      wsteps.forEach(function (s) { s.classList.toggle('on', parseInt(s.getAttribute('data-step'), 10) === curStep); });
+      $('form').hidden = last;
+      document.querySelector('.results').classList.toggle('on', last);
+      $('recap').hidden = !last;
+      Array.prototype.forEach.call($('stepper').children, function (b, i) {
+        b.classList.toggle('cur', i + 1 === curStep);
+        b.classList.toggle('done', i + 1 < curStep);
+        if (i + 1 === curStep) { b.setAttribute('aria-current', 'step'); } else { b.removeAttribute('aria-current'); }
+      });
+      $('w-prev').style.visibility = curStep === 1 ? 'hidden' : 'visible';
+      $('w-next').textContent = curStep === STEP_LABELS.length - 1 ? 'Vedi il risultato →' : 'Avanti →';
+      if (last) { render(); }
+      if (doScroll) { document.querySelector('.calc').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      try { localStorage.setItem('ab-rentbuy-step', String(curStep)); } catch (e) { /* private mode */ }
+    }
+
+    $('stepper').addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-go]');
+      if (b) { goStep(parseInt(b.getAttribute('data-go'), 10), true); }
+    });
+    $('w-prev').addEventListener('click', function () { goStep(curStep - 1, true); });
+    $('w-next').addEventListener('click', function () { goStep(curStep + 1, true); });
+    $('recap-all').addEventListener('click', function () { goStep(1, true); });
+
+    // I campi rapidi sopra i risultati pilotano gli input veri del pannello
+    Array.prototype.forEach.call(document.querySelectorAll('[data-proxy]'), function (px) {
+      px.addEventListener('input', function () {
+        if (px.value === '') { return; }
+        var k = px.getAttribute('data-proxy');
+        $(k).value = px.value;
+        if (SLIDERS.indexOf(k) > -1) { $(k + '_r').value = px.value; }
+        schedule();
+      });
+    });
+
+    // Da dove si parte: link condiviso → risultato; altrimenti l'ultimo passo visitato.
+    var startStep = 1;
+    try {
+      var ss = parseInt(localStorage.getItem('ab-rentbuy-step'), 10);
+      if (ss >= 1 && ss <= STEP_LABELS.length) { startStep = ss; }
+    } catch (e) { /* private mode */ }
+    if (fromQuery() || qLev.length) { startStep = STEP_LABELS.length; }
+    goStep(startStep, false);
 
     render();
     $('y').textContent = new Date().getFullYear();
