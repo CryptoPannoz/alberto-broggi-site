@@ -438,6 +438,12 @@
       details.deep > summary { padding: 18px 16px; }
       details.deep > div { padding: 0 16px 18px; }
     }
+    /* Su schermo stretto l'etichetta del summary va a capo invece di sfondare la pagina */
+    @media (max-width: 640px) {
+      details.deep > summary { flex-wrap: wrap; gap: 6px 12px; }
+      details.deep > summary h3 { flex: 1 1 100%; }
+      details.deep > summary span { flex: 1 1 100%; justify-content: space-between; white-space: normal; }
+    }
     #sb-prob { margin-top: 5px; font-family: var(--sans); font-size: .74rem; color: #8c3418; }
     #sb-prob b { font-family: var(--mono); font-weight: 500; }
 
@@ -483,29 +489,86 @@
       table.t th, table.t td { padding: 9px 4px; font-size: .74rem; }
     }
 
-    /* Salvataggio e condivisione del riepilogo */
-    .share-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; border-color: #bcc8ff; background: #f5f7ff; }
-    .share-card h3 { margin-bottom: 7px; }
-    .share-card p { margin: 0; max-width: 58ch; color: #4d524e; font-size: .8rem; line-height: 1.5; }
-    .share-card__actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
-    .share-card__actions button { min-height: 42px; padding: 0 15px; border: 1px solid var(--blue); border-radius: 999px; background: var(--blue); color: white; cursor: pointer; font-size: .74rem; font-weight: 650; }
-    .share-card__actions .share-secondary { background: transparent; color: var(--blue); }
-    .share-card__actions button:hover { background: var(--ink); border-color: var(--ink); color: white; }
-    .share-card__form { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; padding-top: 15px; border-top: 1px solid #d7defc; }
-    .share-card__form label { display: block; color: var(--muted); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .06em; }
-    .share-card__form input { display: block; box-sizing: border-box; width: 100%; min-height: 42px; margin-top: 6px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); color: var(--ink); font: .84rem var(--mono); text-transform: none; letter-spacing: normal; }
-    .share-card__form input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
-    .share-card__form button { align-self: end; min-height: 42px; padding: 0 16px; border: 1px solid var(--ink); border-radius: 999px; background: var(--ink); color: white; cursor: pointer; font-size: .74rem; font-weight: 650; }
-    .share-card__note { grid-column: 1 / -1; margin: -1px 0 0; color: var(--muted); font-size: .66rem; line-height: 1.45; }
-    .share-card__status { grid-column: 1 / -1; min-height: 1.2em; margin: 0; color: var(--blue); font-family: var(--mono); font-size: .68rem; }
-    .share-card__status.is-error { color: #c33f1c; }
-    @media (max-width: 650px) { .share-card { grid-template-columns: 1fr; gap: 16px; } .share-card__actions { justify-content: flex-start; } .share-card__form { grid-template-columns: 1fr; } }
+    /* ─── Controlli live: scenari e investimenti a portata di pollice, sotto il verdetto ─── */
+    .lc { border: 1px solid var(--line); border-radius: var(--radius); background: var(--white); padding: 14px 0 4px; }
+    .lc__row + .lc__row { margin-top: 4px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .lc__lab { display: block; padding: 0 16px 8px; color: var(--muted); font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .07em; }
+    .lc__lab b { color: var(--ink); font-weight: 650; }
+    /* Fila scorrevole: su mobile si sfoglia col pollice invece di aprire menu */
+    .lc__chips { display: flex; gap: 8px; overflow-x: auto; padding: 0 16px 12px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .lc__chips::-webkit-scrollbar { display: none; }
+    .lc__chips > * { scroll-snap-align: start; }
+    .chip {
+      flex: 0 0 auto; display: inline-flex; flex-direction: column; justify-content: center; gap: 1px;
+      min-height: 46px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px;
+      background: var(--paper); color: var(--ink); cursor: pointer; text-align: left; white-space: nowrap;
+      font-size: .76rem; font-weight: 650; line-height: 1.2;
+    }
+    .chip small { color: var(--muted); font-size: .6rem; font-weight: 400; }
+    .chip:hover { border-color: var(--ink); }
+    .chip.on { background: var(--blue); border-color: var(--blue); color: white; }
+    .chip.on small { color: rgba(255,255,255,.78); }
+    .chip.risk { border-color: rgba(255,91,53,.5); }
+    .chip.risk.on { background: var(--orange); border-color: var(--orange); }
+    .chip--clear.on { background: var(--ink); border-color: var(--ink); }
+    .lc__hint { margin: 0; padding: 0 16px 12px; color: var(--muted); font-size: .66rem; }
+
+    /* Riga d'invito al salvataggio, al posto del vecchio blocco statico */
+    .save-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border: 1px solid #bcc8ff; border-radius: var(--radius); background: #f5f7ff; }
+    .save-cta strong { display: block; font-size: .88rem; }
+    .save-cta span { display: block; margin-top: 2px; color: #4d524e; font-size: .74rem; }
+    .btn-primary { min-height: 46px; padding: 0 18px; border: 1px solid var(--blue); border-radius: 999px; background: var(--blue); color: white; cursor: pointer; font-size: .78rem; font-weight: 650; }
+    .btn-primary:hover { background: var(--ink); border-color: var(--ink); }
+    .btn-ghost { min-height: 46px; padding: 0 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); color: var(--ink); cursor: pointer; font-size: .76rem; font-weight: 650; }
+    .btn-ghost:hover { border-color: var(--ink); }
+
+    /* Banner: compare una volta sola quando il risultato è stato letto */
+    .save-banner { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--ink); border-radius: 16px; background: var(--ink); color: white; box-shadow: 0 10px 30px rgba(0,0,0,.22); animation: slideUp .28s ease; }
+    .save-banner[hidden] { display: none; }
+    .save-banner p { flex: 1; margin: 0; font-size: .76rem; line-height: 1.35; }
+    .save-banner button { flex: 0 0 auto; min-height: 42px; padding: 0 14px; border: 0; border-radius: 999px; background: white; color: var(--ink); cursor: pointer; font-size: .74rem; font-weight: 650; }
+    .save-banner .sb-x { min-width: 42px; padding: 0; background: transparent; color: rgba(255,255,255,.7); font-size: 1rem; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+    @media (min-width: 700px) { .save-banner { left: auto; right: 20px; bottom: 20px; max-width: 420px; } }
+
+    /* Foglio modale: bottom sheet su mobile, riquadro centrato da desktop */
+    .sheet { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; }
+    .sheet[hidden] { display: none; }
+    .sheet__back { position: absolute; inset: 0; border: 0; padding: 0; background: rgba(10,12,10,.45); cursor: pointer; }
+    .sheet__box { position: relative; width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto; padding: 22px 20px calc(20px + env(safe-area-inset-bottom)); border-radius: 20px 20px 0 0; background: var(--white); animation: slideUp .26s ease; }
+    .sheet__grab { width: 40px; height: 4px; margin: -6px auto 14px; border-radius: 999px; background: var(--line); }
+    .sheet h3 { margin: 0 0 4px; font-size: 1.05rem; }
+    .sheet__sub { margin: 0 0 16px; color: var(--muted); font-size: .76rem; line-height: 1.45; }
+    .sheet__recap { margin: 0 0 16px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); font-size: .78rem; line-height: 1.5; }
+    .sheet__recap b { font-weight: 650; }
+    .sheet__acts { display: grid; gap: 8px; }
+    .sheet__acts button { width: 100%; min-height: 50px; border-radius: 14px; font-size: .82rem; }
+    .sheet__note { margin: 14px 0 0; color: var(--muted); font-size: .66rem; line-height: 1.45; }
+    .sheet__status { min-height: 1.2em; margin: 10px 0 0; color: var(--blue); font-family: var(--mono); font-size: .68rem; }
+    .sheet__status.is-error { color: #c33f1c; }
+    .sheet__close { position: absolute; top: 12px; right: 12px; min-width: 44px; min-height: 44px; border: 0; border-radius: 999px; background: var(--paper); color: var(--muted); cursor: pointer; font-size: 1rem; }
+    @media (min-width: 700px) { .sheet { align-items: center; } .sheet__box { border-radius: 20px; } .sheet__grab { display: none; } }
+
+    /* Le tabelle larghe scorrono dentro il loro riquadro invece di allargare tutta la pagina */
+    .tscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+    .tscroll > table { margin: 0; }
+
+    /* ─── Tap target: nulla di interattivo sotto i 44px su touch ─── */
+    @media (pointer: coarse) {
+      .tool-top a { display: inline-flex; align-items: center; min-height: 44px; }
+      .field input[type="range"] { height: 44px; background: transparent; }
+      .recap__scroll input { min-height: 44px; }
+      .recap__btns button, .panel__actions button, .wnav button { min-height: 44px; }
+      table.scen .apply { min-height: 44px; padding: 0 14px; }
+      .preset-row button { min-height: 44px; }
+    }
 
     /* Il PDF nasce dal dialogo di stampa del browser: questa è la versione leggibile da salvare. */
     @media print {
       @page { margin: 14mm; size: A4; }
       body { background: white; }
-      .tool-top, .tool-hero, .sticky-result, .stepper, .panel, .recap, .scen-banner, .share-card, .wnav, .deep-head, #scenari, .faq, .footer, .site-footer { display: none !important; }
+      .tool-top, .tool-hero, .sticky-result, .stepper, .panel, .recap, .scen-banner, .wnav, .deep-head, #scenari, .faq, .footer, .site-footer,
+      .lc, .save-cta, .save-banner, .sheet { display: none !important; }
       main, .calc, .container, .calc-layout { display: block !important; width: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
       .results { display: flex !important; gap: 12px !important; }
       .card, .kpis, .warn { break-inside: avoid; page-break-inside: avoid; }
@@ -776,7 +839,6 @@
 
           <div class="panel__actions">
             <button type="button" class="mini-btn" id="reset">Ripristina default</button>
-            <button type="button" class="mini-btn" id="share">Copia link</button>
           </div>
         </form>
 
@@ -795,7 +857,6 @@
             </div>
             <div class="recap__btns">
               <button type="button" id="recap-all">Tutti i parametri</button>
-              <button type="button" id="share2">Copia link</button>
               <button type="button" id="reset2">Reset</button>
             </div>
           </div>
@@ -827,24 +888,30 @@
             <p class="verdict-assump"><span aria-hidden="true">◇</span><span>Ipotesi investimenti: <b id="v-assump"></b></span></p>
           </div>
 
-          <section class="card share-card" aria-labelledby="share-title">
+          <!-- Scenari e investimenti si cambiano qui, senza tornare nel pannello: il verdetto in alto si aggiorna subito. -->
+          <div class="lc" id="live-controls">
+            <div class="lc__row">
+              <span class="lc__lab">Dove investi la differenza · <b id="lc-rend"></b></span>
+              <div class="lc__chips" id="lc-ports"></div>
+            </div>
+            <div class="lc__row">
+              <span class="lc__lab">E se il mercato va diversamente?</span>
+              <div class="lc__chips" id="lc-levers"></div>
+            </div>
+            <div class="lc__row">
+              <span class="lc__lab">Combinazioni pronte</span>
+              <div class="lc__chips" id="lc-presets"></div>
+              <p class="lc__hint" id="lc-hint"></p>
+            </div>
+          </div>
+
+          <div class="save-cta">
             <div>
-              <h3 id="share-title">Salva e condividi il tuo confronto</h3>
-              <p>Genera un PDF leggibile del risultato, poi prepara un’email per te o per chi vuoi coinvolgere nella decisione. Il riepilogo contiene anche il link con i tuoi parametri.</p>
+              <strong>Ti servirà dopo?</strong>
+              <span>Salva il PDF, o mandalo a chi decide insieme a te.</span>
             </div>
-            <div class="share-card__actions">
-              <button type="button" id="pdf-report">Crea PDF</button>
-              <button type="button" class="share-secondary" id="share-report">Copia link</button>
-            </div>
-            <form class="share-card__form" id="email-report" novalidate>
-              <label for="report-email">Email destinatario
-                <input id="report-email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" />
-              </label>
-              <button type="submit">Prepara email</button>
-              <p class="share-card__note">L’email si apre nel tuo client: allega il PDF appena creato. Nessun indirizzo viene salvato o inviato dal sito.</p>
-              <p class="share-card__status" id="share-status" aria-live="polite"></p>
-            </form>
-          </section>
+            <button type="button" class="btn-primary" id="open-share">Salva o invia →</button>
+          </div>
 
           <div class="warn" id="warn" hidden><span aria-hidden="true">▲</span><span id="warn-text"></span></div>
 
@@ -866,9 +933,10 @@
             </div>
           </div>
 
-          <div class="card" id="scenari">
-            <p class="step-tag">Gli scenari di mercato</p>
-            <h3>E se il mercato va diversamente?</h3>
+          <details class="card deep" id="scenari">
+            <summary><h3>Tutti gli scenari di mercato</h3><span>Leva per leva, con le probabilità <b>+</b></span></summary>
+            <div>
+            <p class="note">Le leve principali le accendi con un tocco sotto il verdetto. Qui c’è il dettaglio: cosa muove ognuna, quanto è probabile, e l’effetto sulle due colonne.</p>
             <div class="scen-live neutro" id="scen-live"></div>
             <p class="note">Cinque leve indipendenti, sul tuo orizzonte di <span id="scen-anni"></span> anni. <strong>Puoi accenderne più di una insieme</strong> — tassi alti <em>e</em> mattone in boom, per esempio — ma non due opposte: dentro ogni famiglia la scelta è unica, accenderne una spegne l'altra. Le opzioni sono ordinate <strong>dalla più probabile alla meno probabile</strong>. I tuoi numeri nel pannello non vengono mai riscritti; per tornare indietro c'è «spegni» sulla riga, o «Rimuovi tutto» qui sopra.<br />Le cifre di ogni riga tengono già conto delle altre leve accese: leggile come «cosa succede se in questa famiglia scelgo questa».<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
             <p class="note" style="margin-bottom:10px"><strong>Combinazioni pronte</strong> — accendono più leve insieme, poi puoi ritoccarle una a una:</p>
@@ -878,7 +946,8 @@
               <tbody id="scen"></tbody>
             </table>
             <p class="note" style="margin:22px 0 0">Da dove vengono le percentuali: sono <strong>stime soggettive</strong> ricavate dalla frequenza storica di ciascuna condizione su orizzonti lunghi, in Italia e sui mercati sviluppati. Non sono previsioni e nessuno ha i numeri veri — servono a distinguere «raro ma possibile» da «probabile». Dentro ogni famiglia le opzioni sommano a 100%, contando anche il caso base (i tuoi parametri).<br />Quando accendi più leve, la probabilità mostrata è il <strong>prodotto</strong> delle sole condizioni accese — sulle famiglie che lasci al caso base non si sta affermando nulla, quindi non entrano nel conto. Va comunque letta con prudenza, perché le variabili sono <strong>correlate</strong>: inflazione alta e tassi alti arrivano quasi sempre insieme, quindi una combinazione coerente è più probabile di quanto dica il prodotto, e una contraddittoria molto meno. E se sposti i parametri del pannello lontano dai valori di partenza, la probabilità del «caso base» non vale più.</p>
-          </div>
+            </div>
+          </details>
 
           <div class="deep-head" id="approfondimenti">
             <p class="step-tag">Approfondimenti</p>
@@ -990,6 +1059,31 @@
       </div>
     </section>
   </main>
+
+  <!-- Fuori da .results: quello viene nascosto fuori dal passo finale, il foglio no. -->
+  <div class="save-banner" id="save-banner" hidden>
+    <p><b>Il tuo confronto è pronto.</b> Salvalo in PDF o mandalo a chi decide con te.</p>
+    <button type="button" id="banner-open">Salva</button>
+    <button type="button" class="sb-x" id="banner-x" aria-label="Chiudi">✕</button>
+  </div>
+
+  <div class="sheet" id="share-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <button type="button" class="sheet__back" id="sheet-back" aria-label="Chiudi"></button>
+    <div class="sheet__box">
+      <div class="sheet__grab" aria-hidden="true"></div>
+      <button type="button" class="sheet__close" id="sheet-close" aria-label="Chiudi">✕</button>
+      <h3 id="sheet-title">Salva o invia il confronto</h3>
+      <p class="sheet__sub">Il PDF e l’email contengono il risultato e il link che riapre il calcolo con i tuoi stessi parametri.</p>
+      <p class="sheet__recap" id="sheet-recap"></p>
+      <div class="sheet__acts">
+        <button type="button" class="btn-primary" id="sheet-pdf">Scarica il PDF</button>
+        <button type="button" class="btn-ghost" id="sheet-mail">Mandalo ad Alberto</button>
+        <button type="button" class="btn-ghost" id="sheet-link">Copia link</button>
+      </div>
+      <p class="sheet__note">«Mandalo ad Alberto» apre la tua app di posta con il testo già pronto: scrivimi pure la tua situazione, rispondo io. Nessun indirizzo viene salvato o inviato da questo sito.</p>
+      <p class="sheet__status" id="share-status" aria-live="polite"></p>
+    </div>
+  </div>
 
   <footer>
     <div class="container">
@@ -1725,6 +1819,32 @@
         return '<button type="button" data-preset="' + i + '" class="' + (uguale ? 'on' : '') + '">' + pr.n + '<small>' + pr.d + '</small></button>';
       }).join('');
 
+      /* ─── Controlli live sotto il verdetto: stessi dati, a un tocco e senza scorrere ─── */
+      $('lc-rend').textContent = pct(p.rendimento) + '/anno';
+      $('lc-ports').innerHTML = PORTAFOGLI.map(function (t) {
+        var on = Math.abs(pBase.rendimento - t.r) < 0.05;
+        return '<button type="button" class="chip' + (t.risk ? ' risk' : '') + (on ? ' on' : '') + '" data-lcport="' + t.id + '">' +
+          t.n + '<small>' + pct(t.r) + '/anno</small></button>';
+      }).join('');
+
+      // Una leva per famiglia: ritocco il chip acceso e spengo gli altri della stessa famiglia.
+      $('lc-levers').innerHTML =
+        '<button type="button" class="chip chip--clear' + (attivi.length ? '' : ' on') + '" data-lclev="">I tuoi numeri</button>' +
+        SCENARI.map(function (s) {
+          var on = attivi.indexOf(s.id) > -1;
+          return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-lclev="' + s.id + '" data-lcfam="' + s.fam + '">' +
+            s.n + '<small>' + s.p + '%</small></button>';
+        }).join('');
+
+      $('lc-presets').innerHTML = PRESET.map(function (pr, i) {
+        var uguale = pr.lev.length === attivi.length && pr.lev.every(function (id) { return attivi.indexOf(id) > -1; });
+        return '<button type="button" class="chip' + (uguale ? ' on' : '') + '" data-lcpreset="' + i + '">' + pr.n + '</button>';
+      }).join('');
+
+      $('lc-hint').textContent = attivi.length
+        ? 'Stai guardando un\'ipotesi: ' + attivi.map(function (id) { return byId(id).n; }).join(' + ') + ' · probabilità ' + probFmt(comboProb()) + '. I tuoi parametri non sono stati toccati.'
+        : 'Tocca una leva per vedere subito come cambia il verdetto qui sopra. I tuoi parametri restano quelli che hai inserito.';
+
       // Risultato sempre in cima alla card: si accendono le leve e si vede subito l'effetto.
       var live = $('scen-live');
       live.className = 'scen-live' + (attivi.length ? '' : ' neutro');
@@ -1951,6 +2071,37 @@
       if (ev.target.closest('#live-clear')) { setCombo([]); }
     });
 
+    /* ─── Controlli live: gli stessi comandi del pannello, ma dentro il risultato ─── */
+    $('live-controls').addEventListener('click', function (ev) {
+      var b = ev.target.closest('button');
+      if (!b) { return; }
+
+      // Portafoglio: scrive davvero nel pannello, è una scelta, non un'ipotesi in prova.
+      var port = b.getAttribute('data-lcport');
+      if (port !== null) {
+        var t = PORTAFOGLI.filter(function (x) { return x.id === port; })[0];
+        if (t) { $('rendimento').value = t.r; render(); }
+        return;
+      }
+
+      // Leva: toccarla di nuovo la spegne; dentro la famiglia la scelta resta unica.
+      var lev = b.getAttribute('data-lclev');
+      if (lev !== null) {
+        if (lev === '') { setCombo([]); return; }
+        var s = byId(lev);
+        if (s) { setLever(s.fam, attivi.indexOf(lev) > -1 ? '' : lev); }
+        return;
+      }
+
+      var pi = b.getAttribute('data-lcpreset');
+      if (pi !== null) {
+        var pr = PRESET[parseInt(pi, 10)];
+        if (!pr) { return; }
+        var uguale = pr.lev.length === attivi.length && pr.lev.every(function (id) { return attivi.indexOf(id) > -1; });
+        setCombo(uguale ? [] : pr.lev.slice());
+      }
+    });
+
     // «Rimuovi tutto»: torna ai parametri del pannello, che non sono mai stati toccati.
     $('sb-remove').addEventListener('click', function () {
       setCombo([]);
@@ -2005,53 +2156,117 @@
       try { window.dispatchEvent(new CustomEvent('rentbuy:cta', { detail: { name: name } })); } catch (e2) { /* browser datato */ }
     }
 
+    // Riassunto in chiaro del risultato corrente: serve al foglio, all'email e al PDF.
+    function esitoCorrente() {
+      var p = comboParams(read());
+      var r = simulate(p);
+      var diff = r.netBuy - r.netRent;
+      var pari = Math.abs(diff) < Math.max(2000, Math.abs(r.netRent) * 0.01);
+      return {
+        p: p, r: r, diff: diff, pari: pari,
+        frase: pari ? 'Il risultato è sostanzialmente in pareggio.'
+          : (diff > 0 ? 'Con questi dati, acquistare lascia circa ' + money(diff) + ' in più.'
+                      : 'Con questi dati, restare in affitto lascia circa ' + money(-diff) + ' in più.')
+      };
+    }
+
     function doShare(btn) {
       var url = makeShareUrl();
+      var etichetta = btn.textContent;
       var done = function (ok) {
         btn.textContent = ok ? 'Link copiato ✓' : 'Copia dalla barra ↑';
-        setTimeout(function () { btn.textContent = 'Copia link'; }, 2200);
-        if (ok) { setShareStatus('Link copiato: puoi incollarlo dove vuoi.', false); }
+        setTimeout(function () { btn.textContent = etichetta; }, 2200);
+        setShareStatus(ok ? 'Link copiato: puoi incollarlo dove vuoi.' : 'Copia il link dalla barra degli indirizzi.', !ok);
       };
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
       } else { done(false); }
     }
-    ['share', 'share2', 'share-report'].forEach(function (id) {
-      var el = $(id);
-      if (el) { el.addEventListener('click', function () { trackCta('copy_link'); doShare(el); }); }
-    });
 
-    $('pdf-report').addEventListener('click', function () {
+    function salvaPdf() {
       var originalTitle = document.title;
-      var when = new Date().toLocaleDateString('it-IT');
-      document.title = 'Confronto-affitto-acquisto-' + when;
+      document.title = 'Confronto-affitto-acquisto-' + new Date().toLocaleDateString('it-IT');
       trackCta('create_pdf');
       setShareStatus('Nel dialogo scegli “Salva come PDF”.', false);
       window.print();
       setTimeout(function () { document.title = originalTitle; }, 300);
-    });
+    }
 
-    $('email-report').addEventListener('submit', function (ev) {
-      ev.preventDefault();
-      var input = $('report-email');
-      var email = input.value.trim();
-      if (!email || !input.checkValidity()) {
-        setShareStatus('Inserisci un indirizzo email valido.', true);
-        input.focus();
-        return;
-      }
-      var p = comboParams(read());
-      var r = simulate(p);
-      var diff = r.netBuy - r.netRent;
-      var esito = Math.abs(diff) < Math.max(2000, Math.abs(r.netRent) * 0.01)
-        ? 'Il risultato è sostanzialmente in pareggio.'
-        : (diff > 0 ? 'Con questi dati, acquistare lascia circa ' + money(diff) + ' in più.' : 'Con questi dati, restare in affitto lascia circa ' + money(-diff) + ' in più.');
-      var body = 'Ciao,\n\nti mando il mio confronto tra acquisto e affitto.\n\n' +
-        esito + '\nOrizzonte: ' + p.anni + ' anni.\nPatrimonio finale acquisto: ' + money(r.netBuy) + '.\nPatrimonio finale affitto + investimenti: ' + money(r.netRent) + '.\n\nApri qui il calcolo con gli stessi parametri:\n' + makeShareUrl() +
-        '\n\nAllego anche il PDF del riepilogo.\n\nNota: è una simulazione orientativa, non un consiglio finanziario.';
+    // Mailto verso di me: il visitatore scrive dal suo client, il sito non tocca nessun indirizzo.
+    var MIA_EMAIL = 'bebroggi@gmail.com';
+    function preparaEmail() {
+      var e = esitoCorrente();
+      var body = 'Ciao Alberto,\n\nho usato il tuo calcolatore affitto vs acquisto ed è uscito questo:\n\n' +
+        e.frase + '\nOrizzonte: ' + e.p.anni + ' anni.\nPatrimonio finale acquisto: ' + money(e.r.netBuy) + '.\n' +
+        'Patrimonio finale affitto + investimenti: ' + money(e.r.netRent) + '.\n\n' +
+        'Il calcolo con i miei parametri:\n' + makeShareUrl() + '\n\n' +
+        '— La mia situazione (scrivila qui):\n\n\n';
       trackCta('prepare_email');
-      setShareStatus('Apro il tuo client email: allega il PDF appena salvato.', false);
-      window.location.href = 'mailto:' + encodeURIComponent(email) + '?subject=' + encodeURIComponent('Confronto: affitto o acquisto casa') + '&body=' + encodeURIComponent(body);
+      setShareStatus('Apro la tua app di posta con il testo già pronto.', false);
+      window.location.href = 'mailto:' + MIA_EMAIL +
+        '?subject=' + encodeURIComponent('Il mio confronto affitto vs acquisto') +
+        '&body=' + encodeURIComponent(body);
+    }
+
+    /* ─────────── Foglio «salva o invia» ─────────── */
+    var sheet = $('share-sheet'), lastFocus = null;
+    function openSheet() {
+      var e = esitoCorrente();
+      $('sheet-recap').innerHTML = '<b>' + (e.pari ? 'Sostanzialmente pari' :
+        (e.diff > 0 ? 'Comprare ' + signed(e.diff) : 'Affittare ' + signed(-e.diff))) + '</b> su ' + e.p.anni + ' anni<br />' +
+        'acquisto ' + money(e.r.netBuy) + ' · affitto + investimenti ' + money(e.r.netRent);
+      setShareStatus('', false);
+      lastFocus = document.activeElement;
+      sheet.hidden = false;
+      document.body.style.overflow = 'hidden';
+      $('sheet-pdf').focus();
+      hideBanner(true);
+    }
+    function closeSheet() {
+      sheet.hidden = true;
+      document.body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) { lastFocus.focus(); }
+    }
+    $('open-share').addEventListener('click', openSheet);
+    $('sheet-back').addEventListener('click', closeSheet);
+    $('sheet-close').addEventListener('click', closeSheet);
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !sheet.hidden) { closeSheet(); }
+    });
+    $('sheet-pdf').addEventListener('click', salvaPdf);
+    $('sheet-mail').addEventListener('click', preparaEmail);
+    $('sheet-link').addEventListener('click', function () { trackCta('copy_link'); doShare(this); });
+
+    /* ─────────── Banner: una volta sola, quando il risultato è stato letto ─────────── */
+    var banner = $('save-banner'), bannerFatto = false;
+    try { bannerFatto = sessionStorage.getItem('ab-rentbuy-banner') === '1'; } catch (e) { /* private mode */ }
+    function hideBanner(permanente) {
+      if (banner) { banner.hidden = true; }
+      if (permanente) {
+        bannerFatto = true;
+        try { sessionStorage.setItem('ab-rentbuy-banner', '1'); } catch (e) { /* private mode */ }
+      }
+    }
+    function maybeBanner() {
+      if (bannerFatto || !banner || !banner.hidden) { return; }
+      if (curStep !== STEP_LABELS.length) { return; }        // solo sul risultato
+      if (!sheet.hidden) { return; }
+      var grafico = document.querySelector('#chart');
+      if (!grafico) { return; }
+      // Compare quando il grafico è stato superato: il verdetto è già stato letto.
+      if (grafico.getBoundingClientRect().bottom < window.innerHeight * 0.5) { banner.hidden = false; }
+    }
+    window.addEventListener('scroll', maybeBanner, { passive: true });
+    $('banner-open').addEventListener('click', function () { hideBanner(true); openSheet(); });
+    $('banner-x').addEventListener('click', function () { hideBanner(true); });
+
+    // Le tabelle più larghe del telefono scorrono nel loro riquadro: la pagina non si sposta di lato.
+    Array.prototype.forEach.call(document.querySelectorAll('.results table.t'), function (t) {
+      if (t.parentNode && t.parentNode.className === 'tscroll') { return; }
+      var w = document.createElement('div');
+      w.className = 'tscroll';
+      t.parentNode.insertBefore(w, t);
+      w.appendChild(t);
     });
 
     // Dopo un reload o un «indietro» il browser ripristina i campi: risincronizza i risultati.
@@ -2083,7 +2298,7 @@
       });
       $('w-prev').style.visibility = curStep === 1 ? 'hidden' : 'visible';
       $('w-next').textContent = curStep === STEP_LABELS.length - 1 ? 'Vedi il risultato →' : 'Avanti →';
-      if (last) { render(); }
+      if (last) { render(); } else if (banner) { banner.hidden = true; }
       if (doScroll) { document.querySelector('.calc').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       try { localStorage.setItem('ab-rentbuy-step', String(curStep)); } catch (e) { /* private mode */ }
     }
