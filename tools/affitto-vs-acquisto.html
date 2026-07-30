@@ -345,18 +345,42 @@
     .crypto-more > summary::-webkit-details-marker { display: none; }
     .crypto-more p { margin: 10px 0 0; font-size: .78rem; line-height: 1.55; }
 
-    /* I due flussi in gioco */
-    .invest-flows { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .invest-flows > div { padding: 16px 18px; border: 1px solid rgba(22,93,255,.3); border-radius: 14px; background: var(--white); }
-    .invest-flows span { display: block; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
-    .invest-flows > div > b { display: block; margin-top: 8px; font-size: clamp(1.4rem, 2.6vw, 1.95rem); letter-spacing: -.04em; }
-    .invest-flows i { display: block; margin-top: 5px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
-    .invest-flows i b { color: var(--ink); font-size: inherit; font-weight: 650; }
+    /* Il confronto dei due piani: cosa investe chi affitta, cosa blocca chi compra */
+    .duel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .duel__side { padding: 16px 18px; border: 1px solid rgba(22,93,255,.35); border-radius: 14px; background: var(--white); }
+    .duel__side--buy { border-color: rgba(17,22,21,.3); }
+    .duel__tag { display: block; font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; color: var(--blue); }
+    .duel__side--buy .duel__tag { color: var(--ink); }
+    .duel__nums { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-top: 9px; }
+    .duel__nums p { margin: 0; }
+    .duel__nums b { display: block; font-size: clamp(1.25rem, 2.3vw, 1.7rem); letter-spacing: -.04em; }
+    .duel__nums small { display: block; margin-top: 2px; color: var(--muted); font-family: var(--mono); font-size: .56rem; text-transform: uppercase; letter-spacing: .05em; }
+    .duel__side i { display: block; margin-top: 9px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
+    .duel__side i b { color: var(--ink); font-size: inherit; font-weight: 650; }
+
+    /* Navigazione a passi nell'hero */
+    .steps-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+    .steps-nav a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); font-size: .74rem; font-weight: 650; transition: border-color .16s ease, transform .16s ease; }
+    .steps-nav a:hover { border-color: var(--ink); transform: translateY(-1px); }
+    .steps-nav i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); color: white; font-style: normal; font-size: .6rem; }
+
+    /* Barrette di probabilità e separatori di famiglia negli scenari */
+    .pmeter { display: block; max-width: 150px; height: 3px; margin-top: 7px; border-radius: 999px; background: rgba(17,22,21,.1); overflow: hidden; }
+    .pmeter i { display: block; height: 100%; border-radius: inherit; background: #7a817b; }
+    .scen tr.base .pmeter i { background: var(--blue); }
+    .scen tr.on .pmeter i { background: var(--orange); }
+    .scen tr.fam .fam-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 14px; }
+    .scen tr.fam em { color: var(--muted); font-family: var(--mono); font-size: .56rem; font-style: normal; }
+
+    /* Intestazione del blocco approfondimenti */
+    .deep-head { margin: 26px 4px 0; }
+    .deep-head .step-tag { margin: 0 0 6px; }
+    .deep-head > p:last-child { margin: 0; color: var(--muted); font-size: .84rem; max-width: 70ch; }
     #ip-test { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid rgba(22,93,255,.25); }
     #ip-test b { color: var(--ink); }
 
     @media (max-width: 900px) { .port-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 520px) { .invest-flows { grid-template-columns: 1fr; } .port-row { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .duel { grid-template-columns: 1fr; } .port-row { grid-template-columns: 1fr; } }
 
     /* Sezioni di approfondimento richiudibili */
     details.deep { padding: 0; }
@@ -449,6 +473,13 @@
         <p class="eyebrow"><span class="status-dot"></span> Strumento · Finanza personale</p>
         <h1>Comprare o <em>affittare casa?</em></h1>
         <p class="lead">Il confronto giusto non è «rata contro affitto»: è <strong>quanto patrimonio netto hai in tasca</strong> alla fine dell'orizzonte temporale, nei due scenari. Chi compra accumula equity nel mattone. Chi affitta, <strong>per fare un confronto onesto, deve investire</strong> l'anticipo che non ha versato e ogni euro di differenza mensile: se se li spende, comprare vince quasi sempre.</p>
+        <nav class="steps-nav" aria-label="Come funziona il calcolatore">
+          <a href="#form"><i>1</i> I tuoi numeri</a>
+          <a href="#invest"><i>2</i> L'investimento</a>
+          <a href="#verdict"><i>3</i> Il verdetto</a>
+          <a href="#scenari"><i>4</i> Gli scenari</a>
+          <a href="#approfondimenti"><i>5</i> Approfondimenti</a>
+        </nav>
       </div>
     </header>
 
@@ -646,9 +677,24 @@
             <p class="step-tag"><i>2</i> Dove investi se resti in affitto?</p>
             <h3>È il punto chiave di questo calcolatore</h3>
             <p class="lead">Chi compra immobilizza due cose: l'<strong>anticipo</strong> (più i costi d'acquisto) il giorno del rogito, e ogni mese la <strong>differenza tra rata e canone</strong>. Chi resta in affitto quei soldi non li tira fuori — ma se non li investe non sta risparmiando, li sta spendendo.<br />Ed è esattamente per questo che <strong>senza investire converrebbe sempre comprare</strong>: il mutuo è un piano di accumulo obbligatorio, l'affitto no. Il rendimento che scegli qui pesa sul verdetto più del prezzo della casa, più del tasso, più della rivalutazione.</p>
-            <div class="invest-flows">
-              <div><span>Anticipo + costi, investiti subito</span><b id="ip-cassa"></b><i id="ip-cassa-note"></i></div>
-              <div><span>Differenza sulla rata, ogni mese</span><b id="ip-mese"></b><i id="ip-mese-note"></i></div>
+            <div class="duel">
+              <div class="duel__side duel__side--rent">
+                <span class="duel__tag">Se resti in affitto — la quota da investire</span>
+                <div class="duel__nums">
+                  <p><b id="ip-cassa"></b><small>subito, in un colpo</small></p>
+                  <p><b id="ip-mese"></b><small>ogni mese, il 1° anno</small></p>
+                </div>
+                <i id="ip-cassa-note"></i>
+                <i id="ip-mese-note"></i>
+              </div>
+              <div class="duel__side duel__side--buy">
+                <span class="duel__tag">Se compri — la rata che resta ferma</span>
+                <div class="duel__nums">
+                  <p><b id="ip-rata"></b><small>al mese, fissa</small></p>
+                  <p><b id="ip-quota"></b><small>di cui già risparmio, il 1° anno</small></p>
+                </div>
+                <i id="ip-rata-note"></i>
+              </div>
             </div>
             <p class="port-intro">Scegli come vengono investiti:</p>
             <div class="port-row" id="ports"></div>
@@ -697,9 +743,9 @@
             </div>
           </div>
 
-          <details class="card deep">
-            <summary><h3>Testa scenari alternativi</h3><span>Tassi, mercato, affitti, portafoglio, disciplina <b>+</b></span></summary>
-            <div>
+          <div class="card" id="scenari">
+            <p class="step-tag"><i>4</i> Gli scenari di mercato</p>
+            <h3>E se il mercato va diversamente?</h3>
             <div class="scen-live neutro" id="scen-live"></div>
             <p class="note">Cinque leve indipendenti, sul tuo orizzonte di <span id="scen-anni"></span> anni. <strong>Puoi accenderne più di una insieme</strong> — tassi alti <em>e</em> mattone in boom, per esempio — ma non due opposte: dentro ogni famiglia la scelta è unica, accenderne una spegne l'altra. Le opzioni sono ordinate <strong>dalla più probabile alla meno probabile</strong>. I tuoi numeri nel pannello non vengono mai riscritti; per tornare indietro c'è «spegni» sulla riga, o «Rimuovi tutto» qui sopra.<br />Le cifre di ogni riga tengono già conto delle altre leve accese: leggile come «cosa succede se in questa famiglia scelgo questa».<br />Cambia anche la colonna «Affitto», e non è un errore: nei due scenari esci di casa con la stessa cifra ogni mese, quindi se un'ipotesi rende l'acquisto più caro chi affitta si ritrova a investire di più.</p>
             <p class="note" style="margin-bottom:10px"><strong>Combinazioni pronte</strong> — accendono più leve insieme, poi puoi ritoccarle una a una:</p>
@@ -709,8 +755,12 @@
               <tbody id="scen"></tbody>
             </table>
             <p class="note" style="margin:22px 0 0">Da dove vengono le percentuali: sono <strong>stime soggettive</strong> ricavate dalla frequenza storica di ciascuna condizione su orizzonti lunghi, in Italia e sui mercati sviluppati. Non sono previsioni e nessuno ha i numeri veri — servono a distinguere «raro ma possibile» da «probabile». Dentro ogni famiglia le opzioni sommano a 100%, contando anche il caso base (i tuoi parametri).<br />Quando accendi più leve, la probabilità mostrata è il <strong>prodotto</strong> delle sole condizioni accese — sulle famiglie che lasci al caso base non si sta affermando nulla, quindi non entrano nel conto. Va comunque letta con prudenza, perché le variabili sono <strong>correlate</strong>: inflazione alta e tassi alti arrivano quasi sempre insieme, quindi una combinazione coerente è più probabile di quanto dica il prodotto, e una contraddittoria molto meno. E se sposti i parametri del pannello lontano dai valori di partenza, la probabilità del «caso base» non vale più.</p>
-            </div>
-          </details>
+          </div>
+
+          <div class="deep-head" id="approfondimenti">
+            <p class="step-tag"><i>5</i> Approfondimenti</p>
+            <p>Le soglie di pareggio, dove finiscono i soldi voce per voce, la sensibilità alle ipotesi e il metodo. Aprili solo se vuoi scavare: il verdetto non cambia.</p>
+          </div>
 
           <details class="card deep">
             <summary><h3>Soglie di pareggio</h3><span>Pareggio, affitto e prezzo limite <b>+</b></span></summary>
@@ -1351,10 +1401,23 @@
       $('ip-cassa-note').innerHTML = 'La cassa che chi compra versa al rogito (' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) +
         ' di costi). Chi affitta non la tira fuori: la investe, e in ' + p.anni + ' anni diventa <b>' +
         money(r.cassaIniziale * Math.pow(1 + p.rendimento / 100, p.anni)) + '</b> al lordo delle tasse.';
-      $('ip-mese').textContent = (diffMese1 >= 0 ? money(diffMese1) : money(0)) + '/mese';
+      $('ip-mese').textContent = money(Math.max(0, diffMese1));
       $('ip-mese-note').innerHTML = diffMese1 > 0
         ? 'Il 1° anno possedere costa ' + money(r.costoBuy1) + ' al mese contro ' + money(r.costoRent1) + ' di affitto. Chi affitta deve mettere da parte quella differenza, non spenderla.'
         : 'Qui l\'affitto costa più della rata: è <b>chi compra</b> ad avere il surplus da investire (' + money(-diffMese1) + '/mese). Man mano che il canone si adegua, la differenza si sposta.';
+
+      // La sponda opposta: la rata non si muove, e dentro c'è già risparmio forzoso
+      if (r.rata > 0) {
+        var int1 = r.mutuo * (p.tasso / 100 / 12);
+        var quota1 = Math.max(0, r.rata - int1);
+        $('ip-rata').textContent = money(r.rata);
+        $('ip-quota').textContent = money(quota1);
+        $('ip-rata-note').innerHTML = 'Ferma per ' + p.durata + ' anni, mentre l\'affitto si adegua ogni anno. Il 1° anno dentro la rata ci sono <b>' + money(int1) + '</b> di interessi — il costo vero — e <b>' + money(quota1) + '</b> di quota capitale: risparmio obbligatorio che diventa casa. Anno dopo anno gli interessi calano e la quota capitale cresce.';
+      } else {
+        $('ip-rata').textContent = '0 €';
+        $('ip-quota').textContent = '—';
+        $('ip-rata-note').textContent = 'Senza mutuo non c\'è rata: tutta la cifra è immobilizzata il giorno dell\'acquisto, e il confronto si gioca solo sul costo-opportunità di quel capitale.';
+      }
 
       // Controfattuale: stessi parametri ma nessuno investe il surplus mensile
       var rNoInv = simulate(Object.assign({}, p, { quotaInv: 0 }));
@@ -1499,14 +1562,15 @@
         var rr = simulate(pTest);
         var dd = rr.netBuy - rr.netRent;
         var badge = '<span class="prob ' + (prob >= 30 ? 'hi' : (prob <= 15 ? 'lo' : '')) + '">' + prob + '%</span>';
-        return '<tr class="' + (cls || '') + (on ? ' on' : '') + '"><td><strong>' + nome + '</strong>' + badge + '<small>' + desc + '</small></td>' +
+        var meter = '<span class="pmeter" aria-hidden="true"><i style="width:' + Math.min(100, prob) + '%"></i></span>';
+        return '<tr class="' + (cls || '') + (on ? ' on' : '') + '"><td><strong>' + nome + '</strong>' + badge + '<small>' + desc + '</small>' + meter + '</td>' +
                '<td class="num">' + money(rr.netBuy) + '</td><td class="num">' + money(rr.netRent) + '</td>' +
                '<td class="num" style="color:' + (dd >= 0 ? '#1c9a52' : '#c33f1c') + '">' + signed(dd) + '</td>' +
                '<td>' + azione + '</td></tr>';
       };
       FAMIGLIE.forEach(function (f) {
         var att = inFam(f.id);
-        sc += '<tr class="fam"><td colspan="5"><strong>' + f.nome + '</strong></td></tr>';
+        sc += '<tr class="fam"><td colspan="5"><span class="fam-row"><strong>' + f.nome + '</strong><em>una sola leva attiva per famiglia · % = probabilità indicativa</em></span></td></tr>';
         // Caso base + opzioni, ordinati dal più probabile al meno probabile.
         var opzioni = [{ base: true, n: 'Come da tuoi parametri', d: f.baseD, p: f.pBase }]
           .concat(SCENARI.filter(function (s) { return s.fam === f.id; }))
