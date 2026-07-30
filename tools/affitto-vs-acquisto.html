@@ -197,15 +197,16 @@
       .sr-scen { padding: 3px 8px; font-size: .52rem; }
     }
 
-    /* Passo 1 — la scelta di investimento, prima di tutto il resto */
-    .step-invest { padding: 8px 0 40px; }
-    .step-invest__box { padding: clamp(26px, 3.5vw, 40px); border: 1px solid var(--blue); border-radius: var(--radius-lg); background: #f2f5ff; }
-    .step-tag { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; color: var(--blue); font-family: var(--mono); font-size: .64rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
-    .step-tag i { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--blue); color: white; font-style: normal; font-size: .66rem; }
-    .step-invest h2 { margin: 0; font-size: clamp(1.5rem, 3vw, 2.15rem); font-weight: 640; letter-spacing: -.04em; }
-    .step-invest > .container > .step-invest__box > p.lead { max-width: 66ch; margin: 12px 0 0; color: #40506e; font-size: .95rem; line-height: 1.5; }
+    /* Passo 2 — la scelta di investimento, il cuore del confronto */
+    .step-tag { display: flex; align-items: center; gap: 11px; margin: 0 0 14px; color: var(--blue); font-family: var(--mono); font-size: .63rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
+    .step-tag i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: white; font-style: normal; font-size: .64rem; }
+    .invest-step { border: 1px solid var(--blue); background: #f2f5ff; padding: clamp(24px, 3vw, 34px); }
+    .invest-step > h3 { margin: 0; font-size: clamp(1.25rem, 2.4vw, 1.7rem); font-weight: 640; letter-spacing: -.04em; color: var(--blue); }
+    .invest-step > p.lead { max-width: 70ch; margin: 12px 0 22px; color: #3d4c68; font-size: .9rem; line-height: 1.55; }
+    .invest-step > p.lead strong { color: var(--ink); }
+    .port-intro { margin: 24px 0 10px; color: var(--ink); font-size: .82rem; font-weight: 650; }
 
-    .port-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 24px 0 0; }
+    .port-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 0; }
     .port { padding: 15px 16px; border: 1px solid rgba(22,93,255,.28); border-radius: 14px; background: var(--white); cursor: pointer; text-align: left; transition: transform .16s ease, border-color .16s ease, background .16s ease; }
     .port:hover { transform: translateY(-2px); border-color: var(--blue); }
     .port u { display: block; margin-bottom: 8px; color: var(--muted); font-family: var(--mono); font-size: .55rem; text-decoration: none; text-transform: uppercase; letter-spacing: .07em; }
@@ -229,14 +230,14 @@
     .crypto-more > summary::-webkit-details-marker { display: none; }
     .crypto-more p { margin: 10px 0 0; font-size: .78rem; line-height: 1.55; }
 
-    /* Come lavora l'investimento */
+    /* I due flussi in gioco */
     .invest-flows { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .invest-flows > div { padding: 16px 18px; border: 1px solid rgba(22,93,255,.3); border-radius: 14px; background: #f7f9ff; }
+    .invest-flows > div { padding: 16px 18px; border: 1px solid rgba(22,93,255,.3); border-radius: 14px; background: var(--white); }
     .invest-flows span { display: block; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
     .invest-flows > div > b { display: block; margin-top: 8px; font-size: clamp(1.4rem, 2.6vw, 1.95rem); letter-spacing: -.04em; }
     .invest-flows i { display: block; margin-top: 5px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
     .invest-flows i b { color: var(--ink); font-size: inherit; font-weight: 650; }
-    #ip-test { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid var(--line); }
+    #ip-test { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid rgba(22,93,255,.25); }
     #ip-test b { color: var(--ink); }
 
     @media (max-width: 900px) { .port-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -334,36 +335,16 @@
       </div>
     </header>
 
-    <section class="step-invest">
-      <div class="container">
-        <div class="step-invest__box">
-          <p class="step-tag"><i>1</i> Come investi la differenza</p>
-          <h2>Dove investi se resti in affitto?</h2>
-          <p class="lead">Il risultato dipende dal rendimento della liquidità che non usi per anticipo, notaio e differenza mensile. Scegli un portafoglio: è l'ipotesi che guida tutto il confronto.</p>
-          <div class="port-row" id="ports"></div>
-          <div class="crypto-warn" id="crypto-warn" hidden>
-            <span aria-hidden="true">▲</span>
-            <span>
-              <b>Rischio elevato:</b> il calcolo usa un rendimento medio costante; non rappresenta crolli, volatilità e rischio di sequenza.
-              <details class="crypto-more">
-                <summary>Perché conta</summary>
-                <p id="crypto-detail"></p>
-              </details>
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="calc">
       <div class="container calc-layout">
 
         <!-- ─────────── INPUT ─────────── -->
         <form class="panel" id="form" autocomplete="off">
-          <h2>I tuoi numeri</h2>
+          <p class="step-tag"><i>1</i> I tuoi numeri</p>
+          <h2>La casa e l'affitto di oggi</h2>
           <p class="panel__hint">Muovi gli slider: tutto si ricalcola in tempo reale.</p>
 
-          <p class="adv-group">2 · La casa che stai valutando</p>
+          <p class="adv-group">La casa che stai valutando</p>
 
           <div class="field">
             <label for="prezzo">Valore immobile <output id="prezzo_o"></output></label>
@@ -391,7 +372,7 @@
             <small>Se supera l'orizzonte, il debito residuo viene sottratto dal patrimonio finale.</small>
           </div>
 
-          <p class="adv-group">3 · Affitto e orizzonte</p>
+          <p class="adv-group">Affitto e orizzonte</p>
 
           <div class="field">
             <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
@@ -519,6 +500,29 @@
             </div>
           </div>
 
+          <div class="card invest-step" id="invest">
+            <p class="step-tag"><i>2</i> Dove investi se resti in affitto?</p>
+            <h3>È il punto chiave di questo calcolatore</h3>
+            <p class="lead">Chi compra immobilizza due cose: l'<strong>anticipo</strong> (più i costi d'acquisto) il giorno del rogito, e ogni mese la <strong>differenza tra rata e canone</strong>. Chi resta in affitto quei soldi non li tira fuori — ma se non li investe non sta risparmiando, li sta spendendo.<br />Ed è esattamente per questo che <strong>senza investire converrebbe sempre comprare</strong>: il mutuo è un piano di accumulo obbligatorio, l'affitto no. Il rendimento che scegli qui pesa sul verdetto più del prezzo della casa, più del tasso, più della rivalutazione.</p>
+            <div class="invest-flows">
+              <div><span>Anticipo + costi, investiti subito</span><b id="ip-cassa"></b><i id="ip-cassa-note"></i></div>
+              <div><span>Differenza sulla rata, ogni mese</span><b id="ip-mese"></b><i id="ip-mese-note"></i></div>
+            </div>
+            <p class="port-intro">Scegli come vengono investiti:</p>
+            <div class="port-row" id="ports"></div>
+            <div class="crypto-warn" id="crypto-warn" hidden>
+              <span aria-hidden="true">▲</span>
+              <span>
+                <b>Rischio elevato:</b> il calcolo usa un rendimento medio costante; non rappresenta crolli, volatilità e rischio di sequenza.
+                <details class="crypto-more">
+                  <summary>Perché conta</summary>
+                  <p id="crypto-detail"></p>
+                </details>
+              </span>
+            </div>
+            <p class="note" id="ip-test"></p>
+          </div>
+
           <div class="card verdict" id="verdict">
             <small id="v-kicker">Verdetto</small>
             <strong id="v-title"></strong>
@@ -549,16 +553,6 @@
               <span><i style="background:var(--orange)"></i>Affitto + investo</span>
               <span><i style="background:#9aa09a"></i>Punto di pareggio</span>
             </div>
-          </div>
-
-          <div class="card">
-            <h3>Come lavora l'investimento</h3>
-            <p class="note">I due flussi che chi affitta deve mettere a rendere perché il confronto stia in piedi. Se se li spende, comprare vince quasi sempre.</p>
-            <div class="invest-flows">
-              <div><span>Liquidità iniziale investita</span><b id="ip-cassa"></b><i id="ip-cassa-note"></i></div>
-              <div><span>Differenza mensile investita</span><b id="ip-mese"></b><i id="ip-mese-note"></i></div>
-            </div>
-            <p class="note" id="ip-test"></p>
           </div>
 
           <details class="card deep">
@@ -1137,7 +1131,7 @@
 
       // Verdetto
       $('verdict').setAttribute('data-win', win);
-      $('v-kicker').textContent = 'Verdetto' +
+      $('v-kicker').textContent = '3 · Il verdetto' +
         (attivi.length ? ' · scenario ' + attivi.map(function (id) { return '«' + byId(id).n + '»'; }).join(' + ') : '');
       if (win === 'buy') {
         $('v-title').innerHTML = 'Su ' + p.anni + ' anni, acquistare conviene di <em>' + money(diff) + '</em>';
