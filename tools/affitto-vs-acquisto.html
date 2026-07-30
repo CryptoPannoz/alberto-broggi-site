@@ -1992,9 +1992,17 @@
       status.classList.toggle('is-error', !!isError);
     }
 
-    // Punto di aggancio per un analytics con eventi (es. Plausible o GA), senza inviare dati personali.
+    // Traccia solo il nome della CTA sul Worker Cloudflare: nessuna email o dato della simulazione lascia il browser.
+    var CTA_ENDPOINT = 'https://bebroggi-cta-tracker.bebroggi.workers.dev';
     function trackCta(name) {
-      try { window.dispatchEvent(new CustomEvent('rentbuy:cta', { detail: { name: name } })); } catch (e) { /* browser datato */ }
+      var payload = JSON.stringify({ event: name });
+      try {
+        var sent = navigator.sendBeacon && navigator.sendBeacon(CTA_ENDPOINT, new Blob([payload], { type: 'text/plain;charset=UTF-8' }));
+        if (!sent && window.fetch) {
+          fetch(CTA_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload, keepalive: true }).catch(function () { /* analytics opzionale */ });
+        }
+      } catch (e) { /* analytics opzionale */ }
+      try { window.dispatchEvent(new CustomEvent('rentbuy:cta', { detail: { name: name } })); } catch (e2) { /* browser datato */ }
     }
 
     function doShare(btn) {

@@ -6,3 +6,6 @@ CV & Bando/
 
 # Config locale Claude Code (tooling personale)
 .claude/
+
+# Stato locale Wrangler / Cloudflare
+.wrangler/

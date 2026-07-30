@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "bebroggi-cta-tracker",
+  "main": "workers/cta-tracker.js",
+  "compatibility_date": "2026-07-30",
+  "workers_dev": true,
+  "analytics_engine_datasets": [
+    {
+      "binding": "CTA",
+      "dataset": "bebroggi_rentbuy_cta"
+    }
+  ]
+}
