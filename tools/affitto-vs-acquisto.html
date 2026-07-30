@@ -49,12 +49,27 @@
     .adv > summary::-webkit-details-marker { display: none; }
     .adv > summary span:last-child { color: var(--muted); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .07em; }
     .adv[open] > summary span:last-child b { display: inline-block; transform: rotate(45deg); }
-    .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding-bottom: 18px; }
-    .adv-grid .field { margin: 0; }
-    .adv-grid .field > label { font-size: .68rem; font-weight: 600; }
-    .adv-grid .field input[type="number"] { padding: 8px 10px; font-size: .82rem; }
-    .check { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 9px; font-size: .7rem; line-height: 1.35; color: #3f443f; }
-    .check input { margin: 2px 0 0; accent-color: var(--blue); width: 15px; height: 15px; }
+    /* I parametri avanzati hanno lo stesso peso visivo di quelli principali */
+    .adv-grid { padding-bottom: 18px; }
+    .adv-grid .field { margin: 0 0 17px; }
+    .adv-grid .field + .field { margin-top: 0; }
+    .adv-group {
+      display: flex; align-items: center; gap: 10px; margin: 24px 0 12px;
+      color: var(--ink); font-family: var(--mono); font-size: .62rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .07em;
+    }
+    .adv-group::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    .adv-group:first-child { margin-top: 4px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .yn { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .yn button {
+      min-height: 40px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper);
+      cursor: pointer; font-size: .8rem; font-weight: 650; letter-spacing: -.01em;
+      transition: background .16s ease, color .16s ease, border-color .16s ease;
+    }
+    .yn button:hover { border-color: var(--ink); }
+    .yn button.on { background: var(--blue); border-color: var(--blue); color: white; }
+    .yn button:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
     .panel__actions { display: flex; gap: 8px; margin-top: 6px; }
     .mini-btn { flex: 1; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: transparent; cursor: pointer; font-size: .72rem; font-weight: 650; }
     .mini-btn:hover { background: var(--paper); }
@@ -334,52 +349,97 @@
           <details class="adv">
             <summary><span>Parametri avanzati</span><span id="adv-tag">Modifica <b>+</b></span></summary>
             <div class="adv-grid">
+              <p class="adv-group">Il mercato — le ipotesi che decidono il verdetto</p>
               <div class="field">
-                <label for="durata">Durata mutuo (anni)</label>
-                <input type="number" id="durata" min="1" max="40" step="1" inputmode="numeric" />
-              </div>
-              <div class="field">
-                <label for="costiAcq">Costi d'acquisto (%)</label>
-                <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
-              </div>
-              <div class="field">
-                <label for="manut">Manutenzione (%/anno)</label>
-                <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
-              </div>
-              <div class="field">
-                <label for="imu">IMU + tasse (€/anno)</label>
-                <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
-              </div>
-              <div class="field">
-                <label for="altro">Altre spese (€/mese)</label>
-                <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
-              </div>
-              <div class="field">
-                <label for="rivaluta">Rivalutazione casa (%/anno)</label>
-                <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
-              </div>
-              <div class="field">
-                <label for="inflAffitto">Crescita affitto (%/anno)</label>
-                <input type="number" id="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" />
-              </div>
-              <div class="field">
-                <label for="rendimento">Rendimento investimenti (%/anno)</label>
+                <label for="rendimento">Rendimento investimenti <output id="rendimento_o"></output></label>
                 <input type="number" id="rendimento" min="0" max="40" step="0.1" inputmode="decimal" />
+                <input type="range" id="rendimento_r" min="0" max="25" step="0.1" aria-label="Rendimento investimenti (slider)" />
+                <small>Quanto rende il capitale investito, al netto dei costi. È la leva più potente: scegli un portafoglio nella card «Dove investi la differenza».</small>
               </div>
               <div class="field">
-                <label for="quotaInv">Quota del surplus investita (%)</label>
+                <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
+                <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
+                <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
+                <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media.</small>
+              </div>
+              <div class="field">
+                <label for="inflAffitto">Crescita affitto <output id="inflAffitto_o"></output></label>
+                <input type="number" id="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" />
+                <input type="range" id="inflAffitto_r" min="0" max="10" step="0.1" aria-label="Crescita affitto (slider)" />
+                <small>Adeguamento annuo del canone. Più corre, più conviene aver bloccato una rata fissa.</small>
+              </div>
+              <div class="field">
+                <label for="quotaInv">Quota del surplus investita <output id="quotaInv_o"></output></label>
                 <input type="number" id="quotaInv" min="0" max="100" step="5" inputmode="numeric" />
+                <input type="range" id="quotaInv_r" min="0" max="100" step="5" aria-label="Quota del surplus investita (slider)" />
+                <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
+              </div>
+
+              <p class="adv-group">Il mutuo</p>
+              <div class="field">
+                <label for="durata">Durata mutuo <output id="durata_o"></output></label>
+                <input type="number" id="durata" min="1" max="40" step="1" inputmode="numeric" />
+                <input type="range" id="durata_r" min="5" max="40" step="1" aria-label="Durata mutuo (slider)" />
+                <small>Se supera l'orizzonte, il debito residuo viene sottratto dal patrimonio finale.</small>
+              </div>
+              <div class="field field--bool">
+                <label>Detrazione interessi prima casa <output id="detrazione_o"></output></label>
+                <div class="yn" role="group" aria-label="Detrazione interessi prima casa">
+                  <button type="button" data-bool="detrazione" data-val="1">Sì</button>
+                  <button type="button" data-bool="detrazione" data-val="0">No</button>
+                </div>
+                <input type="checkbox" id="detrazione" class="sr-only" />
+                <small>19% degli interessi su un massimo di 4.000 €/anno: fino a 760 €/anno di IRPEF in meno. Serve capienza fiscale.</small>
+              </div>
+
+              <p class="adv-group">Costi della casa</p>
+              <div class="field">
+                <label for="costiAcq">Costi d'acquisto <output id="costiAcq_o"></output></label>
+                <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
+                <input type="range" id="costiAcq_r" min="0" max="20" step="0.5" aria-label="Costi d'acquisto (slider)" />
+                <small>Sul prezzo: imposte, notaio, agenzia, istruttoria. Da privato senza agenzia scende molto.</small>
               </div>
               <div class="field">
-                <label for="tasseFin">Tassa su plusvalenze (%)</label>
-                <input type="number" id="tasseFin" min="0" max="50" step="1" inputmode="numeric" />
+                <label for="manut">Manutenzione <output id="manut_o"></output></label>
+                <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
+                <input type="range" id="manut_r" min="0" max="3" step="0.1" aria-label="Manutenzione (slider)" />
+                <small>Del valore della casa, all'anno: straordinarie, infissi, facciata, assicurazione. Le condominiali ordinarie sono escluse.</small>
               </div>
               <div class="field">
-                <label for="costiVendita">Costi di vendita (%)</label>
+                <label for="imu">IMU + tasse <output id="imu_o"></output></label>
+                <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
+                <input type="range" id="imu_r" min="0" max="3000" step="50" aria-label="IMU e tasse (slider)" />
+                <small>Zero se è prima casa. Alzalo se stai valutando una seconda casa.</small>
+              </div>
+              <div class="field">
+                <label for="altro">Altre spese <output id="altro_o"></output></label>
+                <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
+                <input type="range" id="altro_r" min="0" max="500" step="5" aria-label="Altre spese (slider)" />
+                <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
+              </div>
+
+              <p class="adv-group">Uscita e fisco</p>
+              <div class="field field--bool">
+                <label>A fine orizzonte liquido tutto <output id="vendo_o"></output></label>
+                <div class="yn" role="group" aria-label="A fine orizzonte liquido tutto">
+                  <button type="button" data-bool="vendo" data-val="1">Sì</button>
+                  <button type="button" data-bool="vendo" data-val="0">No</button>
+                </div>
+                <input type="checkbox" id="vendo" class="sr-only" />
+                <small>Vendi la casa e disinvesti il portafoglio: sottrae costi di vendita e tasse sul capital gain. Se rispondi No il patrimonio resta teorico, non incassabile.</small>
+              </div>
+              <div class="field">
+                <label for="costiVendita">Costi di vendita <output id="costiVendita_o"></output></label>
                 <input type="number" id="costiVendita" min="0" max="15" step="0.5" inputmode="decimal" />
+                <input type="range" id="costiVendita_r" min="0" max="10" step="0.5" aria-label="Costi di vendita (slider)" />
+                <small>Sul valore finale: agenzia, APE, cancellazione ipoteca. Contano solo se liquidi.</small>
               </div>
-              <label class="check"><input type="checkbox" id="vendo" /> <span>A fine orizzonte liquido tutto (vendo casa e disinvesto): sottrae costi di vendita e tasse sul capital gain.</span></label>
-              <label class="check"><input type="checkbox" id="detrazione" /> <span>Detrazione interessi mutuo prima casa: 19% su max 4.000 €/anno di interessi (fino a 760 €/anno).</span></label>
+              <div class="field">
+                <label for="tasseFin">Tassa su plusvalenze <output id="tasseFin_o"></output></label>
+                <input type="number" id="tasseFin" min="0" max="50" step="1" inputmode="numeric" />
+                <input type="range" id="tasseFin_r" min="0" max="50" step="1" aria-label="Tassa su plusvalenze (slider)" />
+                <small>Solo sui guadagni finanziari, non sul capitale versato. 26% per ETF e azioni; le cripto hanno un regime proprio, verificalo.</small>
+              </div>
             </div>
           </details>
 
@@ -562,7 +622,8 @@
     };
     var NUM = ['prezzo','tasso','anticipo','anni','affitto','durata','costiAcq','manut','imu','altro','rivaluta','inflAffitto','rendimento','quotaInv','tasseFin','costiVendita'];
     var BOOL = ['vendo','detrazione'];
-    var SLIDERS = ['prezzo','tasso','anticipo','anni','affitto'];
+    // Ogni parametro numerico ha il suo slider, avanzati compresi.
+    var SLIDERS = NUM.slice();
     var STORE = 'ab-rentbuy-v1';
 
     var $ = function (id) { return document.getElementById(id); };
@@ -993,6 +1054,19 @@
       $('anticipo_o').textContent = money(p.anticipo);
       $('anni_o').textContent = p.anni + (p.anni === 1 ? ' anno' : ' anni');
       $('affitto_o').textContent = money(p.affitto);
+
+      ['rendimento','rivaluta','inflAffitto','quotaInv','costiAcq','manut','tasseFin','costiVendita']
+        .forEach(function (k) { $(k + '_o').textContent = pct(p[k]); });
+      $('durata_o').textContent = p.durata + (p.durata === 1 ? ' anno' : ' anni');
+      $('imu_o').textContent = money(p.imu) + '/anno';
+      $('altro_o').textContent = money(p.altro) + '/mese';
+      BOOL.forEach(function (k) {
+        $(k + '_o').textContent = p[k] ? 'Sì' : 'No';
+        Array.prototype.forEach.call(document.querySelectorAll('[data-bool="' + k + '"]'), function (b) {
+          b.classList.toggle('on', (b.getAttribute('data-val') === '1') === !!p[k]);
+        });
+      });
+
       var ut = p.prezzo * p.costiAcq / 100;
       $('anticipo_hint').innerHTML = 'Capitale che versi sul prezzo. Servono in più <b>' + money(ut) + '</b> di costi d\'acquisto: ' +
         'la cassa da avere il giorno del rogito è <b>' + money(Math.max(0, p.anticipo) + ut) + '</b>. ' +
@@ -1361,6 +1435,14 @@
       var btn = ev.target.closest('.apply');
       if (!btn) { return; }
       setLever(btn.getAttribute('data-fam'), btn.getAttribute('data-lev'));
+    });
+
+    // Toggle Sì/No: pilotano la checkbox nascosta, che resta la sorgente di verità per read()/write().
+    $('form').addEventListener('click', function (ev) {
+      var b = ev.target.closest('[data-bool]');
+      if (!b) { return; }
+      $(b.getAttribute('data-bool')).checked = b.getAttribute('data-val') === '1';
+      render();
     });
 
     // I portafogli scrivono davvero nel pannello: è una scelta tua, non uno scenario in prova.
