@@ -100,6 +100,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/style.css?v=lang-2" />
+  <script src="data/omi-capoluoghi.js"></script>
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "db61b4f9c2c74ea3a63c5265be73510e"}'></script>
   <!-- End Cloudflare Web Analytics -->
@@ -152,6 +153,21 @@
       flex: none; display: grid; place-items: center; min-width: 30px; height: 21px; padding: 0 6px;
       border-radius: 999px; background: var(--ink); color: white; font-style: normal; font-size: .58rem;
     }
+    /* Precompilazione dai dati OMI */
+    .omi { margin: 0 0 20px; padding: 15px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+    .omi__title { margin: 0; font-size: .82rem; font-weight: 650; letter-spacing: -.02em; }
+    .omi__sub { margin: 5px 0 13px; color: var(--muted); font-size: .7rem; line-height: 1.45; }
+    .omi__row { display: grid; grid-template-columns: 1fr 88px; gap: 8px; }
+    .omi__f { display: flex; flex-direction: column; gap: 5px; }
+    .omi__f > span { color: var(--muted); font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .06em; }
+    .omi select, .omi input { width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 11px; background: var(--white); font-size: .82rem; }
+    .omi select:focus, .omi input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+    .omi__out { margin: 11px 0 0; color: var(--muted); font-family: var(--mono); font-size: .64rem; line-height: 1.55; }
+    .omi__out b { color: var(--ink); font-weight: 500; }
+    .omi__out em { display: block; margin-top: 3px; font-style: normal; }
+    .omi__apply { width: 100%; min-height: 40px; margin-top: 11px; border: 1px solid var(--blue); border-radius: 999px; background: var(--blue); color: white; cursor: pointer; font-size: .76rem; font-weight: 650; }
+    .omi__apply:hover:not([disabled]) { background: var(--ink); border-color: var(--ink); }
+    .omi__apply[disabled] { opacity: .4; cursor: default; }
     .field--key { padding: 15px 16px; margin-inline: -4px; border: 1px solid var(--blue); border-radius: 14px; background: #f2f5ff; }
     .field--key > label { color: var(--blue); }
     .field--key small b { color: var(--ink); }
@@ -446,6 +462,21 @@
           <p class="panel__hint">Muovi gli slider: tutto si ricalcola in tempo reale.</p>
 
           <p class="sub-step"><i>1.1</i> La casa</p>
+
+          <div class="omi" id="omi">
+            <p class="omi__title">Non conosci i valori della tua zona?</p>
+            <p class="omi__sub">Parti dai dati ufficiali dell'Osservatorio del Mercato Immobiliare, poi correggili con quello che vedi tu.</p>
+            <div class="omi__row">
+              <label class="omi__f" for="omi-citta"><span>Città</span>
+                <select id="omi-citta"><option value="">Scegli una città…</option></select>
+              </label>
+              <label class="omi__f" for="omi-mq"><span>Superficie m²</span>
+                <input type="number" id="omi-mq" min="20" max="500" step="5" inputmode="numeric" value="80" />
+              </label>
+            </div>
+            <p class="omi__out" id="omi-out">Scegli una città per vedere i valori al metro quadro.</p>
+            <button type="button" class="omi__apply" id="omi-apply" disabled>Usa questi valori</button>
+          </div>
 
           <div class="field">
             <label for="prezzo">Valore immobile <output id="prezzo_o"></output></label>
@@ -1630,6 +1661,68 @@
       if (!btn) { return; }
       setLever(btn.getAttribute('data-fam'), btn.getAttribute('data-lev'));
     });
+
+    /* ─────────── Precompilazione dai valori OMI ─────────── */
+    (function () {
+      var dati = window.OMI;
+      var sel = $('omi-citta'), mq = $('omi-mq'), out = $('omi-out'), btn = $('omi-apply');
+      if (!dati || !dati.citta || !dati.citta.length) {
+        $('omi').hidden = true;
+        return;
+      }
+      var STORE_CITTA = 'ab-rentbuy-citta';
+      sel.innerHTML = '<option value="">Scegli una città…</option>' + dati.citta.map(function (c, i) {
+        return '<option value="' + i + '">' + c.n + ' (' + c.p + ')</option>';
+      }).join('');
+
+      var scelta = function () {
+        var i = parseInt(sel.value, 10);
+        return isFinite(i) ? dati.citta[i] : null;
+      };
+      var superficie = function () {
+        var v = parseFloat(mq.value);
+        return isFinite(v) && v > 0 ? Math.min(500, v) : 0;
+      };
+
+      function aggiorna() {
+        var c = scelta(), m = superficie();
+        btn.disabled = !c || !m;
+        if (!c) {
+          out.innerHTML = 'Scegli una città per vedere i valori al metro quadro.';
+          return;
+        }
+        var prezzo = Math.round(c.v * m / 1000) * 1000;
+        var canone = Math.round(c.a * m / 25) * 25;
+        // il canone al metro quadro è un numero piccolo: serve il decimale
+        var mq2 = new Intl.NumberFormat('it-IT', { maximumFractionDigits: 1 }).format(c.a) + ' €';
+        out.innerHTML = '<b>' + money(c.v) + '/m²</b> in vendita · <b>' + mq2 + '/m² al mese</b> in affitto'
+          + '<em>Su ' + m + ' m²: <b>' + money(prezzo) + '</b> di valore e <b>' + money(canone) + '/mese</b> di canone.</em>'
+          + '<em>Mediana delle ' + c.z + (c.z === 1 ? ' zona' : ' zone') + ' OMI di ' + c.n + ', abitazioni civili in stato normale. '
+          + 'Fonte: ' + dati.fonte + ', semestre ' + dati.periodo + ' — sono valori di quel periodo, non di oggi.</em>';
+      }
+
+      sel.addEventListener('change', function () {
+        aggiorna();
+        try { localStorage.setItem(STORE_CITTA, sel.value); } catch (e) { /* private mode */ }
+      });
+      mq.addEventListener('input', aggiorna);
+
+      btn.addEventListener('click', function () {
+        var c = scelta(), m = superficie();
+        if (!c || !m) { return; }
+        $('prezzo').value = Math.round(c.v * m / 1000) * 1000;
+        $('affitto').value = Math.round(c.a * m / 25) * 25;
+        SLIDERS.forEach(function (k) { $(k + '_r').value = $(k).value; });
+        render();
+        $('verdict').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      try {
+        var salvata = localStorage.getItem(STORE_CITTA);
+        if (salvata && dati.citta[parseInt(salvata, 10)]) { sel.value = salvata; }
+      } catch (e) { /* private mode */ }
+      aggiorna();
+    })();
 
     // Toggle Sì/No: pilotano la checkbox nascosta, che resta la sorgente di verità per read()/write().
     $('form').addEventListener('click', function (ev) {
