@@ -3,10 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Affitto o acquisto? — Calcolatore | Alberto Broggi</title>
-  <meta name="description" content="Calcolatore affitto vs acquisto casa: valore immobile, tasso del mutuo, anticipo e orizzonte temporale. Confronta il patrimonio netto finale, l'anno di pareggio e l'affitto di indifferenza." />
-  <meta name="robots" content="index, follow" />
+  <title>Comprare o affittare casa? Calcolatore affitto vs acquisto</title>
+  <meta name="description" content="Conviene comprare o affittare? Calcolatore gratuito: patrimonio netto a confronto, costi non recuperabili e anno di pareggio, con i tuoi numeri." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="author" content="Alberto Broggi" />
   <link rel="canonical" href="https://bebroggi.it/tools/affitto-vs-acquisto.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="Alberto Broggi" />
+  <meta property="og:title" content="Comprare o affittare casa? Il calcolatore" />
+  <meta property="og:description" content="Il confronto giusto non è «rata contro affitto»: è quanto patrimonio netto ti resta dopo N anni nei due scenari. Calcolalo con i tuoi numeri." />
+  <meta property="og:url" content="https://bebroggi.it/tools/affitto-vs-acquisto.html" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Comprare o affittare casa? Il calcolatore" />
+  <meta name="twitter:description" content="Patrimonio netto a confronto dopo N anni, costi non recuperabili, anno di pareggio e scenari di mercato." />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://bebroggi.it/tools/affitto-vs-acquisto.html#app",
+        "name": "Calcolatore comprare o affittare casa",
+        "url": "https://bebroggi.it/tools/affitto-vs-acquisto.html",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Qualsiasi browser",
+        "inLanguage": "it-IT",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "description": "Confronta affitto e acquisto della prima casa sul patrimonio netto finale: mutuo, anticipo, costi d'acquisto, manutenzione, fisco, rendimento degli investimenti e scenari di mercato.",
+        "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+        "featureList": [
+          "Patrimonio netto a confronto sull'orizzonte scelto",
+          "Costi non recuperabili annui, anche in % del valore dell'immobile",
+          "Anno di pareggio, affitto di indifferenza, prezzo massimo sensato",
+          "Portafogli di riferimento per il rendimento della liquidità",
+          "Scenari di mercato combinabili su tassi, prezzi, inflazione e borsa"
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Alberto Broggi", "item": "https://bebroggi.it/it/" },
+          { "@type": "ListItem", "position": 2, "name": "Comprare o affittare casa?", "item": "https://bebroggi.it/tools/affitto-vs-acquisto.html" }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Conviene comprare o affittare casa?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Dipende da quattro cose: quanti anni resti in quella casa, il rapporto tra canone e prezzo, il tasso del mutuo e il rendimento a cui investi la liquidità che non immobilizzi. Su orizzonti lunghi e con un canone alto rispetto al prezzo comprare tende a vincere; su orizzonti brevi i costi d'acquisto, che in Italia valgono circa il 9% del prezzo, non fanno in tempo a essere assorbiti. Il confronto va fatto sul patrimonio netto finale, non sul confronto tra rata e canone." }
+          },
+          {
+            "@type": "Question",
+            "name": "Perché non basta confrontare la rata del mutuo con l'affitto?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Perché la rata non è tutta un costo: la quota capitale abbatte il debito e resta patrimonio, mentre gli interessi sono soldi che non tornano. E perché chi compra immobilizza l'anticipo più i costi d'acquisto, che chi affitta può invece investire. Confrontare rata e canone ignora entrambe le cose." }
+          },
+          {
+            "@type": "Question",
+            "name": "Cosa sono i costi non recuperabili di una casa?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sono le uscite che non tornano indietro in nessuna forma. Per chi affitta: il canone. Per chi compra: gli interessi del mutuo, i costi d'acquisto, la manutenzione straordinaria, l'IMU se dovuta e i costi di vendita, meno le detrazioni. La quota capitale del mutuo non è un costo non recuperabile, perché diventa patrimonio." }
+          },
+          {
+            "@type": "Question",
+            "name": "Se affitto devo investire la differenza?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Sì, altrimenti il confronto non è onesto. Chi resta in affitto non tira fuori l'anticipo e, nei mesi in cui la rata costa più del canone, non paga quella differenza: se non li investe li sta spendendo. È il motivo per cui senza investire converrebbe quasi sempre comprare, dato che il mutuo funziona come un piano di accumulo obbligatorio." }
+          },
+          {
+            "@type": "Question",
+            "name": "Conviene comprare casa in contanti o con il mutuo?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Comprare in contanti evita gli interessi ma immobilizza tutto il capitale, e il costo opportunità di quel capitale è spesso superiore al costo del debito. Con un mutuo a tasso contenuto e un rendimento atteso degli investimenti più alto, l'acquisto con mutuo risulta di frequente meno costoso di quello in contanti. Nel calcolatore basta portare l'anticipo al valore pieno dell'immobile per confrontare i due casi." }
+          },
+          {
+            "@type": "Question",
+            "name": "Dopo quanti anni conviene comprare invece di affittare?",
+            "acceptedAnswer": { "@type": "Answer", "text": "È l'anno di pareggio: il momento in cui il patrimonio netto di chi ha comprato supera quello di chi ha affittato e investito. Dipende dai parametri, ma con costi d'acquisto intorno al 9% del prezzo si colloca spesso tra il settimo e il quindicesimo anno. Sotto quella soglia l'acquisto tende a distruggere valore." }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -253,6 +334,9 @@
     details.deep[open] > summary span b { transform: rotate(45deg); }
     details.deep > summary:hover span b { background: var(--ink); color: white; border-color: var(--ink); }
     details.deep > div { padding: 0 24px 24px; }
+    .faq h4 { margin: 28px 0 6px; font-size: .95rem; font-weight: 650; letter-spacing: -.03em; }
+    .faq h4:first-of-type { margin-top: 4px; }
+    .faq p:not(.note) { margin: 0; color: #424743; font-size: .86rem; line-height: 1.6; max-width: 76ch; }
     .sub-h { display: flex; align-items: center; gap: 10px; margin: 34px 0 6px; font-size: .92rem; font-weight: 650; letter-spacing: -.03em; }
     .sub-h::after { content: ""; flex: 1; height: 1px; background: var(--line); }
     .sub-h:first-child { margin-top: 0; }
@@ -330,7 +414,7 @@
     <header class="tool-hero">
       <div class="container">
         <p class="eyebrow"><span class="status-dot"></span> Strumento · Finanza personale</p>
-        <h1>Affitto o <em>acquisto?</em></h1>
+        <h1>Comprare o <em>affittare casa?</em></h1>
         <p class="lead">Il confronto giusto non è «rata contro affitto»: è <strong>quanto patrimonio netto hai in tasca</strong> alla fine dell'orizzonte temporale, nei due scenari. Chi compra accumula equity nel mattone. Chi affitta, <strong>per fare un confronto onesto, deve investire</strong> l'anticipo che non ha versato e ogni euro di differenza mensile: se se li spende, comprare vince quasi sempre.</p>
       </div>
     </header>
@@ -588,6 +672,10 @@
                     <td><strong>Prezzo massimo sensato</strong><small>Oltre questo prezzo, comprare distrugge valore rispetto all'affitto</small></td>
                     <td class="num" id="s-price"></td>
                   </tr>
+                  <tr>
+                    <td><strong>Rendimento lordo da locazione</strong><small id="s-yield-note"></small></td>
+                    <td class="num" id="s-yield"></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -623,6 +711,32 @@
               <ul class="drivers" id="drivers"></ul>
             </div>
           </details>
+
+          <section class="card faq" aria-labelledby="faq-title">
+            <h3 id="faq-title">Comprare o affittare: le domande che tornano sempre</h3>
+            <p class="note">Le risposte brevi. I numeri esatti sul tuo caso li fa il calcolatore qui sopra.</p>
+
+            <h4>Conviene comprare o affittare casa?</h4>
+            <p>Dipende da quattro cose, in questo ordine: <strong>quanti anni resti</strong> in quella casa, il <strong>rapporto tra canone e prezzo</strong>, il <strong>tasso del mutuo</strong> e il <strong>rendimento</strong> a cui investi la liquidità che non immobilizzi. Su orizzonti lunghi, e dove l'affitto è alto rispetto ai prezzi, comprare tende a vincere. Su orizzonti brevi no: i costi d'acquisto — in Italia circa il 9% del prezzo tra imposte, notaio e agenzia — non fanno in tempo a essere assorbiti.</p>
+
+            <h4>Perché non basta confrontare la rata del mutuo con l'affitto?</h4>
+            <p>Per due motivi. Il primo: <strong>la rata non è tutta un costo</strong>. La quota capitale abbatte il debito e resta tuo patrimonio, sono gli interessi i soldi che non tornano. Il secondo: chi compra <strong>immobilizza l'anticipo più i costi d'acquisto</strong>, che chi affitta può invece investire. Mettere a confronto rata e canone ignora entrambe le cose, ed è il motivo per cui quel confronto dà quasi sempre la risposta sbagliata.</p>
+
+            <h4>Cosa sono i costi non recuperabili?</h4>
+            <p>Le uscite che non tornano indietro in nessuna forma. Per chi affitta è solo una voce: il canone. Per chi compra sono <strong>interessi del mutuo, costi d'acquisto, manutenzione straordinaria, IMU se dovuta e costi di vendita</strong>, meno le detrazioni fiscali. La quota capitale non ci rientra: è capitale che cambia forma, non spesa. Nella sezione «Dove finiscono i soldi» trovi questo totale anche annualizzato e in percentuale sul valore dell'immobile, così puoi confrontare case diverse.</p>
+
+            <h4>Se resto in affitto devo investire la differenza?</h4>
+            <p>Sì, altrimenti il confronto non sta in piedi. Chi affitta non tira fuori l'anticipo, e nei mesi in cui la rata costa più del canone non paga quella differenza. Se non li investe, non li sta risparmiando: <strong>li sta spendendo</strong>. È esattamente per questo che senza investire converrebbe quasi sempre comprare — il mutuo è un piano di accumulo obbligatorio, l'affitto no. Non è una verità finanziaria, è una verità comportamentale, e nel calcolatore la puoi quantificare con «quota del surplus investita».</p>
+
+            <h4>Conviene comprare casa in contanti o con il mutuo?</h4>
+            <p>Controintuitivo, ma <strong>spesso il mutuo costa meno</strong>. Pagare in contanti evita gli interessi, però immobilizza tutto il capitale, e il costo opportunità di quel capitale è di frequente superiore al costo del debito — soprattutto con un tasso contenuto già bloccato. Per verificarlo sul tuo caso porta l'anticipo al valore pieno dell'immobile e guarda come cambia il costo non recuperabile annuo.</p>
+
+            <h4>Dopo quanti anni conviene comprare?</h4>
+            <p>È l'<strong>anno di pareggio</strong>: il momento in cui il patrimonio di chi ha comprato supera quello di chi ha affittato e investito. Con costi d'acquisto intorno al 9% cade spesso tra il settimo e il quindicesimo anno. Prima di quella soglia comprare tende a distruggere valore, e la ragione è quasi sempre la stessa: quei costi iniziali vanno spalmati su troppi pochi anni.</p>
+
+            <h4>E le cose che il calcolo non vede?</h4>
+            <p>Restano fuori, e pesano: la <strong>flessibilità</strong> di poter cambiare città con tre mesi di preavviso, il fatto che una casa è un investimento <strong>concentrato e illiquido</strong> mentre un portafoglio è diversificato, il rischio di dover vendere nel momento sbagliato, e il valore — non economico — di abitare qualcosa che è tuo. Questo strumento risponde solo alla domanda finanziaria, che è una parte della decisione, non tutta.</p>
+          </section>
 
           <details class="card deep assump">
             <summary><h3>Metodo e limiti</h3><span>Cosa assume il modello <b>+</b></span></summary>
@@ -1245,6 +1359,14 @@
         ? '<span class="pill pill--rent">n/d</span>'
         : '<strong>' + money(maxPrice) + '</strong>';
 
+      // Rendimento lordo: dice se prezzo e canone sono coerenti tra loro
+      var yield0 = p.prezzo > 0 ? p.affitto * 12 / p.prezzo * 100 : 0;
+      $('s-yield').innerHTML = '<strong>' + pct(yield0) + '</strong>';
+      $('s-yield-note').textContent = money(p.affitto * 12) + ' di canone annuo su ' + money(p.prezzo) + '. '
+        + (yield0 >= 6 ? 'Canone alto rispetto al prezzo: è la situazione che più favorisce l\'acquisto.'
+          : yield0 >= 4 ? 'Rapporto tipico delle città italiane. Verifica che prezzo e affitto siano davvero della stessa casa.'
+          : 'Canone basso rispetto al prezzo: comprare quella casa costa caro rispetto ad affittarla.');
+
       // Dove finiscono i soldi
       var bruciatoBuy = r.interessiTot + r.unaTantum + r.speseTot + r.costiVenditaTot - r.detrTot;
       var speseDesc = pct(p.manut) + '/anno sul valore della casa'
@@ -1290,6 +1412,14 @@
       });
       html += '<tr class="total"><td>Totale bruciato<small>Uscite senza contropartita. Per chi compra: interessi + costi d\'acquisto + manutenzione e tasse + costi di vendita, meno le detrazioni. Per chi affitta: i canoni, e basta. Confrontare queste due cifre è il modo più veloce per capire chi «butta via» di più — ma non basta a decidere, perché ignora dove finisce il capitale.</small></td><td class="num">' +
               signed(-bruciatoBuy) + '</td><td class="num">' + signed(-r.affittiTot) + '</td></tr>';
+
+      // Lo stesso costo annualizzato e in % del valore: è la metrica con cui si confrontano
+      // affitto, mutuo e acquisto in contanti a parità di casa.
+      var nrBuyAnno = bruciatoBuy / p.anni, nrRentAnno = r.affittiTot / p.anni;
+      html += '<tr class="total" style="border-top:0;border-bottom:0"><td>Costo non recuperabile all\'anno<small>I totali qui sopra divisi per ' + p.anni + ' anni: quanto ti costa ogni anno abitare, escluso tutto ciò che resta capitale. Attenzione se lo confronti con altre fonti: qui la rivalutazione della casa <em>non</em> è sottratta da questa cifra, la trovi come voce a sé qui sopra.</small></td><td class="num">' +
+              money(nrBuyAnno) + '</td><td class="num">' + money(nrRentAnno) + '</td></tr>';
+      html += '<tr class="total" style="border-top:0"><td>In % del valore dell\'immobile<small>Lo stesso numero rapportato a ' + money(p.prezzo) + ', così puoi confrontare case diverse. Per vedere l\'acquisto in contanti porta l\'anticipo a ' + money(p.prezzo) + ': spesso costa più del mutuo, perché immobilizzi tutto il capitale.</small></td><td class="num">' +
+              pct(nrBuyAnno / Math.max(1, p.prezzo) * 100) + '</td><td class="num">' + pct(nrRentAnno / Math.max(1, p.prezzo) * 100) + '</td></tr>';
       html += '<tr class="total" style="border-top:0"><td>Patrimonio netto finale<small>Quello che conta davvero. Non è la somma della colonna: comprende anche l\'anticipo di ' + money(r.anticipo) + ' e il valore iniziale dell\'immobile, che qui sopra non compaiono perché non sono né costi né guadagni — sono capitale che cambia forma.</small></td><td class="num">' +
               money(r.netBuy) + '</td><td class="num">' + money(r.netRent) + '</td></tr>';
       $('flow').innerHTML = html;
