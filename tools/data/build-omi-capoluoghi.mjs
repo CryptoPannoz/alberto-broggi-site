@@ -47,8 +47,14 @@ const norm = s => s.toUpperCase()
   .replace(/\s+/g, ' ').trim();
 
 const raw = readFileSync(file, 'utf8');
-const sep = (raw.slice(0, 400).match(/;/g) || []).length > (raw.slice(0, 400).match(/,/g) || []).length ? ';' : ',';
 const lines = raw.split(/\r?\n/).filter(Boolean);
+
+// L'export ufficiale ha una riga di titolo prima dell'header; il mirror onData no.
+// L'header è la riga che contiene i nomi delle colonne.
+const headIdx = lines.findIndex(l => l.includes('Comune_descrizione') && l.includes('Compr_min'));
+if (headIdx < 0) { throw new Error('header non trovato: il file non sembra un export VALORI delle quotazioni OMI'); }
+const headLine = lines[headIdx];
+const sep = (headLine.match(/;/g) || []).length > (headLine.match(/,/g) || []).length ? ';' : ',';
 
 // Parser CSV minimale: gestisce i campi fra doppi apici (i decimali italiani sono quotati)
 function parse(line) {
@@ -61,7 +67,7 @@ function parse(line) {
   out.push(cur);
   return out;
 }
-const head = parse(lines[0]).map(h => h.trim());
+const head = parse(headLine).map(h => h.trim());
 const col = n => { const i = head.indexOf(n); if (i < 0) { throw new Error('colonna assente: ' + n); } return i; };
 const [cCom, cProv, cTip, cStato, cCmin, cCmax, cLmin, cLmax, cZona] =
   ['Comune_descrizione','Prov','Descr_Tipologia','Stato','Compr_min','Compr_max','Loc_min','Loc_max','Zona'].map(col);
@@ -70,7 +76,7 @@ const num = s => { const v = parseFloat(String(s).replace(',', '.')); return isF
 const target = new Map(CAPOLUOGHI.map(c => [norm(ALIAS[c] || c), c]));
 const acc = new Map();   // nome normalizzato -> { nome, prov, compr:[], loc:[], zone:Set }
 
-for (let i = 1; i < lines.length; i++) {
+for (let i = headIdx + 1; i < lines.length; i++) {
   const r = parse(lines[i]);
   if (r[cTip] !== 'Abitazioni civili' || r[cStato] !== 'NORMALE') { continue; }
   const key = norm(r[cCom]);
@@ -108,7 +114,7 @@ writeFileSync('tools/data/omi-capoluoghi.js',
   '/* Generato da build-omi-capoluoghi.mjs · Fonte: Agenzia Entrate - OMI · periodo ' + periodo + ' */\n' +
   'window.OMI = ' + JSON.stringify(out) + ';\n');
 
-console.log(`periodo ${periodo} · separatore "${sep}" · ${lines.length - 1} righe lette`);
+console.log(`periodo ${periodo} · separatore "${sep}" · ${lines.length - headIdx - 1} righe lette`);
 console.log(`citta con dati completi: ${citta.length} su ${CAPOLUOGHI.length} cercate`);
 if (mancanti.length) { console.log('non trovate nel file: ' + mancanti.join(', ')); }
 const senzaAffitto = [...acc.values()].filter(a => a.compr.length && !a.loc.length).map(a => a.nome);
