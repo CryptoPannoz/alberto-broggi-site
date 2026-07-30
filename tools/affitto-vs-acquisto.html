@@ -141,9 +141,20 @@
     .adv > summary span:last-child { color: var(--muted); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .07em; }
     .adv[open] > summary span:last-child b { display: inline-block; transform: rotate(45deg); }
     /* I parametri avanzati hanno lo stesso peso visivo di quelli principali */
-    .adv-grid { padding-bottom: 18px; }
-    .adv-grid .field { margin: 0 0 17px; }
-    .adv-grid .field + .field { margin-top: 0; }
+    /* Sotto-passi del pannello: tutti i parametri sono sempre visibili */
+    .sub-step {
+      display: flex; align-items: center; gap: 10px; margin: 30px 0 14px;
+      color: var(--ink); font-family: var(--mono); font-size: .64rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: .07em;
+    }
+    .sub-step::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+    .sub-step i {
+      flex: none; display: grid; place-items: center; min-width: 30px; height: 21px; padding: 0 6px;
+      border-radius: 999px; background: var(--ink); color: white; font-style: normal; font-size: .58rem;
+    }
+    .field--key { padding: 15px 16px; margin-inline: -4px; border: 1px solid var(--blue); border-radius: 14px; background: #f2f5ff; }
+    .field--key > label { color: var(--blue); }
+    .field--key small b { color: var(--ink); }
     .adv-group {
       display: flex; align-items: center; gap: 10px; margin: 24px 0 12px;
       color: var(--ink); font-family: var(--mono); font-size: .62rem; font-weight: 500;
@@ -393,7 +404,6 @@
       .verdict-split { grid-template-columns: 1fr; }
       .kpis { grid-template-columns: 1fr 1fr; }
       .kpi b { font-size: 1.25rem; }
-      .adv-grid { grid-template-columns: 1fr; }
       table.t th, table.t td { padding: 9px 4px; font-size: .74rem; }
     }
   </style>
@@ -435,13 +445,23 @@
           <h2>La casa e l'affitto di oggi</h2>
           <p class="panel__hint">Muovi gli slider: tutto si ricalcola in tempo reale.</p>
 
-          <p class="adv-group">La casa che stai valutando</p>
+          <p class="sub-step"><i>1.1</i> La casa</p>
 
           <div class="field">
             <label for="prezzo">Valore immobile <output id="prezzo_o"></output></label>
             <input type="number" id="prezzo" min="0" step="1000" inputmode="numeric" />
             <input type="range" id="prezzo_r" min="50000" max="900000" step="5000" aria-label="Valore immobile (slider)" />
+            <small>Il prezzo che pagheresti per la casa in cui oggi stai in affitto, o per una equivalente.</small>
           </div>
+
+          <div class="field">
+            <label for="costiAcq">Costi d'acquisto <output id="costiAcq_o"></output></label>
+            <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
+            <input type="range" id="costiAcq_r" min="0" max="20" step="0.5" aria-label="Costi d'acquisto (slider)" />
+            <small>In percentuale sul prezzo: imposte, notaio, agenzia, istruttoria. Si pagano in contanti al rogito e non rientrano mai. Da privato senza agenzia scendono parecchio.</small>
+          </div>
+
+          <p class="sub-step"><i>1.2</i> Il mutuo</p>
 
           <div class="field">
             <label for="anticipo">Anticipo <output id="anticipo_o"></output></label>
@@ -454,6 +474,7 @@
             <label for="tasso">Tasso del mutuo (TAN) <output id="tasso_o"></output></label>
             <input type="number" id="tasso" min="0" max="15" step="0.05" inputmode="decimal" />
             <input type="range" id="tasso_r" min="0" max="8" step="0.05" aria-label="Tasso del mutuo (slider)" />
+            <small>Tasso fisso. Con anticipo sotto il 20% del prezzo le banche di solito chiedono qualcosa in più.</small>
           </div>
 
           <div class="field">
@@ -463,111 +484,110 @@
             <small>Se supera l'orizzonte, il debito residuo viene sottratto dal patrimonio finale.</small>
           </div>
 
-          <p class="adv-group">Affitto e orizzonte</p>
+          <div class="field field--bool">
+            <label>Detrazione interessi prima casa <output id="detrazione_o"></output></label>
+            <div class="yn" role="group" aria-label="Detrazione interessi prima casa">
+              <button type="button" data-bool="detrazione" data-val="1">S&igrave;</button>
+              <button type="button" data-bool="detrazione" data-val="0">No</button>
+            </div>
+            <input type="checkbox" id="detrazione" class="sr-only" />
+            <small>19% degli interessi su un massimo di 4.000 &euro;/anno: fino a 760 &euro;/anno di IRPEF in meno. Vale solo per l'abitazione principale e serve capienza fiscale.</small>
+          </div>
+
+          <p class="sub-step"><i>1.3</i> L'affitto di oggi</p>
+
+          <div class="field">
+            <label for="affitto">Affitto attuale (&euro;/mese) <output id="affitto_o"></output></label>
+            <input type="number" id="affitto" min="0" step="25" inputmode="numeric" />
+            <input type="range" id="affitto_r" min="200" max="3000" step="25" aria-label="Affitto mensile (slider)" />
+            <small>Quello che paghi adesso, per la casa che stai confrontando con l'acquisto.</small>
+          </div>
+
+          <div class="field">
+            <label for="inflAffitto">Crescita affitto <output id="inflAffitto_o"></output></label>
+            <input type="number" id="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" />
+            <input type="range" id="inflAffitto_r" min="0" max="10" step="0.1" aria-label="Crescita affitto (slider)" />
+            <small>Adeguamento annuo del canone. Pi&ugrave; corre, pi&ugrave; conviene aver bloccato una rata fissa.</small>
+          </div>
+
+          <p class="sub-step"><i>1.4</i> Quanto resti, e come esci</p>
 
           <div class="field">
             <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
             <input type="number" id="anni" min="1" max="40" step="1" inputmode="numeric" />
             <input type="range" id="anni_r" min="1" max="40" step="1" aria-label="Orizzonte temporale (slider)" />
-            <small>Per quanti anni resti in questa casa prima di tirare le somme.</small>
+            <small>Per quanti anni resti in questa casa prima di tirare le somme. &Egrave; la variabile pi&ugrave; decisiva di tutte.</small>
+          </div>
+
+          <div class="field field--bool field--key">
+            <label>A fine orizzonte vendi e disinvesti tutto? <output id="vendo_o"></output></label>
+            <div class="yn" role="group" aria-label="A fine orizzonte vendi e disinvesti tutto">
+              <button type="button" data-bool="vendo" data-val="1">S&igrave;</button>
+              <button type="button" data-bool="vendo" data-val="0">No</button>
+            </div>
+            <input type="checkbox" id="vendo" class="sr-only" />
+            <small><b>Cambia molto il risultato.</b> Con <b>S&igrave;</b> il confronto &egrave; tra due cifre che puoi davvero incassare: vengono sottratti i costi di vendita e le tasse sul capital gain. Con <b>No</b> confronti due patrimoni sulla carta: pi&ugrave; alti, ma non liquidi.</small>
           </div>
 
           <div class="field">
-            <label for="affitto">Affitto attuale (€/mese) <output id="affitto_o"></output></label>
-            <input type="number" id="affitto" min="0" step="25" inputmode="numeric" />
-            <input type="range" id="affitto_r" min="200" max="3000" step="25" aria-label="Affitto mensile (slider)" />
+            <label for="costiVendita">Costi di vendita <output id="costiVendita_o"></output></label>
+            <input type="number" id="costiVendita" min="0" max="15" step="0.5" inputmode="decimal" />
+            <input type="range" id="costiVendita_r" min="0" max="10" step="0.5" aria-label="Costi di vendita (slider)" />
+            <small>Sul valore finale della casa: agenzia, APE, cancellazione ipoteca. Contano solo se sopra hai risposto S&igrave;.</small>
           </div>
 
-          <details class="adv">
-            <summary><span>Parametri avanzati</span><span id="adv-tag">Modifica <b>+</b></span></summary>
-            <div class="adv-grid">
-              <p class="adv-group">Il mercato — le ipotesi che decidono il verdetto</p>
-              <div class="field">
-                <label for="rendimento">Rendimento personalizzato <output id="rendimento_o"></output></label>
-                <input type="number" id="rendimento" min="0" max="40" step="0.1" inputmode="decimal" />
-                <input type="range" id="rendimento_r" min="0" max="25" step="0.1" aria-label="Rendimento personalizzato (slider)" />
-                <small>Lo imposti scegliendo un portafoglio nel passo 1, qui puoi metterci il numero che vuoi. È la leva più potente del modello.</small>
-              </div>
-              <div class="field">
-                <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
-                <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
-                <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
-                <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media.</small>
-              </div>
-              <div class="field">
-                <label for="inflAffitto">Crescita affitto <output id="inflAffitto_o"></output></label>
-                <input type="number" id="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" />
-                <input type="range" id="inflAffitto_r" min="0" max="10" step="0.1" aria-label="Crescita affitto (slider)" />
-                <small>Adeguamento annuo del canone. Più corre, più conviene aver bloccato una rata fissa.</small>
-              </div>
-              <div class="field">
-                <label for="quotaInv">Quota del surplus investita <output id="quotaInv_o"></output></label>
-                <input type="number" id="quotaInv" min="0" max="100" step="5" inputmode="numeric" />
-                <input type="range" id="quotaInv_r" min="0" max="100" step="5" aria-label="Quota del surplus investita (slider)" />
-                <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
-              </div>
+          <div class="field">
+            <label for="tasseFin">Tassa su plusvalenze <output id="tasseFin_o"></output></label>
+            <input type="number" id="tasseFin" min="0" max="50" step="1" inputmode="numeric" />
+            <input type="range" id="tasseFin_r" min="0" max="50" step="1" aria-label="Tassa su plusvalenze (slider)" />
+            <small>Solo sui guadagni finanziari, non sul capitale versato. 26% per ETF e azioni; le cripto hanno un regime proprio, verificalo. Sulla casa non si paga: prima casa, o dopo 5 anni, la plusvalenza immobiliare non &egrave; tassata.</small>
+          </div>
 
-              <p class="adv-group">Il mutuo</p>
-              <div class="field field--bool">
-                <label>Detrazione interessi prima casa <output id="detrazione_o"></output></label>
-                <div class="yn" role="group" aria-label="Detrazione interessi prima casa">
-                  <button type="button" data-bool="detrazione" data-val="1">Sì</button>
-                  <button type="button" data-bool="detrazione" data-val="0">No</button>
-                </div>
-                <input type="checkbox" id="detrazione" class="sr-only" />
-                <small>19% degli interessi su un massimo di 4.000 €/anno: fino a 760 €/anno di IRPEF in meno. Serve capienza fiscale.</small>
-              </div>
+          <p class="sub-step"><i>1.5</i> Cosa costa tenere la casa</p>
 
-              <p class="adv-group">Costi della casa</p>
-              <div class="field">
-                <label for="costiAcq">Costi d'acquisto <output id="costiAcq_o"></output></label>
-                <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
-                <input type="range" id="costiAcq_r" min="0" max="20" step="0.5" aria-label="Costi d'acquisto (slider)" />
-                <small>Sul prezzo: imposte, notaio, agenzia, istruttoria. Da privato senza agenzia scende molto.</small>
-              </div>
-              <div class="field">
-                <label for="manut">Manutenzione <output id="manut_o"></output></label>
-                <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
-                <input type="range" id="manut_r" min="0" max="3" step="0.1" aria-label="Manutenzione (slider)" />
-                <small>Del valore della casa, all'anno: straordinarie, infissi, facciata, assicurazione. Le condominiali ordinarie sono escluse.</small>
-              </div>
-              <div class="field">
-                <label for="imu">IMU + tasse <output id="imu_o"></output></label>
-                <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
-                <input type="range" id="imu_r" min="0" max="3000" step="50" aria-label="IMU e tasse (slider)" />
-                <small>Zero se è prima casa. Alzalo se stai valutando una seconda casa.</small>
-              </div>
-              <div class="field">
-                <label for="altro">Altre spese <output id="altro_o"></output></label>
-                <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
-                <input type="range" id="altro_r" min="0" max="500" step="5" aria-label="Altre spese (slider)" />
-                <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
-              </div>
+          <div class="field">
+            <label for="manut">Manutenzione <output id="manut_o"></output></label>
+            <input type="number" id="manut" min="0" max="5" step="0.1" inputmode="decimal" />
+            <input type="range" id="manut_r" min="0" max="3" step="0.1" aria-label="Manutenzione (slider)" />
+            <small>Del valore della casa, all'anno: straordinarie, infissi, facciata, caldaia, assicurazione. Le condominiali ordinarie non ci sono, perch&eacute; le pagheresti anche da inquilino.</small>
+          </div>
 
-              <p class="adv-group">Uscita e fisco</p>
-              <div class="field field--bool">
-                <label>A fine orizzonte liquido tutto <output id="vendo_o"></output></label>
-                <div class="yn" role="group" aria-label="A fine orizzonte liquido tutto">
-                  <button type="button" data-bool="vendo" data-val="1">Sì</button>
-                  <button type="button" data-bool="vendo" data-val="0">No</button>
-                </div>
-                <input type="checkbox" id="vendo" class="sr-only" />
-                <small>Vendi la casa e disinvesti il portafoglio: sottrae costi di vendita e tasse sul capital gain. Se rispondi No il patrimonio resta teorico, non incassabile.</small>
-              </div>
-              <div class="field">
-                <label for="costiVendita">Costi di vendita <output id="costiVendita_o"></output></label>
-                <input type="number" id="costiVendita" min="0" max="15" step="0.5" inputmode="decimal" />
-                <input type="range" id="costiVendita_r" min="0" max="10" step="0.5" aria-label="Costi di vendita (slider)" />
-                <small>Sul valore finale: agenzia, APE, cancellazione ipoteca. Contano solo se liquidi.</small>
-              </div>
-              <div class="field">
-                <label for="tasseFin">Tassa su plusvalenze <output id="tasseFin_o"></output></label>
-                <input type="number" id="tasseFin" min="0" max="50" step="1" inputmode="numeric" />
-                <input type="range" id="tasseFin_r" min="0" max="50" step="1" aria-label="Tassa su plusvalenze (slider)" />
-                <small>Solo sui guadagni finanziari, non sul capitale versato. 26% per ETF e azioni; le cripto hanno un regime proprio, verificalo.</small>
-              </div>
-            </div>
-          </details>
+          <div class="field">
+            <label for="imu">IMU + tasse <output id="imu_o"></output></label>
+            <input type="number" id="imu" min="0" step="50" inputmode="numeric" />
+            <input type="range" id="imu_r" min="0" max="3000" step="50" aria-label="IMU e tasse (slider)" />
+            <small>Zero se &egrave; prima casa: &egrave; esente. Alzalo se stai valutando una seconda casa.</small>
+          </div>
+
+          <div class="field">
+            <label for="altro">Altre spese <output id="altro_o"></output></label>
+            <input type="number" id="altro" min="0" step="5" inputmode="numeric" />
+            <input type="range" id="altro_r" min="0" max="500" step="5" aria-label="Altre spese (slider)" />
+            <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
+          </div>
+
+          <p class="sub-step"><i>1.6</i> Ipotesi di mercato</p>
+
+          <div class="field">
+            <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
+            <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
+            <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
+            <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media nazionale.</small>
+          </div>
+
+          <div class="field">
+            <label for="quotaInv">Quota del surplus investita <output id="quotaInv_o"></output></label>
+            <input type="number" id="quotaInv" min="0" max="100" step="5" inputmode="numeric" />
+            <input type="range" id="quotaInv_r" min="0" max="100" step="5" aria-label="Quota del surplus investita (slider)" />
+            <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
+          </div>
+
+          <div class="field">
+            <label for="rendimento">Rendimento personalizzato <output id="rendimento_o"></output></label>
+            <input type="number" id="rendimento" min="0" max="40" step="0.1" inputmode="decimal" />
+            <input type="range" id="rendimento_r" min="0" max="25" step="0.1" aria-label="Rendimento personalizzato (slider)" />
+            <small>Lo imposti scegliendo un portafoglio nel passo 2, qui puoi metterci il numero che vuoi.</small>
+          </div>
 
           <div class="panel__actions">
             <button type="button" class="mini-btn" id="reset">Ripristina default</button>
@@ -1169,13 +1189,8 @@
     function markOverrides(pUsed, chg) {
       Array.prototype.forEach.call(document.querySelectorAll('.field small.ovr'), function (e) { e.remove(); });
       Array.prototype.forEach.call(document.querySelectorAll('.field.is-overridden'), function (e) { e.classList.remove('is-overridden'); });
-      var tag = $('adv-tag');
-      if (attivi.length === 0) {
-        tag.innerHTML = 'Modifica <b>+</b>';
-        tag.style.color = '';
-        return;
-      }
-      var nascosti = 0;
+      // Ogni campo è ora sempre visibile, quindi basta marcarlo dove sta.
+      if (attivi.length === 0) { return; }
       chg.forEach(function (k) {
         var input = $(k);
         if (!input) { return; }
@@ -1185,12 +1200,7 @@
         s.className = 'ovr';
         s.textContent = 'scenario attivo: ' + pct(pUsed[k]);
         f.appendChild(s);
-        if (f.parentNode && f.parentNode.className === 'adv-grid') { nascosti++; }
       });
-      tag.innerHTML = nascosti > 0
-        ? nascosti + (nascosti === 1 ? ' valore' : ' valori') + ' da scenario <b>+</b>'
-        : 'Modifica <b>+</b>';
-      tag.style.color = nascosti > 0 ? '#c33f1c' : '';
     }
 
     /* ─────────── Lettura / scrittura parametri ─────────── */
