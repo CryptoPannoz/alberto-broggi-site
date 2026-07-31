@@ -215,6 +215,22 @@
     .verdict[data-win="rent"] strong em { color: var(--orange); }
     .verdict p { margin: 18px 0 0; max-width: 58ch; color: rgba(255,255,255,.8); font-size: .9rem; }
     .verdict-split { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 26px; background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.22); border-radius: var(--radius); overflow: hidden; }
+    .verdict-cosa { margin: 14px 0 0; font-size: .8rem; line-height: 1.55; color: rgba(255,255,255,.85); }
+    .verdict-cosa b { color: white; font-weight: 650; }
+    .tasca { margin: 16px 0 0; padding: 14px 16px; border: 1px solid rgba(255,255,255,.28); border-radius: 14px; background: rgba(255,255,255,.08); }
+    .tasca__h { margin: 0 0 10px; font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .07em; color: rgba(255,255,255,.7); }
+    .tasca__t { width: 100%; border-collapse: collapse; font-size: .8rem; table-layout: fixed; }
+    .tasca__t th:first-child, .tasca__t td:first-child { width: 44%; }
+    .tasca__t th:not(:first-child), .tasca__t td:not(:first-child) { width: 28%; padding-left: 10px; }
+    @media (max-width: 430px) { .tasca__t { font-size: .72rem; } .tasca__t th { font-size: .5rem; } .tasca__t td:first-child { font-size: .74rem; } }
+    .tasca__t th { padding: 0 0 8px; text-align: right; font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .06em; color: rgba(255,255,255,.7); font-weight: 500; }
+    .tasca__t th:first-child { text-align: left; }
+    .tasca__t td { padding: 7px 0; text-align: right; border-top: 1px solid rgba(255,255,255,.16); font-variant-numeric: tabular-nums; }
+    .tasca__t td:first-child { text-align: left; padding-right: 10px; color: rgba(255,255,255,.85); }
+    .tasca__t td small { display: block; color: rgba(255,255,255,.55); font-size: .64rem; }
+    .tasca__tot td { font-weight: 650; border-top-color: rgba(255,255,255,.5); }
+    .tasca__n { margin: 10px 0 0; color: rgba(255,255,255,.72); font-size: .7rem; line-height: 1.5; }
+    .tasca__n b { color: white; font-weight: 650; }
     .verdict-perche { margin: 18px 0 0; padding: 14px 16px; border-left: 3px solid rgba(255,255,255,.5); background: rgba(255,255,255,.1); border-radius: 0 12px 12px 0; font-size: .82rem; line-height: 1.55; }
     .verdict-perche b { font-weight: 650; }
     .verdict-assump { display: flex; align-items: center; gap: 10px; margin: 12px 0 0; padding: 12px 16px; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; background: rgba(255,255,255,.1); font-family: var(--mono); font-size: .68rem; line-height: 1.4; }
@@ -396,6 +412,11 @@
     .recap label { flex: none; display: flex; flex-direction: column; gap: 3px; color: var(--muted); font-family: var(--mono); font-size: .52rem; text-transform: uppercase; letter-spacing: .05em; }
     .recap input { width: 86px; min-height: 36px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); font: inherit; font-size: .8rem; }
     .recap input:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: var(--white); }
+    .recap__sw { flex: none; display: flex; flex-direction: column; gap: 3px; }
+    .yn--mini { display: inline-flex; gap: 4px; }
+    .yn--mini button { min-height: 34px; min-width: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); cursor: pointer; font: inherit; font-size: .7rem; font-weight: 650; }
+    .yn--mini button.on { background: var(--ink); border-color: var(--ink); color: white; }
+    @media (pointer: coarse) { .yn--mini button { min-height: 44px; } }
     .recap__btns { display: flex; gap: 6px; }
     .recap__btns button { min-height: 36px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); cursor: pointer; font-size: .68rem; font-weight: 650; white-space: nowrap; }
     .recap__btns button:hover { border-color: var(--ink); }
@@ -513,6 +534,14 @@
     .il__grid b { display: block; margin-top: 6px; font-size: 1.5rem; font-weight: 650; letter-spacing: -.03em; }
     .il__note { margin: 12px 0 0; color: rgba(255,255,255,.78); font-size: .74rem; line-height: 1.5; }
     .il__note b { color: white; font-weight: 650; }
+    .il__scelta { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.2); }
+    .il__q { margin: 0 0 10px; font-size: .82rem; font-weight: 650; }
+    .yn--dark { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .yn--dark button { min-height: 46px; padding: 0 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 12px; background: transparent; color: rgba(255,255,255,.8); cursor: pointer; font: inherit; font-size: .74rem; font-weight: 650; }
+    .yn--dark button.on { background: white; border-color: white; color: var(--ink); }
+    @media (max-width: 520px) { .yn--dark { grid-template-columns: 1fr; } }
+    .il__delta { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); font-size: .74rem; line-height: 1.5; }
+    .il__delta b { color: white; font-weight: 650; }
 
     /* Blocco «altre ipotesi» dentro lo step investimenti */
     .adv { margin-top: 16px; border: 1px solid var(--line); border-radius: 14px; padding: 0 16px; background: var(--paper); }
@@ -592,7 +621,7 @@
 
     /* ─── Tap target: nulla di interattivo sotto i 44px su touch ─── */
     @media (pointer: coarse) {
-      .tool-top a { display: inline-flex; align-items: center; min-height: 44px; }
+      .tool-top a, footer a { display: inline-flex; align-items: center; min-height: 44px; }
       .field input[type="range"] { height: 44px; background: transparent; }
       .recap__scroll input { min-height: 44px; }
       .recap__btns button, .panel__actions button, .wnav button { min-height: 44px; }
@@ -600,8 +629,20 @@
       .preset-row button { min-height: 44px; }
     }
 
+    /* La scheda parametri esiste solo nel PDF */
+    .print-only { display: none; }
+
     /* Il PDF nasce dal dialogo di stampa del browser: questa è la versione leggibile da salvare. */
     @media print {
+      .print-only { display: block !important; break-inside: avoid; page-break-inside: avoid; border: 1px solid #ccc; border-radius: 8px; padding: 14px 16px; }
+      .print-only h3 { margin: 0 0 4px; font-size: .95rem; }
+      .pp-when { margin: 0 0 12px; color: #666; font-size: .7rem; }
+      .pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+      .pp-row { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; border-bottom: 1px dotted #ddd; font-size: .74rem; }
+      .pp-row b { font-weight: 650; white-space: nowrap; }
+      .pp-h { grid-column: 1 / -1; margin: 8px 0 2px; font-size: .62rem; text-transform: uppercase; letter-spacing: .06em; color: #666; }
+      .pp-scen { margin: 12px 0 0; font-size: .74rem; }
+      .pp-link { margin: 8px 0 0; font-size: .64rem; color: #666; word-break: break-all; }
       @page { margin: 14mm; size: A4; }
       body { background: white; }
       .tool-top, .tool-hero, .sticky-result, .stepper, .panel, .recap, .scen-banner, .wnav, .deep-head, #scenari, .faq, .footer, .site-footer,
@@ -751,6 +792,17 @@
               <div><span id="il-mese-lab">Ogni mese, la differenza con la rata</span><b id="il-mese">—</b></div>
             </div>
             <p class="il__note" id="il-note"></p>
+
+            <div class="il__scelta">
+              <p class="il__q">Quei soldi li investi davvero?</p>
+              <div class="yn yn--dark" role="group" aria-label="Investi anche la cassa iniziale">
+                <button type="button" data-bool="investiCassa" data-val="1">Sì, anche la cassa iniziale</button>
+                <button type="button" data-bool="investiCassa" data-val="0">No, solo la differenza mensile</button>
+              </div>
+              <input type="checkbox" id="investiCassa" class="sr-only" />
+              <output id="investiCassa_o" class="sr-only"></output>
+              <p class="il__delta" id="il-delta"></p>
+            </div>
           </div>
 
           </section>
@@ -895,12 +947,30 @@
           <div class="recap" id="recap" hidden>
             <div class="recap__scroll">
               <label><span>Valore €</span><input type="number" data-proxy="prezzo" min="0" step="1000" inputmode="numeric" /></label>
+              <label><span>Costi acq. %</span><input type="number" data-proxy="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" /></label>
               <label><span>Anticipo €</span><input type="number" data-proxy="anticipo" min="0" step="1000" inputmode="numeric" /></label>
               <label><span>Tasso %</span><input type="number" data-proxy="tasso" min="0" max="15" step="0.05" inputmode="decimal" /></label>
               <label><span>Durata anni</span><input type="number" data-proxy="durata" min="1" max="40" step="1" inputmode="numeric" /></label>
               <label><span>Affitto €/mese</span><input type="number" data-proxy="affitto" min="0" step="25" inputmode="numeric" /></label>
+              <label><span>Cresc. affitto %</span><input type="number" data-proxy="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" /></label>
               <label><span>Orizzonte</span><input type="number" data-proxy="anni" min="1" max="40" step="1" inputmode="numeric" /></label>
               <label><span>Rendimento %</span><input type="number" data-proxy="rendimento" min="0" max="40" step="0.1" inputmode="decimal" /></label>
+              <label><span>Rivaluta casa %</span><input type="number" data-proxy="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" /></label>
+              <label><span>Surplus inv. %</span><input type="number" data-proxy="quotaInv" min="0" max="100" step="5" inputmode="numeric" /></label>
+              <label><span>Manutenz. %</span><input type="number" data-proxy="manut" min="0" max="5" step="0.1" inputmode="decimal" /></label>
+              <label><span>IMU €/anno</span><input type="number" data-proxy="imu" min="0" step="50" inputmode="numeric" /></label>
+              <label class="recap__sw"><span>Investi la cassa iniz.</span>
+                <span class="yn yn--mini" role="group" aria-label="Investi anche la cassa iniziale">
+                  <button type="button" data-bool="investiCassa" data-val="1">Sì</button>
+                  <button type="button" data-bool="investiCassa" data-val="0">No</button>
+                </span>
+              </label>
+              <label class="recap__sw"><span>Vendi a fine periodo</span>
+                <span class="yn yn--mini" role="group" aria-label="Vendi e disinvesti a fine periodo">
+                  <button type="button" data-bool="vendo" data-val="1">Sì</button>
+                  <button type="button" data-bool="vendo" data-val="0">No</button>
+                </span>
+              </label>
             </div>
             <div class="recap__btns">
               <button type="button" id="recap-all">Tutti i parametri</button>
@@ -928,9 +998,22 @@
             <strong id="v-title"></strong>
             <p id="v-text"></p>
             <div class="verdict-split">
-              <div><span>Acquisto</span><b id="v-buy"></b></div>
-              <div><span>Affitto + investimenti</span><b id="v-rent"></b></div>
+              <div><span id="v-buy-lab">Acquisto</span><b id="v-buy"></b></div>
+              <div><span id="v-rent-lab">Affitto + investimenti</span><b id="v-rent"></b></div>
               <div><span>Differenza</span><b id="v-diff"></b></div>
+            </div>
+            <p class="verdict-cosa" id="v-cosa"></p>
+            <div class="tasca" id="tasca">
+              <p class="tasca__h">Quanto esce dalle tue tasche e quanto ne ricavi</p>
+              <table class="tasca__t">
+                <thead><tr><th></th><th>Comprando</th><th>Affittando</th></tr></thead>
+                <tbody>
+                  <tr><td>Uscite totali dal conto</td><td id="t-out-b"></td><td id="t-out-r"></td></tr>
+                  <tr><td>Di cui bruciato <small>mai più tuo</small></td><td id="t-burn-b"></td><td id="t-burn-r"></td></tr>
+                  <tr class="tasca__tot"><td id="t-fine-lab">Quanto ti resta alla fine</td><td id="t-net-b"></td><td id="t-net-r"></td></tr>
+                </tbody>
+              </table>
+              <p class="tasca__n" id="t-nota"></p>
             </div>
             <p class="verdict-perche" id="v-perche"></p>
             <p class="verdict-assump"><span aria-hidden="true">◇</span><span>Ipotesi investimenti: <b id="v-assump"></b></span></p>
@@ -956,9 +1039,18 @@
           <div class="save-cta">
             <div>
               <strong>Ti servirà dopo?</strong>
-              <span>Salva il PDF, o mandalo a chi decide insieme a te.</span>
+              <span>Salva il PDF completo, o mandalo a chi decide insieme a te.</span>
             </div>
             <button type="button" class="btn-primary" id="open-share">Salva o invia →</button>
+          </div>
+
+          <!-- Scheda che compare solo nel PDF: senza i parametri il riepilogo non è verificabile. -->
+          <div class="print-only" id="print-params">
+            <h3>I parametri di questa simulazione</h3>
+            <p class="pp-when" id="pp-when"></p>
+            <div class="pp-grid" id="pp-grid"></div>
+            <p class="pp-scen" id="pp-scen"></p>
+            <p class="pp-link" id="pp-link"></p>
           </div>
 
           <div class="warn" id="warn" hidden><span aria-hidden="true">▲</span><span id="warn-text"></span></div>
@@ -1133,7 +1225,7 @@
           <input id="sheet-email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" />
           <button type="submit" class="btn-primary">Invia</button>
         </div>
-        <p class="sheet__flag"><span aria-hidden="true">◇</span><span>Si apre la tua app di posta con il testo già pronto — così puoi allegare il PDF. <b>Teniamo traccia di quante email vengono preparate</b>, per capire se lo strumento è utile: non dell’indirizzo, che non passa mai da questo sito.</span></p>
+        <p class="sheet__flag"><span aria-hidden="true">◇</span><span>Si apre la tua app di posta con il testo già pronto — così puoi allegare il PDF. <b>Teniamo traccia di quante email vengono preparate</b>, per capire se lo strumento è utile: non dell’indirizzo, che non passa mai da questo sito. <a href="../privacy.html" target="_blank" rel="noopener">Come tratto i dati</a>.</span></p>
       </form>
       <p class="sheet__status" id="share-status" aria-live="polite"></p>
     </div>
@@ -1142,7 +1234,7 @@
   <footer>
     <div class="container">
       <p>© <span id="y"></span> Alberto Broggi · Trieste, Italy</p>
-      <a href="../index.html">bebroggi.it</a>
+      <span><a href="../privacy.html">Privacy</a> · <a href="../index.html">bebroggi.it</a></span>
     </div>
   </footer>
 
@@ -1154,10 +1246,10 @@
       prezzo: 240000, tasso: 3.2, anticipo: 60000, anni: 20, affitto: 850, quotaInv: 100,
       durata: 25, costiAcq: 9, manut: 1, imu: 0, altro: 0,
       rivaluta: 1, inflAffitto: 2, rendimento: 5, tasseFin: 26, costiVendita: 3,
-      vendo: true, detrazione: true
+      vendo: true, detrazione: true, investiCassa: true
     };
     var NUM = ['prezzo','tasso','anticipo','anni','affitto','durata','costiAcq','manut','imu','altro','rivaluta','inflAffitto','rendimento','quotaInv','tasseFin','costiVendita'];
-    var BOOL = ['vendo','detrazione'];
+    var BOOL = ['vendo','detrazione','investiCassa'];
     // Ogni parametro numerico ha il suo slider, avanzati compresi.
     var SLIDERS = NUM.slice();
     var STORE = 'ab-rentbuy-v1';
@@ -1196,9 +1288,11 @@
 
       var saldo = mutuo;
       var casa = p.prezzo;
-      // Chi compra immobilizza tutta la cassa; chi affitta la tiene investita.
+      // Chi compra immobilizza tutta la cassa; chi affitta la tiene investita —
+      // ma solo se sceglie di farlo: senza, gli resta in mano la sola differenza mensile.
+      var cassaInvestita = p.investiCassa ? cassaIniziale : 0;
       var pfB = extra, baseB = extra;
-      var pfR = cassaIniziale, baseR = cassaIniziale;
+      var pfR = cassaInvestita, baseR = cassaInvestita;
 
       var interessiTot = 0, interessiAnno = 0, detrTot = 0, speseTot = 0, affittiTot = 0,
           capitaleTot = 0, versatiB = 0, versatiR = 0;
@@ -1252,7 +1346,7 @@
         taxB: pfB - netTax(pfB, baseB), taxR: pfR - netTax(pfR, baseR),
         netBuy: netBuy(), netRent: netRent(), serie: serie,
         rata: rata, mutuo: mutuo, anticipo: anticipo, ltv: ltv, unaTantum: unaTantum,
-        cassaIniziale: cassaIniziale, extra: extra,
+        cassaIniziale: cassaIniziale, cassaInvestita: cassaInvestita, extra: extra,
         costoBuy1: costoBuy1, costoRent1: costoRent1,
         casaFine: casa, saldoFine: saldo, pfB: pfB, pfR: pfR,
         interessiTot: interessiTot, detrTot: detrTot, speseTot: speseTot,
@@ -1611,6 +1705,14 @@
       // Lo scenario attivo sovrascrive solo il calcolo, mai il pannello.
       var p = comboParams(pBase);
       var chg = changedKeys(pBase, p);
+      var anniTxt = p.anni + (p.anni === 1 ? ' anno' : ' anni');
+      // Cosa ha cambiato davvero lo scenario: il valore, non solo il nome della leva.
+      var scenTxt = chg.map(function (k) {
+        var etichetta = PARAM_LABEL[k] || k;
+        var v = ['prezzo','anticipo','affitto','imu','altro'].indexOf(k) > -1 ? money(p[k])
+              : (['anni','durata'].indexOf(k) > -1 ? p[k] + ' anni' : pct(p[k]));
+        return etichetta + ' ' + v;
+      }).join(' · ');
       bannerScen(pBase, p, chg);
       markOverrides(p, chg);
       var r = simulate(p);
@@ -1638,6 +1740,84 @@
       $('v-rent').textContent = money(r.netRent);
       $('v-diff').textContent = Math.abs(diff) < 1 ? '—' : signed(diff);
 
+      /* ─── Cosa vuol dire il numero finale, e quanto è uscito davvero dal conto ───
+         Il modello è simmetrico: ogni mese entrambi spendono la stessa cifra (il massimo fra
+         costo di possedere e canone) e chi spende meno investe la differenza. Le uscite quindi
+         coincidono quasi sempre: a cambiare è solo cosa resta in mano alla fine. */
+      var burnB = r.interessiTot + r.unaTantum + r.speseTot + r.costiVenditaTot - r.detrTot + r.taxB;
+      var burnR = r.affittiTot + r.taxR;
+      var outB = r.cassaIniziale + r.interessiTot + r.capitaleTot + r.speseTot + r.versatiB - r.detrTot;
+      var outR = r.cassaInvestita + r.affittiTot + r.versatiR;
+      $('t-out-b').textContent = money(outB);
+      $('t-out-r').textContent = money(outR);
+      $('t-burn-b').textContent = money(burnB);
+      $('t-burn-r').textContent = money(burnR);
+      $('t-net-b').textContent = money(r.netBuy);
+      $('t-net-r').textContent = money(r.netRent);
+
+      var liquida = p.vendo;
+      $('t-fine-lab').textContent = liquida ? 'Quanto ti resta in tasca' : 'Quanto vale ciò che possiedi';
+      $('v-buy-lab').textContent = liquida ? 'Comprando, in tasca' : 'Comprando, patrimonio';
+      $('v-rent-lab').textContent = liquida ? 'Affittando, in tasca' : 'Affittando, patrimonio';
+      $('v-cosa').innerHTML = liquida
+        ? '<b>Sono soldi liquidi.</b> A fine periodo vendi la casa (tolti ' + pct(p.costiVendita) + ' di costi di vendita' +
+          (r.saldoFine > 1 ? ' e ' + money(r.saldoFine) + ' di debito residuo da estinguere' : '') +
+          ') e disinvesti il portafoglio pagando ' + pct(p.tasseFin) + ' sulle plusvalenze: quello che vedi è ciò che ti ritrovi sul conto.'
+        : '<b>Attenzione: è valore sulla carta.</b> Hai scelto di non vendere e non disinvestire, quindi la casa è contata a prezzo pieno ' +
+          'senza costi di vendita' + (r.saldoFine > 1 ? ', il debito residuo di ' + money(r.saldoFine) + ' è già sottratto' : '') +
+          ', e sul portafoglio non sono ancora state pagate le tasse. Per vedere le cifre incassabili metti «vendo e disinvesto» su Sì.';
+      // Le uscite coincidono per costruzione: quando non lo fanno, il motivo è preciso e va detto.
+      var deltaOut = outR - outB, cause = [];
+      if (r.detrTot > 1) { cause.push('la detrazione sugli interessi ti restituisce ' + money(r.detrTot) + ' nell\'arco del periodo'); }
+      if (!p.investiCassa) { cause.push('i ' + money(r.cassaIniziale) + ' del rogito, non investendoli, non escono dal conto di chi affitta'); }
+      if (p.quotaInv < 100) { cause.push('solo il ' + pct(p.quotaInv) + ' del surplus mensile viene messo via'); }
+      $('t-nota').innerHTML = Math.abs(deltaOut) < Math.max(500, Math.abs(outB) * 0.01)
+        ? 'Le uscite sono <b>praticamente identiche</b>, e non è un caso: il confronto è costruito così, ogni mese esci di casa con la stessa cifra nei due scenari. Cambia solo dove finiscono quei soldi.'
+        : 'Ogni mese i due scenari ti costano la stessa cifra per costruzione; sul totale ballano ' + money(Math.abs(deltaOut)) +
+          ' ' + (deltaOut > 0 ? 'in più affittando' : 'in più comprando') +
+          (cause.length ? ', perché ' + cause.join('; ') + '.' : '.');
+
+      /* ─── Scheda parametri per il PDF: senza questa il riepilogo non è verificabile ─── */
+      var ppRow = function (l, v) { return '<div class="pp-row"><span>' + l + '</span><b>' + v + '</b></div>'; };
+      $('pp-when').textContent = 'Simulazione del ' + new Date().toLocaleDateString('it-IT') +
+        ' · orizzonte ' + anniTxt + ' · ' + (p.vendo ? 'con vendita e disinvestimento a fine periodo' : 'senza vendere né disinvestire');
+      $('pp-grid').innerHTML =
+        '<p class="pp-h">La casa</p>' +
+        ppRow('Valore immobile', money(p.prezzo)) +
+        ppRow("Costi d'acquisto", pct(p.costiAcq) + ' = ' + money(r.unaTantum)) +
+        ppRow('Rivalutazione casa', pct(p.rivaluta) + '/anno') +
+        '<p class="pp-h">Il mutuo</p>' +
+        ppRow('Anticipo', money(p.anticipo)) +
+        ppRow('Mutuo richiesto', money(r.mutuo) + ' (LTV ' + pct(r.ltv * 100) + ')') +
+        ppRow('Tasso (TAN)', pct(p.tasso)) +
+        ppRow('Durata', p.durata + ' anni') +
+        ppRow('Rata mensile', money(r.rata)) +
+        ppRow('Detrazione interessi', p.detrazione ? 'Sì' : 'No') +
+        '<p class="pp-h">L\'affitto</p>' +
+        ppRow('Canone attuale', money(p.affitto) + '/mese') +
+        ppRow('Crescita canone', pct(p.inflAffitto) + '/anno') +
+        ppRow('Canone al ' + p.anni + '° anno', money(r.affittoFine) + '/mese') +
+        '<p class="pp-h">Costi da proprietario</p>' +
+        ppRow('Manutenzione', pct(p.manut) + '/anno sul valore') +
+        ppRow('IMU e tasse', money(p.imu) + '/anno') +
+        ppRow('Altre spese', money(p.altro) + '/mese') +
+        '<p class="pp-h">Investimenti</p>' +
+        ppRow('Rendimento ipotizzato', pct(p.rendimento) + '/anno') +
+        ppRow('Cassa iniziale investita', p.investiCassa ? money(r.cassaIniziale) : 'no, spesa') +
+        ppRow('Quota surplus investita', pct(p.quotaInv)) +
+        ppRow('Tassa su plusvalenze', pct(p.tasseFin)) +
+        ppRow('Costi di vendita', pct(p.costiVendita)) +
+        '<p class="pp-h">Risultato</p>' +
+        ppRow('Uscite totali comprando', money(outB)) +
+        ppRow('Uscite totali affittando', money(outR)) +
+        ppRow((liquida ? 'In tasca' : 'Patrimonio') + ' comprando', money(r.netBuy)) +
+        ppRow((liquida ? 'In tasca' : 'Patrimonio') + ' affittando', money(r.netRent));
+      $('pp-scen').innerHTML = attivi.length
+        ? '<b>Scenario applicato:</b> ' + attivi.map(function (id) { return byId(id).n; }).join(' + ') + ' — ' + scenTxt +
+          '. I valori qui sopra sono quelli usati nel calcolo.'
+        : '<b>Nessuno scenario di mercato attivo:</b> il calcolo usa solo i parametri inseriti.';
+      $('pp-link').textContent = 'Riapri questa simulazione: ' + makeShareUrl();
+
       // Perché la colonna «affitto» non è solo il canone risparmiato: è la parte che sorprende.
       $('v-perche').innerHTML = 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
         money(r.cassaIniziale) + '</b> investito subito — l\'anticipo e i costi d\'acquisto che non versi al rogito — ' +
@@ -1654,8 +1834,8 @@
       $('sr-buy').textContent = money(r.netBuy);
       $('sr-rent').textContent = money(r.netRent);
       $('sr-scen').hidden = attivi.length === 0;
-      $('sr-scen').textContent = attivi.length === 1 ? 'scenario: ' + byId(attivi[0]).n
-        : (attivi.length > 1 ? attivi.length + ' leve accese' : '');
+      // Non basta il nome della leva: va mostrato il valore che ha davvero preso il posto del tuo.
+      $('sr-scen').textContent = attivi.length ? scenTxt : '';
       // La barra di ritocco si aggancia appena sotto la barra del verdetto, qualunque altezza abbia
       document.documentElement.style.setProperty('--barh', $('sticky').offsetHeight + 'px');
 
@@ -1700,6 +1880,18 @@
           '<b>solo se finiscono investiti</b>. Se li spende, comprare vince quasi sempre.'
         : 'Qui l\'affitto costa <b>più</b> della rata: è chi compra ad avere <b>' + money(-diffMese1) + '/mese</b> di surplus da investire. ' +
           'La cifra iniziale resta però immobilizzata nella casa.';
+
+      // Controfattuale esplicito: cosa succede all'altra scelta, calcolato davvero.
+      var altRes = simulate(Object.assign({}, p, { investiCassa: !p.investiCassa }));
+      $('il-delta').innerHTML = p.investiCassa
+        ? 'Stai investendo <b>tutto</b>. Se invece quei ' + money(r.cassaIniziale) +
+          ' li spendi e metti da parte solo la differenza mensile, dopo ' + anniTxt +
+          ' con l\'affitto chiudi con <b>' + money(altRes.netRent) + '</b> invece di ' + money(r.netRent) +
+          ': <b>' + money(Math.abs(r.netRent - altRes.netRent)) + ' in meno</b>, e ' +
+          (altRes.netBuy > altRes.netRent ? 'comprare torna a vincere.' : 'comprare resta comunque dietro.')
+        : 'Stai investendo <b>solo la differenza mensile</b>: i ' + money(r.cassaIniziale) +
+          ' del rogito li consideri spesi. Investendoli, dopo ' + anniTxt + ' l\'affitto chiuderebbe con <b>' +
+          money(altRes.netRent) + '</b> invece di ' + money(r.netRent) + '.';
 
       $('ip-cassa').textContent = money(r.cassaIniziale);
       $('ip-cassa-note').innerHTML = 'La cassa che chi compra versa al rogito (' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) +
@@ -1902,7 +2094,7 @@
       /* ─── Controlli live sotto il verdetto: stessi dati, a un tocco e senza scorrere ─── */
       $('lc-rend').textContent = pct(p.rendimento) + '/anno';
       $('lc-ports').innerHTML = PORTAFOGLI.map(function (t) {
-        var on = Math.abs(pBase.rendimento - t.r) < 0.05;
+        var on = Math.abs(p.rendimento - t.r) < 0.05;   // effettivo: se uno scenario cambia il rendimento, si sposta anche il chip
         return '<button type="button" class="chip' + (t.risk ? ' risk' : '') + (on ? ' on' : '') + '" data-lcport="' + t.id + '">' +
           t.n + '<small>' + pct(t.r) + '/anno</small></button>';
       }).join('');
@@ -2121,7 +2313,7 @@
     })();
 
     // Toggle Sì/No: pilotano la checkbox nascosta, che resta la sorgente di verità per read()/write().
-    $('form').addEventListener('click', function (ev) {
+    document.addEventListener('click', function (ev) {
       var b = ev.target.closest('[data-bool]');
       if (!b) { return; }
       $(b.getAttribute('data-bool')).checked = b.getAttribute('data-val') === '1';
@@ -2346,8 +2538,11 @@
       if (!sheet.hidden) { return; }
       var grafico = document.querySelector('#chart');
       if (!grafico) { return; }
-      // Compare quando il grafico è stato superato: il verdetto è già stato letto.
-      if (grafico.getBoundingClientRect().bottom < window.innerHeight * 0.5) { banner.hidden = false; }
+      // Superato il grafico il verdetto è stato letto: da lì si apre il popup, una volta sola per sessione.
+      if (grafico.getBoundingClientRect().bottom < window.innerHeight * 0.5) {
+        hideBanner(true);
+        openSheet();
+      }
     }
     window.addEventListener('scroll', maybeBanner, { passive: true });
     $('banner-open').addEventListener('click', function () { hideBanner(true); openSheet(); });

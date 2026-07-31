@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy e cookie — bebroggi.it</title>
+<meta name="description" content="Come vengono trattati i dati su bebroggi.it: nessun cookie di profilazione, nessun account, statistiche aggregate senza dati personali." />
+<meta name="robots" content="index,follow" />
+<style>
+  :root {
+    --paper: #f4f3ef; --white: #fbfbf9; --ink: #14171a; --muted: #6b706e; --line: #e2e0d9; --blue: #165dff;
+    --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); line-height: 1.6; }
+  .container { width: 100%; max-width: 760px; margin: 0 auto; padding: 0 20px; }
+  .top { border-bottom: 1px solid var(--line); }
+  .top .container { min-height: 64px; display: flex; align-items: center; gap: 18px; }
+  .top a { color: var(--ink); text-decoration: none; font-size: .78rem; font-weight: 650; display: inline-flex; align-items: center; min-height: 44px; }
+  main { padding: 40px 0 64px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); letter-spacing: -.03em; margin-bottom: 8px; }
+  .lead { color: var(--muted); font-size: .95rem; margin-bottom: 8px; }
+  .agg { font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: 30px; }
+  h2 { font-size: 1.05rem; margin: 32px 0 8px; letter-spacing: -.01em; }
+  p, li { font-size: .92rem; }
+  ul { margin: 8px 0 0 20px; }
+  li { margin-bottom: 6px; }
+  .box { margin: 20px 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); }
+  .box p + p { margin-top: 10px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .86rem; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 500; }
+  a { color: var(--blue); }
+  code { font-family: var(--mono); font-size: .84em; background: var(--white); border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+  footer { border-top: 1px solid var(--line); padding: 24px 0; color: var(--muted); font-size: .78rem; }
+  footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+  <div class="top"><div class="container"><a href="index.html">← Home</a></div></div>
+
+  <main>
+    <div class="container">
+      <h1>Privacy e cookie</h1>
+      <p class="lead">Questo sito è statico e non ti chiede mai di registrarti. Non usa cookie di profilazione, non ha pubblicità e non rivende dati a nessuno.</p>
+      <p class="agg">Ultimo aggiornamento: 31 luglio 2026</p>
+
+      <h2>Chi tratta i dati</h2>
+      <p>Titolare del trattamento è <strong>Alberto Broggi</strong>, Trieste (Italia). Per qualsiasi richiesta relativa a questa pagina puoi scrivere a <a href="mailto:bebroggi@gmail.com">bebroggi@gmail.com</a>.</p>
+
+      <h2>Cosa NON viene raccolto</h2>
+      <div class="box">
+        <p>I calcolatori di questo sito (compreso <a href="tools/affitto-vs-acquisto.html">affitto vs acquisto</a>) funzionano <strong>interamente nel tuo browser</strong>. I numeri che inserisci — prezzo della casa, reddito, anticipo, canone — non vengono mai inviati a nessun server: restano sul tuo dispositivo.</p>
+        <p>Quando usi il pulsante per inviare il riepilogo via email, si apre la <strong>tua</strong> applicazione di posta con il testo già scritto. L'indirizzo del destinatario lo digiti tu e non transita da questo sito: non viene né salvato né trasmesso.</p>
+      </div>
+
+      <h2>Cosa viene raccolto</h2>
+      <p>Per capire se gli strumenti vengono usati, alcune azioni generano un evento anonimo e aggregato. L'evento contiene <strong>solo</strong> il nome dell'azione e il Paese di provenienza della richiesta, ricavato dalla rete di distribuzione. Non viene registrato l'indirizzo IP, non vengono usati cookie né identificatori che permettano di riconoscerti in visite successive.</p>
+      <table>
+        <thead><tr><th>Dato</th><th>Perché</th><th>Conservazione</th></tr></thead>
+        <tbody>
+          <tr><td>Nome dell'azione<br /><code>create_pdf</code>, <code>copy_link</code>, <code>prepare_email</code></td><td>Sapere quali funzioni servono davvero</td><td>Fino a 90 giorni, in forma aggregata</td></tr>
+          <tr><td>Paese della richiesta</td><td>Capire da dove arrivano i visitatori</td><td>Fino a 90 giorni, in forma aggregata</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px">Poiché questi dati non permettono, da soli né combinati fra loro, di identificare una persona fisica, non costituiscono dati personali ai sensi dell'art. 4 GDPR. Non è quindi richiesto il tuo consenso e non compare alcun banner cookie.</p>
+
+      <h2>Dove finiscono</h2>
+      <p>Gli eventi sono elaborati da <strong>Cloudflare, Inc.</strong> tramite un servizio Workers e conservati in forma aggregata sulla sua piattaforma di analisi. Cloudflare agisce come responsabile del trattamento; i dati possono essere trattati anche fuori dallo Spazio economico europeo, sulla base delle clausole contrattuali standard adottate dalla Commissione europea. Informativa di Cloudflare: <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">cloudflare.com/privacypolicy</a>.</p>
+      <p>Il sito è ospitato su <strong>GitHub Pages</strong> (GitHub, Inc.), che per motivi di sicurezza e per erogare le pagine può registrare temporaneamente indirizzi IP nei propri log tecnici. Informativa: <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">GitHub Privacy Statement</a>.</p>
+
+      <h2>Memoria locale del browser</h2>
+      <p>Per non farti ricominciare da capo, i calcolatori salvano i parametri che inserisci e l'ultimo passaggio visitato nella memoria locale del browser (<code>localStorage</code> e <code>sessionStorage</code>). Sono informazioni tecniche che <strong>restano sul tuo dispositivo</strong>, non raggiungono alcun server e non sono cookie. Puoi cancellarle in ogni momento svuotando i dati del sito dalle impostazioni del browser, oppure con il pulsante «Reset» dentro allo strumento.</p>
+
+      <h2>I tuoi diritti</h2>
+      <p>Se in futuro dovessero essere raccolti dati personali, potrai esercitare i diritti previsti dagli artt. 15-22 GDPR — accesso, rettifica, cancellazione, limitazione, opposizione e portabilità — scrivendo a <a href="mailto:bebroggi@gmail.com">bebroggi@gmail.com</a>. Hai inoltre diritto di proporre reclamo al <a href="https://www.garanteprivacy.it" rel="noopener">Garante per la protezione dei dati personali</a>. Allo stato attuale, non essendo raccolto alcun dato personale, non esiste materialmente nulla da consultare o cancellare.</p>
+
+      <h2>Modifiche</h2>
+      <p>Se in futuro verranno introdotte funzioni che raccolgono dati personali — per esempio un modulo che salva il tuo indirizzo email — questa pagina sarà aggiornata <em>prima</em> che la funzione entri in servizio, e ti verrà chiesto un consenso esplicito e revocabile.</p>
+
+      <div class="box" style="border-color:#d8c9a8;background:#fdfaf1">
+        <p style="font-size:.84rem;color:#6b5a30"><strong>Nota per il titolare del sito:</strong> questa è una bozza tecnica, redatta descrivendo ciò che il codice fa oggi. Va verificata da un consulente prima di considerarla definitiva, e va riscritta se cambia il modo in cui i dati vengono trattati. Rimuovi questo riquadro dopo la revisione.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="y"></span> Alberto Broggi · Trieste, Italy</p>
+      <a href="index.html">bebroggi.it</a>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
