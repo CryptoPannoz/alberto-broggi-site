@@ -408,9 +408,32 @@
     /* Barra di ritocco sopra i risultati: i parametri sempre a portata */
     .recap { position: sticky; top: calc(var(--barh, 64px) + 6px); z-index: 55; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--white) 92%, transparent); backdrop-filter: blur(14px) saturate(150%); box-shadow: 0 12px 34px rgba(17,22,21,.07); }
     .recap[hidden] { display: none; }
-    .recap__scroll { display: flex; gap: 8px; flex: 1 1 320px; min-width: 0; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+    /* Su schermo stretto i gruppi occupano troppe righe per restare appiccicati sopra il contenuto. */
+    /* Tutti i parametri visibili in alto: i gruppi vanno a capo, non si scorre mai di lato. */
+    .recap__grid { display: flex; flex-wrap: wrap; gap: 10px 14px; flex: 1 1 320px; min-width: 0; }
+    .rg { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px; padding: 0 14px 0 0; border-right: 1px solid var(--line); }
+    .rg:last-child { border-right: 0; padding-right: 0; }
+    .rg__t { flex: 1 1 100%; margin: 0 0 1px; color: var(--blue); font-family: var(--mono); font-size: .5rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 650; }
+    @media (max-width: 900px) {
+      .recap { position: static; }
+      /* Un'unica griglia: i titoli di gruppo occupano la riga, i campi si affiancano al massimo possibile. */
+      .recap__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 5px 6px; align-items: end; }
+      .rg { display: contents; }
+      .rg__t { grid-column: 1 / -1; margin: 5px 0 -3px; font-size: .46rem; }
+      .rg:first-child .rg__t { margin-top: 0; }
+      .recap { gap: 8px; padding: 10px; }
+      .recap__grid label { min-width: 0; gap: 1px; font-size: .46rem; letter-spacing: .03em; }
+      .recap__grid label span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .recap input { width: 100%; min-height: 38px; padding: 4px 6px; font-size: .76rem; }
+      .recap__sw { grid-column: span 2; }
+      .yn--mini button { min-height: 38px; min-width: 0; padding: 0 8px; flex: 1; }
+      /* Con tutti i campi aperti la barra è alta: su mobile il verdetto e i chip vengono prima,
+         così il risultato resta la prima cosa che leggi e i parametri restano comunque tutti visibili. */
+      .verdict { order: -2; }
+      #live-controls { order: -1; }
+    }
     .recap label { flex: none; display: flex; flex-direction: column; gap: 3px; color: var(--muted); font-family: var(--mono); font-size: .52rem; text-transform: uppercase; letter-spacing: .05em; }
-    .recap input { width: 86px; min-height: 36px; padding: 5px 8px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); font: inherit; font-size: .8rem; }
+    .recap input { width: 78px; min-height: 36px; padding: 5px 7px; border: 1px solid var(--line); border-radius: 9px; background: var(--paper); font: inherit; font-size: .8rem; }
     .recap input:focus { outline: 2px solid var(--blue); outline-offset: 1px; background: var(--white); }
     .recap__sw { flex: none; display: flex; flex-direction: column; gap: 3px; }
     .yn--mini { display: inline-flex; gap: 4px; }
@@ -623,7 +646,7 @@
     @media (pointer: coarse) {
       .tool-top a, footer a { display: inline-flex; align-items: center; min-height: 44px; }
       .field input[type="range"] { height: 44px; background: transparent; }
-      .recap__scroll input { min-height: 44px; }
+      .recap input { min-height: 44px; }
       .recap__btns button, .panel__actions button, .wnav button { min-height: 44px; }
       table.scen .apply { min-height: 44px; padding: 0 14px; }
       .preset-row button { min-height: 44px; }
@@ -945,32 +968,50 @@
         <div class="results">
 
           <div class="recap" id="recap" hidden>
-            <div class="recap__scroll">
-              <label><span>Valore €</span><input type="number" data-proxy="prezzo" min="0" step="1000" inputmode="numeric" /></label>
-              <label><span>Costi acq. %</span><input type="number" data-proxy="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" /></label>
-              <label><span>Anticipo €</span><input type="number" data-proxy="anticipo" min="0" step="1000" inputmode="numeric" /></label>
-              <label><span>Tasso %</span><input type="number" data-proxy="tasso" min="0" max="15" step="0.05" inputmode="decimal" /></label>
-              <label><span>Durata anni</span><input type="number" data-proxy="durata" min="1" max="40" step="1" inputmode="numeric" /></label>
-              <label><span>Affitto €/mese</span><input type="number" data-proxy="affitto" min="0" step="25" inputmode="numeric" /></label>
-              <label><span>Cresc. affitto %</span><input type="number" data-proxy="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" /></label>
-              <label><span>Orizzonte</span><input type="number" data-proxy="anni" min="1" max="40" step="1" inputmode="numeric" /></label>
-              <label><span>Rendimento %</span><input type="number" data-proxy="rendimento" min="0" max="40" step="0.1" inputmode="decimal" /></label>
-              <label><span>Rivaluta casa %</span><input type="number" data-proxy="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" /></label>
-              <label><span>Surplus inv. %</span><input type="number" data-proxy="quotaInv" min="0" max="100" step="5" inputmode="numeric" /></label>
-              <label><span>Manutenz. %</span><input type="number" data-proxy="manut" min="0" max="5" step="0.1" inputmode="decimal" /></label>
-              <label><span>IMU €/anno</span><input type="number" data-proxy="imu" min="0" step="50" inputmode="numeric" /></label>
-              <label class="recap__sw"><span>Investi la cassa iniz.</span>
-                <span class="yn yn--mini" role="group" aria-label="Investi anche la cassa iniziale">
-                  <button type="button" data-bool="investiCassa" data-val="1">Sì</button>
-                  <button type="button" data-bool="investiCassa" data-val="0">No</button>
-                </span>
-              </label>
-              <label class="recap__sw"><span>Vendi a fine periodo</span>
-                <span class="yn yn--mini" role="group" aria-label="Vendi e disinvesti a fine periodo">
-                  <button type="button" data-bool="vendo" data-val="1">Sì</button>
-                  <button type="button" data-bool="vendo" data-val="0">No</button>
-                </span>
-              </label>
+            <div class="recap__grid">
+              <div class="rg">
+                <p class="rg__t">La casa</p>
+                <label><span>Valore €</span><input type="number" data-proxy="prezzo" min="0" step="1000" inputmode="numeric" /></label>
+                <label><span>Costi acq. %</span><input type="number" data-proxy="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" /></label>
+                <label><span>Rivaluta %</span><input type="number" data-proxy="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" /></label>
+              </div>
+              <div class="rg">
+                <p class="rg__t">Il mutuo</p>
+                <label><span>Anticipo €</span><input type="number" data-proxy="anticipo" min="0" step="1000" inputmode="numeric" /></label>
+                <label><span>Tasso %</span><input type="number" data-proxy="tasso" min="0" max="15" step="0.05" inputmode="decimal" /></label>
+                <label><span>Durata anni</span><input type="number" data-proxy="durata" min="1" max="40" step="1" inputmode="numeric" /></label>
+              </div>
+              <div class="rg">
+                <p class="rg__t">L’affitto</p>
+                <label><span>Canone €</span><input type="number" data-proxy="affitto" min="0" step="25" inputmode="numeric" /></label>
+                <label><span>Crescita %</span><input type="number" data-proxy="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" /></label>
+              </div>
+              <div class="rg">
+                <p class="rg__t">Costi da proprietario</p>
+                <label><span>Manutenz. %</span><input type="number" data-proxy="manut" min="0" max="5" step="0.1" inputmode="decimal" /></label>
+                <label><span>IMU €/anno</span><input type="number" data-proxy="imu" min="0" step="50" inputmode="numeric" /></label>
+              </div>
+              <div class="rg">
+                <p class="rg__t">Investimenti</p>
+                <label><span>Rendim. %</span><input type="number" data-proxy="rendimento" min="0" max="40" step="0.1" inputmode="decimal" /></label>
+                <label><span>Surplus inv. %</span><input type="number" data-proxy="quotaInv" min="0" max="100" step="5" inputmode="numeric" /></label>
+                <label class="recap__sw"><span>Cassa iniziale</span>
+                  <span class="yn yn--mini" role="group" aria-label="Investi anche la cassa iniziale">
+                    <button type="button" data-bool="investiCassa" data-val="1">Sì</button>
+                    <button type="button" data-bool="investiCassa" data-val="0">No</button>
+                  </span>
+                </label>
+              </div>
+              <div class="rg">
+                <p class="rg__t">Orizzonte</p>
+                <label><span>Anni</span><input type="number" data-proxy="anni" min="1" max="40" step="1" inputmode="numeric" /></label>
+                <label class="recap__sw"><span>Vendi alla fine</span>
+                  <span class="yn yn--mini" role="group" aria-label="Vendi e disinvesti a fine periodo">
+                    <button type="button" data-bool="vendo" data-val="1">Sì</button>
+                    <button type="button" data-bool="vendo" data-val="0">No</button>
+                  </span>
+                </label>
+              </div>
             </div>
             <div class="recap__btns">
               <button type="button" id="recap-all">Tutti i parametri</button>
