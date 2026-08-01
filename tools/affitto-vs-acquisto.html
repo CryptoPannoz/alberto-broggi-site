@@ -553,6 +553,17 @@
     .yn--dark button { min-height: 46px; padding: 0 12px; border: 1px solid rgba(255,255,255,.3); border-radius: 12px; background: transparent; color: rgba(255,255,255,.8); cursor: pointer; font: inherit; font-size: .74rem; font-weight: 650; }
     .yn--dark button.on { background: white; border-color: white; color: var(--ink); }
     @media (max-width: 520px) { .yn--dark { grid-template-columns: 1fr; } }
+    .il__campo { grid-column: 1 / -1; }
+    .il__inp { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .il__inp input { width: 130px; min-height: 44px; padding: 6px 10px; border: 1px solid rgba(255,255,255,.35); border-radius: 10px; background: white; color: var(--ink); font: 600 1.05rem var(--mono); }
+    .il__inp input:focus { outline: 2px solid var(--lime); outline-offset: 1px; }
+    .il__inp b { font-size: .8rem; color: rgba(255,255,255,.85); }
+    .il__campo input[type="range"] { width: 100%; margin-top: 8px; accent-color: white; }
+    .il__aggancia { margin-top: 9px; padding: 7px 11px; border: 1px dashed rgba(255,255,255,.4); border-radius: 999px; background: transparent; color: rgba(255,255,255,.85); cursor: pointer; font-size: .64rem; font-weight: 650; }
+    .il__aggancia.on { border-style: solid; background: rgba(255,255,255,.14); cursor: default; }
+    .il__aggancia:not(.on):hover { background: white; color: var(--ink); }
+    .il__campo.is-overridden .il__inp input { outline: 2px solid var(--orange); }
+    .il__campo small.ovr { display: block; margin-top: 6px; color: #ffcdb8; font-family: var(--mono); font-size: .62rem; }
     .il__delta { margin: 12px 0 0; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); font-size: .74rem; line-height: 1.5; }
     .il__delta b { color: white; font-weight: 650; }
 
@@ -847,7 +858,12 @@
           <div class="investi-live" id="investi-live">
             <p class="il__title" id="il-title">Restando in affitto, questi soldi non li spendi: <strong>li devi investire</strong></p>
             <div class="il__grid">
-              <div><span id="il-mese-lab">Ogni mese, la differenza con la rata</span><b id="il-mese">—</b></div>
+              <div class="il__campo">
+                <span id="il-mese-lab">Ogni mese metti via <output id="investeMese_o" class="sr-only"></output></span>
+                <div class="il__inp"><input type="number" id="investeMese" min="0" step="5" inputmode="numeric" /><b>€/mese</b></div>
+                <input type="range" id="investeMese_r" min="0" max="3000" step="5" aria-label="Investimento mensile (slider)" />
+                <button type="button" class="il__aggancia" id="il-auto"></button>
+              </div>
               <div><span id="il-cassa-lab">Subito, al posto di anticipo + costi d’acquisto</span><b id="il-cassa">—</b></div>
             </div>
             <p class="il__note" id="il-note"></p>
@@ -860,6 +876,8 @@
               </div>
               <input type="checkbox" id="investiCassa" class="sr-only" />
               <output id="investiCassa_o" class="sr-only"></output>
+              <input type="checkbox" id="investeAuto" class="sr-only" />
+              <output id="investeAuto_o" class="sr-only"></output>
               <p class="il__delta" id="il-delta"></p>
             </div>
           </div>
@@ -929,12 +947,6 @@
             <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media nazionale.</small>
           </div>
 
-          <div class="field">
-            <label for="quotaInv">Quota del surplus investita <output id="quotaInv_o"></output></label>
-            <input type="number" id="quotaInv" min="0" max="100" step="5" inputmode="numeric" />
-            <input type="range" id="quotaInv_r" min="0" max="100" step="5" aria-label="Quota del surplus investita (slider)" />
-            <small>Quanta parte della differenza mensile viene davvero investita invece che spesa. Vale per entrambe le parti.</small>
-          </div>
             </div>
           </details>
           </section>
@@ -980,7 +992,7 @@
               <div class="rg">
                 <p class="rg__t">Investimenti</p>
                 <label><span>Rendim. %</span><input type="number" data-proxy="rendimento" min="0" max="40" step="0.1" inputmode="decimal" /></label>
-                <label><span>Surplus inv. %</span><input type="number" data-proxy="quotaInv" min="0" max="100" step="5" inputmode="numeric" /></label>
+                <label><span>Invest. €/mese</span><input type="number" data-proxy="investeMese" min="0" step="5" inputmode="numeric" /></label>
                 <label class="recap__sw"><span>Cassa iniziale</span>
                   <span class="yn yn--mini" role="group" aria-label="Investi anche la cassa iniziale">
                     <button type="button" data-bool="investiCassa" data-val="1">Sì</button>
@@ -1201,7 +1213,7 @@
             <p>Le uscite che non tornano indietro in nessuna forma. Per chi affitta è solo una voce: il canone. Per chi compra sono <strong>interessi del mutuo, costi d'acquisto, manutenzione straordinaria, IMU se dovuta e costi di vendita</strong>, meno le detrazioni fiscali. La quota capitale non ci rientra: è capitale che cambia forma, non spesa. Nella sezione «Dove finiscono i soldi» trovi questo totale anche annualizzato e in percentuale sul valore dell'immobile, così puoi confrontare case diverse.</p>
 
             <h4>Se resto in affitto devo investire la differenza?</h4>
-            <p>Sì, altrimenti il confronto non sta in piedi. Chi affitta non tira fuori l'anticipo, e nei mesi in cui la rata costa più del canone non paga quella differenza. Se non li investe, non li sta risparmiando: <strong>li sta spendendo</strong>. È esattamente per questo che senza investire converrebbe quasi sempre comprare — il mutuo è un piano di accumulo obbligatorio, l'affitto no. Non è una verità finanziaria, è una verità comportamentale, e nel calcolatore la puoi quantificare con «quota del surplus investita».</p>
+            <p>Sì, altrimenti il confronto non sta in piedi. Chi affitta non tira fuori l'anticipo, e nei mesi in cui la rata costa più del canone non paga quella differenza. Se non li investe, non li sta risparmiando: <strong>li sta spendendo</strong>. È esattamente per questo che senza investire converrebbe quasi sempre comprare — il mutuo è un piano di accumulo obbligatorio, l'affitto no. Non è una verità finanziaria, è una verità comportamentale, e nel calcolatore la governi con un numero solo: quanti euro metti via ogni mese nel passo Investimenti.</p>
 
             <h4>Conviene comprare casa in contanti o con il mutuo?</h4>
             <p>Controintuitivo, ma <strong>spesso il mutuo costa meno</strong>. Pagare in contanti evita gli interessi, però immobilizza tutto il capitale, e il costo opportunità di quel capitale è di frequente superiore al costo del debito — soprattutto con un tasso contenuto già bloccato. Per verificarlo sul tuo caso porta l'anticipo al valore pieno dell'immobile e guarda come cambia il costo non recuperabile annuo.</p>
@@ -1218,7 +1230,7 @@
             <div>
             <p class="note">Trasparenza sui numeri, così sai dove intervenire.</p>
             <ul>
-              <li><b>Confronto simmetrico.</b> Entrambi gli scenari partono dalla stessa cassa (anticipo + costi d'acquisto) e spendono ogni mese la stessa cifra. Chi in quel mese spende meno investe la differenza al rendimento indicato: è il costo-opportunità dell'anticipo, il pezzo che i confronti «rata vs affitto» dimenticano. Se abbassi «quota del surplus investita» in «Altre ipotesi», quella differenza viene invece consumata — da entrambe le parti, ma il capitale del mutuo resta risparmio forzoso, e lì sta il vantaggio vero di chi compra.</li>
+              <li><b>Come si confrontano le due strade.</b> Chi compra paga rata e spese; chi affitta paga il canone e investe la cifra mensile che scegli tu (di default, agganciata alla differenza del 1° anno: così le uscite partono uguali). Nei mesi in cui possedere costa meno del canone, anche chi compra investe il proprio avanzo. La cassa iniziale (anticipo + costi) chi affitta la investe, se lo decidi. Il capitale del mutuo resta comunque risparmio forzoso: è lì il vantaggio strutturale di chi compra.</li>
               <li><b>Mutuo a tasso fisso</b>, ammortamento alla francese, rata costante. Se la durata supera l'orizzonte, il debito residuo viene sottratto dal patrimonio.</li>
               <li><b>Costi d'acquisto</b> in percentuale sul prezzo: notaio, imposte, agenzia, istruttoria e perizia. Il 9% di default è una stima prudente per prima casa con agenzia; da privato e senza intermediario scende parecchio.</li>
               <li><b>Spese condominiali ordinarie escluse</b>: in affitto le paghi comunque, quindi si annullano. Nella voce manutenzione rientrano straordinarie, rifacimenti e assicurazione.</li>
@@ -1279,13 +1291,16 @@
 
     var DEFAULTS = {
       // L'orizzonte parte uguale alla durata del mutuo; l'adeguamento canone segue l'ISTAT (~1,5%).
-      prezzo: 240000, tasso: 3.2, anticipo: 60000, anni: 25, affitto: 850, quotaInv: 100,
+      prezzo: 240000, tasso: 3.2, anticipo: 60000, anni: 25, affitto: 850,
       durata: 25, costiAcq: 9, manut: 1, imu: 0, altro: 0,
       rivaluta: 1, inflAffitto: 1.5, rendimento: 5, tasseFin: 26, costiVendita: 3,
-      vendo: true, detrazione: true, investiCassa: true
+      vendo: true, detrazione: true, investiCassa: true,
+      // investeMese: quanto chi affitta mette via ogni mese, in euro. Finché investeAuto è
+      // attivo segue da solo la differenza (rata+spese−canone) del 1° anno.
+      investeMese: 0, investeAuto: true
     };
-    var NUM = ['prezzo','tasso','anticipo','anni','affitto','durata','costiAcq','manut','imu','altro','rivaluta','inflAffitto','rendimento','quotaInv','tasseFin','costiVendita'];
-    var BOOL = ['vendo','detrazione','investiCassa'];
+    var NUM = ['prezzo','tasso','anticipo','anni','affitto','durata','costiAcq','manut','imu','altro','rivaluta','inflAffitto','rendimento','investeMese','tasseFin','costiVendita'];
+    var BOOL = ['vendo','detrazione','investiCassa','investeAuto'];
     // Ogni parametro numerico ha il suo slider, avanzati compresi.
     var SLIDERS = NUM.slice();
     var STORE = 'ab-rentbuy-v1';
@@ -1318,12 +1333,8 @@
       var mutuo = Math.max(0, p.prezzo - anticipo);
       var ltv = p.prezzo > 0 ? mutuo / p.prezzo : 0;
       var rata = mutuo <= 0 ? 0 : (rM === 0 ? mutuo / nMut : mutuo * rM / (1 - Math.pow(1 + rM, -nMut)));
-      // Quota del surplus mensile che viene davvero investita invece che spesa. Vale per entrambi:
-      // il capitale del mutuo resta comunque risparmio forzoso, ed è lì l'asimmetria vera.
-      var qInv = Math.min(1, Math.max(0, p.quotaInv / 100));
-      // Versamento mensile aggiuntivo del solo affittuario: serve alle soglie («quanto in più
-      // dovresti investire per pareggiare»), non è un input del pannello.
-      var extraM = Math.max(0, p.extraMese || 0);
+      // Quanto mette via ogni mese chi affitta: una cifra fissa in euro, scelta dall'utente.
+      var invMese = Math.max(0, p.investeMese || 0);
 
       var saldo = mutuo;
       var casa = p.prezzo;
@@ -1362,9 +1373,8 @@
         var costoBuy = rataM + spese;
         var costoRent = affitto;
         if (m === 1) { costoBuy1 = costoBuy; costoRent1 = costoRent; }
-        var budget = Math.max(costoBuy, costoRent);
 
-        var addB = (budget - costoBuy) * qInv, addR = (budget - costoRent) * qInv + extraM;
+        var addB = Math.max(0, costoRent - costoBuy), addR = invMese;
         pfB = pfB * (1 + rI) + addB; baseB += addB; versatiB += addB;
         pfR = pfR * (1 + rI) + addR; baseR += addR; versatiR += addR;
 
@@ -1540,7 +1550,7 @@
       { id: 'casa', nome: 'Mercato immobiliare', pBase: 32, baseD: 'La casa si rivaluta come hai ipotizzato' },
       { id: 'affitti', nome: 'Inflazione e canoni', pBase: 50, baseD: 'Gli affitti crescono come hai ipotizzato' },
       { id: 'borsa', nome: 'Mercati finanziari', pBase: 32, baseD: 'Il portafoglio rende come hai ipotizzato' },
-      { id: 'disciplina', nome: 'Disciplina di risparmio', pBase: 30, baseD: 'Il surplus mensile viene investito per intero, da entrambe le parti' }
+      { id: 'disciplina', nome: 'Disciplina di risparmio', pBase: 30, baseD: 'Ogni mese investi davvero la cifra impostata' }
     ];
 
     var SCENARI = [
@@ -1573,10 +1583,10 @@
       { id: 'casa-crollo', fam: 'casa', p: 5, n: 'Crollo immobiliare',
         d: '−4%/anno nominale: bolla che si sgonfia, tipo Spagna o Irlanda dopo il 2008. Con la leva del mutuo è lo scenario peggiore in assoluto.', m: { rivaluta: { set: -4 } } },
 
-      { id: 'disc-meta', fam: 'disciplina', p: 40, n: 'Metà del surplus si perde per strada',
-        d: 'Solo il 50% della differenza mensile viene davvero investito, il resto se ne va in consumi. È l\'ipotesi più realistica per la maggior parte delle persone.', m: { quotaInv: { set: 50 } } },
-      { id: 'disc-zero', fam: 'disciplina', p: 30, n: 'Nessuno investe la differenza',
-        d: 'Il surplus mensile viene interamente speso. Il mutuo però continua a rimborsare capitale: è risparmio forzoso, e qui si vede tutto il vantaggio psicologico di comprare.', m: { quotaInv: { set: 0 } } }
+      { id: 'disc-meta', fam: 'disciplina', p: 40, n: 'Metà della cifra si perde per strada',
+        d: 'Ogni mese ne investi solo la metà, il resto se ne va in consumi. È l\'ipotesi più realistica per la maggior parte delle persone.', m: { investeMese: { mul: 0.5 } } },
+      { id: 'disc-zero', fam: 'disciplina', p: 30, n: 'Non investi niente ogni mese',
+        d: 'La cifra mensile viene interamente spesa. Il mutuo però continua a rimborsare capitale: è risparmio forzoso, e qui si vede tutto il vantaggio psicologico di comprare.', m: { investeMese: { set: 0 } } }
     ];
 
     var PRESET = [
@@ -1585,7 +1595,7 @@
       { n: 'Italia 2012-2021', d: 'tassi giù · mattone fermo · canoni fermi · borsa forte', lev: ['tassi-giu', 'casa-fermo', 'aff-zero', 'borsa-forte'] },
       { n: 'Il peggio per chi compra', d: 'tassi su · casa che perde valore · borsa forte', lev: ['tassi-su', 'casa-giu', 'borsa-forte'] },
       { n: 'Il peggio per chi affitta', d: 'tassi giù · casa boom · canoni +4% · borsa debole', lev: ['tassi-giu', 'casa-boom', 'aff-alta', 'borsa-debole'] },
-      { n: 'Realistico italiano', d: 'mattone fermo · metà del surplus si perde per strada', lev: ['casa-fermo', 'disc-meta'] }
+      { n: 'Realistico italiano', d: 'mattone fermo · metà della cifra si perde per strada', lev: ['casa-fermo', 'disc-meta'] }
     ];
 
     // Portafogli di riferimento: impostano il rendimento atteso nel pannello.
@@ -1607,7 +1617,9 @@
     function applyScen(p, m) {
       var q = Object.assign({}, p);
       Object.keys(m).forEach(function (k) {
-        q[k] = m[k].set !== undefined ? m[k].set : q[k] + m[k].add;
+        q[k] = m[k].set !== undefined ? m[k].set
+             : m[k].mul !== undefined ? q[k] * m[k].mul
+             : q[k] + m[k].add;
         if (k !== 'rivaluta') { q[k] = Math.max(0, q[k]); }
       });
       return q;
@@ -1618,7 +1630,7 @@
     var PARAM_LABEL = {
       tasso: 'tasso del mutuo', rivaluta: 'rivalutazione casa', inflAffitto: 'crescita affitto',
       rendimento: 'rendimento investimenti', manut: 'manutenzione', costiAcq: "costi d'acquisto",
-      quotaInv: 'quota del surplus investita'
+      investeMese: 'investimento mensile'
     };
 
     var inFam = function (fam) {
@@ -1663,7 +1675,8 @@
       $('sb-changes').textContent = chg.length === 0
         ? 'Queste leve coincidono già con i parametri che hai impostato: i numeri non cambiano.'
         : chg.map(function (k) {
-            return (PARAM_LABEL[k] || k) + ' ' + pct(pBase[k]) + ' → ' + pct(pUsed[k]);
+            var f = k === 'investeMese' ? money : pct;
+            return (PARAM_LABEL[k] || k) + ' ' + f(pBase[k]) + ' → ' + f(pUsed[k]);
           }).join('  ·  ');
       $('sb-prob').innerHTML = 'Probabilità indicativa che si verifichino insieme le condizioni accese: <b>' + probFmt(comboProb()) + '</b>' +
         (attivi.length > 1
@@ -1679,16 +1692,28 @@
       chg.forEach(function (k) {
         var input = $(k);
         if (!input) { return; }
-        var f = input.parentNode;
+        var f = input.closest('.field') || input.closest('.il__campo') || input.parentNode;
         f.classList.add('is-overridden');
         var s = document.createElement('small');
         s.className = 'ovr';
-        s.textContent = 'scenario attivo: ' + pct(pUsed[k]);
+        s.textContent = 'scenario attivo: ' + (k === 'investeMese' ? money(pUsed[k]) + '/mese' : pct(pUsed[k]));
         f.appendChild(s);
       });
     }
 
     /* ─────────── Lettura / scrittura parametri ─────────── */
+    // Differenza mensile del 1° anno (rata + spese − canone) in forma chiusa: serve
+    // all'aggancio automatico di investeMese senza dover simulare.
+    function diffMese1Of(p) {
+      var nMut = Math.max(1, Math.round(p.durata * 12));
+      var rM = p.tasso / 100 / 12;
+      var anticipo = Math.min(Math.max(0, p.anticipo), p.prezzo);
+      var mutuo = Math.max(0, p.prezzo - anticipo);
+      var rata = mutuo <= 0 ? 0 : (rM === 0 ? mutuo / nMut : mutuo * rM / (1 - Math.pow(1 + rM, -nMut)));
+      var spese = p.prezzo * (p.manut / 100) / 12 + p.imu / 12 + p.altro;
+      return Math.max(0, Math.round(rata + spese - p.affitto));
+    }
+
     function read() {
       var p = {};
       NUM.forEach(function (k) {
@@ -1698,6 +1723,8 @@
       BOOL.forEach(function (k) { p[k] = $(k).checked; });
       p.anni = Math.min(40, Math.max(1, Math.round(p.anni)));
       p.durata = Math.min(40, Math.max(1, Math.round(p.durata)));
+      // Con l'aggancio attivo la cifra mensile è sempre la differenza reale del 1° anno.
+      if (p.investeAuto) { p.investeMese = diffMese1Of(p); }
       return p;
     }
 
@@ -1717,10 +1744,20 @@
       $('anni_o').textContent = p.anni + (p.anni === 1 ? ' anno' : ' anni');
       $('affitto_o').textContent = money(p.affitto);
 
-      ['rendimento','rivaluta','inflAffitto','quotaInv','costiAcq','manut','tasseFin','costiVendita']
+      ['rendimento','rivaluta','inflAffitto','costiAcq','manut','tasseFin','costiVendita']
         .forEach(function (k) { $(k + '_o').textContent = pct(p[k]); });
       $('durata_o').textContent = p.durata + (p.durata === 1 ? ' anno' : ' anni');
       $('imu_o').textContent = money(p.imu) + '/anno';
+      $('investeMese_o').textContent = money(p.investeMese) + '/mese';
+      // Se l'aggancio è attivo, il campo mostra sempre la differenza corrente
+      if (p.investeAuto && $('investeMese') !== document.activeElement) {
+        $('investeMese').value = p.investeMese;
+        $('investeMese_r').value = p.investeMese;
+      }
+      $('il-auto').textContent = p.investeAuto
+        ? 'Agganciato alla differenza: si aggiorna da solo'
+        : 'Riaggancia alla differenza (' + money(diffMese1Of(p)) + ')';
+      $('il-auto').classList.toggle('on', !!p.investeAuto);
       $('altro_o').textContent = money(p.altro) + '/mese';
       BOOL.forEach(function (k) {
         $(k + '_o').textContent = p[k] ? 'Sì' : 'No';
@@ -1748,7 +1785,7 @@
       // Cosa ha cambiato davvero lo scenario: il valore, non solo il nome della leva.
       var scenTxt = chg.map(function (k) {
         var etichetta = PARAM_LABEL[k] || k;
-        var v = ['prezzo','anticipo','affitto','imu','altro'].indexOf(k) > -1 ? money(p[k])
+        var v = ['prezzo','anticipo','affitto','imu','altro','investeMese'].indexOf(k) > -1 ? money(p[k])
               : (['anni','durata'].indexOf(k) > -1 ? p[k] + ' anni' : pct(p[k]));
         return etichetta + ' ' + v;
       }).join(' · ');
@@ -1809,10 +1846,12 @@
       var deltaOut = outR - outB, cause = [];
       if (r.detrTot > 1) { cause.push('la detrazione sugli interessi ti restituisce ' + money(r.detrTot) + ' nell\'arco del periodo'); }
       if (!p.investiCassa) { cause.push('i ' + money(r.cassaIniziale) + ' del rogito, non investendoli, non escono dal conto di chi affitta'); }
-      if (p.quotaInv < 100) { cause.push('solo il ' + pct(p.quotaInv) + ' del surplus mensile viene messo via'); }
+      var diffRif = Math.max(0, diffMese1);
+      if (p.investeMese < diffRif - 1) { cause.push('metti via ' + money(p.investeMese) + '/mese contro una differenza di ' + money(diffRif) + ': il resto è consumo'); }
+      if (p.investeMese > diffRif + 1) { cause.push('metti via ' + money(p.investeMese) + '/mese' + (diffRif > 0 ? ', più della differenza di ' + money(diffRif) : ', pur senza differenza da coprire') + ': cassa in più che esce solo affittando'); }
       $('t-nota').innerHTML = Math.abs(deltaOut) < Math.max(500, Math.abs(outB) * 0.01)
-        ? 'Le uscite sono <b>praticamente identiche</b>, e non è un caso: il confronto è costruito così, ogni mese esci di casa con la stessa cifra nei due scenari. Cambia solo dove finiscono quei soldi.'
-        : 'Ogni mese i due scenari ti costano la stessa cifra per costruzione; sul totale ballano ' + money(Math.abs(deltaOut)) +
+        ? 'Le uscite sono <b>praticamente identiche</b>: con la cifra mensile agganciata alla differenza esci di casa con lo stesso denaro nei due scenari, e cambia solo dove finisce. Se la modifichi, anche le uscite si allontanano.'
+        : 'Sul totale delle uscite ballano ' + money(Math.abs(deltaOut)) +
           ' ' + (deltaOut > 0 ? 'in più affittando' : 'in più comprando') +
           (cause.length ? ', perché ' + cause.join('; ') + '.' : '.');
 
@@ -1843,7 +1882,7 @@
         '<p class="pp-h">Investimenti</p>' +
         ppRow('Rendimento ipotizzato', pct(p.rendimento) + '/anno') +
         ppRow('Cassa iniziale investita', p.investiCassa ? money(r.cassaIniziale) : 'no, spesa') +
-        ppRow('Quota surplus investita', pct(p.quotaInv)) +
+        ppRow('Investimento mensile (affitto)', money(p.investeMese) + '/mese' + (p.investeAuto ? ' · agganciato alla differenza' : '')) +
         ppRow('Tassa su plusvalenze', pct(p.tasseFin)) +
         ppRow('Costi di vendita', pct(p.costiVendita)) +
         '<p class="pp-h">Risultato</p>' +
@@ -1860,9 +1899,8 @@
       // Perché la colonna «affitto» non è solo il canone risparmiato: è la parte che sorprende.
       $('v-perche').innerHTML = 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
         money(r.cassaIniziale) + '</b> investito subito — l\'anticipo e i costi d\'acquisto che non versi al rogito — ' +
-        (diffMese1 > 0
-          ? 'più <b>' + money(diffMese1) + ' al mese</b>, la differenza tra quello che costa possedere e il canone.'
-          : 'mentre il costo mensile è più alto del possedere: lì il surplus da investire ce l\'ha chi compra.') +
+        'più <b>' + money(p.investeMese) + ' al mese</b>' +
+        (p.investeAuto ? ', la differenza tra quello che costa possedere e il canone.' : ', la cifra che hai scelto tu nel passo Investimenti.') +
         ' Se quei soldi vengono spesi invece che investiti, questo confronto non regge e comprare vince.';
 
       // La fotografia del mutuo, in fondo allo step 2: sempre i numeri del pannello, mai lo scenario.
@@ -1900,23 +1938,13 @@
       }
 
       // Ipotesi chiave: senza investire, il confronto non regge
-      /* Il ponte nello step 2: chi non compra deve investire esattamente queste due cifre. */
+      /* Il ponte: chi non compra sceglie quanto investire al mese; il default è la differenza. */
       $('il-cassa').textContent = money(r.cassaIniziale);
-      $('il-mese').textContent = money(Math.abs(diffMese1)) + '/mese';
-      // Di solito il surplus mensile è di chi affitta, ma se il canone supera il costo di possedere si ribalta.
-      $('il-mese-lab').textContent = diffMese1 >= 0
-        ? 'Ogni mese, quanto costa in più possedere'
-        : 'Ogni mese, il surplus è però di chi compra';
-      $('il-title').innerHTML = diffMese1 >= 0
-        ? 'Restando in affitto, questi soldi non li spendi: <strong>li devi investire</strong>'
-        : 'Con questo canone l’affitto costa di più: <strong>investire tocca a chi compra</strong>';
-      $('il-note').innerHTML = diffMese1 >= 0
-        ? 'Chi compra versa <b>' + money(r.cassaIniziale) + '</b> al rogito (' + money(r.anticipo) + ' di anticipo + ' +
-          money(r.unaTantum) + ' di costi) e poi paga <b>' + money(r.costoBuy1) + '</b> al mese, tutto incluso. ' +
-          'Chi affitta paga <b>' + money(r.costoRent1) + '</b> di canone: quei soldi non versati restano suoi, ma valgono qualcosa ' +
-          '<b>solo se finiscono investiti</b>. Se li spende, comprare vince quasi sempre.'
-        : 'Qui l\'affitto costa <b>più</b> della rata: è chi compra ad avere <b>' + money(-diffMese1) + '/mese</b> di surplus da investire. ' +
-          'La cifra iniziale resta però immobilizzata nella casa.';
+      $('il-title').innerHTML = 'Restando in affitto, quanto metti via ogni mese? <strong>Decidilo qui</strong>';
+      $('il-note').innerHTML = 'Possedere costa <b>' + money(r.costoBuy1) + '</b> al mese (rata + spese), il canone <b>' +
+        money(r.costoRent1) + '</b>: la differenza il 1° anno ' +
+        (diffMese1 >= 0 ? 'è <b>' + money(diffMese1) + '/mese</b> in tasca a chi affitta' : 'gioca per chi compra (' + money(-diffMese1) + '/mese)') +
+        '. Con l\'aggancio attivo investi esattamente quella cifra; scrivi un numero tuo per dire quanto metti via davvero — è l\'ipotesi che pesa più di tutte. Chi compra, nei mesi in cui possedere costa meno del canone, investe a sua volta l\'avanzo.';
 
       // Controfattuale esplicito: cosa succede all'altra scelta, calcolato davvero.
       var altRes = simulate(Object.assign({}, p, { investiCassa: !p.investiCassa }));
@@ -1943,22 +1971,24 @@
         $('ip-rata-note').textContent = 'Senza mutuo non c\'è rata: tutta la cifra è immobilizzata il giorno dell\'acquisto, e il confronto si gioca solo sul costo-opportunità di quel capitale.';
       }
 
-      // Controfattuale: stessi parametri ma nessuno investe il surplus mensile
-      var rNoInv = simulate(Object.assign({}, p, { quotaInv: 0 }));
+      // Controfattuale: stessi parametri ma chi affitta non investe nulla, nemmeno la cassa
+      var rNoInv = simulate(Object.assign({}, p, { investeMese: 0, investiCassa: false }));
       var diffNoInv = rNoInv.netBuy - rNoInv.netRent;
-      $('ip-test').innerHTML = 'Prova del nove: se <b>nessuno dei due investisse</b> il surplus mensile e lo spendesse, ' +
+      $('ip-test').innerHTML = 'Prova del nove: se restando in affitto <b>non investissi niente</b> — né la cassa del rogito né la cifra mensile — ' +
         'il verdetto diventerebbe <b>' + (diffNoInv >= 0 ? 'comprare +' + money(diffNoInv) : 'affittare +' + money(-diffNoInv)) + '</b> ' +
         '(ora è ' + (diff >= 0 ? 'comprare +' + money(diff) : 'affittare +' + money(-diff)) + '). ' +
         (diffNoInv > diff
           ? 'Ecco perché «l\'affitto è soldi buttati» suona vero nella pratica: il mutuo è un piano di accumulo obbligatorio, l\'affitto no. Il vantaggio di comprare qui non viene dal mattone, viene dalla disciplina.'
-          : 'In questo caso la disciplina di risparmio non ribalta niente: sono gli altri parametri a decidere.') +
-        ' Puoi regolare l\'ipotesi con «quota del surplus investita» in «Altre ipotesi», qui sotto' +
-        (p.quotaInv < 100 ? ', che hai già portato al ' + pct(p.quotaInv) + '.' : '.');
+          : 'In questo caso la disciplina di risparmio non ribalta niente: sono gli altri parametri a decidere.');
 
       // Avvisi
       var msgs = [];
       if (r.ltv > 0.8) { msgs.push('Rapporto mutuo/valore: <b>' + pct(r.ltv * 100) + '</b>. Sopra l\'80% le banche chiedono garanzie extra (o il Fondo Consap under 36) e applicano tassi più alti di quello che hai impostato.'); }
-      if (p.quotaInv < 100) { msgs.push('Stai ipotizzando che solo il <b>' + pct(p.quotaInv) + '</b> del surplus mensile venga investito: il resto è speso e sparisce da entrambe le colonne. È l\'ipotesi che pesa di più su tutto il confronto.'); }
+      if (p.investeMese < Math.max(0, diffMese1) - 1) { msgs.push('Stai investendo <b>' + money(p.investeMese) + '/mese</b> contro una differenza di <b>' + money(Math.max(0, diffMese1)) + '</b> il 1° anno: il resto è consumo, e il confronto lo sente parecchio.'); }
+      if (p.rendimento >= 10) {
+        var molt = Math.pow(1 + p.rendimento / 100, p.anni);
+        msgs.push('Rendimento al <b>' + pct(p.rendimento) + '</b> per ' + p.anni + ' anni: il capitale si moltiplica <b>×' + molt.toFixed(1).replace('.', ',') + '</b>. Se vedi cifre enormi nella colonna affitto è l\'effetto di questa ipotesi — matematicamente coerente, realisticamente da maneggiare con le pinze (vedi l\'avviso nel passo 3).');
+      }
       if (r.rata > 0 && r.rata > p.affitto * 2.2) { msgs.push('La rata è più del doppio dell\'affitto attuale: verifica la sostenibilità sul reddito (le banche si fermano di solito al 30-35%).'); }
       if (p.durata < p.anni && r.saldoFine <= 0.01) { /* mutuo estinto: nessun avviso */ }
       $('warn').hidden = msgs.length === 0;
@@ -2002,7 +2032,8 @@
             : scarto > 0 ? ', cioè ' + pct(scarto) + ' sopra: per questo l\'affitto è davanti.'
             : ': te ne mancano ' + pct(-scarto) + ' per pareggiare.');
       }
-      var extraNeed = diff > 0 ? solveFor(p, 'extraMese', 0, 20000) : null;
+      var needMese = diff > 0 ? solveFor(p, 'investeMese', 0, 20000) : null;
+      var extraNeed = needMese === null ? null : Math.max(0, needMese - p.investeMese);
       var extraPari = extraNeed !== null && extraNeed < 0.5;   // divario sotto l'euro: di fatto pari
       $('s-extra').innerHTML = diff <= 0 || extraPari
         ? '<span class="pill pill--rent">' + (extraPari ? 'già alla pari' : 'non serve') + '</span>'
@@ -2012,7 +2043,7 @@
                      : 'L\'affitto è già in vantaggio con quello che stai investendo: ogni euro in più allarga il distacco.')
         : (extraNeed === null
           ? 'Su questo orizzonte nemmeno versamenti extra molto grandi chiudono il divario.'
-          : 'Investiti ogni mese al ' + pct(p.rendimento) + ', oltre alla differenza già messa via, chiudono il divario di ' + money(diff) + '. Qualsiasi cifra sopra ti porta in vantaggio.');
+          : 'In più rispetto ai ' + money(p.investeMese) + ' che già metti via: portando l\'investimento mensile a ' + money(needMese) + ' al ' + pct(p.rendimento) + ' chiudi il divario di ' + money(diff) + '. Qualsiasi cifra sopra ti porta in vantaggio.');
 
       var reIndiff = solveFor(p, 'affitto', 100, 9000);
       $('s-rent').innerHTML = reIndiff === null
@@ -2063,7 +2094,7 @@
          'Quanto vale la casa in più (o in meno) dopo ' + p.anni + ' anni al ' + pct(p.rivaluta) + '/anno: da ' + money(p.prezzo) + ' a ' + money(r.casaFine) + '. È ricchezza sulla carta finché non vendi.',
          r.casaFine - p.prezzo, null],
         ['Portafoglio investito a fine periodo',
-         'Chi affitta tiene investita tutta la cassa che non ha versato al rogito (' + money(r.cassaIniziale) + ' = ' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) + ' di costi); chi compra la immobilizza nel mattone e investe solo l\'avanzo dei mesi in cui possedere costa meno che affittare. Rendimento ipotizzato: ' + pct(p.rendimento) + '/anno' + (p.quotaInv < 100 ? ', investendo però solo il ' + pct(p.quotaInv) + ' del surplus mensile' : '') + '.',
+         'Chi affitta tiene investita tutta la cassa che non ha versato al rogito (' + money(r.cassaIniziale) + ' = ' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) + ' di costi); chi compra la immobilizza nel mattone e investe solo l\'avanzo dei mesi in cui possedere costa meno che affittare. Rendimento ipotizzato: ' + pct(p.rendimento) + '/anno; chi affitta versa in più ' + money(p.investeMese) + '/mese.',
          r.pfB, r.pfR],
         ['Tasse sulle plusvalenze finanziarie',
          pct(p.tasseFin) + ' sui soli guadagni del portafoglio, non sul capitale versato, contate al disinvestimento. Sulla casa invece non c\'è nulla: sull\'abitazione principale, o comunque dopo 5 anni, la plusvalenza immobiliare non è tassata.',
@@ -2279,6 +2310,15 @@
     });
     SLIDERS.forEach(function (k) {
       $(k + '_r').addEventListener('input', function () { $(k).value = $(k + '_r').value; schedule(); });
+    });
+
+    // Scrivere la cifra mensile a mano stacca l'aggancio automatico alla differenza.
+    ['investeMese', 'investeMese_r'].forEach(function (id) {
+      $(id).addEventListener('input', function () { $('investeAuto').checked = false; });
+    });
+    $('il-auto').addEventListener('click', function () {
+      $('investeAuto').checked = true;
+      render();
     });
 
     // L'orizzonte segue la durata del mutuo finché coincidono; al primo scostamento si sgancia.
@@ -2691,6 +2731,7 @@
         $(k).value = px.value;
         if (SLIDERS.indexOf(k) > -1) { $(k + '_r').value = px.value; }
         if (k === 'durata') { prevDurata = parseFloat(px.value); }
+        if (k === 'investeMese') { $('investeAuto').checked = false; }
         schedule();
       });
     });
