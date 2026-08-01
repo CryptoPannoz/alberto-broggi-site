@@ -108,7 +108,7 @@
     body { background: var(--paper); }
 
     /* Hero */
-    html { scroll-padding-top: 88px; }  /* lascia spazio alla barra risultato fissa */
+    html { scroll-padding-top: 12px; }
     .tool-top { border-bottom: 1px solid var(--line); }
     .tool-top__inner { min-height: 64px; display: flex; align-items: center; gap: 18px; }
     .tool-top a { font-size: .78rem; font-weight: 650; }
@@ -312,31 +312,33 @@
     .scen-live button { padding: 9px 14px; border: 1px solid var(--orange); border-radius: 999px; background: var(--orange); color: white; cursor: pointer; font-size: .7rem; font-weight: 650; white-space: nowrap; }
     .scen-live button:hover { background: var(--ink); border-color: var(--ink); }
 
-    /* Barra risultato sempre visibile */
-    .sticky-result { position: sticky; top: 0; z-index: 60; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(16px) saturate(160%); }
-    .sticky-result__inner { min-height: 68px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; padding: 11px 0; }
-    .sr-verdict { flex: 1 1 240px; min-width: 0; display: flex; align-items: baseline; gap: 12px; }
-    .sr-verdict > span { color: var(--muted); font-family: var(--mono); font-size: .58rem; text-transform: uppercase; letter-spacing: .07em; white-space: nowrap; }
-    .sr-verdict > b { font-size: clamp(1.05rem, 2.2vw, 1.45rem); font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
-    .sr-verdict > b.buy { color: var(--blue); }
-    .sr-verdict > b.rent { color: var(--orange); }
-    .sr-nums { display: flex; gap: 22px; }
-    .sr-nums div { display: flex; flex-direction: column; }
-    .sr-nums span { color: var(--muted); font-family: var(--mono); font-size: .55rem; text-transform: uppercase; letter-spacing: .06em; }
-    .sr-nums b { margin-top: 2px; font-size: .9rem; font-weight: 650; letter-spacing: -.02em; white-space: nowrap; }
-    .sr-scen { padding: 5px 10px; border-radius: 999px; background: rgba(255,91,53,.14); color: #b04a24; font-family: var(--mono); font-size: .58rem; white-space: nowrap; }
-    .sr-scen[hidden] { display: none; }
-    @media (max-width: 700px) {
-      .sticky-result__inner { min-height: 0; gap: 2px 14px; padding: 8px 0; }
-      .sr-verdict { flex: 1 1 100%; flex-direction: column; gap: 0; }
-      .sr-verdict > span { font-size: .52rem; }
-      .sr-verdict > b { font-size: 1.02rem; }
-      .sr-nums { flex: 1 1 100%; gap: 14px; }
-      .sr-nums div { flex-direction: row; align-items: baseline; gap: 5px; }
-      .sr-nums span { font-size: .5rem; }
-      .sr-nums b { margin-top: 0; font-size: .72rem; }
-      .sr-scen { padding: 3px 8px; font-size: .52rem; }
-    }
+    /* La fotografia del mutuo, in fondo allo step 2 */
+    .mutuobox { padding: 18px 20px; border: 1px solid rgba(22,93,255,.4); border-radius: 16px; background: #f2f5ff; }
+    .mb__tag { margin: 0 0 12px; color: var(--blue); font-family: var(--mono); font-size: .6rem; font-weight: 650; text-transform: uppercase; letter-spacing: .08em; }
+    .mb__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    @media (max-width: 640px) { .mb__grid { grid-template-columns: 1fr; } }
+    .mb__cell { padding: 12px 14px; border: 1px solid rgba(22,93,255,.25); border-radius: 12px; background: var(--white); }
+    .mb__cell span { display: block; color: var(--muted); font-family: var(--mono); font-size: .56rem; text-transform: uppercase; letter-spacing: .06em; }
+    .mb__cell b { display: block; margin-top: 6px; font-size: 1.45rem; font-weight: 650; letter-spacing: -.03em; }
+    .mb__cell--rata b { color: var(--blue); }
+    .mb__cell--tot { background: var(--blue); border-color: var(--blue); }
+    .mb__cell--tot span { color: rgba(255,255,255,.75); }
+    .mb__cell--tot b, .mb__cell--tot i { color: white; }
+    .mb__cell i { display: block; margin-top: 4px; color: var(--muted); font-size: .64rem; font-style: normal; line-height: 1.4; }
+    .mb__cell--tot i { color: rgba(255,255,255,.75); }
+    .mb__field { margin-top: 12px; }
+    .mb__field .field { margin-bottom: 0; }
+    .mb__field .field small { font-size: .68rem; }
+
+    /* La rata ferma, nella colonna blu dello step 3 */
+    .rataferma { margin-bottom: 16px; padding: 13px 14px; border: 1px solid rgba(22,93,255,.3); border-radius: 12px; background: var(--white); }
+    .rf__tag { margin: 0 0 10px; color: var(--blue); font-family: var(--mono); font-size: .58rem; font-weight: 650; text-transform: uppercase; letter-spacing: .07em; }
+    .rf__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 560px) { .rf__grid { grid-template-columns: 1fr; } }
+    .rf__grid span { display: block; color: var(--muted); font-family: var(--mono); font-size: .54rem; text-transform: uppercase; letter-spacing: .05em; line-height: 1.35; }
+    .rf__grid b { display: block; margin-top: 5px; font-size: 1.3rem; font-weight: 650; letter-spacing: -.03em; }
+    .rf__note { margin: 10px 0 0; color: #4a4f4a; font-size: .7rem; line-height: 1.5; }
+    .rf__note b { font-weight: 650; }
 
     /* Passo 2 — la scelta di investimento, il cuore del confronto */
     .step-tag { display: flex; align-items: center; gap: 11px; margin: 0 0 14px; color: var(--blue); font-family: var(--mono); font-size: .63rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
@@ -371,18 +373,6 @@
     .crypto-more > summary::-webkit-details-marker { display: none; }
     .crypto-more p { margin: 10px 0 0; font-size: .78rem; line-height: 1.55; }
 
-    /* Il confronto dei due piani: cosa investe chi affitta, cosa blocca chi compra */
-    .duel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .duel__side { padding: 16px 18px; border: 1px solid rgba(22,93,255,.35); border-radius: 14px; background: var(--white); }
-    .duel__side--buy { border-color: rgba(17,22,21,.3); }
-    .duel__tag { display: block; font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; color: var(--blue); }
-    .duel__side--buy .duel__tag { color: var(--ink); }
-    .duel__nums { display: flex; flex-wrap: wrap; gap: 6px 26px; margin-top: 9px; }
-    .duel__nums p { margin: 0; }
-    .duel__nums b { display: block; font-size: clamp(1.25rem, 2.3vw, 1.7rem); letter-spacing: -.04em; }
-    .duel__nums small { display: block; margin-top: 2px; color: var(--muted); font-family: var(--mono); font-size: .56rem; text-transform: uppercase; letter-spacing: .05em; }
-    .duel__side i { display: block; margin-top: 9px; color: var(--muted); font-size: .72rem; font-style: normal; line-height: 1.45; }
-    .duel__side i b { color: var(--ink); font-size: inherit; font-weight: 650; }
 
     /* Wizard: stepper, passi, navigazione */
     .stepper { display: flex; flex-wrap: wrap; gap: 6px; max-width: 780px; margin: 0 auto 16px; }
@@ -406,7 +396,7 @@
     #w-next:hover { background: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
 
     /* Barra di ritocco sopra i risultati: i parametri sempre a portata */
-    .recap { position: sticky; top: calc(var(--barh, 64px) + 6px); z-index: 55; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--white) 92%, transparent); backdrop-filter: blur(14px) saturate(150%); box-shadow: 0 12px 34px rgba(17,22,21,.07); }
+    .recap { position: sticky; top: 10px; z-index: 55; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in srgb, var(--white) 92%, transparent); backdrop-filter: blur(14px) saturate(150%); box-shadow: 0 12px 34px rgba(17,22,21,.07); }
     .recap[hidden] { display: none; }
     /* Su schermo stretto i gruppi occupano troppe righe per restare appiccicati sopra il contenuto. */
     /* Tutti i parametri visibili in alto: i gruppi vanno a capo, non si scorre mai di lato. */
@@ -462,7 +452,7 @@
     #ip-test b { color: var(--ink); }
 
     @media (max-width: 900px) { .port-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (max-width: 520px) { .duel { grid-template-columns: 1fr; } .port-row { grid-template-columns: 1fr; } }
+    @media (max-width: 520px) { .port-row { grid-template-columns: 1fr; } }
 
     /* Sezioni di approfondimento richiudibili */
     details.deep { padding: 0; }
@@ -668,7 +658,7 @@
       .pp-link { margin: 8px 0 0; font-size: .64rem; color: #666; word-break: break-all; }
       @page { margin: 14mm; size: A4; }
       body { background: white; }
-      .tool-top, .tool-hero, .sticky-result, .stepper, .panel, .recap, .scen-banner, .wnav, .deep-head, #scenari, .faq, .footer, .site-footer,
+      .tool-top, .tool-hero, .stepper, .panel, .recap, .scen-banner, .wnav, .deep-head, #scenari, .faq, footer, .footer, .site-footer,
       .lc, .save-cta, .save-banner, .sheet { display: none !important; }
       main, .calc, .container, .calc-layout { display: block !important; width: auto !important; max-width: none !important; margin: 0 !important; padding: 0 !important; }
       .results { display: flex !important; gap: 12px !important; }
@@ -689,16 +679,7 @@
   </div>
 
   <main>
-    <div class="sticky-result" id="sticky">
-      <div class="container sticky-result__inner">
-        <div class="sr-verdict"><span id="sr-label">Verdetto</span><b id="sr-title"></b></div>
-        <div class="sr-nums">
-          <div><span>Acquisto</span><b id="sr-buy"></b></div>
-          <div><span>Affitto + investo</span><b id="sr-rent"></b></div>
-        </div>
-        <span class="sr-scen" id="sr-scen" hidden></span>
-      </div>
-    </div>
+
 
     <header class="tool-hero">
       <div class="container">
@@ -744,12 +725,6 @@
             <small>Il prezzo che pagheresti per la casa in cui oggi stai in affitto, o per una equivalente.</small>
           </div>
 
-          <div class="field">
-            <label for="costiAcq">Costi d'acquisto <output id="costiAcq_o"></output></label>
-            <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
-            <input type="range" id="costiAcq_r" min="0" max="20" step="0.5" aria-label="Costi d'acquisto (slider)" />
-            <small>In percentuale sul prezzo: imposte, notaio, agenzia, istruttoria. Si pagano in contanti al rogito e non rientrano mai. Da privato senza agenzia scendono parecchio.</small>
-          </div>
           </section>
 
           <section class="wstep" data-step="2">
@@ -799,20 +774,81 @@
           </div>
 
           <div class="field">
-            <label for="inflAffitto">Crescita affitto <output id="inflAffitto_o"></output></label>
+            <label for="inflAffitto">Adeguamento del canone (ISTAT) <output id="inflAffitto_o"></output></label>
             <input type="number" id="inflAffitto" min="0" max="10" step="0.1" inputmode="decimal" />
             <input type="range" id="inflAffitto_r" min="0" max="10" step="0.1" aria-label="Crescita affitto (slider)" />
-            <small>Adeguamento annuo del canone. Pi&ugrave; corre, pi&ugrave; conviene aver bloccato una rata fissa.</small>
+            <small>Di quanto sale il canone ogni anno. L'adeguamento ISTAT (indice FOI) vale storicamente circa l'1,5%/anno; al rinnovo del contratto può salire di più.</small>
           </div>
             </div>
           </div>
 
+          <!-- La fotografia del mutuo: rata, costi d'acquisto e cassa necessaria al rogito. -->
+          <div class="mutuobox" id="mutuobox">
+            <p class="mb__tag">La fotografia del mutuo</p>
+            <div class="mb__grid">
+              <div class="mb__cell mb__cell--rata"><span>Rata mensile</span><b id="mx-rata">—</b><i id="mx-mutuo"></i></div>
+              <div class="mb__cell"><span>Anticipo</span><b id="mx-anticipo">—</b><i>lo regoli nella colonna blu</i></div>
+              <div class="mb__cell mb__cell--tot"><span>Cassa da avere al rogito</span><b id="mx-cassa">—</b><i>anticipo + costi d'acquisto</i></div>
+            </div>
+            <div class="mb__field">
+          <div class="field">
+            <label for="costiAcq">Costi d'acquisto <output id="costiAcq_o"></output></label>
+            <input type="number" id="costiAcq" min="0" max="25" step="0.5" inputmode="decimal" />
+            <input type="range" id="costiAcq_r" min="0" max="20" step="0.5" aria-label="Costi d'acquisto (slider)" />
+            <small id="mx-costi-note"></small>
+          </div>
+            </div>
+          </div>
+
+          </section>
+
+
+
+          <section class="wstep" data-step="3">
+            <p class="sub-step"><i>3</i> Per quanto tempo, e dove investi</p><p class="panel__hint">L'orizzonte comanda il confronto; poi decidi cosa succede dei soldi non versati, da una parte e dall'altra.</p>
+
+          <div class="field">
+            <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
+            <input type="number" id="anni" min="1" max="40" step="1" inputmode="numeric" />
+            <input type="range" id="anni_r" min="1" max="40" step="1" aria-label="Orizzonte temporale (slider)" />
+            <small>Di default &egrave; pari alla durata del mutuo: cambialo se pensi di rivendere prima, o di restarci pi&ugrave; a lungo. &Egrave; la variabile pi&ugrave; decisiva di tutte.</small>
+          </div>
+
+          <div class="split">
+            <div class="split__side split__side--buy">
+              <p class="split__tag">Se la compri</p>
+              <div class="rataferma">
+                <p class="rf__tag">La rata non si muove</p>
+                <div class="rf__grid">
+                  <div><span>Al mese, fissa</span><b id="ip-rata">—</b></div>
+                  <div><span>Di cui già risparmio, il 1° anno</span><b id="ip-quota">—</b></div>
+                </div>
+                <p class="rf__note" id="ip-rata-note"></p>
+              </div>
+          <div class="field field--bool field--key">
+            <label>A fine orizzonte vendi e disinvesti tutto? <output id="vendo_o"></output></label>
+            <div class="yn" role="group" aria-label="A fine orizzonte vendi e disinvesti tutto">
+              <button type="button" data-bool="vendo" data-val="1">S&igrave;</button>
+              <button type="button" data-bool="vendo" data-val="0">No</button>
+            </div>
+            <input type="checkbox" id="vendo" class="sr-only" />
+            <small><b>Cambia molto il risultato.</b> Con <b>S&igrave;</b> il confronto &egrave; tra due cifre che puoi davvero incassare: vengono sottratti i costi di vendita e le tasse sul capital gain. Con <b>No</b> confronti due patrimoni sulla carta: pi&ugrave; alti, ma non liquidi.</small>
+          </div>
+          <div class="field">
+            <label for="costiVendita">Costi di vendita <output id="costiVendita_o"></output></label>
+            <input type="number" id="costiVendita" min="0" max="15" step="0.5" inputmode="decimal" />
+            <input type="range" id="costiVendita_r" min="0" max="10" step="0.5" aria-label="Costi di vendita (slider)" />
+            <small>Sul valore finale della casa: agenzia, APE, cancellazione ipoteca. Contano solo se sopra hai risposto S&igrave;.</small>
+          </div>
+            </div>
+            <div class="split__side split__side--rent">
+              <p class="split__tag">Se resti in affitto</p>
           <!-- Il ponte fra i due scenari: i soldi che chi compra immobilizza, chi affitta li investe. -->
           <div class="investi-live" id="investi-live">
             <p class="il__title" id="il-title">Restando in affitto, questi soldi non li spendi: <strong>li devi investire</strong></p>
             <div class="il__grid">
-              <div><span id="il-cassa-lab">Subito, al posto di anticipo + costi d’acquisto</span><b id="il-cassa">—</b></div>
               <div><span id="il-mese-lab">Ogni mese, la differenza con la rata</span><b id="il-mese">—</b></div>
+              <div><span id="il-cassa-lab">Subito, al posto di anticipo + costi d’acquisto</span><b id="il-cassa">—</b></div>
             </div>
             <p class="il__note" id="il-note"></p>
 
@@ -827,69 +863,19 @@
               <p class="il__delta" id="il-delta"></p>
             </div>
           </div>
-
-          </section>
-
-          <section class="wstep" data-step="3">
-            <p class="sub-step"><i>3</i> Per quanto tempo la terrai</p><p class="panel__hint">È la variabile più decisiva di tutte: indica il tuo orizzonte realistico, non la durata del mutuo.</p>
-
-          <div class="field">
-            <label for="anni">Orizzonte temporale <output id="anni_o"></output></label>
-            <input type="number" id="anni" min="1" max="40" step="1" inputmode="numeric" />
-            <input type="range" id="anni_r" min="1" max="40" step="1" aria-label="Orizzonte temporale (slider)" />
-            <small>Per quanti anni resti in questa casa prima di tirare le somme. &Egrave; la variabile pi&ugrave; decisiva di tutte.</small>
-          </div>
-
-          <div class="field field--bool field--key">
-            <label>A fine orizzonte vendi e disinvesti tutto? <output id="vendo_o"></output></label>
-            <div class="yn" role="group" aria-label="A fine orizzonte vendi e disinvesti tutto">
-              <button type="button" data-bool="vendo" data-val="1">S&igrave;</button>
-              <button type="button" data-bool="vendo" data-val="0">No</button>
-            </div>
-            <input type="checkbox" id="vendo" class="sr-only" />
-            <small><b>Cambia molto il risultato.</b> Con <b>S&igrave;</b> il confronto &egrave; tra due cifre che puoi davvero incassare: vengono sottratti i costi di vendita e le tasse sul capital gain. Con <b>No</b> confronti due patrimoni sulla carta: pi&ugrave; alti, ma non liquidi.</small>
-          </div>
-
-          <div class="field">
-            <label for="costiVendita">Costi di vendita <output id="costiVendita_o"></output></label>
-            <input type="number" id="costiVendita" min="0" max="15" step="0.5" inputmode="decimal" />
-            <input type="range" id="costiVendita_r" min="0" max="10" step="0.5" aria-label="Costi di vendita (slider)" />
-            <small>Sul valore finale della casa: agenzia, APE, cancellazione ipoteca. Contano solo se sopra hai risposto S&igrave;.</small>
-          </div>
-
           <div class="field">
             <label for="tasseFin">Tassa su plusvalenze <output id="tasseFin_o"></output></label>
             <input type="number" id="tasseFin" min="0" max="50" step="1" inputmode="numeric" />
             <input type="range" id="tasseFin_r" min="0" max="50" step="1" aria-label="Tassa su plusvalenze (slider)" />
             <small>Solo sui guadagni finanziari, non sul capitale versato. 26% per ETF e azioni; le cripto hanno un regime proprio, verificalo. Sulla casa non si paga: prima casa, o dopo 5 anni, la plusvalenza immobiliare non &egrave; tassata.</small>
           </div>
-          </section>
+            </div>
+          </div>
 
-          <section class="wstep" data-step="4">
-            <p class="sub-step"><i>4</i> Dove investi la differenza</p><p class="panel__hint">Senza questo passaggio l’affitto perde sempre: è qui che si decide il confronto.</p>
 
           <div class="card invest-step" id="invest">
-            <h3>È il punto chiave di questo calcolatore</h3>
-            <p class="lead">Chi compra immobilizza due cose: l'<strong>anticipo</strong> (più i costi d'acquisto) il giorno del rogito, e ogni mese la <strong>differenza tra rata e canone</strong>. Chi resta in affitto quei soldi non li tira fuori — ma se non li investe non sta risparmiando, li sta spendendo.<br />Ed è esattamente per questo che <strong>senza investire converrebbe sempre comprare</strong>: il mutuo è un piano di accumulo obbligatorio, l'affitto no. Il rendimento che scegli qui pesa sul verdetto più del prezzo della casa, più del tasso, più della rivalutazione.</p>
-            <div class="duel">
-              <div class="duel__side duel__side--rent">
-                <span class="duel__tag">Se resti in affitto — la quota da investire</span>
-                <div class="duel__nums">
-                  <p><b id="ip-cassa"></b><small>subito, in un colpo</small></p>
-                  <p><b id="ip-mese"></b><small>ogni mese, il 1° anno</small></p>
-                </div>
-                <i id="ip-cassa-note"></i>
-                <i id="ip-mese-note"></i>
-              </div>
-              <div class="duel__side duel__side--buy">
-                <span class="duel__tag">Se compri — la rata che resta ferma</span>
-                <div class="duel__nums">
-                  <p><b id="ip-rata"></b><small>al mese, fissa</small></p>
-                  <p><b id="ip-quota"></b><small>di cui già risparmio, il 1° anno</small></p>
-                </div>
-                <i id="ip-rata-note"></i>
-              </div>
-            </div>
+            <h3>Dove li investi</h3>
+            <p class="lead">Il rendimento di questi soldi pesa sul verdetto pi&ugrave; del prezzo della casa, pi&ugrave; del tasso, pi&ugrave; della rivalutazione. Scegli un profilo, o imposta il numero che vuoi.</p>
             <p class="port-intro">Scegli come vengono investiti:</p>
             <div class="port-row" id="ports"></div>
             <div class="crypto-warn" id="crypto-warn" hidden>
@@ -1063,17 +1049,17 @@
           <!-- Scenari e investimenti si cambiano qui, senza tornare nel pannello: il verdetto in alto si aggiorna subito. -->
           <div class="lc" id="live-controls">
             <div class="lc__row">
-              <span class="lc__lab">Dove investi la differenza · <b id="lc-rend"></b></span>
-              <div class="lc__chips" id="lc-ports"></div>
+              <span class="lc__lab">Combinazioni pronte</span>
+              <div class="lc__chips" id="lc-presets"></div>
             </div>
             <div class="lc__row">
               <span class="lc__lab">E se il mercato va diversamente?</span>
               <div class="lc__chips" id="lc-levers"></div>
+              <p class="lc__hint" id="lc-hint"></p>
             </div>
             <div class="lc__row">
-              <span class="lc__lab">Combinazioni pronte</span>
-              <div class="lc__chips" id="lc-presets"></div>
-              <p class="lc__hint" id="lc-hint"></p>
+              <span class="lc__lab">Dove investi la differenza · <b id="lc-rend"></b></span>
+              <div class="lc__chips" id="lc-ports"></div>
             </div>
           </div>
 
@@ -1136,11 +1122,19 @@
           </div>
 
           <details class="card deep">
-            <summary><h3>Soglie di pareggio</h3><span>Pareggio, affitto e prezzo limite <b>+</b></span></summary>
+            <summary><h3>Soglie di pareggio</h3><span>Quando l'affitto pareggia, e cosa serve per riuscirci <b>+</b></span></summary>
             <div>
-              <p class="note">Con i tuoi parametri, i punti esatti in cui la risposta si ribalta.</p>
+              <p class="note">Con i tuoi parametri, i punti esatti in cui la risposta si ribalta. Le prime due righe rispondono alla domanda che conta per chi affitta: <strong>quanto deve rendere — o quanto va aggiunto ogni mese — per pareggiare l'acquisto</strong>.</p>
               <table class="t">
                 <tbody>
+                  <tr>
+                    <td><strong>Rendimento minimo per pareggiare</strong><small id="s-rend-note"></small></td>
+                    <td class="num" id="s-rend-need"></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Versamento extra per pareggiare</strong><small id="s-extra-note"></small></td>
+                    <td class="num" id="s-extra"></td>
+                  </tr>
                   <tr>
                     <td><strong>Anno di pareggio</strong><small>Da qui in poi comprare batte affittare</small></td>
                     <td class="num" id="s-breakeven"></td>
@@ -1224,7 +1218,7 @@
             <div>
             <p class="note">Trasparenza sui numeri, così sai dove intervenire.</p>
             <ul>
-              <li><b>Confronto simmetrico.</b> Entrambi gli scenari partono dalla stessa cassa (anticipo + costi d'acquisto) e spendono ogni mese la stessa cifra. Chi in quel mese spende meno investe la differenza al rendimento indicato: è il costo-opportunità dell'anticipo, il pezzo che i confronti «rata vs affitto» dimenticano. Se abbassi «quota del surplus investita» nei parametri avanzati, quella differenza viene invece consumata — da entrambe le parti, ma il capitale del mutuo resta risparmio forzoso, e lì sta il vantaggio vero di chi compra.</li>
+              <li><b>Confronto simmetrico.</b> Entrambi gli scenari partono dalla stessa cassa (anticipo + costi d'acquisto) e spendono ogni mese la stessa cifra. Chi in quel mese spende meno investe la differenza al rendimento indicato: è il costo-opportunità dell'anticipo, il pezzo che i confronti «rata vs affitto» dimenticano. Se abbassi «quota del surplus investita» in «Altre ipotesi», quella differenza viene invece consumata — da entrambe le parti, ma il capitale del mutuo resta risparmio forzoso, e lì sta il vantaggio vero di chi compra.</li>
               <li><b>Mutuo a tasso fisso</b>, ammortamento alla francese, rata costante. Se la durata supera l'orizzonte, il debito residuo viene sottratto dal patrimonio.</li>
               <li><b>Costi d'acquisto</b> in percentuale sul prezzo: notaio, imposte, agenzia, istruttoria e perizia. Il 9% di default è una stima prudente per prima casa con agenzia; da privato e senza intermediario scende parecchio.</li>
               <li><b>Spese condominiali ordinarie escluse</b>: in affitto le paghi comunque, quindi si annullano. Nella voce manutenzione rientrano straordinarie, rifacimenti e assicurazione.</li>
@@ -1284,9 +1278,10 @@
     'use strict';
 
     var DEFAULTS = {
-      prezzo: 240000, tasso: 3.2, anticipo: 60000, anni: 20, affitto: 850, quotaInv: 100,
+      // L'orizzonte parte uguale alla durata del mutuo; l'adeguamento canone segue l'ISTAT (~1,5%).
+      prezzo: 240000, tasso: 3.2, anticipo: 60000, anni: 25, affitto: 850, quotaInv: 100,
       durata: 25, costiAcq: 9, manut: 1, imu: 0, altro: 0,
-      rivaluta: 1, inflAffitto: 2, rendimento: 5, tasseFin: 26, costiVendita: 3,
+      rivaluta: 1, inflAffitto: 1.5, rendimento: 5, tasseFin: 26, costiVendita: 3,
       vendo: true, detrazione: true, investiCassa: true
     };
     var NUM = ['prezzo','tasso','anticipo','anni','affitto','durata','costiAcq','manut','imu','altro','rivaluta','inflAffitto','rendimento','quotaInv','tasseFin','costiVendita'];
@@ -1326,6 +1321,9 @@
       // Quota del surplus mensile che viene davvero investita invece che spesa. Vale per entrambi:
       // il capitale del mutuo resta comunque risparmio forzoso, ed è lì l'asimmetria vera.
       var qInv = Math.min(1, Math.max(0, p.quotaInv / 100));
+      // Versamento mensile aggiuntivo del solo affittuario: serve alle soglie («quanto in più
+      // dovresti investire per pareggiare»), non è un input del pannello.
+      var extraM = Math.max(0, p.extraMese || 0);
 
       var saldo = mutuo;
       var casa = p.prezzo;
@@ -1366,7 +1364,7 @@
         if (m === 1) { costoBuy1 = costoBuy; costoRent1 = costoRent; }
         var budget = Math.max(costoBuy, costoRent);
 
-        var addB = (budget - costoBuy) * qInv, addR = (budget - costoRent) * qInv;
+        var addB = (budget - costoBuy) * qInv, addR = (budget - costoRent) * qInv + extraM;
         pfB = pfB * (1 + rI) + addB; baseB += addB; versatiB += addB;
         pfR = pfR * (1 + rI) + addR; baseR += addR; versatiR += addR;
 
@@ -1707,6 +1705,9 @@
       NUM.forEach(function (k) { $(k).value = p[k]; });
       BOOL.forEach(function (k) { $(k).checked = !!p[k]; });
       SLIDERS.forEach(function (k) { $(k + '_r').value = p[k]; });
+      // Il riferimento del link durata→anni segue ogni scrittura programmatica,
+      // altrimenti dopo un reset il primo ritocco alla durata aggancia/sgancia a caso.
+      prevDurata = p.durata;
     }
 
     function labels(p) {
@@ -1728,10 +1729,7 @@
         });
       });
 
-      var ut = p.prezzo * p.costiAcq / 100;
-      $('anticipo_hint').innerHTML = 'Capitale che versi sul prezzo. Servono in più <b>' + money(ut) + '</b> di costi d\'acquisto: ' +
-        'la cassa da avere il giorno del rogito è <b>' + money(Math.max(0, p.anticipo) + ut) + '</b>. ' +
-        'Nello scenario «affitto» è esattamente questa cifra che resta investita.';
+      $('anticipo_hint').innerHTML = 'Capitale che versi sul prezzo: il resto lo copre il mutuo. Rata, costi d\'acquisto e cassa necessaria li vedi nel riquadro blu in fondo a questo passo.';
 
       // La barra di ritocco rispecchia sempre il pannello, tranne il campo che stai scrivendo
       Array.prototype.forEach.call(document.querySelectorAll('[data-proxy]'), function (px) {
@@ -1857,7 +1855,7 @@
         ? '<b>Scenario applicato:</b> ' + attivi.map(function (id) { return byId(id).n; }).join(' + ') + ' — ' + scenTxt +
           '. I valori qui sopra sono quelli usati nel calcolo.'
         : '<b>Nessuno scenario di mercato attivo:</b> il calcolo usa solo i parametri inseriti.';
-      $('pp-link').textContent = 'Riapri questa simulazione: ' + makeShareUrl();
+      $('pp-link').textContent = 'Riapri questa simulazione: ' + buildShareUrl();
 
       // Perché la colonna «affitto» non è solo il canone risparmiato: è la parte che sorprende.
       $('v-perche').innerHTML = 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
@@ -1867,18 +1865,16 @@
           : 'mentre il costo mensile è più alto del possedere: lì il surplus da investire ce l\'ha chi compra.') +
         ' Se quei soldi vengono spesi invece che investiti, questo confronto non regge e comprare vince.';
 
-      // Barra risultato sempre visibile
-      $('sr-label').textContent = 'Verdetto · ' + p.anni + ' anni · rendimento ' + pct(p.rendimento);
-      $('sr-title').textContent = win === 'tie' ? 'sostanzialmente pari'
-        : (win === 'buy' ? 'Comprare ' + signed(diff) : 'Affittare ' + signed(-diff));
-      $('sr-title').className = win === 'tie' ? '' : (win === 'buy' ? 'buy' : 'rent');
-      $('sr-buy').textContent = money(r.netBuy);
-      $('sr-rent').textContent = money(r.netRent);
-      $('sr-scen').hidden = attivi.length === 0;
-      // Non basta il nome della leva: va mostrato il valore che ha davvero preso il posto del tuo.
-      $('sr-scen').textContent = attivi.length ? scenTxt : '';
-      // La barra di ritocco si aggancia appena sotto la barra del verdetto, qualunque altezza abbia
-      document.documentElement.style.setProperty('--barh', $('sticky').offsetHeight + 'px');
+      // La fotografia del mutuo, in fondo allo step 2: sempre i numeri del pannello, mai lo scenario.
+      var rBase = attivi.length ? simulate(pBase) : r;
+      $('mx-rata').textContent = rBase.rata > 0 ? money(rBase.rata) : '0 €';
+      $('mx-mutuo').textContent = rBase.mutuo > 0
+        ? 'mutuo ' + money(rBase.mutuo) + ' · ' + pBase.durata + ' anni al ' + pct(pBase.tasso)
+        : 'acquisto senza mutuo';
+      $('mx-anticipo').textContent = money(pBase.anticipo);
+      $('mx-cassa').textContent = money(rBase.cassaIniziale);
+      $('mx-costi-note').innerHTML = 'In percentuale sul prezzo: imposte, notaio, agenzia, istruttoria. Con questi numeri fanno <b>' +
+        money(rBase.unaTantum) + '</b>, in contanti al rogito: non si finanziano col mutuo.';
 
       // Portafogli di riferimento
       $('ports').innerHTML = PORTAFOGLI.map(function (t) {
@@ -1934,15 +1930,6 @@
           ' del rogito li consideri spesi. Investendoli, dopo ' + anniTxt + ' l\'affitto chiuderebbe con <b>' +
           money(altRes.netRent) + '</b> invece di ' + money(r.netRent) + '.';
 
-      $('ip-cassa').textContent = money(r.cassaIniziale);
-      $('ip-cassa-note').innerHTML = 'La cassa che chi compra versa al rogito (' + money(r.anticipo) + ' di anticipo + ' + money(r.unaTantum) +
-        ' di costi). Chi affitta non la tira fuori: la investe, e in ' + p.anni + ' anni diventa <b>' +
-        money(r.cassaIniziale * Math.pow(1 + p.rendimento / 100, p.anni)) + '</b> al lordo delle tasse.';
-      $('ip-mese').textContent = money(Math.max(0, diffMese1));
-      $('ip-mese-note').innerHTML = diffMese1 > 0
-        ? 'Il 1° anno possedere costa ' + money(r.costoBuy1) + ' al mese contro ' + money(r.costoRent1) + ' di affitto. Chi affitta deve mettere da parte quella differenza, non spenderla.'
-        : 'Qui l\'affitto costa più della rata: è <b>chi compra</b> ad avere il surplus da investire (' + money(-diffMese1) + '/mese). Man mano che il canone si adegua, la differenza si sposta.';
-
       // La sponda opposta: la rata non si muove, e dentro c'è già risparmio forzoso
       if (r.rata > 0) {
         var int1 = r.mutuo * (p.tasso / 100 / 12);
@@ -1965,7 +1952,7 @@
         (diffNoInv > diff
           ? 'Ecco perché «l\'affitto è soldi buttati» suona vero nella pratica: il mutuo è un piano di accumulo obbligatorio, l\'affitto no. Il vantaggio di comprare qui non viene dal mattone, viene dalla disciplina.'
           : 'In questo caso la disciplina di risparmio non ribalta niente: sono gli altri parametri a decidere.') +
-        ' Puoi regolare l\'ipotesi con «quota del surplus investita» nei parametri avanzati' +
+        ' Puoi regolare l\'ipotesi con «quota del surplus investita» in «Altre ipotesi», qui sotto' +
         (p.quotaInv < 100 ? ', che hai già portato al ' + pct(p.quotaInv) + '.' : '.');
 
       // Avvisi
@@ -1997,6 +1984,36 @@
         ? '<span class="pill pill--rent">mai entro ' + p.anni + ' anni</span>'
         : (be === 0 ? '<span class="pill pill--buy">subito</span>' : '<strong>' + be.toFixed(1).replace('.', ',') + ' anni</strong>');
 
+      // Le due soglie di chi affitta: che rendimento serve, o quanto versare in più al mese.
+      var rendNeed = solveFor(p, 'rendimento', 0, 40);
+      if (rendNeed === null) {
+        var affittoVinceSempre = diff < 0;
+        $('s-rend-need').innerHTML = affittoVinceSempre
+          ? '<span class="pill pill--rent">basta lo 0%</span>'
+          : '<span class="pill pill--buy">oltre il 40%</span>';
+        $('s-rend-note').textContent = affittoVinceSempre
+          ? 'Con questi numeri l\'affitto resta avanti perfino a rendimento zero: il possesso costa di più di per sé.'
+          : 'Nemmeno un 40% annuo costante basterebbe: su questi numeri comprare vince comunque.';
+      } else {
+        $('s-rend-need').innerHTML = '<strong>' + pct(rendNeed) + '/anno</strong>';
+        var scarto = p.rendimento - rendNeed;
+        $('s-rend-note').textContent = 'Sotto questa soglia vince comprare, sopra vince l\'affitto. Stai ipotizzando ' + pct(p.rendimento) +
+          (Math.abs(scarto) < 0.05 ? ': sei esattamente sulla soglia.'
+            : scarto > 0 ? ', cioè ' + pct(scarto) + ' sopra: per questo l\'affitto è davanti.'
+            : ': te ne mancano ' + pct(-scarto) + ' per pareggiare.');
+      }
+      var extraNeed = diff > 0 ? solveFor(p, 'extraMese', 0, 20000) : null;
+      var extraPari = extraNeed !== null && extraNeed < 0.5;   // divario sotto l'euro: di fatto pari
+      $('s-extra').innerHTML = diff <= 0 || extraPari
+        ? '<span class="pill pill--rent">' + (extraPari ? 'già alla pari' : 'non serve') + '</span>'
+        : (extraNeed === null ? '<span class="pill pill--buy">n/d</span>' : '<strong>' + money(extraNeed) + '/mese</strong>');
+      $('s-extra-note').textContent = diff <= 0 || extraPari
+        ? (extraPari ? 'Il divario è sotto la soglia del rumore: qualsiasi versamento in più ti porta davanti.'
+                     : 'L\'affitto è già in vantaggio con quello che stai investendo: ogni euro in più allarga il distacco.')
+        : (extraNeed === null
+          ? 'Su questo orizzonte nemmeno versamenti extra molto grandi chiudono il divario.'
+          : 'Investiti ogni mese al ' + pct(p.rendimento) + ', oltre alla differenza già messa via, chiudono il divario di ' + money(diff) + '. Qualsiasi cifra sopra ti porta in vantaggio.');
+
       var reIndiff = solveFor(p, 'affitto', 100, 9000);
       $('s-rent').innerHTML = reIndiff === null
         ? '<span class="pill pill--rent">nessuno</span>'
@@ -2018,7 +2035,7 @@
       // Dove finiscono i soldi
       var bruciatoBuy = r.interessiTot + r.unaTantum + r.speseTot + r.costiVenditaTot - r.detrTot;
       var speseDesc = pct(p.manut) + '/anno sul valore della casa'
-        + (p.imu > 0 ? ', più ' + money(p.imu) + '/anno di IMU' : '. IMU esente perché prima casa (cambiala nei parametri avanzati se è una seconda casa)')
+        + (p.imu > 0 ? ', più ' + money(p.imu) + '/anno di IMU' : '. IMU esente perché prima casa (cambiala in «Altre ipotesi» se è una seconda casa)')
         + (p.altro > 0 ? ', più ' + money(p.altro) + '/mese di altre spese.' : '.')
         + ' Copre straordinarie, caldaia, infissi, rifacimento facciata, assicurazione. Le spese condominiali ordinarie non compaiono: le pagheresti anche da inquilino, quindi si annullano.';
       var rows = [
@@ -2264,6 +2281,19 @@
       $(k + '_r').addEventListener('input', function () { $(k).value = $(k + '_r').value; schedule(); });
     });
 
+    // L'orizzonte segue la durata del mutuo finché coincidono; al primo scostamento si sgancia.
+    var prevDurata = parseFloat($('durata').value);
+    ['durata', 'durata_r'].forEach(function (id) {
+      $(id).addEventListener('input', function () {
+        var d = parseFloat($(id).value);
+        if (isFinite(d) && parseFloat($('anni').value) === prevDurata) {
+          $('anni').value = d;
+          $('anni_r').value = d;
+        }
+        if (isFinite(d)) { prevDurata = d; }
+      });
+    });
+
     var famIdx = function (fam) {
       for (var i = 0; i < FAMIGLIE.length; i++) { if (FAMIGLIE[i].id === fam) { return i; } }
       return 99;
@@ -2341,7 +2371,7 @@
         $('affitto').value = Math.round(c.a * m / 25) * 25;
         SLIDERS.forEach(function (k) { $(k + '_r').value = $(k).value; });
         render();
-        // niente salto di pagina: il verdetto nella barra in alto si aggiorna da solo
+        // niente salto di pagina: la conferma è sul bottone, il ricalcolo è già avvenuto
         btn.textContent = 'Valori applicati ✓';
         setTimeout(function () { btn.textContent = 'Usa questi valori'; }, 1800);
       });
@@ -2439,14 +2469,23 @@
       if (el) { el.addEventListener('click', doReset); }
     });
 
-    function makeShareUrl() {
+    // Versione pura: costruisce il link senza toccare la barra degli indirizzi.
+    // render() la usa per la scheda PDF; se scrivesse l'URL a ogni render, ogni
+    // reload ripartirebbe dal passo Risultato invece che dal wizard.
+    function buildShareUrl() {
       var p = read();
       var q = new URLSearchParams();
       NUM.forEach(function (k) { q.set(k, p[k]); });
       BOOL.forEach(function (k) { q.set(k, p[k] ? '1' : '0'); });
       if (attivi.length) { q.set('lev', attivi.join(',')); }
-      history.replaceState(null, '', '?' + q.toString());
       return location.origin + location.pathname + '?' + q.toString();
+    }
+
+    // Quando l'utente condivide davvero, l'URL nella barra si allinea al link copiato.
+    function makeShareUrl() {
+      var url = buildShareUrl();
+      history.replaceState(null, '', url.slice(url.indexOf('?')));
+      return url;
     }
 
     function setShareStatus(message, isError) {
@@ -2573,19 +2612,22 @@
         try { sessionStorage.setItem('ab-rentbuy-banner', '1'); } catch (e) { /* private mode */ }
       }
     }
-    function maybeBanner() {
-      if (bannerFatto || !banner || !banner.hidden) { return; }
-      if (curStep !== STEP_LABELS.length) { return; }        // solo sul risultato
-      if (!sheet.hidden) { return; }
-      var grafico = document.querySelector('#chart');
-      if (!grafico) { return; }
-      // Superato il grafico il verdetto è stato letto: da lì si apre il popup, una volta sola per sessione.
-      if (grafico.getBoundingClientRect().bottom < window.innerHeight * 0.5) {
-        hideBanner(true);
-        openSheet();
-      }
+    // Dopo 20 secondi sul risultato compare l'invito al PDF: una volta sola per sessione,
+    // e mai sopra il foglio già aperto. Se si torna ai passi, il timer riparte da capo.
+    var bannerTimer = null;
+    function armBanner() {
+      if (bannerTimer) { clearTimeout(bannerTimer); bannerTimer = null; }
+      if (bannerFatto || !banner) { return; }
+      if (curStep !== STEP_LABELS.length) { return; }
+      bannerTimer = setTimeout(function () {
+        bannerTimer = null;
+        if (bannerFatto || curStep !== STEP_LABELS.length || !sheet.hidden) { return; }
+        banner.hidden = false;
+        bannerFatto = true;
+        try { sessionStorage.setItem('ab-rentbuy-banner', '1'); } catch (e) { /* private mode */ }
+        trackCta('pdf_banner_shown');
+      }, 20000);
     }
-    window.addEventListener('scroll', maybeBanner, { passive: true });
     $('banner-open').addEventListener('click', function () { hideBanner(true); openSheet(); });
     $('banner-x').addEventListener('click', function () { hideBanner(true); });
 
@@ -2605,7 +2647,7 @@
     });
 
     /* ─────────── Wizard a passi ─────────── */
-    var STEP_LABELS = ['La casa', 'Compri o affitti', 'Orizzonte', 'Investimenti', 'Risultato'];
+    var STEP_LABELS = ['La casa', 'Compri o affitti', 'Investimenti', 'Risultato'];
     var wsteps = Array.prototype.slice.call(document.querySelectorAll('.wstep'));
     var curStep = 1;
 
@@ -2628,6 +2670,7 @@
       $('w-prev').style.visibility = curStep === 1 ? 'hidden' : 'visible';
       $('w-next').textContent = curStep === STEP_LABELS.length - 1 ? 'Vedi il risultato →' : 'Avanti →';
       if (last) { render(); } else if (banner) { banner.hidden = true; }
+      armBanner();
       if (doScroll) { document.querySelector('.calc').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
       try { localStorage.setItem('ab-rentbuy-step', String(curStep)); } catch (e) { /* private mode */ }
     }
@@ -2647,6 +2690,7 @@
         var k = px.getAttribute('data-proxy');
         $(k).value = px.value;
         if (SLIDERS.indexOf(k) > -1) { $(k + '_r').value = px.value; }
+        if (k === 'durata') { prevDurata = parseFloat(px.value); }
         schedule();
       });
     });
@@ -2655,6 +2699,7 @@
     var startStep = 1;
     try {
       var ss = parseInt(localStorage.getItem('ab-rentbuy-step'), 10);
+      if (ss > STEP_LABELS.length) { ss = STEP_LABELS.length; }   // vecchio schema a 5 passi
       if (ss >= 1 && ss <= STEP_LABELS.length) { startStep = ss; }
     } catch (e) { /* private mode */ }
     if (fromQuery() || qLev.length) { startStep = STEP_LABELS.length; }
