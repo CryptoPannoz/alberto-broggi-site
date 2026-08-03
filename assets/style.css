@@ -118,7 +118,7 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
   content: ""; position: absolute; width: 90%; aspect-ratio: 1; top: 8%; left: 5%;
   background: var(--orange); border-radius: 50%; filter: blur(56px); opacity: .18;
 }
-.portrait img {
+.portrait img, .portrait video {
   position: relative; width: 100%; aspect-ratio: .82; object-fit: cover; display: block;
   border-radius: 140px 140px var(--radius-lg) var(--radius-lg);
   filter: saturate(.88) contrast(1.04);
@@ -500,7 +500,7 @@ footer a { color: white; }
   html[lang="it"] .hero h1 { max-width: 13ch; font-size: clamp(3.2rem, 12vw, 4.5rem); }
   .hero__lead { margin-top: 24px; font-size: 1.1rem; }
   .portrait { width: min(82%, 360px); margin-left: auto; }
-  .portrait img { border-radius: 100px 100px 22px 22px; }
+  .portrait img, .portrait video { border-radius: 100px 100px 22px 22px; }
   .capability-grid { grid-template-columns: 1fr; }
   .capability-grid article { min-height: 250px; }
   .section-heading--row { display: block; }
