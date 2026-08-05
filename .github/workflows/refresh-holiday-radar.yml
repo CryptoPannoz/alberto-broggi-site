@@ -1,0 +1,45 @@
+name: Refresh Holiday Radar data
+
+# Le date delle vacanze scolastiche escono a scaglioni durante l'anno. Questa
+# rigenerazione mensile tiene aggiornata la copia pubblica su bebroggi.it senza
+# dover ricordarsi di risincronizzarla a mano dalla repo holiday-radar.
+on:
+  schedule:
+    - cron: '23 4 2 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+defaults:
+  run:
+    working-directory: tools/holiday-radar
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Rebuild data from upstream APIs
+        run: npm run build:data
+
+      - name: Sanity-check the result
+        run: npm run check
+
+      - name: Commit if anything changed
+        working-directory: .
+        run: |
+          if [ -z "$(git status --porcelain tools/holiday-radar/data)" ]; then
+            echo "Nessuna variazione: niente commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/holiday-radar/data
+          git commit -m "chore(holiday-radar): aggiorna i dati delle vacanze"
+          git push

@@ -52,4 +52,9 @@
   <url><loc>https://bebroggi.it/jobs/seably.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://bebroggi.it/jobs/ajl-atelier.html</loc><changefreq>yearly</changefreq><priority>0.4</priority></url>
 
+  <url>
+    <loc>https://bebroggi.it/tools/holiday-radar/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
