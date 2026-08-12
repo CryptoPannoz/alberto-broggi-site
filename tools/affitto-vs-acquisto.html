@@ -1807,10 +1807,12 @@
         $('v-title').innerHTML = 'Su ' + p.anni + ' anni è <em>sostanzialmente pari</em>';
       }
       var rel = r.netRent !== 0 ? Math.abs(diff / r.netRent) * 100 : 0;
+      // Cosa investe davvero chi affitta: senza la cassa iniziale resta la sola differenza mensile.
+      var cheCosaInveste = p.investiCassa ? 'anticipo e differenza mensile' : 'la differenza mensile';
       $('v-text').textContent = win === 'tie'
         ? 'La differenza è dentro il margine di errore delle ipotesi: a questi parametri la scelta è più di stile di vita che di soldi.'
         : 'Dopo ' + p.anni + ' anni chiudi con ' + money(Math.max(r.netBuy, r.netRent)) + ' invece di ' + money(Math.min(r.netBuy, r.netRent)) +
-          ': ' + pct(rel) + ' di patrimonio in più ' + (win === 'buy' ? 'comprando' : 'restando in affitto e investendo anticipo e differenza mensile') + '.';
+          ': ' + pct(rel) + ' di patrimonio in più ' + (win === 'buy' ? 'comprando' : 'restando in affitto e investendo ' + cheCosaInveste) + '.';
       var diffMese1 = r.costoBuy1 - r.costoRent1;   // serve al verdetto e al ponte dello step 2
       $('v-buy').textContent = money(r.netBuy);
       $('v-rent').textContent = money(r.netRent);
@@ -1897,11 +1899,20 @@
       $('pp-link').textContent = 'Riapri questa simulazione: ' + buildShareUrl();
 
       // Perché la colonna «affitto» non è solo il canone risparmiato: è la parte che sorprende.
-      $('v-perche').innerHTML = 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
-        money(r.cassaIniziale) + '</b> investito subito — l\'anticipo e i costi d\'acquisto che non versi al rogito — ' +
-        'più <b>' + money(p.investeMese) + ' al mese</b>' +
-        (p.investeAuto ? ', la differenza tra quello che costa possedere e il canone.' : ', la cifra che hai scelto tu nel passo Investimenti.') +
-        ' Se quei soldi vengono spesi invece che investiti, questo confronto non regge e comprare vince.';
+      // Con la cassa iniziale non investita resta il solo versamento mensile, e va detto:
+      // altrimenti il testo promette un capitale che nel calcolo non c'è.
+      var qualeVersamento = ', la differenza tra quello che costa possedere e il canone.';
+      if (!p.investeAuto) { qualeVersamento = ', la cifra che hai scelto tu nel passo Investimenti.'; }
+      $('v-perche').innerHTML = p.investiCassa
+        ? 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
+          money(r.cassaIniziale) + '</b> investito subito — l\'anticipo e i costi d\'acquisto che non versi al rogito — ' +
+          'più <b>' + money(p.investeMese) + ' al mese</b>' + qualeVersamento +
+          ' Se quei soldi vengono spesi invece che investiti, questo confronto non regge e comprare vince.'
+        : 'La colonna <b>affitto</b> non è «non compro e basta»: dentro c\'è <b>' +
+          money(p.investeMese) + ' al mese</b>' + qualeVersamento +
+          ' I ' + money(r.cassaIniziale) + ' di anticipo e costi d\'acquisto che non versi al rogito, invece, ' +
+          'hai scelto di <b>non</b> investirli: restano fuori dal confronto. ' +
+          'Se anche il versamento mensile viene speso invece che investito, questo confronto non regge e comprare vince.';
 
       // La fotografia del mutuo, in fondo allo step 2: sempre i numeri del pannello, mai lo scenario.
       var rBase = attivi.length ? simulate(pBase) : r;
