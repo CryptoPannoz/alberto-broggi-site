@@ -1583,8 +1583,8 @@
       { id: 'casa-crollo', fam: 'casa', p: 5, n: 'Crollo immobiliare',
         d: '−4%/anno nominale: bolla che si sgonfia, tipo Spagna o Irlanda dopo il 2008. Con la leva del mutuo è lo scenario peggiore in assoluto.', m: { rivaluta: { set: -4 } } },
 
-      { id: 'disc-meta', fam: 'disciplina', p: 40, n: 'Metà della cifra si perde per strada',
-        d: 'Ogni mese ne investi solo la metà, il resto se ne va in consumi. È l\'ipotesi più realistica per la maggior parte delle persone.', m: { investeMese: { mul: 0.5 } } },
+      { id: 'disc-meta', fam: 'disciplina', p: 40, n: 'Metti via solo metà della cifra mensile',
+        d: 'Del "metti via ogni mese" del pannello ne investi davvero solo la metà: il resto finisce in consumi. Succede spesso, perché nessuno ti obbliga a fare quel versamento come farebbe la rata del mutuo.', m: { investeMese: { mul: 0.5 } } },
       { id: 'disc-zero', fam: 'disciplina', p: 30, n: 'Non investi niente ogni mese',
         d: 'La cifra mensile viene interamente spesa. Il mutuo però continua a rimborsare capitale: è risparmio forzoso, e qui si vede tutto il vantaggio psicologico di comprare.', m: { investeMese: { set: 0 } } }
     ];
@@ -1595,7 +1595,7 @@
       { n: 'Italia 2012-2021', d: 'tassi giù · mattone fermo · canoni fermi · borsa forte', lev: ['tassi-giu', 'casa-fermo', 'aff-zero', 'borsa-forte'] },
       { n: 'Il peggio per chi compra', d: 'tassi su · casa che perde valore · borsa forte', lev: ['tassi-su', 'casa-giu', 'borsa-forte'] },
       { n: 'Il peggio per chi affitta', d: 'tassi giù · casa boom · canoni +4% · borsa debole', lev: ['tassi-giu', 'casa-boom', 'aff-alta', 'borsa-debole'] },
-      { n: 'Realistico italiano', d: 'mattone fermo · metà della cifra si perde per strada', lev: ['casa-fermo', 'disc-meta'] }
+      { n: 'Realistico italiano', d: 'mattone fermo · canoni fermi', lev: ['casa-fermo', 'aff-zero'] }
     ];
 
     // Portafogli di riferimento: impostano il rendimento atteso nel pannello.
