@@ -116,6 +116,8 @@
     .tool-hero { padding: 46px 0 34px; }
     .tool-hero h1 { margin: 0; max-width: 15ch; font-size: clamp(2.5rem, 6vw, 4.6rem); font-weight: 630; letter-spacing: -.06em; }
     .tool-hero p.lead { max-width: 62ch; margin: 22px 0 0; color: #4d524e; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.4; }
+    /* La domanda da cui nasce lo strumento: apre la pagina e fissa il confronto sulla stessa casa. */
+    .hero-q { max-width: 34ch; margin: 22px 0 0; padding-left: 14px; border-left: 3px solid var(--ink); color: var(--ink); font-size: clamp(1.05rem, 1.7vw, 1.35rem); font-weight: 560; line-height: 1.32; letter-spacing: -.02em; }
 
 
     .hero-promise { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
@@ -344,6 +346,11 @@
     .step-tag { display: flex; align-items: center; gap: 11px; margin: 0 0 14px; color: var(--blue); font-family: var(--mono); font-size: .63rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; }
     .step-tag i { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: white; font-style: normal; font-size: .64rem; }
     .invest-step { border: 1px solid var(--blue); background: #f2f5ff; padding: clamp(24px, 3vw, 34px); }
+    /* Pari grado della card investimenti: stessa gerarchia, tonalità del mattone per non competere col blu. */
+    .mattone-step { margin-top: 18px; border-color: rgba(166, 94, 42, .42); background: #fdf6ef; }
+    .mattone-step > h3 { color: #8a4b1f; font-size: clamp(1.15rem, 2vw, 1.45rem); letter-spacing: -.035em; }
+    .mattone-step > p.note { max-width: 70ch; margin-bottom: 18px; color: #6d5744; font-size: .82rem; line-height: 1.5; }
+    .mattone-step .field input[type="range"] { accent-color: #a65e2a; }
     .invest-step > h3 { margin: 0; font-size: clamp(1.25rem, 2.4vw, 1.7rem); font-weight: 640; letter-spacing: -.04em; color: var(--blue); }
     .invest-step > p.lead { max-width: 70ch; margin: 12px 0 22px; color: #3d4c68; font-size: .9rem; line-height: 1.55; }
     .invest-step > p.lead strong { color: var(--ink); }
@@ -450,6 +457,9 @@
     .deep-head > p:last-child { margin: 0; color: var(--muted); font-size: .84rem; max-width: 70ch; }
     #ip-test { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid rgba(22,93,255,.25); }
     #ip-test b { color: var(--ink); }
+    /* Stessa prova del nove, sul lato mattone */
+    #riv-test { margin: 18px 0 0; padding-top: 16px; border-top: 1px solid rgba(166,94,42,.28); }
+    #riv-test b { color: var(--ink); }
 
     @media (max-width: 900px) { .port-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
     @media (max-width: 520px) { .port-row { grid-template-columns: 1fr; } }
@@ -696,7 +706,8 @@
       <div class="container">
         <p class="eyebrow"><span class="status-dot"></span> Strumento gratuito · Finanza personale</p>
         <h1>Comprare o <em>restare in affitto?</em></h1>
-        <p class="lead">Non confrontare solo rata e canone. Inserisci pochi numeri e scopri <strong>quale scelta ti lascia più patrimonio netto</strong> all'orizzonte che scegli.</p>
+        <p class="hero-q">«Se dovessi comprare la casa dove vivo in affitto, mi converrebbe?»</p>
+        <p class="lead">È la domanda da cui parte questo strumento — e il confronto regge solo se resta la <strong>stessa casa</strong> su entrambi i lati. Non fermarti a rata contro canone: inserisci pochi numeri e scopri <strong>quale scelta ti lascia più patrimonio netto</strong> all'orizzonte che scegli.</p>
         <div class="hero-promise" aria-label="Come funziona"><span>1. I tuoi costi</span><span>2. Il tempo che resti</span><span>3. Un risultato spiegato</span></div>
         <a class="hero-start" href="#stepper">Inizia il confronto <span aria-hidden="true">↓</span></a>
         <p class="hero-note">Una simulazione per orientarti, non un consiglio finanziario. Puoi modificare ogni ipotesi.</p>
@@ -778,10 +789,10 @@
             <div class="split__side split__side--rent">
               <p class="split__tag">Se resti in affitto</p>
           <div class="field">
-            <label for="affitto">Affitto attuale (&euro;/mese) <output id="affitto_o"></output></label>
+            <label for="affitto">Canone della <em>stessa</em> casa (&euro;/mese) <output id="affitto_o"></output></label>
             <input type="number" id="affitto" min="0" step="25" inputmode="numeric" />
             <input type="range" id="affitto_r" min="200" max="3000" step="25" aria-label="Affitto mensile (slider)" />
-            <small>Quello che paghi adesso, per la casa che stai confrontando con l'acquisto.</small>
+            <small><b>Deve essere la stessa casa del passo 1.</b> Se oggi affitti un bilocale ma compreresti un trilocale, non mettere il canone che paghi: metti quanto costerebbe affittare la casa che compreresti. Altrimenti stai confrontando due immobili diversi e il risultato non vuol dire niente.</small>
           </div>
 
           <div class="field">
@@ -915,8 +926,21 @@
             <p class="note" id="ip-test"></p>
           </div>
 
+          <!-- Fuori da "Altre ipotesi": è la variabile che decide il lato acquisto, come il rendimento decide l'altro. -->
+          <div class="card mattone-step" id="mattone">
+            <h3>Quanto rende il mattone</h3>
+            <p class="note">L'altra faccia del rendimento qui sopra: quello del portafoglio muove il lato affitto, questo muove il lato acquisto. Sono i due numeri che decidono il verdetto.</p>
+          <div class="field">
+            <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
+            <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
+            <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
+            <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media nazionale. Puoi metterlo anche in negativo.</small>
+          </div>
+            <p class="note" id="riv-test"></p>
+          </div>
+
           <details class="adv">
-            <summary>Altre ipotesi <span>manutenzione, IMU, rivalutazione, disciplina <b>+</b></span></summary>
+            <summary>Altre ipotesi <span>manutenzione, IMU, spese, disciplina <b>+</b></span></summary>
             <div class="adv__body">
           <div class="field">
             <label for="manut">Manutenzione <output id="manut_o"></output></label>
@@ -939,13 +963,6 @@
             <small>Al mese, solo quello che paghi da proprietario e non pagheresti da inquilino.</small>
           </div>
 
-
-          <div class="field">
-            <label for="rivaluta">Rivalutazione casa <output id="rivaluta_o"></output></label>
-            <input type="number" id="rivaluta" min="-5" max="10" step="0.1" inputmode="decimal" />
-            <input type="range" id="rivaluta_r" min="-5" max="10" step="0.1" aria-label="Rivalutazione casa (slider)" />
-            <small>Crescita nominale del prezzo, all'anno. In Italia i prezzi sono stati piatti per un decennio: conta il tuo quartiere, non la media nazionale.</small>
-          </div>
 
             </div>
           </details>
@@ -1230,6 +1247,8 @@
             <div>
             <p class="note">Trasparenza sui numeri, così sai dove intervenire.</p>
             <ul>
+              <li><b>Stessa casa su entrambi i lati.</b> Il confronto ha senso solo se il canone che inserisci è quello della <em>stessa</em> casa che compreresti: stesso taglio, stessa zona, stesso stato. Confrontare il canone di un bilocale con il prezzo di un trilocale gonfia artificialmente il lato affitto. Se il rendimento lordo implicito (canone annuo diviso prezzo) esce dalla forchetta 3-8% dei capoluoghi italiani, il calcolatore te lo segnala.</li>
+              <li><b>Calibrato sull'Italia.</b> IMU prima casa, detrazione IRPEF degli interessi al 19%, imposte di registro e catastali nei costi d'acquisto, adeguamento ISTAT del canone, 26% sulle plusvalenze finanziarie. Fuori dall'Italia la struttura fiscale cambia e i risultati non sono trasferibili.</li>
               <li><b>Come si confrontano le due strade.</b> Chi compra paga rata e spese; chi affitta paga il canone e investe la cifra mensile che scegli tu (di default, agganciata alla differenza del 1° anno: così le uscite partono uguali). Nei mesi in cui possedere costa meno del canone, anche chi compra investe il proprio avanzo. La cassa iniziale (anticipo + costi) chi affitta la investe, se lo decidi. Il capitale del mutuo resta comunque risparmio forzoso: è lì il vantaggio strutturale di chi compra.</li>
               <li><b>Mutuo a tasso fisso</b>, ammortamento alla francese, rata costante. Se la durata supera l'orizzonte, il debito residuo viene sottratto dal patrimonio.</li>
               <li><b>Costi d'acquisto</b> in percentuale sul prezzo: notaio, imposte, agenzia, istruttoria e perizia. Il 9% di default è una stima prudente per prima casa con agenzia; da privato e senza intermediario scende parecchio.</li>
@@ -1992,8 +2011,29 @@
           ? 'Ecco perché «l\'affitto è soldi buttati» suona vero nella pratica: il mutuo è un piano di accumulo obbligatorio, l\'affitto no. Il vantaggio di comprare qui non viene dal mattone, viene dalla disciplina.'
           : 'In questo caso la disciplina di risparmio non ribalta niente: sono gli altri parametri a decidere.');
 
+      // Controfattuale sul mattone: cosa succede al verdetto se i prezzi non fanno quello che hai ipotizzato.
+      var rivAlt = Math.abs(p.rivaluta) < 0.05 ? 2 : 0;
+      var rRiv = simulate(Object.assign({}, p, { rivaluta: rivAlt }));
+      var diffRiv = rRiv.netBuy - rRiv.netRent;
+      $('riv-test').innerHTML = 'Stai ipotizzando <b>' + pct(p.rivaluta) + '/anno</b>: in ' + p.anni + ' anni la casa passa da ' + money(p.prezzo) + ' a <b>' + money(r.casaFine) + '</b>. ' +
+        'Con la casa ' + (rivAlt === 0 ? '<b>ferma a 0%</b>' : '<b>a +2%/anno</b>') + ' il verdetto diventerebbe <b>' +
+        (diffRiv >= 0 ? 'comprare +' + money(diffRiv) : 'affittare +' + money(-diffRiv)) + '</b>, ora è <b>' +
+        (diff >= 0 ? 'comprare +' + money(diff) : 'affittare +' + money(-diff)) + '</b>.';
+
       // Avvisi
       var msgs = [];
+      // Coerenza fra canone e prezzo. Il rendimento lordo implicito fuori mercato è quasi sempre il sintomo
+      // che i due lati non sono la stessa casa. Banda tarata sui 115 capoluoghi OMI 2025/2: min 3,2% (Salerno), max 8,4% (Rovigo).
+      if (p.prezzo > 0 && p.affitto > 0) {
+        var lordo = p.affitto * 12 / p.prezzo * 100;
+        if (lordo < 2.5 || lordo > 9) {
+          msgs.push('<b>I due lati sembrano case diverse.</b> ' + money(p.affitto) + '/mese su una casa da ' + money(p.prezzo) +
+            ' fanno un rendimento lordo del <b>' + pct(lordo) + '</b>, ' + (lordo < 2.5 ? 'molto sotto' : 'molto sopra') +
+            ' la forchetta reale dei capoluoghi italiani (3-8%). Se stai confrontando il canone che paghi oggi con il prezzo di una casa più ' +
+            (lordo < 2.5 ? 'grande' : 'piccola') + ', il risultato non vuol dire niente: metti il canone che pagheresti per <b>la stessa casa</b> che compreresti. ' +
+            'Il riquadro OMI nel passo 1 ti dà prezzo e canone coerenti fra loro, città per città.');
+        }
+      }
       if (r.ltv > 0.8) { msgs.push('Rapporto mutuo/valore: <b>' + pct(r.ltv * 100) + '</b>. Sopra l\'80% le banche chiedono garanzie extra (o il Fondo Consap under 36) e applicano tassi più alti di quello che hai impostato.'); }
       if (p.investeMese < Math.max(0, diffMese1) - 1) { msgs.push('Stai investendo <b>' + money(p.investeMese) + '/mese</b> contro una differenza di <b>' + money(Math.max(0, diffMese1)) + '</b> il 1° anno: il resto è consumo, e il confronto lo sente parecchio.'); }
       if (p.rendimento >= 10) {
