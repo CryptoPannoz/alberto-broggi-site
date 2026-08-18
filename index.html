@@ -406,7 +406,8 @@
             <div class="section-kicker"><span>06</span><p>Off the clock</p></div>
             <h2>Wind, water<br /><em>&amp; mountains.</em></h2>
           </div>
-          <p>Sport is the backbone. A visual log of the things that keep me sane.</p>
+          <p>Sport is the backbone. A visual log of the things that keep me sane.<br />
+          <button class="text-button" data-open="cv-velico">Sailing CV — cruises, deliveries &amp; regattas <span aria-hidden="true">↗</span></button></p>
         </div>
 
         <div class="life-grid">
@@ -627,6 +628,40 @@
     <ul class="skills"><li>Partner management</li><li>Itinerary design</li><li>Booking operations</li><li>Lead generation</li></ul>
   </template>
 
+  <template data-job="cv-velico">
+    <span class="when">2010 — present</span>
+    <h2 id="modal-title">Sailing CV</h2>
+    <p class="sub">Alberto Broggi · Skipper — offshore license (beyond 12 nm, 2013)</p>
+    <p>I grew up sailing a 6.9 m ketch on Lake Orta with my grandfather, then spent five seasons as a windsurf instructor in Porto Pollo, Sardinia. Since 2013 I've worked as skipper and crew across the Mediterranean, the Atlantic and the Arctic — from flotilla holidays to maxi-yacht racing.</p>
+    <h4>Cruises &amp; professional experience</h4>
+    <ul>
+      <li><strong>Le Grifon · First 29</strong> — deliveries Genoa/Porto Pollo, itinerant sailing school; first as client, then co-skipper — 2010 · 2012 · 2013 · 2014</li>
+      <li><strong>Adriasail Custom 59</strong> — deliveries Elba/Genoa — 2013 · 2014</li>
+      <li><strong>Mondovela · Bavaria 45/55</strong> — co-skipper &amp; skipper, charter flotillas in Croatia (Kornati) and the Ionian, Greece (base: Lefkada) — 2014 · 2015</li>
+      <li><strong>SOD 55</strong> — skipper for Mondovela clients, northern Sardinia / Strait of Bonifacio — summer 2015</li>
+      <li><strong>VerticalSailing Tour · Tromsø, Norway</strong> — skipper for ski-touring &amp; sailing holidays — 2017</li>
+      <li><strong>Kinina · Swan 78</strong> — first mate, Genoa → Canary Islands — 2018</li>
+      <li><strong>BeBlue</strong> — skipper for flotillas and private clients, Croatia · Ionian Greece · Sardinia — 2018 · 2019 · 2020</li>
+    </ul>
+    <h4>Regattas</h4>
+    <ul>
+      <li><strong>Le Grifon · First 29</strong> — halyards — Trofeo Formenton 2011 · 2012 · 2013</li>
+      <li><strong>Lunz am Meer · Swan 65</strong> — bow — Vulcano Race, Capri 2013 · Maxi Yacht Rolex Cup, Porto Cervo 2014/2015 · Swan Cup 2014/2016/2018 · Giraglia 2015 · Rolex Middle Sea Race 2015/2016</li>
+      <li><strong>BrainStrom · Beneteau 29</strong> — bowman — Campionato Invernale del Tigullio, Chiavari 2015</li>
+      <li><strong>Nashorn · Baltic 51</strong> — first mate — ARC 2017, transatlantic race Gran Canaria → Saint Lucia (2,700 nm)</li>
+      <li><strong>Prosecco DOC · Reichel/Pugh 90 (ex Alfa Romeo)</strong> — runners, mainsheet traveller &amp; hydraulic systems — Barcolana 2022 · 2023 · 2024 · 2025 · Tre Golfi 2024 · Brindisi–Corfu Record 2026 · Aegean 600 2026 (Line Honours)</li>
+      <li><strong>Viriella · Maxi Dolphin 128</strong> — bowman — Maxi Yacht Rolex Cup 2024 · 2025</li>
+    </ul>
+    <h4>Training &amp; safety</h4>
+    <ul>
+      <li>Italian offshore sailing license (beyond 12 nm) — 2013</li>
+      <li>RYA Offshore Safety Course — Malta 2015</li>
+      <li>Windsurf instructor, Porto Pollo (Sardinia) — 5 seasons</li>
+    </ul>
+    <h4>Share</h4>
+    <p>Direct link: <a class="ext" href="https://bebroggi.it/#cv-velico">bebroggi.it/#cv-velico</a></p>
+  </template>
+
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -659,6 +694,12 @@
     modal.querySelectorAll('[data-close]').forEach(function (el) {
       el.addEventListener('click', closeModal);
     });
+
+    // Deep link: open a modal directly from the URL hash (e.g. /#cv-velico)
+    (function () {
+      var key = decodeURIComponent(location.hash.replace('#', ''));
+      if (key && document.querySelector('template[data-job="' + key + '"]')) openModal(key);
+    })();
 
     // ---- Lightbox (click a hobby photo to expand) ----
     const lightbox = document.getElementById('lightbox');
