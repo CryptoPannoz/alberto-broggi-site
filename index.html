@@ -324,6 +324,34 @@
             </div>
           </article>
 
+          <article class="toolcard toolcard--consumi">
+            <div class="toolcard__head">
+              <span class="toolcard__ico">💡</span>
+              <div><h3>Home utilities cost</h3><small>Household budget · IT / EN</small></div>
+              <span class="toolcard__live"><i></i> Live tool</span>
+            </div>
+            <p class="pitch">Electricity, gas, water and Wi-Fi: <strong>what does a flat really burn per year?</strong> Start from the occupants, then correct every line with your own bills. Drag the slider:</p>
+            <div class="toolcard__viz" id="tcu">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px">
+                <span style="font-family:var(--mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Occupants</span>
+                <b id="tcu-n" style="font-size:.72rem;letter-spacing:-.02em">2 people</b>
+              </div>
+              <input type="range" id="tcu-occ" min="1" max="12" step="1" value="2" style="width:100%;margin:6px 0 10px;accent-color:#0d9488" aria-label="Occupants" />
+              <div class="tcn__rows">
+                <div class="tcn__row" data-k="luce"><span>Electricity</span><i class="bar" style="background:#0d9488"></i><b></b></div>
+                <div class="tcn__row" data-k="gas"><span>Gas</span><i class="bar" style="background:#165dff"></i><b></b></div>
+                <div class="tcn__row" data-k="acqua"><span>Water</span><i class="bar" style="background:#7a3ff2"></i><b></b></div>
+                <div class="tcn__row" data-k="fissi"><span>Wi-Fi + fixed</span><i class="bar" style="background:#b8860b"></i><b></b></div>
+                <div class="tcn__row win" data-k="tot"><span>Total / year</span><i class="bar" style="background:#c7ff39"></i><b></b></div>
+              </div>
+              <p class="tcn__foot">€600 standing + €450 per occupant, split on a typical profile — every quantity and tariff is editable in the tool.</p>
+            </div>
+            <div class="toolcard__foot">
+              <div class="dev-tags"><span>Same tested engine</span><span>Shareable link</span><span>IT / EN</span></div>
+              <a class="toolcard__cta" href="tools/consumi-casa/?lang=en">Open the utilities calculator ↗</a>
+            </div>
+          </article>
+
           <article class="toolcard toolcard--vento">
             <div class="toolcard__head">
               <span class="toolcard__ico">💨</span>
@@ -350,9 +378,9 @@
           /* Rendita: due città d'esempio, numeri reali del calcolatore (motore testato, ago 2026). */
           var TCN = {
             ts: { be: 'Break-even: short lets beat the 4+4 from 30% occupancy · Trieste, 70 m², flat tax and IMU included',
-                  rows: { conc: [2758, '€2,758'], lib44: [2908, '€2,908'], medio: [31, '€31'], breve: [7130, '€7,130'] } },
+                  rows: { conc: [2758, '€2,758'], lib44: [2908, '€2,908'], medio: [-169, '−€169'], breve: [7130, '€7,130'] } },
             mi: { be: 'Break-even: short lets beat the 4+4 from 38% occupancy · Milan, 70 m², flat tax and IMU included',
-                  rows: { conc: [5835, '€5,835'], lib44: [6081, '€6,081'], medio: [2796, '€2,796'], breve: [10398, '€10,398'] } }
+                  rows: { conc: [5835, '€5,835'], lib44: [6081, '€6,081'], medio: [2596, '€2,596'], breve: [10398, '€10,398'] } }
           };
           var box = document.getElementById('tcn');
           function cityRender(id) {
@@ -374,6 +402,24 @@
             if (b) cityRender(b.dataset.city);
           });
           cityRender('ts');
+
+          /* Consumi: stessa stima del calcolatorino — 600 fissi + 450 a persona, riparto 540/400/200 su 1.140. */
+          var tcu = document.getElementById('tcu');
+          function tcuRender(n) {
+            var tot = 600 + 450 * n, variabile = tot - 360;
+            var v = {
+              luce: variabile * 540 / 1140, gas: variabile * 400 / 1140,
+              acqua: variabile * 200 / 1140, fissi: 360, tot: tot
+            };
+            document.getElementById('tcu-n').textContent = n + (n === 1 ? ' person' : ' people');
+            tcu.querySelectorAll('.tcn__row').forEach(function (r) {
+              var x = v[r.dataset.k];
+              r.querySelector('.bar').style.width = Math.max(2, Math.round(x / tot * 100)) + '%';
+              r.querySelector('b').textContent = '€' + String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            });
+          }
+          document.getElementById('tcu-occ').addEventListener('input', function (e) { tcuRender(+e.target.value); });
+          tcuRender(2);
 
           /* Radar: barre settimanali esplorabili (dati dimostrativi del mock). */
           var scores = [34, 20, 30, 17, 26, 46, 100, 94, 33, 21, 54, 29];
