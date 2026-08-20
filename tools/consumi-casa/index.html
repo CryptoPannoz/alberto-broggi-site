@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quanto costano i consumi di casa? Luce, gas, acqua e Wi-Fi all'anno</title>
+  <meta name="description" content="Calcolatore gratuito dei consumi di casa: luce (kWh × tariffa), gas (Smc × tariffa), acqua, Wi-Fi e altri costi fissi. Stima da numero di occupanti, totale annuo e mensile, condivisibile con un link." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Alberto Broggi" />
+  <link rel="canonical" href="https://bebroggi.it/tools/consumi-casa/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="it_IT" />
+  <meta property="og:site_name" content="Alberto Broggi" />
+  <meta property="og:title" content="Quanto costano i consumi di casa?" />
+  <meta property="og:description" content="Luce, gas, acqua, Wi-Fi: costruisci il costo annuo da quantità e tariffe reali, partendo dagli occupanti. Gratuito e open source." />
+  <meta property="og:url" content="https://bebroggi.it/tools/consumi-casa/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wdth,wght@75..100,400..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #f3f1ea; --white: #fffefa; --ink: #111615;
+      --muted: #686d68; --line: rgba(17,22,21,.15); --blue: #165dff;
+      --lime: #c7ff39; --teal: #0d9488; --radius: 18px;
+      --sans: "Instrument Sans", Arial, sans-serif;
+      --serif: "Instrument Serif", Georgia, serif;
+      --mono: "IBM Plex Mono", monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+    header.top { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; }
+    header.top a { color: var(--ink); font-family: var(--mono); font-size: .7rem; text-decoration: none; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--white); }
+    header.top a:hover { background: var(--ink); color: white; }
+    h1 { margin: 26px 0 8px; font-size: clamp(1.7rem, 4.5vw, 2.4rem); font-weight: 650; letter-spacing: -.04em; line-height: 1.08; }
+    h1 em { color: var(--teal); font-family: var(--serif); font-weight: 400; font-style: normal; }
+    .lead { max-width: 62ch; margin: 0 0 26px; color: var(--muted); font-size: .92rem; }
+    .card { background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 24px; margin-bottom: 18px; }
+    .field label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: .8rem; font-weight: 600; }
+    .field output { color: var(--blue); font-family: var(--mono); font-size: .78rem; white-space: nowrap; }
+    .field small { display: block; margin-top: 6px; color: var(--muted); font-size: .68rem; line-height: 1.45; }
+    input[type=range] { width: 100%; margin-top: 10px; accent-color: var(--ink); }
+    .griglia { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+    @media (max-width: 640px) { .griglia { grid-template-columns: 1fr; } .totale { flex-direction: column; align-items: stretch; } }
+    .cella { background: linear-gradient(145deg, #f1fbf8, var(--white)); border: 1px solid rgba(13,148,136,.28); border-radius: var(--radius); padding: 14px; }
+    .cella label { display: block; font-size: .74rem; font-weight: 650; }
+    .formula { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+    .formula span { color: var(--muted); font-family: var(--mono); font-size: .62rem; white-space: nowrap; }
+    .formula input { width: 100%; min-width: 0; padding: 8px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); font-family: var(--mono); font-size: .82rem; -moz-appearance: textfield; }
+    .cella small { display: block; margin-top: 7px; color: var(--muted); font-size: .64rem; }
+    .cella small b { color: var(--ink); font-family: var(--mono); }
+    .totale { display: flex; justify-content: space-between; align-items: center; gap: 16px; background: var(--ink); color: white; border-radius: var(--radius); padding: 18px 20px; margin-top: 18px; }
+    .totale span { color: rgba(255,255,255,.65); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .07em; }
+    .totale .anno { color: var(--lime); font-family: var(--mono); font-size: 1.35rem; }
+    .totale .mese { color: rgba(255,255,255,.85); font-family: var(--mono); font-size: .82rem; }
+    .azioni { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .azioni button, .azioni a { padding: 10px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); color: var(--ink); font-family: var(--mono); font-size: .68rem; cursor: pointer; text-decoration: none; }
+    .azioni button:hover, .azioni a:hover { background: var(--ink); color: var(--lime); }
+    .nota { color: var(--muted); font-size: .7rem; line-height: 1.55; }
+    .nota a { color: var(--teal); }
+    footer { padding: 26px 0 40px; color: var(--muted); font-size: .68rem; }
+    footer a { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="top">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="../rendita-affitti/">Quanto rende il tuo immobile? →</a>
+    </header>
+
+    <h1>Quanto costano davvero <em>i consumi di casa?</em></h1>
+    <p class="lead">Luce, gas, acqua, Wi-Fi e costi fissi: parti dagli occupanti per una stima onesta, poi correggi ogni voce con quantità e tariffe delle tue bollette. Totale annuo e mensile, subito.</p>
+
+    <div class="card">
+      <div class="field">
+        <label><span>Occupanti</span> <output id="o-occup">2 persone</output></label>
+        <input type="range" id="occup" value="2" min="1" max="12" step="1" />
+        <small>Quante persone vivono (o soggiornano) nell'appartamento. Muovendo il cursore le voci sotto si ricalcolano: ~600 € di quota fissa + ~450 € a persona, da correggere con i tuoi numeri reali.</small>
+      </div>
+
+      <div class="griglia">
+        <div class="cella">
+          <label>Luce</label>
+          <div class="formula"><input type="number" id="cons-luce-kwh" value="1800" min="0" step="50" aria-label="kWh annui" /><span>kWh ×</span><input type="number" id="cons-luce-tariffa" value="0.30" min="0" step="0.01" aria-label="Euro per kWh" /></div>
+          <small>risultato: <b id="tot-luce"></b></small>
+        </div>
+        <div class="cella">
+          <label>Gas</label>
+          <div class="formula"><input type="number" id="cons-gas-smc" value="400" min="0" step="25" aria-label="Smc annui" /><span>Smc ×</span><input type="number" id="cons-gas-tariffa" value="1.00" min="0" step="0.01" aria-label="Euro per Smc" /></div>
+          <small>risultato: <b id="tot-gas"></b></small>
+        </div>
+        <div class="cella">
+          <label>Acqua</label>
+          <div class="formula"><input type="number" id="cons-acqua" value="200" min="0" step="25" aria-label="Acqua euro annui" /><span>€/anno</span></div>
+          <small>Da ultima bolletta o consuntivo.</small>
+        </div>
+        <div class="cella">
+          <label>Wi-Fi</label>
+          <div class="formula"><input type="number" id="cons-internet" value="30" min="0" step="1" aria-label="Wi-Fi euro mensili" /><span>€/mese × 12</span></div>
+          <small>risultato: <b id="tot-internet"></b></small>
+        </div>
+        <div class="cella">
+          <label>Altri costi fissi</label>
+          <div class="formula"><input type="number" id="cons-altro" value="0" min="0" step="25" aria-label="Altri consumi euro annui" /><span>€/anno</span></div>
+          <small>Canoni, bombole, minimi o voci mancanti.</small>
+        </div>
+      </div>
+
+      <div class="totale">
+        <span>totale consumi</span>
+        <div style="text-align:right"><div class="anno" id="o-anno"></div><div class="mese" id="o-mese"></div></div>
+      </div>
+
+      <div class="azioni">
+        <button type="button" id="condividi">Condividi questo calcolatore</button>
+        <a href="../rendita-affitti/">Quanto rende il tuo immobile in affitto? →</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="nota"><b>Come calcola.</b> Luce = kWh annui × €/kWh; gas = Smc annui × €/Smc; Wi-Fi = canone mensile × 12; acqua e altri costi entrano come importi annui. La stima iniziale dagli occupanti usa 600 € di quota fissa + 450 € a persona, ripartiti tra le voci in proporzione a un profilo tipico (540 luce, 400 gas, 200 acqua su 1.140 € variabili): è un ordine di grandezza, non una bolletta — le tariffe vere le trovi in bolletta alle voci «spesa per la materia energia» e «spesa per la materia gas naturale». Questo è lo stesso motore, <a href="https://github.com/CryptoPannoz/rendita-affitti" rel="noopener">open source su GitHub</a>, usato dal calcolatore <a href="../rendita-affitti/">Quanto rende il tuo immobile?</a> per i consumi inclusi di affitto breve e medio termine.</p>
+    </div>
+
+    <footer>
+      © <span id="anno-f"></span> <a href="https://bebroggi.it/">Alberto Broggi</a> · Nessun cookie di profilazione, nessun dato raccolto.
+    </footer>
+  </div>
+
+  <script type="module">
+    import { consumiPieni, calcolaConsumiVoci } from '../rendita-affitti/logic.mjs?v=20260820-4';
+
+    const $ = id => document.getElementById(id);
+    const fmt = n => String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const eur = n => fmt(n) + ' €';
+
+    function aggiorna() {
+      const c = calcolaConsumiVoci({
+        luceKwh: +$('cons-luce-kwh').value,
+        luceTariffa: +$('cons-luce-tariffa').value,
+        gasSmc: +$('cons-gas-smc').value,
+        gasTariffa: +$('cons-gas-tariffa').value,
+        acqua: +$('cons-acqua').value,
+        internetMensile: +$('cons-internet').value,
+        altro: +$('cons-altro').value
+      });
+      $('tot-luce').textContent = eur(c.luce);
+      $('tot-gas').textContent = eur(c.gas);
+      $('tot-internet').textContent = eur(c.internet);
+      $('o-anno').textContent = eur(c.totale) + '/anno';
+      $('o-mese').textContent = eur(c.totale / 12) + '/mese';
+    }
+
+    /* Stessa ripartizione trasparente del tool principale: 540/400/200 su 1.140 € variabili. */
+    function suggerisci(occupanti) {
+      const target = consumiPieni(occupanti);
+      const internet = 30;
+      const variabile = Math.max(0, target - internet * 12);
+      const tariffaLuce = +$('cons-luce-tariffa').value || 0.30;
+      const tariffaGas = +$('cons-gas-tariffa').value || 1;
+      $('cons-luce-kwh').value = (variabile * 540 / 1140 / tariffaLuce).toFixed(0);
+      $('cons-gas-smc').value = (variabile * 400 / 1140 / tariffaGas).toFixed(0);
+      $('cons-acqua').value = (variabile * 200 / 1140).toFixed(0);
+      $('cons-internet').value = internet;
+      $('cons-altro').value = 0;
+      aggiorna();
+    }
+
+    $('occup').addEventListener('input', () => {
+      const n = +$('occup').value;
+      $('o-occup').textContent = n + (n === 1 ? ' persona' : ' persone');
+      suggerisci(n);
+    });
+    document.querySelectorAll('.formula input').forEach(el => el.addEventListener('input', aggiorna));
+
+    $('condividi').addEventListener('click', async () => {
+      const url = 'https://bebroggi.it/tools/consumi-casa/';
+      try {
+        if (navigator.share) { await navigator.share({ title: document.title, url }); return; }
+        await navigator.clipboard.writeText(url);
+        $('condividi').textContent = 'Link copiato ✓';
+        setTimeout(() => { $('condividi').textContent = 'Condividi questo calcolatore'; }, 1800);
+      } catch { /* condivisione annullata */ }
+    });
+
+    $('anno-f').textContent = new Date().getFullYear();
+    suggerisci(2);
+  </script>
+</body>
+</html>
