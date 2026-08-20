@@ -191,7 +191,7 @@ export function classifica(scenari) {
  *   netto(occ) = occ·[adr·365·(1 − ota − gest − ced) − (1−quotaFissa)·consumi]
  *                − quotaFissa·consumi − condominio − manut·1,5 − IMU
  * Ritorna null se il margine per punto di occupazione è nullo o serve
- * un'occupazione irrealistica (> 150%).
+ * un'occupazione oltre il 100%, fisicamente impossibile.
  */
 export function breakEvenOcc(grezzi, obiettivo) {
   const p = normalizza(grezzi);
