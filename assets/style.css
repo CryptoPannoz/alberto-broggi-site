@@ -406,13 +406,7 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
 .toolcard--rendita { --tc: #7a3ff2; }
 .toolcard--calc { --tc: #165dff; }
 .toolcard--vento { --tc: #ff5b35; }
-.toolcard--fiscal { --tc: #0f6b52; grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.35fr); grid-template-rows: auto 1fr auto; column-gap: 32px; }
-.toolcard--fiscal .toolcard__head { grid-column: 1; grid-row: 1; }
-.toolcard--fiscal > p.pitch { grid-column: 1; grid-row: 2; align-self: start; }
-.toolcard--fiscal .toolcard__foot { grid-column: 1; grid-row: 3; }
-.toolcard--fiscal .toolcard__viz { grid-column: 2; grid-row: 1 / 4; align-self: center; }
-.toolcard--fiscal:hover .tcv__frame img { transform: scale(1.04); }
-@media (max-width: 880px) { .toolcard--fiscal { display: flex; } }
+.toolcard--fiscal { --tc: #0f6b52; }
 .toolcard__live.is-dev { border-color: rgba(184,134,11,.35); color: #8f5c11; }
 .toolcard__live.is-dev i { background: #e6a23c; box-shadow: 0 0 0 0 rgba(230,162,60,.5); animation-name: tc-pulse-dev; }
 @keyframes tc-pulse-dev { 0% { box-shadow: 0 0 0 0 rgba(230,162,60,.45); } 70% { box-shadow: 0 0 0 7px rgba(230,162,60,0); } 100% { box-shadow: 0 0 0 0 rgba(230,162,60,0); } }
