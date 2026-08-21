@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/style.css?v=fiscalninja-1" />
+  <link rel="stylesheet" href="assets/style.css?v=fiscalninja-2" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "db61b4f9c2c74ea3a63c5265be73510e"}'></script>
   <!-- End Cloudflare Web Analytics -->
@@ -323,17 +323,14 @@
               <div><h3>FiscalNinja</h3><small>Partite IVA forfettarie · Web app</small></div>
               <span class="toolcard__live is-dev"><i></i> In sviluppo</span>
             </div>
-            <p class="pitch">Imposta, INPS e acconti calcolati <strong>per cassa, da ogni fattura incassata</strong> — con piano F24 a rate e lettura automatica delle quietanze dell'Agenzia delle Entrate. Un esempio su 42.000 € incassati:</p>
-            <div class="toolcard__viz" id="tcf">
-              <div class="tcn__rows">
-                <div class="tcn__row" data-k="inps"><span>INPS 26,07%</span><i class="bar" style="background:#888a85;width:29%"></i><b>8.541 €</b></div>
-                <div class="tcn__row" data-k="tax"><span>Imposta 15%</span><i class="bar" style="background:#6d4c41;width:13%"></i><b>3.774 €</b></div>
-                <div class="tcn__row win" data-k="net"><span>Netto</span><i class="bar" style="background:#9cc35a;width:100%"></i><b>29.685 €</b></div>
-              </div>
-              <p class="tcn__foot">Coefficiente 78%, contributi versati 7.600 € dedotti, Gestione Separata — nella demo cambi attività, aliquota e previdenza e vedi il piano F24 che ne esce.</p>
+            <p class="pitch">Quanto devi davvero di imposta e INPS quest'anno? <strong>Lo sai a ogni fattura incassata.</strong> Legge gli incassi dal gestionale, calcola per cassa imposta sostitutiva, contributi e acconti, prepara il piano F24 a rate e legge da sola le quietanze dell'Agenzia delle Entrate: la rata si segna pagata e i totali si ricalcolano. Con sezione cripto: registro acquisti, quadro RW e plusvalenze.</p>
+            <div class="toolcard__viz" style="padding:0;overflow:hidden">
+              <span class="tcv__frame">
+                <img src="assets/img/dev-fiscalninja.svg" alt="Il cruscotto di FiscalNinja: netto mensile, flusso incassato → INPS → imposta → netto" width="1280" height="720" loading="lazy" />
+              </span>
             </div>
             <div class="toolcard__foot">
-              <div class="dev-tags"><span>Criterio di cassa</span><span>Fatture in Cloud</span><span>Quietanze F24</span></div>
+              <div class="dev-tags"><span>Criterio di cassa</span><span>Fatture in Cloud</span><span>Quietanze F24</span><span>Next.js · Vercel</span></div>
               <a class="toolcard__cta" href="fiscalninja/#demo">Prova la demo ↗</a>
             </div>
           </article>
