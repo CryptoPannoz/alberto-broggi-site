@@ -196,7 +196,7 @@
             <div class="section-kicker"><span>04</span><p>Dev</p></div>
             <h2>Useful first.<br /><em>Then polished.</em></h2>
           </div>
-          <p>Small apps and scripts born from a real need. Ship a first version, keep improving it.</p>
+          <p>Small apps and scripts born from a real need.</p>
         </div>
 
         <div class="toolgrid">
@@ -491,9 +491,9 @@
           <figure class="life-card life-card--compact"><img src="assets/img/snowboard-japan.jpg" alt="Snowboard crew in deep powder, Japan" loading="lazy" /><figcaption class="life-card__cap"><strong>Snowboard instructor</strong><span>Deep and steep · Japan 2018</span></figcaption></figure>
           <figure class="life-card"><img src="assets/img/windsurf-maggiore.jpg" alt="Windsurfing on Lake Maggiore" loading="lazy" /><figcaption class="life-card__cap"><strong>Lake Maggiore</strong><span>Chasing gusts past Isola Bella.</span></figcaption></figure>
           <figure class="life-card"><img src="assets/img/foil-duino.png" alt="Foiling off Duino" loading="lazy" /><figcaption class="life-card__cap"><strong>Duino sessions</strong><span>Bora days on the Gulf of Trieste.</span></figcaption></figure>
+          <figure class="life-card life-card--video life-card--video-wide"><video controls autoplay muted loop playsinline preload="metadata" poster="assets/img/treenet-friuli.jpg" aria-label="Treenet weaving video"><source src="assets/video/treenet.mp4" type="video/mp4" /></video><figcaption class="life-card__cap"><strong>Treenet weaver</strong><span>Slow craft, knots and trees.</span></figcaption></figure>
           <figure class="life-card"><img src="assets/img/snowboard-courmayeur.jpg" alt="Riders on a snowy ridge above Courmayeur" loading="lazy" /><figcaption class="life-card__cap"><strong>Courmayeur ridges</strong><span>Hiking for lines under Mont Blanc.</span></figcaption></figure>
           <figure class="life-card"><img src="assets/img/vst-marettimo.jpg" alt="Sail and trek on Marettimo" loading="lazy" /><figcaption class="life-card__cap"><strong>Sail &amp; trek</strong><span>Climbing the islands we sail to.</span></figcaption></figure>
-          <figure class="life-card life-card--video life-card--video-wide"><video controls autoplay muted loop playsinline preload="metadata" poster="assets/img/treenet-friuli.jpg" aria-label="Treenet weaving video"><source src="assets/video/treenet.mp4" type="video/mp4" /></video><figcaption class="life-card__cap"><strong>Treenet weaver</strong><span>Slow craft, knots and trees.</span></figcaption></figure>
           <a class="life-card life-card--links life-card--links-wide" href="hobbies/links.html"><span><small>Rabbit holes</small><strong>Links I love</strong><em>The corners of the web I keep coming back to ↗</em></span></a>
         </div>
       </div>
@@ -532,9 +532,13 @@
   <!-- ============ LIGHTBOX SHELL ============ -->
   <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
     <button class="lightbox__close" data-lbclose aria-label="Close">×</button>
+    <button class="lightbox__nav lightbox__nav--prev" data-lbprev aria-label="Previous">‹</button>
+    <button class="lightbox__nav lightbox__nav--next" data-lbnext aria-label="Next">›</button>
     <figure class="lightbox__fig">
       <img id="lightbox-img" src="" alt="" />
+      <video id="lightbox-video" controls playsinline preload="metadata" hidden></video>
       <figcaption class="lightbox__cap" id="lightbox-cap"></figcaption>
+      <span class="lightbox__count" id="lightbox-count"></span>
     </figure>
   </div>
 
@@ -772,32 +776,82 @@
       if (key && document.querySelector('template[data-job="' + key + '"]')) openModal(key);
     })();
 
-    // ---- Lightbox (click a hobby photo to expand) ----
+    // ---- Lightbox gallery: photos and videos, prev/next, arrows, swipe ----
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxVideo = document.getElementById('lightbox-video');
     const lightboxCap = document.getElementById('lightbox-cap');
+    const lightboxCount = document.getElementById('lightbox-count');
+    const galleryItems = Array.prototype.slice.call(document.querySelectorAll('.life-card img, .life-card video'));
+    let galleryIndex = 0;
 
-    function openLightbox(img) {
-      lightboxImg.src = img.currentSrc || img.src;
-      lightboxImg.alt = img.alt;
-      const fig = img.closest('.life-card');
+    function showGalleryItem(i) {
+      galleryIndex = (i + galleryItems.length) % galleryItems.length;
+      const el = galleryItems[galleryIndex];
+      const fig = el.closest('.life-card');
       const cap = fig ? fig.querySelector('.life-card__cap') : null;
       lightboxCap.innerHTML = cap ? cap.innerHTML : '';
+      lightboxCount.textContent = (galleryIndex + 1) + ' / ' + galleryItems.length;
+      if (el.tagName === 'VIDEO') {
+        el.pause();
+        lightboxImg.hidden = true;
+        lightboxImg.src = '';
+        const src = el.querySelector('source');
+        lightboxVideo.poster = el.poster || '';
+        lightboxVideo.src = src ? src.src : el.src;
+        lightboxVideo.hidden = false;
+        lightboxVideo.muted = false;
+        lightboxVideo.play().catch(function () {});
+      } else {
+        lightboxVideo.pause();
+        lightboxVideo.removeAttribute('src');
+        lightboxVideo.hidden = true;
+        lightboxImg.src = el.currentSrc || el.src;
+        lightboxImg.alt = el.alt;
+        lightboxImg.hidden = false;
+      }
+    }
+    function openLightbox(el) {
       lightbox.hidden = false;
       document.body.classList.add('modal-open');
       lastFocus = document.activeElement;
+      showGalleryItem(galleryItems.indexOf(el));
       lightbox.querySelector('.lightbox__close').focus();
     }
     function closeLightbox() {
       lightbox.hidden = true;
       document.body.classList.remove('modal-open');
       lightboxImg.src = '';
+      lightboxVideo.pause();
+      lightboxVideo.removeAttribute('src');
       if (lastFocus) lastFocus.focus();
     }
 
-    document.querySelectorAll('.life-card img').forEach(function (img) {
-      img.addEventListener('click', function () { openLightbox(img); });
+    galleryItems.forEach(function (el) {
+      if (el.tagName === 'IMG') {
+        el.addEventListener('click', function () { openLightbox(el); });
+      } else {
+        // Videos keep their native controls: add an explicit expand button on the card.
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'life-card__expand';
+        btn.setAttribute('aria-label', 'Open the video full screen');
+        btn.innerHTML = '⤢';
+        btn.addEventListener('click', function () { openLightbox(el); });
+        el.closest('.life-card').appendChild(btn);
+      }
     });
+    lightbox.querySelector('[data-lbprev]').addEventListener('click', function (e) { e.stopPropagation(); showGalleryItem(galleryIndex - 1); });
+    lightbox.querySelector('[data-lbnext]').addEventListener('click', function (e) { e.stopPropagation(); showGalleryItem(galleryIndex + 1); });
+    (function () {
+      let x0 = null;
+      lightbox.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      lightbox.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0; x0 = null;
+        if (Math.abs(dx) > 50) showGalleryItem(galleryIndex + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+    })();
 
     // ---- Hobby videos: autoplay while visible, with native controls for taps ----
     const hobbyVideos = document.querySelectorAll('.life-card video');
@@ -827,10 +881,12 @@
       });
     }
     lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox || e.target.hasAttribute('data-lbclose')) closeLightbox();
+      if (e.target === lightbox || e.target.classList.contains('lightbox__fig') || e.target.hasAttribute('data-lbclose')) closeLightbox();
     });
 
     document.addEventListener('keydown', function (e) {
+      if (!lightbox.hidden && e.key === 'ArrowRight') { showGalleryItem(galleryIndex + 1); return; }
+      if (!lightbox.hidden && e.key === 'ArrowLeft') { showGalleryItem(galleryIndex - 1); return; }
       if (e.key !== 'Escape') return;
       if (!lightbox.hidden) closeLightbox();
       else if (!modal.hidden) closeModal();
