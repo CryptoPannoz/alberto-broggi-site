@@ -6,17 +6,17 @@
     <loc>https://bebroggi.it/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bebroggi.it/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://bebroggi.it/it/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://bebroggi.it/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bebroggi.it/en/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bebroggi.it/" />
   </url>
 
   <url>
-    <loc>https://bebroggi.it/it/</loc>
+    <loc>https://bebroggi.it/en/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://bebroggi.it/" />
-    <xhtml:link rel="alternate" hreflang="it" href="https://bebroggi.it/it/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://bebroggi.it/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://bebroggi.it/en/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://bebroggi.it/" />
   </url>
 
@@ -39,7 +39,7 @@
   </url>
 
   <url>
-    <loc>https://bebroggi.it/it/hobbies/links.html</loc>
+    <loc>https://bebroggi.it/en/hobbies/links.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
