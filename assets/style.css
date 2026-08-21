@@ -411,6 +411,10 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
 .toolcard--vento .toolcard__foot { grid-column: 1; grid-row: 3; }
 .toolcard--vento .toolcard__viz { grid-column: 2; grid-row: 1 / 4; align-self: center; }
 @media (max-width: 880px) { .toolcard--vento { display: flex; } }
+.toolcard--fiscal { --tc: #0f6b52; }
+.toolcard__live.is-dev { border-color: rgba(184,134,11,.35); color: #8f5c11; }
+.toolcard__live.is-dev i { background: #e6a23c; box-shadow: 0 0 0 0 rgba(230,162,60,.5); animation-name: tc-pulse-dev; }
+@keyframes tc-pulse-dev { 0% { box-shadow: 0 0 0 0 rgba(230,162,60,.45); } 70% { box-shadow: 0 0 0 7px rgba(230,162,60,0); } 100% { box-shadow: 0 0 0 0 rgba(230,162,60,0); } }
 .toolcard__head { display: flex; align-items: center; gap: 12px; }
 .toolcard__ico { flex: none; display: grid; place-items: center; width: 46px; height: 46px; border-radius: 14px; background: color-mix(in srgb, var(--tc) 13%, white); font-size: 1.35rem; }
 .toolcard__head h3 { margin: 0; font-size: clamp(1.35rem, 2vw, 1.75rem); letter-spacing: -.045em; }
