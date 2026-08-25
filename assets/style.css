@@ -538,6 +538,14 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
 .contact__eyebrow { margin: 72px 0 22px; color: rgba(255,255,255,.72); font-size: 1rem; }
 .contact h2 { margin: 0; max-width: 11ch; font-size: clamp(4rem, 8vw, 8.2rem); font-weight: 620; letter-spacing: -.065em; }
 .contact h2 em { color: var(--lime); }
+.book-call {
+  display: inline-flex; align-items: center; gap: 12px;
+  margin-top: 48px; padding: 20px 38px;
+  background: var(--lime); color: var(--ink); border-radius: 999px;
+  font-size: clamp(1.05rem, 2.2vw, 1.45rem); font-weight: 650; letter-spacing: -.02em;
+  transition: transform .18s ease, background .18s ease;
+}
+.book-call:hover { transform: translateY(-3px); background: white; }
 .contact__links { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-top: 72px; }
 .big-mail { font-size: clamp(1.25rem, 3vw, 2.6rem); font-weight: 580; letter-spacing: -.04em; border-bottom: 2px solid rgba(255,255,255,.45); }
 .contact__links > a:last-child { font-size: .8rem; border-bottom: 1px solid currentColor; }
