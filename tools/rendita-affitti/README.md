@@ -29,12 +29,9 @@ risultati si sblocca lasciando un'email (vedi «Il cancello dei risultati»).
   regola il lordo mensile e leggi sulla stessa linea la **soglia oltre la quale
   lo scenario batte la migliore alternativa**. Canone e manutenzione sono
   indipendenti per ciascuno scenario, compreso il maggior costo del breve.
-- **Calcolatore dei consumi trasparente**, in un pop-up aperto dal riquadro
-  in pagina: kWh × tariffa per la luce, Smc × tariffa per il gas, acqua, Wi-Fi
-  e altre voci, con stima iniziale dagli occupanti (fino a 12). Il totale viene
-  scalato sulla presenza reale; esiste anche come **calcolatorino condivisibile
-  a sé** su [bebroggi.it/tools/consumi-casa](https://bebroggi.it/tools/consumi-casa/)
-  (stesso motore). **Stagionalità mensile per regione** dal dataset Eurostat
+- **Calcolatore dei consumi trasparente**: kWh × tariffa per la luce, Smc ×
+  tariffa per il gas, acqua, Wi-Fi e altre voci. Il totale viene scalato sulla
+  presenza reale; **stagionalità mensile per regione** dal dataset Eurostat
   sugli alloggi via piattaforme (tour_ce_omn12).
 - Output: netto annuo e mensile per ciascun regime, rendita netta in % del
   valore, **punto di pareggio dell'occupazione** per l'affitto breve e tabella

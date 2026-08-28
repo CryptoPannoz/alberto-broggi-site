@@ -48,7 +48,7 @@
       {
         "@type": "BreadcrumbList",
         "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Alberto Broggi", "item": "https://bebroggi.it/" },
+          { "@type": "ListItem", "position": 1, "name": "Alberto Broggi", "item": "https://bebroggi.it/it/" },
           { "@type": "ListItem", "position": 2, "name": "Quanto rende il tuo immobile?", "item": "https://bebroggi.it/tools/rendita-affitti/" }
         ]
       },
@@ -73,7 +73,7 @@
           {
             "@type": "Question",
             "name": "Cos'è l'affitto a medio termine o transitorio?",
-            "acceptedAnswer": { "@type": "Answer", "text": "È il contratto da 1 a 18 mesi per esigenze temporanee (lavoro, studio, cure): studenti fuori sede, trasfertisti, nomadi digitali. Di norma il canone è vicino a quello del 4+4, ma l'immobile è arredato e i consumi sono inclusi, quindi restano a carico del proprietario. La cedolare è al 21%; scende al 10% solo se il contratto è transitorio a canone concordato (canone da tabelle) in un comune ad alta tensione abitativa." }
+            "acceptedAnswer": { "@type": "Answer", "text": "È il contratto da 1 a 18 mesi per esigenze temporanee documentate (lavoro, studio, cure): studenti fuori sede, trasfertisti, nomadi digitali. Di norma il canone è vicino a quello del 4+4, ma l'immobile è arredato e i consumi sono inclusi, quindi restano a carico del proprietario. Nei comuni con più di 10.000 abitanti il canone deve rispettare le fasce degli accordi territoriali (DM 16/1/2017); il canone davvero libero resta possibile solo nei comuni più piccoli. La cedolare è al 21%, ma scende al 10% per il transitorio a canone concordato con attestazione in un comune ad alta tensione abitativa o calamitato." }
           },
           {
             "@type": "Question",
@@ -185,17 +185,6 @@
     .consumi-total output { display: block; margin-top: 2px; color: var(--lime); font-family: var(--mono); font-size: .9rem; }
     .consumi-total output.mese { color: rgba(255,255,255,.78); font-size: .66rem; margin-top: 1px; }
     .consumi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px; }
-    .consumi-launch { display: flex; justify-content: space-between; align-items: center; gap: 18px; width: 100%; margin-top: 18px; padding: 18px; border: 1px solid rgba(13,148,136,.28); border-radius: 18px; background: linear-gradient(145deg, #f1fbf8, var(--white)); cursor: pointer; text-align: left; font: inherit; transition: border-color .15s, box-shadow .15s; }
-    .consumi-launch:hover, .consumi-launch:focus-visible { border-color: rgba(13,148,136,.6); box-shadow: 0 4px 18px rgba(13,148,136,.14); }
-    .consumi-launch h3 { margin: 0; font-size: .94rem; font-weight: 650; letter-spacing: -.025em; }
-    .consumi-launch p { max-width: 66ch; margin: 4px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.48; }
-    .consumi-launch .cta { display: inline-block; margin-top: 8px; color: #0d9488; font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .05em; }
-    .consumi-dialog { width: min(760px, calc(100vw - 32px)); border: none; border-radius: 22px; padding: 0; box-shadow: 0 24px 70px rgba(17,22,21,.35); }
-    .consumi-dialog::backdrop { background: rgba(17,22,21,.45); }
-    .consumi-dialog .consumi-box { margin-top: 0; border: none; border-radius: 22px; }
-    .consumi-foot { display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 16px; }
-    .consumi-foot a { color: #0d9488; font-size: .7rem; text-decoration: underline; }
-    .consumi-foot button { padding: 9px 16px; border: none; border-radius: 10px; background: var(--ink); color: var(--lime); font-family: var(--mono); font-size: .68rem; cursor: pointer; }
     .consumo-cell { min-width: 0; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
     .consumo-cell > label { display: block; margin-bottom: 7px; font-size: .64rem; font-weight: 650; }
     .consumo-formula { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); align-items: center; gap: 4px; }
@@ -209,7 +198,6 @@
       .consumi-box__head { flex-direction: column; }
       .consumi-total { width: 100%; text-align: left; }
       .consumi-grid { grid-template-columns: 1fr; }
-      .consumi-launch { flex-direction: column; align-items: stretch; }
     }
 
     /* Risultati */
@@ -455,7 +443,7 @@
           </div>
           <div class="field">
             <label><span data-i18n="f.occup">Occupanti tipici</span> <output id="o-occup"></output></label>
-            <input type="range" id="occup" value="2" min="1" max="12" step="1" />
+            <input type="range" id="occup" value="2" min="1" max="8" step="1" />
             <small data-i18n="f.occup.s">Quante persone vivono o soggiornano nell'immobile: da qui si stimano i consumi.</small>
           </div>
           <div class="field">
@@ -465,25 +453,15 @@
           </div>
         </div>
 
-        <input type="hidden" id="consumi" value="1500" />
-        <button type="button" class="consumi-launch" id="apri-consumi" aria-haspopup="dialog" aria-controls="dlg-consumi">
-          <div>
-            <h3 data-i18n="cons.h3">Calcolatore consumi inclusi</h3>
-            <p data-i18n-html="cons.p">Costruisci il costo annuo da quantità e tariffe reali: <b>kWh × €/kWh</b> per la luce, <b>Smc × €/Smc</b> per il gas, più acqua e Wi-Fi. Il totale incide solo su medio e breve e viene poi scalato sulla presenza.</p>
-            <span class="cta" data-i18n="cons.apri">clicca e regola le voci →</span>
-          </div>
-          <div class="consumi-total"><span data-i18n="cons.total">totale a piena occupazione</span><output id="o-consumi"></output><output class="mese" id="o-consumi-mese"></output></div>
-        </button>
-
-        <dialog id="dlg-consumi" class="consumi-dialog" aria-labelledby="dlg-consumi-h3">
         <div class="consumi-box">
           <div class="consumi-box__head">
             <div>
-              <h3 id="dlg-consumi-h3" data-i18n="cons.h3">Calcolatore consumi inclusi</h3>
+              <h3 data-i18n="cons.h3">Calcolatore consumi inclusi</h3>
               <p data-i18n-html="cons.p">Costruisci il costo annuo da quantità e tariffe reali: <b>kWh × €/kWh</b> per la luce, <b>Smc × €/Smc</b> per il gas, più acqua e Wi-Fi. Il totale incide solo su medio e breve e viene poi scalato sulla presenza.</p>
             </div>
-            <div class="consumi-total"><span data-i18n="cons.total">totale a piena occupazione</span><output id="o-consumi-dlg"></output><output class="mese" id="o-consumi-mese-dlg"></output></div>
+            <div class="consumi-total"><span data-i18n="cons.total">totale a piena occupazione</span><output id="o-consumi"></output><output class="mese" id="o-consumi-mese"></output></div>
           </div>
+          <input type="hidden" id="consumi" value="1500" />
           <div class="consumi-grid">
             <div class="consumo-cell">
               <label data-i18n="cons.luce">Luce</label>
@@ -511,12 +489,7 @@
               <small data-i18n="cons.altro.s">Canoni, bombole, minimi o voci mancanti.</small>
             </div>
           </div>
-          <div class="consumi-foot">
-            <a href="../consumi-casa/" data-i18n="cons.solo">Ti serve solo questo? C'è anche come calcolatore a sé, da condividere →</a>
-            <button type="button" id="chiudi-consumi" data-i18n="cons.chiudi">Fatto, chiudi</button>
-          </div>
         </div>
-        </dialog>
       </section>
 
       <!-- ═══ 2 · I QUATTRO SCENARI, ciascuno coi suoi parametri ═══ -->
@@ -622,7 +595,15 @@
               <div class="field">
                 <label><span data-i18n="f.mesimedio">Mesi affittati l'anno</span> <output id="o-mesimedio"></output></label>
                 <input type="range" id="mesimedio" value="11" min="6" max="12" step="0.5" />
-                <small data-i18n="f.mesimedio.s">Contratti transitori 1–18 mesi in catena: qualche settimana vuota è fisiologica.</small>
+                <small data-i18n="f.mesimedio.s">Contratti transitori 1–18 mesi, ognuno con la sua esigenza documentata (pena la riconduzione a 4+4): qualche settimana vuota tra un contratto e l'altro è fisiologica.</small>
+              </div>
+              <div class="field">
+                <label><span data-i18n="f.medioconc">Concordato in comune agevolato?</span></label>
+                <div class="yn" id="yn-medioconc">
+                  <button type="button" data-v="1" data-i18n="f.medioconc.si">Sì → 10%</button>
+                  <button type="button" data-v="0" class="on" data-i18n="f.medioconc.no">No → 21%</button>
+                </div>
+                <small data-i18n-html="f.medioconc.s">Sopra i 10.000 abitanti il canone del transitorio deve stare nelle fasce dell'accordo territoriale (DM 16/1/2017). Con l'attestazione, in comune ad alta tensione o calamitato la cedolare scende al <b>10%</b>; altrove resta al 21%.</small>
               </div>
             </div>
             <table>
@@ -730,10 +711,10 @@
           <summary><h3 data-i18n="met.h3">Come calcola (il metodo, tutto dichiarato)</h3><span><span data-i18n="deep.open">apri</span> <b>+</b></span></summary>
           <div>
             <ul data-i18n-html="met.list">
-              <li><b>3+2 concordato:</b> canone inserito dall'accordo territoriale (tabelle per zona e fascia, non a scelta libera), sfitto dimezzato per la domanda più ampia. Utenze all'inquilino e condominio al 20% (straordinaria), come nel 4+4. Cedolare al <b>10%</b> nei comuni ad alta tensione abitativa o in stato d'emergenza per calamità (21% altrove) e IMU al <b>75%</b> ovunque. La manutenzione ha una stima propria. Attenzione: per fruire di cedolare al 10% e IMU al 75%, nei contratti stipulati senza l'assistenza delle associazioni serve l'<b>attestazione di rispondenza</b> all'accordo territoriale (DM 16/1/2017) — una tantum ~80–200 €, qui trascurata.</li>
+              <li><b>3+2 concordato:</b> canone inserito dall'accordo territoriale (tabelle per zona e fascia, non a scelta libera), sfitto dimezzato per la domanda più ampia. Cedolare al <b>10%</b> nei comuni ad alta tensione abitativa o in stato d'emergenza per calamità (21% altrove) e IMU al <b>75%</b> ovunque. La manutenzione ha una stima propria; l'attestazione di rispondenza una tantum (~80–200 €) è trascurata. La stessa disciplina (canone da tabelle, 10% nei comuni agevolati, IMU 75%) vale per i contratti per studenti universitari (6–36 mesi), anch'essi esclusivamente concordati: usa questa card anche per quel caso.</li>
               <li><b>4+4 canone libero:</b> canone mensile inserito × 12, meno lo sfitto/rischio. Utenze intestate all'inquilino, condominio al 20% (straordinaria), manutenzione regolabile nel suo box. Cedolare al 21%. IMU piena.</li>
-              <li><b>Medio termine (transitorio):</b> canone mensile regolabile per i mesi affittati. Immobile arredato, <b>consumi inclusi</b> e condominio a tuo carico, manutenzione specifica, gestione leggera (5% per cambi inquilino). Cedolare al 21%; scende al 10% solo con un transitorio a canone concordato (canone dalle tabelle, non di mercato) in comune ad alta tensione abitativa — variante non modellata qui. IMU piena.</li>
-              <li><b>Affitto breve:</b> ricavi = prezzo a notte × 365 × occupazione. Costi: commissioni OTA, gestione operativa in % dei ricavi, consumi (inclusi), condominio pieno e la manutenzione più alta mostrata nel suo box. Cedolare secca al 26%, o 21% per un solo immobile a scelta, sui ricavi lordi — con la cedolare <b>nessun costo è deducibile</b>. La ritenuta del 21% delle piattaforme è un acconto, non un'imposta in più. Le pulizie addebitate forfettariamente all'ospite sarebbero comunque imponibili in cedolare (Circ. AdE 24/E/2017): qui restano fuori dai ricavi per semplicità, con prezzo a notte «pulizie escluse». IMU piena. Dal 2026 massimo due appartamenti in affitto breve: dal terzo, regime d'impresa (fuori dal perimetro di questo calcolo). Serve inoltre il <b>CIN</b> (Codice Identificativo Nazionale): va esposto negli annunci e, dalla dichiarazione dei redditi 2026, indicato anche lì — le sanzioni per chi ne è privo arrivano a 8.000 €.</li>
+              <li><b>Medio termine (transitorio):</b> canone mensile regolabile per i mesi affittati. Immobile arredato, <b>consumi inclusi</b> e condominio a tuo carico, manutenzione specifica, gestione leggera (5% per cambi inquilino). Il transitorio richiede un'esigenza temporanea documentata e nei comuni con più di 10.000 abitanti il canone deve rispettare le fasce degli accordi territoriali (DM 16/1/2017, art. 2); rinnovi «in catena» senza causa reale vengono ricondotti a un 4+4 (art. 2 c. 6). Cedolare al 21%, oppure al <b>10%</b> — attivabile nella card — per il transitorio a canone concordato con attestazione in comune ad alta tensione abitativa o calamitato (Circ. AdE 8/E/2017). IMU piena.</li>
+              <li><b>Affitto breve:</b> ricavi = prezzo a notte × 365 × occupazione. Costi: commissioni OTA, gestione operativa in % dei ricavi, consumi (inclusi), condominio pieno e la manutenzione più alta mostrata nel suo box. Cedolare secca al 26%, o 21% per un solo immobile a scelta, sui ricavi lordi — con la cedolare <b>nessun costo è deducibile</b>. La ritenuta del 21% delle piattaforme è un acconto, non un'imposta in più. Le pulizie addebitate forfettariamente all'ospite sarebbero comunque imponibili in cedolare (Circ. AdE 24/E/2017): qui restano fuori dai ricavi per semplicità, con prezzo a notte «pulizie escluse». IMU piena. Dal 2026 massimo due appartamenti in affitto breve: dal terzo, regime d'impresa (fuori dal perimetro di questo calcolo).</li>
               <li><b>Consumi:</b> il totale a piena occupazione nasce dalle voci visibili nel box — kWh × tariffa per la luce, Smc × tariffa per il gas, acqua, Wi-Fi e altro. La precompilazione usa come ordine di grandezza 600 € di quota fissa + 450 € per occupante, ma ogni quantità e tariffa è modificabile. Il totale viene poi scalato sulla presenza reale: consumi = pieni × (30% + 70% × presenza). Nel breve la presenza è l'occupazione; nel medio i mesi affittati su 12; nei contratti lunghi le utenze sono dell'inquilino.</li>
               <li><b>Stagionalità:</b> la curva mensile sotto l'occupazione è il profilo delle notti negli alloggi via piattaforme della tua regione (Eurostat), riscalato sulla tua occupazione media. Serve a vedere quando si concentra l'incasso, non cambia il totale annuo.</li>
               <li><b>IMU:</b> rendita catastale × 1,05 × 160 × aliquota. La rendita precompilata è una stima grossolana (≈ base imponibile pari a metà del valore di mercato): mettere quella vera cambia il risultato. L'aliquota della tua città è nella delibera comunale sul portale del Dipartimento Finanze (MEF).</li>
@@ -741,7 +722,6 @@
               <li><b>Cosa resta fuori:</b> l'eventuale mutuo (uguale in tutti gli scenari), il tuo tempo, l'imposta di soggiorno (a carico dell'ospite), l'ammortamento dell'arredo, l'IRPEF ordinaria come alternativa alla cedolare (quasi mai conveniente per chi ha altri redditi), la tassazione in regime d'impresa oltre 2 immobili brevi.</li>
             </ul>
             <p class="fonte-line" id="fonti-line"></p>
-            <p class="fonte-line" data-i18n-html="fonti.norme">Riferimenti normativi (verificati ad agosto 2026): cedolare brevi 26%/21% — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legge:2017-04-24;50" rel="noopener">D.L. 50/2017 art. 4</a> come mod. da <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2023-12-30;213" rel="noopener">L. 213/2023</a>; tetto 2 appartamenti e CIN — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2025-12-30;199" rel="noopener">L. 199/2025 art. 1 c. 17</a> (Bilancio 2026); cedolare 21% — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2011-03-14;23" rel="noopener">D.Lgs. 23/2011 art. 3</a>; 10% concordato strutturale, calcolo IMU e IMU al 75% — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2019-12-27;160" rel="noopener">L. 160/2019 art. 1 c. 6, 745, 754 e 760</a>; attestazione di rispondenza — <a href="https://www.gazzettaufficiale.it/eli/id/2017/03/15/17A01780/sg" rel="noopener">DM 16/1/2017</a>; prassi — <a href="https://www.agenziaentrate.gov.it/portale/le-locazioni-brevi-e-la-cedolare-secca" rel="noopener">guida AdE «Locazioni brevi» (apr. 2026)</a> e Circ. 24/E/2017.</p>
           </div>
         </details>
 
@@ -751,9 +731,9 @@
             <h4>Conviene più l'affitto breve o il 4+4?</h4>
             <p>Dipende quasi tutto dall'occupazione e dai costi di gestione. L'affitto breve incassa di più a parità di notti, ma paga commissioni, pulizie, consumi e — dal secondo immobile — una cedolare al 26%. Sotto una certa occupazione, spesso tra il 30% e il 55%, il contratto lungo rende di più con molto meno lavoro. Guarda il punto di pareggio qui sopra: è il numero più importante della pagina.</p>
             <h4>Perché il concordato può battere il canone libero?</h4>
-            <p>Perché lo sconto sul canone è spesso più che compensato dal fisco: cedolare al 10% invece che al 21% e IMU al 75%. Con sconti del 15–25% i due contratti si equivalgono in molte città; dove l'IMU è al massimo, il concordato spesso vince. In più affitti più in fretta e con meno rotazione.</p>
+            <p>Perché lo sconto sul canone è spesso più che compensato dal fisco: cedolare al 10% invece che al 21% e IMU al 75%. Con sconti del 15–25% i due contratti si equivalgono in molte città; dove l'IMU è al massimo, il concordato spesso vince. In più affitti più in fretta e con meno rotazione. La stessa disciplina vale per i contratti per studenti universitari (6–36 mesi), anch'essi esclusivamente a canone concordato.</p>
             <h4>Il medio termine è il compromesso perfetto?</h4>
-            <p>È un equilibrio interessante: occupazione alta, niente commissioni da piattaforma turistica, ospiti che si fermano mesi. Ma di norma il canone è vicino a quello del 4+4, l'immobile dev'essere arredato e i consumi restano a tuo carico: il vantaggio vero è la flessibilità (riprendi l'immobile quando serve), non il netto. Con un transitorio a canone concordato in comune ad alta tensione la cedolare scende al 10%, ma il canone deve seguire le tabelle.</p>
+            <p>È un equilibrio interessante: occupazione alta, niente commissioni da piattaforma turistica, ospiti che si fermano mesi. Ma di norma il canone è vicino a quello del 4+4, l'immobile dev'essere arredato e i consumi restano a tuo carico: il vantaggio vero è la flessibilità (riprendi l'immobile quando serve), non il netto. Attenzione alle regole: ogni contratto richiede un'esigenza di transitorietà documentata, e nei comuni con più di 10.000 abitanti il canone deve seguire le fasce degli accordi territoriali (DM 16/1/2017). Con l'attestazione, in comune ad alta tensione o calamitato la cedolare scende al 10%: puoi attivarla nella card.</p>
             <h4>E se l'occupazione precompilata non fosse realistica per casa mia?</h4>
             <p>È una media cittadina, non una previsione: il singolo annuncio può stare molto sopra o molto sotto, in base a posizione, qualità, prezzo e recensioni. Muovi il cursore ed esplora la tabella di sensibilità: se il verdetto cambia con 5 punti di occupazione in meno, sei in zona rischio.</p>
             <h4>Il calcolatore considera il mutuo?</h4>
@@ -780,15 +760,13 @@
   <script type="module">
   /* Il motore (FISCO, scenari, break-even, consumi) vive in logic.mjs, coperto
      dai test in tests/: qui restano interfaccia, i18n e precompilazioni. */
-  import { FISCO, CONSUMI, calcolaScenari, classifica, breakEvenOcc, consumiPieni, calcolaConsumiVoci, trovaSogliaLordoMensile, curvaStagionale } from './logic.mjs?v=20260820-4';
+  import { FISCO, CONSUMI, calcolaScenari, classifica, breakEvenOcc, consumiPieni, calcolaConsumiVoci, trovaSogliaLordoMensile, curvaStagionale } from './logic.mjs?v=20260820-2';
 
   const $ = id => document.getElementById(id);
   const fmt = n => String(Math.round(Math.abs(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   /* Il segno si decide dopo l'arrotondamento: mai "−0 €". */
   const eur = n => (n < 0 && Math.round(Math.abs(n)) > 0 ? '−' : '') + fmt(n) + ' €';
-  const pct1 = n => (Math.round(n * 1000) / 10).toLocaleString(lang === 'en' ? 'en' : 'it-IT') + '%';
-  /* Voci di spesa: segno meno esplicito, ma mai su un importo che arrotonda a zero. */
-  const eurMeno = n => (Math.round(Math.abs(n)) > 0 ? '−' : '') + fmt(n) + ' €';
+  const pct1 = n => (Math.round(n * 1000) / 10).toLocaleString('it-IT') + '%';
 
   /* ─── i18n: italiano sorgente nell'HTML, EN nel dizionario ─── */
   const EN = {
@@ -821,9 +799,6 @@
     'cons.yr': '€/year', 'cons.yr2': '€/year', 'cons.mo': '€/month × 12',
     'cons.acqua.s': 'Use the latest bill or annual statement.',
     'cons.altro.s': 'Standing charges, bottled gas, minimums or missing items.',
-    'cons.apri': 'click to adjust the items →',
-    'cons.solo': 'Need just this? It also exists as a standalone, shareable calculator →',
-    'cons.chiudi': 'Done, close',
     'best': 'best net', 'best2': 'best net', 'best3': 'best net', 'best4': 'best net',
     'scen.conc': '3+2 controlled', 'scen.lib44': '4+4 open lease', 'scen.medio': 'Mid-term', 'scen.breve': 'Short-term',
     'hero.netto1': 'Net per year', 'hero.netto2': 'Net per year', 'hero.netto3': 'Net per year', 'hero.netto4': 'Net per year',
@@ -847,7 +822,10 @@
     'f.sfitto': 'Vacancy and risk',
     'f.sfitto.s': 'Empty months and arrears, as % of revenue. The 3+2 turns over faster: counted at half.',
     'f.mesimedio': 'Months let per year',
-    'f.mesimedio.s': 'Chained 1–18 month contracts: a few empty weeks are physiological.',
+    'f.mesimedio.s': 'Transitional 1–18 month contracts, each with its own documented need (or the lease reverts to a 4+4): a few empty weeks between contracts are physiological.',
+    'f.medioconc': 'Controlled rent in an eligible municipality?',
+    'f.medioconc.si': 'Yes → 10%', 'f.medioconc.no': 'No → 21%',
+    'f.medioconc.s': 'Above 10,000 inhabitants the transitional rent must sit within the territorial-agreement bands (DM 16/1/2017). With the compliance certificate, in a high-demand or calamity municipality the flat tax drops to <b>10%</b>; elsewhere it stays at 21%.',
     'f.adr': 'Average nightly rate',
     'f.adr.s': 'Average rate earned per night, cleaning fees excluded.',
     'f.occ': 'Occupancy',
@@ -869,10 +847,9 @@
     'warn': '<b>This is an economic comparison, not a forecast.</b> City averages for occupancy and rates don’t apply to a single property; tax rules and local regulations change (CIN registration, municipal caps on short lets, IMU rates set every year). Before signing anything, check the numbers with your accountant. Everything runs in your browser; your email is only requested to unlock the detailed results.',
     'met.h3': 'How it computes (the method, all declared)',
     'deep.open': 'open', 'deep.open2': 'open',
-    'met.list': '<li><b>3+2 controlled rent:</b> rent entered from the territorial agreement (zone and band tables, not free choice), vacancy halved thanks to broader demand. Utilities in the tenant’s name and 20% of building charges (extraordinary), as in the 4+4. Flat tax <b>10%</b> in high-demand municipalities or under a declared calamity emergency (21% elsewhere) and IMU at <b>75%</b> everywhere. Its maintenance estimate is independent. Note: to qualify for the 10% flat tax and 75% IMU, contracts signed without the tenant/landlord associations need the <b>compliance certificate</b> (attestazione di rispondenza, Ministerial Decree 16/1/2017) — a one-off ~€80–200, ignored here.</li><li><b>4+4 open-market lease:</b> market rent × 12, minus vacancy/risk. Utilities in the tenant’s name, 20% of building charges (extraordinary), its own maintenance estimate. Flat tax 21%. Full IMU.</li><li><b>Mid-term (transitional lease):</b> adjustable monthly rent for the months actually let. Furnished, <b>utilities included</b> and building charges on you, its own maintenance estimate, light management (5% for tenant changeovers). Flat tax 21%; it drops to 10% only with a controlled-rent transitional contract (rent from the official tables, not market) in a high-demand municipality — a variant not modelled here. Full IMU.</li><li><b>Short-term rental:</b> revenue = nightly rate × 365 × occupancy. Costs: OTA commissions, running costs as % of revenue, utilities (included), full building charges and the higher maintenance estimate shown in its card. Flat tax of 26% — or 21% for one property of your choice — on gross revenue: with the flat tax <b>no cost is deductible</b>. The platforms’ 21% withholding is an advance, not an extra tax. Flat-fee cleaning charged to guests would in any case be taxable under the flat tax (AdE Circular 24/E/2017): it stays outside revenue here for simplicity, with the nightly rate “cleaning excluded”. Full IMU. From 2026 at most two short-let apartments: from the third, business regime (outside this calculator’s scope). You also need the <b>CIN</b> (National Identification Code): shown in every listing and, from the 2026 tax return, reported there too — fines for operating without it reach €8,000.</li><li><b>Utilities:</b> the full-occupancy total comes from every visible line in the calculator — kWh × tariff for electricity, Smc × tariff for gas, water, Wi-Fi and other costs. The pre-fill uses €600 of standing costs + €450 per occupant only as an order of magnitude; every quantity and tariff is editable. The total is then scaled to actual presence: utilities = full × (30% + 70% × presence). In short-term, presence is occupancy; in mid-term, months let over 12; on long leases utilities are the tenant’s.</li><li><b>Seasonality:</b> the monthly curve under the occupancy slider is your region’s profile of nights in platform accommodation (Eurostat), rescaled to your average occupancy. It shows when the income concentrates; it does not change the annual total.</li><li><b>IMU:</b> cadastral income × 1.05 × 160 × rate. The pre-filled cadastral income is a rough estimate (≈ taxable base equal to half the market value): entering the real one changes the result. Your city’s rate is in the municipal resolution on the MEF Finance Department portal.</li><li><b>Pre-filled occupancy:</b> the average of two public metrics — calendar occupancy (AirROI: nights sold over 365, part-time listings included) and available-nights occupancy (Airbnb data: excludes host-blocked days). The first understates a dedicated full-year listing, the second slightly overstates it: the average is a starting point, not a forecast.</li><li><b>What’s left out:</b> any mortgage (identical across scenarios), your time, tourist tax (paid by guests), furniture depreciation, ordinary income tax as an alternative to the flat tax (rarely convenient if you have other income), the business regime beyond 2 short-let flats.</li>',
-    'fonti.norme': 'Legal references (verified August 2026): short-let flat tax 26%/21% — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legge:2017-04-24;50" rel="noopener">Law Decree 50/2017 art. 4</a> as amended by <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2023-12-30;213" rel="noopener">Law 213/2023</a>; 2-apartment cap and CIN — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2025-12-30;199" rel="noopener">Law 199/2025 art. 1 par. 17</a> (2026 Budget); 21% flat tax — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2011-03-14;23" rel="noopener">Legislative Decree 23/2011 art. 3</a>; structural 10% controlled rate, IMU computation and 75% IMU — <a href="https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2019-12-27;160" rel="noopener">Law 160/2019 art. 1 par. 6, 745, 754, 760</a>; compliance certificate — <a href="https://www.gazzettaufficiale.it/eli/id/2017/03/15/17A01780/sg" rel="noopener">Ministerial Decree 16/1/2017</a>; practice — <a href="https://www.agenziaentrate.gov.it/portale/le-locazioni-brevi-e-la-cedolare-secca" rel="noopener">Revenue Agency guide “Short lets” (Apr 2026)</a> and Circular 24/E/2017.',
+    'met.list': '<li><b>3+2 controlled rent:</b> rent entered from the territorial agreement (zone and band tables, not free choice), vacancy halved thanks to broader demand. Flat tax <b>10%</b> in high-demand municipalities or under a declared calamity emergency (21% elsewhere) and IMU at <b>75%</b> everywhere. Its maintenance estimate is independent, plus the one-off compliance certificate (~€80–200, ignored here). The same discipline (rent from the tables, 10% in eligible municipalities, IMU at 75%) applies to university-student contracts (6–36 months), also controlled-rent only: use this card for that case too.</li><li><b>4+4 open-market lease:</b> market rent × 12, minus vacancy/risk. Utilities in the tenant’s name, 20% of building charges (extraordinary), its own maintenance estimate. Flat tax 21%. Full IMU.</li><li><b>Mid-term (transitional lease):</b> adjustable monthly rent for the months actually let. Furnished, <b>utilities included</b> and building charges on you, its own maintenance estimate, light management (5% for tenant changeovers). A transitional lease requires a documented temporary need, and in municipalities above 10,000 inhabitants the rent must sit within the territorial-agreement bands (DM 16/1/2017, art. 2); “chained” renewals without a real cause revert the lease to a 4+4 (art. 2 c. 6). Flat tax 21%, or <b>10%</b> — selectable in the card — for a controlled-rent transitional contract with the compliance certificate in a high-demand or calamity municipality (AdE Circular 8/E/2017). Full IMU.</li><li><b>Short-term rental:</b> revenue = nightly rate × 365 × occupancy. Costs: OTA commissions, running costs as % of revenue, utilities (included), full building charges and the higher maintenance estimate shown in its card. Flat tax of 26% — or 21% for one property of your choice — on gross revenue: with the flat tax <b>no cost is deductible</b>. The platforms’ 21% withholding is an advance, not an extra tax. Flat-fee cleaning charged to guests would in any case be taxable under the flat tax (AdE Circular 24/E/2017): it stays outside revenue here for simplicity, with the nightly rate “cleaning excluded”. Full IMU. From 2026 at most two short-let apartments: from the third, business regime (outside this calculator’s scope).</li><li><b>Utilities:</b> the full-occupancy total comes from every visible line in the calculator — kWh × tariff for electricity, Smc × tariff for gas, water, Wi-Fi and other costs. The pre-fill uses €600 of standing costs + €450 per occupant only as an order of magnitude; every quantity and tariff is editable. The total is then scaled to actual presence: utilities = full × (30% + 70% × presence). In short-term, presence is occupancy; in mid-term, months let over 12; on long leases utilities are the tenant’s.</li><li><b>Seasonality:</b> the monthly curve under the occupancy slider is your region’s profile of nights in platform accommodation (Eurostat), rescaled to your average occupancy. It shows when the income concentrates; it does not change the annual total.</li><li><b>IMU:</b> cadastral income × 1.05 × 160 × rate. The pre-filled cadastral income is a rough estimate (≈ taxable base equal to half the market value): entering the real one changes the result. Your city’s rate is in the municipal resolution on the MEF Finance Department portal.</li><li><b>Pre-filled occupancy:</b> the average of two public metrics — calendar occupancy (AirROI: nights sold over 365, part-time listings included) and available-nights occupancy (Airbnb data: excludes host-blocked days). The first understates a dedicated full-year listing, the second slightly overstates it: the average is a starting point, not a forecast.</li><li><b>What’s left out:</b> any mortgage (identical across scenarios), your time, tourist tax (paid by guests), furniture depreciation, ordinary income tax as an alternative to the flat tax (rarely convenient if you have other income), the business regime beyond 2 short-let flats.</li>',
     'faq.h3': 'The questions everyone asks',
-    'faq.body': '<h4>Short-term rental or a 4+4 lease?</h4><p>It almost all comes down to occupancy and running costs. Short lets earn more per night, but pay commissions, cleaning, utilities and — from the second property — a 26% flat tax. Below a certain occupancy, often between 30% and 55%, the long lease nets more with far less work. Check the break-even point above: it is the most important number on this page.</p><h4>Why can the controlled 3+2 beat the open-market lease?</h4><p>Because the rent discount is often more than offset by taxes: a 10% flat tax instead of 21%, and IMU at 75%. With 15–25% discounts the two leases net about the same in many cities; where IMU sits at the maximum, the 3+2 often wins. You also let faster, with less churn.</p><h4>Is mid-term the perfect compromise?</h4><p>It is an interesting balance: high occupancy, no tourist-platform commissions, guests staying for months. But as a rule the rent is close to the 4+4, the flat must be furnished and the bills stay with you: the real advantage is flexibility (you get the flat back when you need it), not the net. A controlled-rent transitional contract in a high-demand municipality gets the 10% flat tax, but the rent must follow the official tables.</p><h4>What if the pre-filled occupancy is unrealistic for my place?</h4><p>It is a city average, not a forecast: a single listing can sit far above or below it, depending on location, quality, price and reviews. Move the slider and explore the sensitivity table: if the verdict flips with 5 points less occupancy, you are in the risk zone.</p><h4>Does the calculator account for a mortgage?</h4><p>No, on purpose: the payment is identical in all four scenarios, so it doesn’t change the comparison — only how much of the net ends up in your pocket. If the property is leveraged, subtract your annual payments from every column.</p><h4>Who is behind this tool?</h4><p>The same approach as the <a href="https://bebroggi.it/tools/affitto-vs-acquisto.html" style="text-decoration:underline">rent-or-buy calculator</a>: free, open-source tools, every assumption declared. The code is on <a href="https://github.com/CryptoPannoz/rendita-affitti" rel="noopener" style="text-decoration:underline">GitHub</a>: check it, clone it, adapt it.</p>',
+    'faq.body': '<h4>Short-term rental or a 4+4 lease?</h4><p>It almost all comes down to occupancy and running costs. Short lets earn more per night, but pay commissions, cleaning, utilities and — from the second property — a 26% flat tax. Below a certain occupancy, often between 30% and 55%, the long lease nets more with far less work. Check the break-even point above: it is the most important number on this page.</p><h4>Why can the controlled 3+2 beat the open-market lease?</h4><p>Because the rent discount is often more than offset by taxes: a 10% flat tax instead of 21%, and IMU at 75%. With 15–25% discounts the two leases net about the same in many cities; where IMU sits at the maximum, the 3+2 often wins. You also let faster, with less churn. The same discipline applies to university-student contracts (6–36 months), also controlled-rent only.</p><h4>Is mid-term the perfect compromise?</h4><p>It is an interesting balance: high occupancy, no tourist-platform commissions, guests staying for months. But as a rule the rent is close to the 4+4, the flat must be furnished and the bills stay with you: the real advantage is flexibility (you get the flat back when you need it), not the net. Mind the rules: each contract requires a documented temporary need, and above 10,000 inhabitants the rent must follow the territorial-agreement bands (DM 16/1/2017). With the compliance certificate, in a high-demand or calamity municipality the flat tax drops to 10%: you can toggle it in the card.</p><h4>What if the pre-filled occupancy is unrealistic for my place?</h4><p>It is a city average, not a forecast: a single listing can sit far above or below it, depending on location, quality, price and reviews. Move the slider and explore the sensitivity table: if the verdict flips with 5 points less occupancy, you are in the risk zone.</p><h4>Does the calculator account for a mortgage?</h4><p>No, on purpose: the payment is identical in all four scenarios, so it doesn’t change the comparison — only how much of the net ends up in your pocket. If the property is leveraged, subtract your annual payments from every column.</p><h4>Who is behind this tool?</h4><p>The same approach as the <a href="https://bebroggi.it/tools/affitto-vs-acquisto.html" style="text-decoration:underline">rent-or-buy calculator</a>: free, open-source tools, every assumption declared. The code is on <a href="https://github.com/CryptoPannoz/rendita-affitti" rel="noopener" style="text-decoration:underline">GitHub</a>: check it, clone it, adapt it.</p>',
     'foot.src': 'Source code (MIT)',
     'foot.ava': 'Rent or buy a home?',
     'foot.nodata': 'No profiling cookies; email collected only to unlock the results.'
@@ -917,8 +894,8 @@
       kpi1vMai: 'mai', kpi1v: o => `${o}% di occupazione`,
       kpi1i: (notti, nome, mie) => `${notti} notti l’anno per eguagliare ${nome.toLowerCase()}. Tu ne hai stimate ${mie}.`,
       kpi1iMai: nome => `Con questi costi l’affitto breve non raggiunge ${nome.toLowerCase()} a nessuna occupazione.`,
-      kpi2t: 'Il fisco sul concordato', kpi2v: d => `${d} di imposte in meno`,
-      kpi2i: (ric, aliq) => `Differenza di cedolare e IMU rispetto al 4+4: pesano l'aliquota ${aliq}% e l'IMU al 75%, ma in parte anche il canone scontato (${ric} di ricavi in meno) che riduce l'imponibile.`,
+      kpi2t: 'Il fisco sul concordato', kpi2v: d => `${d} risparmiati`,
+      kpi2i: (ric, aliq) => `Cedolare ${aliq}% e IMU al 75% contro il 4+4: è quanto compensa lo sconto sul canone (${ric} di ricavi in meno).`,
       kpi3t: 'Quanto lavoro ti compri', kpi3vBreve: n => `~${n} check-in/anno`, kpi3vAltro: 'quasi zero',
       kpi3iBreve: 'Con soggiorni medi di 3 notti: pulizie, messaggi, imprevisti. Se non vuoi fartene carico, alza la voce gestione al 20–30%.',
       kpi3iAltro: nome => `${nome} vuol dire un inquilino e poca gestione: il primo in classifica è anche il più comodo.`,
@@ -962,8 +939,8 @@
       kpi1vMai: 'never', kpi1v: o => `${o}% occupancy`,
       kpi1i: (notti, nome, mie) => `${notti} nights a year to match the ${nome.toLowerCase()}. You estimated ${mie}.`,
       kpi1iMai: nome => `With these costs the short-term rental never catches the ${nome.toLowerCase()} at any occupancy.`,
-      kpi2t: 'Taxes on the controlled 3+2', kpi2v: d => `${d} less tax`,
-      kpi2i: (ric, aliq) => `Difference in flat tax and IMU versus the 4+4: driven by the ${aliq}% rate and 75% IMU, but partly also by the discounted rent (${ric} less revenue) shrinking the taxable base.`,
+      kpi2t: 'Taxes on the controlled 3+2', kpi2v: d => `${d} saved`,
+      kpi2i: (ric, aliq) => `${aliq}% flat tax and 75% IMU versus the 4+4: this is what offsets the rent discount (${ric} less revenue).`,
       kpi3t: 'How much work you buy', kpi3vBreve: n => `~${n} check-ins/yr`, kpi3vAltro: 'almost none',
       kpi3iBreve: 'With 3-night average stays: cleanings, messages, surprises. If you’d rather not, raise running costs to 20–30%.',
       kpi3iAltro: nome => `${nome} means one tenant and little management: the top of the ranking is also the most comfortable.`,
@@ -1079,20 +1056,10 @@
     $('tot-luce').textContent = eur(c.luce);
     $('tot-gas').textContent = eur(c.gas);
     $('tot-internet').textContent = eur(c.internet);
-    const anno = eur(c.totale) + (lang === 'en' ? '/yr' : '/anno');
-    const mese = eur(c.totale / 12) + (lang === 'en' ? '/month' : '/mese');
-    $('o-consumi').value = anno;
-    $('o-consumi-mese').value = mese;
-    $('o-consumi-dlg').value = anno;
-    $('o-consumi-mese-dlg').value = mese;
+    $('o-consumi').value = eur(c.totale) + (lang === 'en' ? '/yr' : '/anno');
+    $('o-consumi-mese').value = eur(c.totale / 12) + (lang === 'en' ? '/month' : '/mese');
     return c;
   }
-
-  /* Il calcolatore consumi vive in un pop-up: il riquadro in pagina lo apre. */
-  const dlgConsumi = $('dlg-consumi');
-  $('apri-consumi').addEventListener('click', () => dlgConsumi.showModal());
-  $('chiudi-consumi').addEventListener('click', () => dlgConsumi.close());
-  dlgConsumi.addEventListener('click', e => { if (e.target === dlgConsumi) dlgConsumi.close(); });
 
   function impostaConsumiSuggeriti(occupanti) {
     const target = consumiPieni(occupanti);
@@ -1113,7 +1080,7 @@
     const c = cittaCorrente();
     const mq = +$('mq').value || 70;
     // Occupanti tipici dalla metratura, consumi dagli occupanti (entrambi ritoccabili).
-    const occup = Math.min(12, Math.max(1, Math.round(mq / 35)));
+    const occup = Math.min(8, Math.max(1, Math.round(mq / 35)));
     $('occup').value = occup;
     impostaConsumiSuggeriti(occup);
     if (c) {
@@ -1143,7 +1110,7 @@
   $('occup').addEventListener('input', () => { impostaConsumiSuggeriti(+$('occup').value); render(); });
 
   /* ─── Toggle sì/no ─── */
-  const stato = { unico: true, alta: true };
+  const stato = { unico: true, alta: true, medioConc: false };
   function bindYN(id, key) {
     const box = $(id);
     box.addEventListener('click', e => {
@@ -1155,6 +1122,7 @@
   }
   bindYN('yn-unico', 'unico');
   bindYN('yn-alta', 'alta');
+  bindYN('yn-medioconc', 'medioConc');
 
   function leggi() {
     return {
@@ -1176,7 +1144,7 @@
       manutMedio: +$('manut-medio').value || 0,
       manutBreve: +$('manut-breve').value || 0,
       sfitto: +$('sfitto').value / 100,
-      unico: stato.unico, alta: stato.alta
+      unico: stato.unico, alta: stato.alta, medioConc: stato.medioConc
     };
   }
 
@@ -1281,10 +1249,10 @@
       out('netto').classList.toggle('neg', s.netto < 0);
       out('riga2').textContent = `${t.alMese(eur(s.netto / 12))} · ${t.sulValore(pct1(s.rendimento))}`;
       out('ricavi').textContent = eur(s.ricavi);
-      out('costi').textContent = eurMeno(s.costi);
+      out('costi').textContent = '−' + eur(s.costi).replace('−', '');
       out('cedLabel').textContent = t.ced(Math.round(s.aliq * 100));
-      out('ced').textContent = eurMeno(s.ced);
-      out('imu').textContent = eurMeno(s.imu);
+      out('ced').textContent = '−' + eur(s.ced).replace('−', '');
+      out('imu').textContent = '−' + eur(s.imu).replace('−', '');
       out('ctx').innerHTML =
         k === 'breve' ? t.ctx.breve(Math.round(S.breve.notti), eur(p.adr)) :
         k === 'medio' ? t.ctx.medio(eur(S.medio.canone), p.mesiMedio) :
