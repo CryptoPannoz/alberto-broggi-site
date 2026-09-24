@@ -3,165 +3,441 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FiscalNinja — il cruscotto fiscale per forfettari che si aggiorna da solo</title>
-  <meta name="description" content="Imposta sostitutiva, INPS, acconti e piano F24 calcolati per cassa dalle fatture incassate. Carichi la quietanza e la rata si segna pagata. Demo interattiva per partite IVA forfettarie." />
+  <title>FiscalNinja — dalla dichiarazione al netto in 6 step</title>
+  <meta name="description" content="FiscalNinja è il cruscotto fiscale per partite IVA forfettarie: legge dichiarazione e fatture incassate, calcola imposta e INPS, pianifica le scadenze, compila l'F24 e ti dice quanto ti resta davvero. Guarda i 6 step e chiedi di provarlo." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Alberto Broggi" />
   <link rel="canonical" href="https://bebroggi.it/fiscalninja/" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="it_IT" />
   <meta property="og:site_name" content="Alberto Broggi" />
-  <meta property="og:title" content="FiscalNinja — cruscotto fiscale per forfettari" />
-  <meta property="og:description" content="Quanto devi davvero di imposta e INPS quest'anno? Lo calcola dalle fatture incassate, ti prepara le rate F24 e legge le quietanze. Prova la demo." />
+  <meta property="og:title" content="FiscalNinja — dalla dichiarazione al netto in 6 step" />
+  <meta property="og:description" content="Dichiarazione, fatture, F24, scadenze, quietanze e netto mensile: il forfettario senza foglio Excel a novembre. Guarda come funziona, poi provalo sui tuoi numeri." />
   <meta property="og:url" content="https://bebroggi.it/fiscalninja/" />
+  <meta name="twitter:card" content="summary" />
   <style>
-    :root{--ground:#f3f5f3;--surface:#fff;--surface2:#eef1ee;--ink:#17201c;--muted:#59635d;--faint:#88918b;--line:#e1e5e1;--accent:#0f6b52;--accent-soft:#e4efe9;--warn:#8f5c11;--warn-soft:#f6ecd6;--crit:#a33528;--crit-soft:#f6e2df;--radius:14px;--shadow:0 1px 2px rgba(18,28,22,.05),0 6px 22px rgba(18,28,22,.06)}
-    @media(prefers-color-scheme:dark){:root{--ground:#0f1310;--surface:#171d19;--surface2:#1e251f;--ink:#e7ece8;--muted:#9aa49d;--faint:#6d776f;--line:#27302a;--accent:#46b78f;--accent-soft:#16241e;--warn:#d7a94e;--warn-soft:#28220f;--crit:#e37c6f;--crit-soft:#2c1b18;--shadow:0 1px 2px rgba(0,0,0,.3),0 6px 22px rgba(0,0,0,.35)}}
+    :root{--ground:#f3f5f3;--surface:#fff;--surface2:#eef1ee;--ink:#17201c;--muted:#59635d;--faint:#88918b;--line:#e1e5e1;--accent:#0f6b52;--accent-ink:#fff;--accent-soft:#e4efe9;--warn:#8f5c11;--warn-soft:#f6ecd6;--crit:#a33528;--crit-soft:#f6e2df;--inps:#5b6fb0;--tax:#c07a2c;--radius:16px;--shadow:0 1px 2px rgba(18,28,22,.05),0 8px 26px rgba(18,28,22,.07)}
+    @media(prefers-color-scheme:dark){:root{--ground:#0f1310;--surface:#171d19;--surface2:#1e251f;--ink:#e7ece8;--muted:#9aa49d;--faint:#6d776f;--line:#27302a;--accent:#46b78f;--accent-ink:#0b1510;--accent-soft:#16241e;--warn:#d7a94e;--warn-soft:#28220f;--crit:#e37c6f;--crit-soft:#2c1b18;--inps:#8b9ce0;--tax:#e0a45e;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 26px rgba(0,0,0,.35)}}
     *{box-sizing:border-box}
-    body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.55 "Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.6 "Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif}
     a{color:var(--accent)}
-    .wrap{max-width:980px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:28px}
-    .eyebrow{text-transform:uppercase;letter-spacing:.09em;font-size:.72rem;font-weight:700;color:var(--accent);margin:0 0 6px}
-    h1{font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.15;margin:0 0 10px;letter-spacing:-.01em;text-wrap:balance}
-    h2{font-size:1.15rem;margin:0 0 12px}
-    p.lead{font-size:1.08rem;color:var(--muted);margin:0;max-width:62ch}
-    .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:start}
-    @media(max-width:760px){.hero{grid-template-columns:1fr}}
-    .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
-    .kpi .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
-    .kpi .val{font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums;margin-top:2px}
-    .kpi .sub{font-size:.8rem;color:var(--muted)}
-    .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
-    section.card{padding:20px 22px}
-    .btn{display:inline-block;border-radius:12px;padding:10px 16px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface)}
-    .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    [hidden]{display:none!important}
+    .wrap{max-width:1040px;margin:0 auto;padding:22px 16px 64px;display:flex;flex-direction:column;gap:40px}
+    .top{display:flex;justify-content:space-between;align-items:center;font-size:.88rem}
+    .top a{text-decoration:none;color:var(--muted)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.09em;font-size:.72rem;font-weight:700;color:var(--accent);margin:0 0 8px}
+    h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.08;margin:0 0 14px;letter-spacing:-.02em;text-wrap:balance}
+    h2{font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.2;margin:0 0 12px;letter-spacing:-.01em;text-wrap:balance}
+    h3{font-size:1.1rem;margin:0 0 8px}
+    p{margin:0 0 12px}
+    .lead{font-size:1.12rem;color:var(--muted);max-width:60ch}
+    .muted{color:var(--muted)} .note{font-size:.84rem;color:var(--muted)}
+    .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .btn{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:11px 20px;font:inherit;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+    .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+    .btn:disabled{opacity:.45;cursor:default}
+    .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center;padding-top:10px}
+    @media(max-width:820px){.hero{grid-template-columns:1fr}}
+    .flow{padding:18px}
+    .flow ol{margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+    .flow li{list-style:none}
+    .flow a{display:flex;gap:12px;align-items:center;padding:9px 12px;border-radius:12px;background:var(--surface2);font-size:.93rem;color:var(--ink);text-decoration:none}
+    .flow a:hover{background:var(--accent-soft)}
+    .flow b.n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:.8rem}
+
+    /* Storia */
+    .story{display:grid;grid-template-columns:.8fr 1.2fr;gap:32px}
+    @media(max-width:820px){.story{grid-template-columns:1fr}}
+    .story blockquote{margin:0;padding:18px 20px;border-left:3px solid var(--accent);background:var(--surface);border-radius:0 var(--radius) var(--radius) 0;font-size:1.05rem}
+    .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .facts div{padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+    .facts b{display:block;font-size:1.3rem;font-variant-numeric:tabular-nums}
+    .facts span{font-size:.78rem;color:var(--muted)}
+
+    /* Stepper */
+    .stepper{overflow:hidden;scroll-margin-top:12px}
+    .stepnav{display:grid;grid-template-columns:repeat(6,minmax(118px,1fr));border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+    .stepnav::-webkit-scrollbar{display:none}
+    .stepnav button{all:unset;cursor:pointer;padding:14px 14px 11px;display:flex;flex-direction:column;gap:2px;border-bottom:3px solid transparent}
+    .stepnav button small{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+    .stepnav button span{font-size:.88rem;font-weight:600;color:var(--muted);line-height:1.25}
+    .stepnav button[aria-selected="true"]{border-bottom-color:var(--accent)}
+    .stepnav button[aria-selected="true"] small{color:var(--accent)}
+    .stepnav button[aria-selected="true"] span{color:var(--ink)}
+    .stepnav button.done small::after{content:" ✓";color:var(--accent)}
+    .stepnav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+    .panel{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:26px 24px}
+    @media(max-width:820px){.panel{grid-template-columns:minmax(0,1fr);padding:20px 16px}}
+    .panel ul{margin:0 0 12px;padding-left:20px}
+    .panel li{margin-bottom:4px}
+    .stepfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 24px;border-top:1px solid var(--line);background:var(--surface2)}
+    @media(max-width:820px){.stepfoot{padding:12px 16px}}
+    .prog{flex:1;height:6px;border-radius:99px;background:var(--line);overflow:hidden;max-width:260px}
+    .prog i{display:block;height:100%;background:var(--accent);transition:width .25s}
+
+    /* Finta schermata dell'app */
+    .screen{border:1px solid var(--line);border-radius:14px;background:var(--ground);overflow:hidden;align-self:start;min-width:0}
+    .screen .bar{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--line);background:var(--surface);font-size:.75rem;color:var(--muted)}
+    .screen .bar i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+    .screen .bar em{margin-left:6px;font-style:normal;font-family:ui-monospace,Menlo,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .screen .body{padding:14px;overflow-x:auto}
+    .screen table{width:100%;border-collapse:collapse;font-size:.86rem}
+    .screen td,.screen th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+    .screen th{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+    .screen tr:last-child td{border-bottom:none}
+    .num{text-align:right!important;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .mono{font-family:ui-monospace,Menlo,monospace;font-size:.8rem;white-space:nowrap}
+    .pill{display:inline-block;border-radius:99px;padding:1px 9px;font-size:.72rem;font-weight:600;background:var(--surface2)}
+    .pill.go{background:var(--accent-soft);color:var(--accent)} .pill.warn{background:var(--warn-soft);color:var(--warn)}
+    .drop{border:2px dashed var(--line);border-radius:12px;padding:14px;text-align:center;font-size:.85rem;color:var(--muted);margin-bottom:12px}
+    .tot td{font-weight:700}
+    .kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+    .kpi{padding:10px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+    .kpi small{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600}
+    .kpi b{font-size:1.2rem;font-variant-numeric:tabular-nums}
+    .kpi.hl{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)} .kpi.hl small{color:inherit;opacity:.8}
+    .kpi.wide{grid-column:1/-1}
+    .meter{height:9px;border-radius:99px;background:var(--surface2);overflow:hidden;margin:6px 0 2px}.meter i{display:block;height:100%;background:var(--accent)}
+
+    /* Controlli */
+    .ctrl{display:grid;gap:14px;margin:14px 0}
     label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:4px}
-    input[type=number],select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-variant-numeric:tabular-nums}
-    input[type=range]{width:100%}
-    .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
-    table{border-collapse:collapse;width:100%;font-size:.92rem}
-    th{text-align:left;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);border-bottom:1px solid var(--line);padding:6px 10px}
-    td{padding:8px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;vertical-align:top}
-    tr:last-child td{border-bottom:none}
-    .num{text-align:right;white-space:nowrap}
-    .tbl{overflow-x:auto}
-    .pill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:.74rem;font-weight:600;background:var(--surface2);white-space:nowrap}
-    .pill.go{background:var(--accent-soft);color:var(--accent)}.pill.warn{background:var(--warn-soft);color:var(--warn)}
-    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;counter-reset:s}
-    .step{position:relative;padding-left:44px}
-    .step::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:flex;align-items:center;justify-content:center}
-    .step h3{margin:0 0 4px;font-size:1rem}.step p{margin:0;font-size:.9rem;color:var(--muted)}
-    .note{font-size:.83rem;color:var(--muted)}
-    .alert{border-radius:12px;padding:12px 14px;border:1px solid var(--warn);background:var(--warn-soft);font-size:.92rem}
-    .alert.ok{border-color:var(--accent);background:var(--accent-soft)}
-    .drop{border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;color:var(--muted);cursor:pointer;transition:.15s}
-    .drop:hover{border-color:var(--accent);color:var(--accent)}
-    .bar{height:10px;border-radius:99px;background:var(--surface2);overflow:hidden}.bar>i{display:block;height:100%;background:var(--accent)}
-    code{background:var(--surface2);border-radius:5px;padding:1px 5px;font-size:.85em}
+    label output{float:right;color:var(--ink);font-variant-numeric:tabular-nums}
+    input[type=range]{width:100%;accent-color:var(--accent)}
+    select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit}
+    .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface)}
+    .seg button{all:unset;cursor:pointer;padding:5px 14px;border-radius:999px;font-size:.85rem;font-weight:600;color:var(--muted)}
+    .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+    .seg button:focus-visible{outline:2px solid var(--accent)}
+
+    /* Timeline scadenze */
+    .tl{list-style:none;margin:0;padding:0;position:relative}
+    .tl::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:var(--line)}
+    .tl li{position:relative;padding:0 0 12px 26px;font-size:.86rem}
+    .tl li::before{content:"";position:absolute;left:1px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+    .tl li.nov::before{background:var(--warn);border-color:var(--warn)}
+    .tl li b{font-variant-numeric:tabular-nums}
+    .tl .alarm{font-size:.74rem;color:var(--muted)}
+
+    /* Netto */
+    .stack{display:flex;height:34px;border-radius:10px;overflow:hidden;margin:4px 0 6px}
+    .stack i{display:block;height:100%;transition:width .25s}
+    .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.8rem;color:var(--muted)}
+    .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--c);vertical-align:-1px}
+
+    /* Cancello email */
+    .gate{padding:34px 28px;background:var(--accent);color:var(--accent-ink);border:none;display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;scroll-margin-top:12px}
+    @media(max-width:820px){.gate{grid-template-columns:1fr;padding:26px 18px}}
+    .gate h2{color:inherit}
+    .gate p{opacity:.92}
+    .gate .eyebrow{color:inherit;opacity:.75}
+    .gate form{display:flex;flex-direction:column;gap:8px}
+    .gate label{color:inherit;opacity:.85;margin:4px 0 0}
+    .gate input[type=email],.gate select{min-height:48px;padding:0 16px;border-radius:999px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.1);color:inherit;font:inherit}
+    @media(prefers-color-scheme:dark){.gate input[type=email],.gate select{border-color:rgba(0,0,0,.35);background:rgba(0,0,0,.12)}}
+    .gate select option{color:#17201c;background:#fff}
+    .gate input::placeholder{color:inherit;opacity:.55}
+    .gate input:focus,.gate select:focus{outline:2px solid currentColor;outline-offset:1px}
+    .gate .btn{justify-content:center;background:var(--accent-ink);color:var(--accent);border-color:transparent;min-height:48px;margin-top:6px}
+    .gate .small{font-size:.78rem;opacity:.8;margin:0}
+    .gate .err{background:rgba(0,0,0,.22);border-radius:10px;padding:6px 10px;font-size:.85rem;margin:0}
+    .gate ol{margin:0;padding-left:20px}
+    .gate li{margin-bottom:6px}
+    .thanks b{font-size:1.25rem}
+
+    .faq details{padding:14px 0;border-bottom:1px solid var(--line)}
+    .faq summary{cursor:pointer;font-weight:600}
+    .faq details p{margin:8px 0 0;color:var(--muted)}
     footer{color:var(--faint);font-size:.8rem;text-align:center}
-    details summary{cursor:pointer;color:var(--accent);font-size:.9rem}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.prog i,.stack i{transition:none}}
   </style>
 </head>
 <body>
 <div class="wrap">
 
+  <nav class="top"><a href="/">← Alberto Broggi</a><a href="#prova">Voglio provarlo</a></nav>
+
+  <!-- Che cos'è -->
   <header class="hero">
     <div>
-      <p class="eyebrow">FiscalNinja · MVP per partite IVA forfettarie</p>
-      <h1>Quanto devi davvero di imposta e INPS quest'anno? Lo sai a ogni fattura incassata.</h1>
-      <p class="lead">FiscalNinja legge le fatture <b>incassate</b> (criterio di cassa) dal gestionale, calcola imposta sostitutiva, contributi e acconti, prepara il piano F24 a rate e — quando carichi la quietanza dell'Agenzia delle Entrate — segna la rata come pagata e ricalcola tutto. Niente fogli Excel a novembre.</p>
-      <div class="row" style="margin-top:16px">
-        <a class="btn primary" href="#demo">Prova la demo interattiva ↓</a>
-        <a class="btn" href="#come">Come funziona</a>
+      <p class="eyebrow">🥷 FiscalNinja · per partite IVA forfettarie</p>
+      <h1>Dalla dichiarazione al tuo netto mensile, in 6 step.</h1>
+      <p class="lead">FiscalNinja è un cruscotto fiscale che legge la tua dichiarazione e le fatture <b>incassate</b>, calcola imposta sostitutiva e INPS, mette in calendario ogni F24, lo compila riga per riga e ti dice quanto dei soldi sul conto è davvero tuo.</p>
+      <div class="row" style="margin-top:20px">
+        <a class="btn primary" href="#step-1">Guarda i 6 step →</a>
+        <a class="btn" href="#prova">Voglio provarlo sui miei numeri</a>
       </div>
-      <p class="note" style="margin-top:10px">Nato come strumento personale (regime forfettario, Gestione Separata INPS, Fatture in Cloud). Supporto organizzativo e di calcolo, <b>non</b> consulenza fiscale.</p>
+      <p class="note" style="margin-top:14px">Strumento di calcolo e organizzazione, <b>non</b> consulenza fiscale: il commercialista resta il tuo commercialista. FiscalNinja gli porta i numeri già in ordine.</p>
     </div>
-    <div class="card" style="font-size:.9rem">
-      <p class="eyebrow">Il problema</p>
-      <p style="margin:0 0 8px">Il forfettario è "semplice" finché non arrivano insieme: saldo dell'anno prima, primo acconto, secondo acconto a novembre, contributi INPS su un reddito che nel frattempo è cambiato, e sei rate F24 da non perdere.</p>
-      <p style="margin:0">Chi salta un acconto paga il 25% di sanzione (3,125% se si ravvede da solo). Il metodo <b>previsionale</b> permette di versare il minimo di legge — ma solo se sai, <i>oggi</i>, quanto hai incassato.</p>
-    </div>
+    <nav class="card flow" aria-label="I 6 step di FiscalNinja">
+      <p class="eyebrow">Il percorso</p>
+      <ol>
+        <li><a href="#step-1"><b class="n">1</b>Scarica la dichiarazione dei redditi</a></li>
+        <li><a href="#step-2"><b class="n">2</b>Scarica fatture e posizione IVA</a></li>
+        <li><a href="#step-3"><b class="n">3</b>Calcola il tuo F24</a></li>
+        <li><a href="#step-4"><b class="n">4</b>Imposta le scadenze</a></li>
+        <li><a href="#step-5"><b class="n">5</b>Compila l'F24 e carica la quietanza</a></li>
+        <li><a href="#step-6"><b class="n">6</b>Calcola il tuo netto</a></li>
+      </ol>
+    </nav>
   </header>
 
-  <section class="card" id="come">
-    <h2>Come funziona</h2>
-    <div class="steps">
-      <div class="step"><h3>Collega il gestionale</h3><p>Fatture in Cloud via OAuth, sola lettura: fatture, note di credito e <b>stato incasso</b>. Le NDC riducono l'incassato solo se la fattura stornata era stata pagata.</p></div>
-      <div class="step"><h3>Calcolo per cassa</h3><p>Incassato × coefficiente ATECO − contributi versati nell'anno = imponibile. Imposta 15% (o 5% startup), INPS Gestione Separata 26,07% (o Artigiani/Commercianti).</p></div>
-      <div class="step"><h3>Piano F24</h3><p>Saldo + primo acconto rateizzati (fino a 6 rate con interessi 0,33%/mese), secondo acconto a novembre con metodo storico <i>o</i> previsionale: scegli il minimo di legge.</p></div>
-      <div class="step"><h3>Quietanze</h3><p>Carichi il PDF della quietanza AdE: protocollo, data, righe tributo e saldo vengono letti, la rata si abbina per importo e data e passa a ✅ pagata. I totali si ricalcolano.</p></div>
-    </div>
-  </section>
-
-  <section class="card" id="demo">
-    <p class="eyebrow">Demo interattiva · dati di esempio</p>
-    <h2>Simula il tuo anno</h2>
-    <div class="grid2">
-      <div><label for="inc">Incassato nell'anno (€)</label><input id="inc" type="number" value="42000" step="500" min="0" max="85000" /><input id="incr" type="range" min="0" max="85000" step="500" value="42000" /></div>
-      <div><label for="coef">Attività (coefficiente di redditività)</label>
-        <select id="coef">
-          <option value="0.78">Professionisti e consulenza — 78%</option>
-          <option value="0.67">Informatica, servizi alle imprese, altre attività — 67%</option>
-          <option value="0.86">Costruzioni e immobiliare — 86%</option>
-          <option value="0.62">Intermediari del commercio — 62%</option>
-          <option value="0.40">Commercio, alloggio e ristorazione — 40%</option>
-          <option value="0.54">Commercio ambulante alimentari — 54%</option>
-        </select></div>
-      <div><label for="aliq">Aliquota imposta sostitutiva</label><select id="aliq"><option value="0.15">15% — ordinaria</option><option value="0.05">5% — primi 5 anni (startup)</option></select></div>
-      <div><label for="gest">Previdenza</label><select id="gest"><option value="gs">INPS Gestione Separata — 26,07%, nessun minimale</option><option value="art">Artigiani/Commercianti — minimale ~4.500 € + 24% oltre soglia (riduzione 35% disponibile)</option></select></div>
-      <div><label for="ded">Contributi INPS versati nell'anno (deducibili, €)</label><input id="ded" type="number" value="7600" step="100" min="0" /></div>
-      <div><label for="prev">Imposta + INPS dell'anno precedente (base acconti storici, €)</label><input id="prev" type="number" value="13500" step="100" min="0" /></div>
-    </div>
-
-    <div class="kpis" style="margin-top:18px">
-      <div class="card kpi"><div class="lbl">Reddito lordo</div><div class="val" id="k-lordo">—</div><div class="sub">incassato × coefficiente</div></div>
-      <div class="card kpi"><div class="lbl">Imponibile</div><div class="val" id="k-imp">—</div><div class="sub">− contributi versati</div></div>
-      <div class="card kpi"><div class="lbl">Imposta sostitutiva</div><div class="val" id="k-tax">—</div><div class="sub" id="k-tax-sub"></div></div>
-      <div class="card kpi"><div class="lbl">Contributi INPS dovuti</div><div class="val" id="k-inps">—</div><div class="sub" id="k-inps-sub"></div></div>
-      <div class="card kpi"><div class="lbl">Totale dovuto</div><div class="val" id="k-tot">—</div><div class="sub" id="k-press"></div></div>
-      <div class="card kpi"><div class="lbl">Limite forfettario</div><div class="val" id="k-lim">—</div><div class="sub">su 85.000 € · attenzione oltre 100.000 €</div></div>
-    </div>
-    <div class="bar" style="margin-top:10px"><i id="k-bar" style="width:0"></i></div>
-
-    <h2 style="margin-top:22px">Acconti: storico o previsionale?</h2>
-    <p class="note" style="margin-top:0">L'acconto dovuto è il <b>minore</b> tra il metodo storico (100% dell'anno prima, INPS 80%) e il previsionale (quanto devi davvero quest'anno). Due rate uguali: 30 giugno e 30 novembre. Il previsionale conviene quando incassi meno dell'anno scorso — ma se poi incassi di più, sulla differenza c'è la sanzione del 30%.</p>
-    <div class="tbl"><table>
-      <tr><th></th><th class="num">Storico</th><th class="num">Previsionale</th><th class="num">Minimo di legge</th><th class="num">Risparmio a novembre</th></tr>
-      <tr><td>Acconto totale</td><td class="num" id="a-st">—</td><td class="num" id="a-pr">—</td><td class="num" id="a-min">—</td><td class="num" id="a-save">—</td></tr>
-    </table></div>
-
-    <h2 style="margin-top:22px">Il piano F24 che ne esce</h2>
-    <p class="note" style="margin-top:0">Saldo + primo acconto rateizzati in <select id="nrate" style="width:auto;display:inline-block;padding:4px 8px"><option>1</option><option>2</option><option>3</option><option>4</option><option selected>6</option></select> rate dal 30 giugno (interessi 0,33% al mese dalla seconda rata). Clicca «carica quietanza» per vedere cosa succede quando arriva il PDF dell'Agenzia.</p>
-    <div class="tbl"><table id="piano"></table></div>
-    <div class="row" style="margin-top:12px">
-      <div class="kpis" style="flex:1">
-        <div class="card kpi"><div class="lbl">Piano totale</div><div class="val" id="p-tot">—</div></div>
-        <div class="card kpi"><div class="lbl">Pagato con quietanza</div><div class="val" id="p-paid" style="color:var(--accent)">—</div><div class="sub" id="p-pct"></div></div>
-        <div class="card kpi"><div class="lbl">Residuo</div><div class="val" id="p-res">—</div></div>
+  <!-- La storia -->
+  <section class="story" aria-labelledby="storia-h">
+    <div>
+      <p class="eyebrow">La storia</p>
+      <h2 id="storia-h">Nato da un novembre di troppo.</h2>
+      <blockquote>«Quanto devo davvero versare il 30 novembre? E quanto di quello che ho sul conto posso spendere?»</blockquote>
+      <div class="facts">
+        <div><b>6</b><span>rate F24 da non perdere</span></div>
+        <div><b>30/11</b><span>la decisione che conta</span></div>
+        <div><b>0</b><span>fogli Excel</span></div>
       </div>
     </div>
-    <div id="q-log" class="note" style="margin-top:10px"></div>
-
-    <details style="margin-top:14px"><summary>Cosa legge davvero dal PDF della quietanza</summary>
-      <p class="note">Dalla "Quietanza di versamento" dell'Agenzia delle Entrate il parser ricava: <b>protocollo telematico</b> (che contiene ABI/CAB e data), <b>righe tributo</b> (sezione Erario/INPS, codice o causale, rateazione, periodo, importo a debito e a credito) e il <b>saldo delega</b> (somma delle righe, riscontrata col saldo stampato). Funziona sia con il PDF dell'home banking sia con la stampa dal cassetto fiscale. La rata viene proposta per importo ± 5 centesimi e data più vicina; la conferma è sempre un passo esplicito.</p>
-      <p class="note">Esempio reale (anonimizzato): <code>Erario 1792 · 0206 · 2025 · 45,79</code> · <code>Erario 1790 · 0206 · 2026 · 386,09</code> · <code>Erario 1668 · 2026 · 1,43</code> · <code>INPS PXXR · 01/2025→12/2025 · 335,36</code> · <code>INPS PXXR · 01/2026→12/2026 · 670,72</code> · <code>INPS DPPI · 3,32</code> → saldo 1.442,71 = rata 2/6.</p>
-    </details>
+    <div>
+      <p>Sono un forfettario in Gestione Separata INPS e fatturo con Fatture in Cloud. Il regime si chiama «semplificato», ma ogni anno si ripete la stessa scena: il saldo dell'anno prima, il primo acconto, le rate con gli interessi, i contributi calcolati su un reddito che nel frattempo è cambiato, e a novembre la domanda da un milione: <b>acconto storico o previsionale?</b></p>
+      <p>Le risposte stavano sparse fra il cassetto fiscale, il gestionale, i PDF delle quietanze e un foglio Excel riscritto ogni anno. Così ho fatto quello che faccio per lavoro con i dati: li ho messi in fila. Prima uno script, poi un'app vera, costruita insieme a Claude.</p>
+      <p>Oggi FiscalNinja gestisce la mia partita IVA: legge le fatture incassate in diretta, tiene il piano dei versamenti, legge le quietanze dell'Agenzia delle Entrate e mi dice, ogni giorno, quanto posso spendere senza sorprese. Qui sotto ti mostro come lavora, step per step, con dati di esempio.</p>
+    </div>
   </section>
 
-  <section class="card">
-    <h2>Cosa c'è nell'app completa</h2>
-    <ul style="margin:0;padding-left:20px;font-size:.95rem">
-      <li><b>Cruscotto</b>: incassato live, proiezione a fine anno, imposta e INPS stimati, fatture scadute non incassate, decisione del 30/11 già pronta.</li>
-      <li><b>Versamenti</b>: piano F24 con codici tributo riga per riga, stato (programmato / addebitato / pagato), upload quietanze con lettura automatica.</li>
-      <li><b>INPS</b>: storico imponibili e contributi per anno, doppio ruolo dei contributi (dovuti vs deducibili).</li>
-      <li><b>Fatture</b>: documenti per anno con stato incasso e gestione corretta delle note di credito.</li>
-      <li><b>Sicurezza</b>: login Google con allowlist, token del gestionale in sola lettura e cifrato, nessuna credenziale SPID/INPS mai gestita.</li>
-    </ul>
-    <p class="note" style="margin-top:12px">L'istanza personale è privata. Se sei un forfettario e vuoi provarla sui tuoi dati, o sei un commercialista curioso: <a href="/#contatti">scrivimi</a>.</p>
+  <!-- Il percorso -->
+  <section id="percorso" aria-labelledby="percorso-h">
+    <p class="eyebrow">Come funziona · demo</p>
+    <h2 id="percorso-h">Il percorso, step per step</h2>
+    <p class="muted" style="max-width:62ch">I numeri sono di esempio e si parlano fra loro: cambia l'incassato allo step 3 e vedrai dichiarazione, scadenze, F24 e netto aggiornarsi.</p>
+
+    <div class="card stepper" id="demo">
+      <div class="stepnav" role="tablist" aria-label="Step di FiscalNinja" id="stepnav">
+        <button role="tab" id="t1" aria-controls="s1"><small>Step 1</small><span>Dichiarazione dei redditi</span></button>
+        <button role="tab" id="t2" aria-controls="s2"><small>Step 2</small><span>Fatture e IVA</span></button>
+        <button role="tab" id="t3" aria-controls="s3"><small>Step 3</small><span>Calcola il tuo F24</span></button>
+        <button role="tab" id="t4" aria-controls="s4"><small>Step 4</small><span>Imposta le scadenze</span></button>
+        <button role="tab" id="t5" aria-controls="s5"><small>Step 5</small><span>Compila l'F24</span></button>
+        <button role="tab" id="t6" aria-controls="s6"><small>Step 6</small><span>Calcola il tuo netto</span></button>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="panel" role="tabpanel" id="s1" aria-labelledby="t1">
+        <div>
+          <p class="eyebrow">Step 1 · Scarica la dichiarazione dei redditi</p>
+          <h3>Si parte da quello che hai già dichiarato</h3>
+          <p>Scarichi dal cassetto fiscale il Modello Redditi dell'anno scorso, oppure FiscalNinja lo prende dal tuo fascicolo su Google Drive. Dal quadro del forfettario ricava i numeri che servono a tutto il resto:</p>
+          <ul>
+            <li>reddito lordo, contributi dedotti e imponibile;</li>
+            <li>imposta sostitutiva e contributi <b>dovuti</b>;</li>
+            <li>acconti <b>già versati</b>: la base del saldo di giugno e del metodo storico.</li>
+          </ul>
+          <p class="note">Perché conta: saldo e acconti si calcolano sull'anno precedente. Se sbagli qui, sbagli tutte e sei le rate.</p>
+        </div>
+        <div class="screen" aria-label="Esempio: dichiarazione letta">
+          <div class="bar"><i></i><i></i><i></i><em>fascicolo / Redditi PF 2026</em></div>
+          <div class="body">
+            <div class="drop">📄 Redditi_PF_2026_anno_2025.pdf · <b style="color:var(--accent)">letto ✓</b></div>
+            <table>
+              <tr><th>Voce · anno 2025</th><th class="num">Importo</th></tr>
+              <tr><td>Reddito lordo forfettario</td><td class="num" data-v="lordo"></td></tr>
+              <tr><td>Contributi previdenziali dedotti</td><td class="num" data-v="ded"></td></tr>
+              <tr><td>Reddito imponibile</td><td class="num" data-v="imp"></td></tr>
+              <tr><td>Imposta sostitutiva dovuta</td><td class="num" data-v="tax"></td></tr>
+              <tr><td>Contributi INPS dovuti</td><td class="num" data-v="inps"></td></tr>
+              <tr><td>Acconti già versati</td><td class="num" data-v="versati"></td></tr>
+              <tr class="tot"><td>Saldo da pagare a giugno</td><td class="num" data-v="saldo"></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="panel" role="tabpanel" id="s2" aria-labelledby="t2">
+        <div>
+          <p class="eyebrow">Step 2 · Scarica fatture e posizione IVA</p>
+          <h3>Contano i soldi incassati, non le fatture emesse</h3>
+          <p>FiscalNinja si collega al gestionale (oggi Fatture in Cloud, in sola lettura) e scarica fatture, note di credito e <b>stato di incasso</b>. Il forfettario è tassato per cassa: una fattura di dicembre pagata a gennaio conta l'anno dopo.</p>
+          <ul>
+            <li>le note di credito riducono l'incassato solo se la fattura stornata era stata pagata;</li>
+            <li>la barra del <b>limite di 85.000 €</b> si aggiorna a ogni incasso;</li>
+            <li>le fatture scadute e non incassate finiscono in evidenza.</li>
+          </ul>
+          <p class="note"><b>E la dichiarazione IVA?</b> Il forfettario non applica l'IVA ed è esonerato dalla dichiarazione annuale IVA. FiscalNinja lo sa: al suo posto controlla quello che per te conta davvero, cioè incassato e limite. Il modulo IVA per il regime ordinario è in lavorazione.</p>
+        </div>
+        <div class="screen" aria-label="Esempio: fatture e incassi">
+          <div class="bar"><i></i><i></i><i></i><em>fatture · 2025 · Fatture in Cloud</em></div>
+          <div class="body">
+            <table id="fatture"></table>
+            <div style="margin-top:12px;font-size:.82rem;display:flex;justify-content:space-between"><span class="muted">Limite forfettario</span><b id="lim-pct"></b></div>
+            <div class="meter"><i id="lim-bar"></i></div>
+            <div class="note">su 85.000 € · oltre 100.000 € si esce dal regime in corso d'anno</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="panel" role="tabpanel" id="s3" aria-labelledby="t3">
+        <div>
+          <p class="eyebrow">Step 3 · Calcola il tuo F24</p>
+          <h3>Saldo, acconti e il minimo di legge</h3>
+          <p>Incassato × coefficiente di redditività = reddito lordo; meno i contributi versati = imponibile. Imposta al 15% (5% nei primi cinque anni), INPS Gestione Separata al 26,07% sul lordo. Poi gli acconti dell'anno in corso: <b>storico</b> (sull'anno scorso) o <b>previsionale</b> (su quanto pensi di incassare). Si versa il minore dei due.</p>
+          <div class="ctrl">
+            <div><label for="inc">Incassato 2025 <output id="o-inc" for="inc"></output></label><input id="inc" type="range" min="10000" max="85000" step="500" value="42000" /></div>
+            <div><label for="inc26">Incassato previsto 2026 <output id="o-inc26" for="inc26"></output></label><input id="inc26" type="range" min="0" max="85000" step="500" value="34000" /></div>
+            <div><label for="coef">Attività</label>
+              <select id="coef">
+                <option value="0.78">Professionisti e consulenza — 78%</option>
+                <option value="0.67">Informatica, servizi alle imprese — 67%</option>
+                <option value="0.86">Costruzioni e immobiliare — 86%</option>
+                <option value="0.62">Intermediari del commercio — 62%</option>
+                <option value="0.40">Commercio, alloggio e ristorazione — 40%</option>
+              </select></div>
+            <div><label id="aliq-l">Aliquota imposta sostitutiva</label>
+              <div class="seg" role="group" aria-labelledby="aliq-l"><button type="button" data-aliq="0.15" aria-pressed="true">15%</button><button type="button" data-aliq="0.05" aria-pressed="false">5% startup</button></div></div>
+          </div>
+        </div>
+        <div class="screen" aria-label="Risultato del calcolo">
+          <div class="bar"><i></i><i></i><i></i><em>calcolo · giugno 2026</em></div>
+          <div class="body">
+            <table>
+              <tr><th></th><th class="num">Imposta</th><th class="num">INPS</th><th class="num">Totale</th></tr>
+              <tr><td>Dovuto 2025</td><td class="num" data-v="tax"></td><td class="num" data-v="inps"></td><td class="num" data-v="dovuto"></td></tr>
+              <tr><td colspan="3">− acconti già versati</td><td class="num" data-v="versatiNeg"></td></tr>
+              <tr class="tot"><td colspan="3">Saldo 2025</td><td class="num" data-v="saldo"></td></tr>
+            </table>
+            <table style="margin-top:12px">
+              <tr><th>Acconti 2026</th><th class="num">Storico</th><th class="num">Previsionale</th></tr>
+              <tr><td>Totale</td><td class="num" data-v="accSt"></td><td class="num" data-v="accPr"></td></tr>
+            </table>
+            <div class="kpis">
+              <div class="kpi"><small>Giugno · saldo + 1° acconto</small><b data-v="giugno"></b></div>
+              <div class="kpi"><small>Novembre · 2° acconto</small><b data-v="nov"></b></div>
+              <div class="kpi hl wide"><small>A novembre: metodo <span data-v="metodo"></span></small><b data-v="risparmio"></b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="panel" role="tabpanel" id="s4" aria-labelledby="t4">
+        <div>
+          <p class="eyebrow">Step 4 · Imposta le scadenze</p>
+          <h3>Un calendario, non un post-it sul frigo</h3>
+          <p>Scegli se pagare saldo e primo acconto in un'unica soluzione o a rate. FiscalNinja genera il piano con le date giuste e gli interessi di rateazione e lo tiene vivo: se cambia l'incassato, cambia il piano.</p>
+          <div class="ctrl">
+            <div><label id="rate-l">Rate da giugno</label>
+              <div class="seg" role="group" aria-labelledby="rate-l" id="seg-rate"><button type="button" data-n="1" aria-pressed="false">Unica</button><button type="button" data-n="3" aria-pressed="false">3 rate</button><button type="button" data-n="6" aria-pressed="true">6 rate</button></div></div>
+          </div>
+          <ul>
+            <li>promemoria qualche giorno prima di ogni addebito;</li>
+            <li>stato di ogni rata: programmata → addebitata → <b>pagata con quietanza</b>;</li>
+            <li>la scelta del 30 novembre (storico o previsionale) ricalcolata a ogni incasso.</li>
+          </ul>
+        </div>
+        <div class="screen" aria-label="Esempio: piano delle scadenze">
+          <div class="bar"><i></i><i></i><i></i><em>versamenti · piano 2026</em></div>
+          <div class="body">
+            <ul class="tl" id="timeline"></ul>
+            <div class="kpis"><div class="kpi"><small>Interessi di rateazione</small><b data-v="interessi"></b></div><div class="kpi"><small>Totale piano</small><b data-v="totPiano"></b></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="panel" role="tabpanel" id="s5" aria-labelledby="t5">
+        <div>
+          <p class="eyebrow">Step 5 · Compila l'F24</p>
+          <h3>Codici tributo riga per riga, poi la quietanza</h3>
+          <p>Per ogni rata FiscalNinja prepara le righe del modello F24: sezione Erario per l'imposta sostitutiva (1792 saldo, 1790 primo acconto, 1791 secondo acconto, 1668 interessi di rateazione) e sezione INPS per i contributi. Le copi nell'home banking o le passi al commercialista.</p>
+          <p>Quando arriva la <b>quietanza</b> dell'Agenzia delle Entrate carichi il PDF: FiscalNinja legge protocollo, righe tributo e saldo, la abbina alla rata per importo e data e, dopo la tua conferma, la segna pagata.</p>
+          <div class="row"><button type="button" class="btn primary" id="btn-q">📄 Simula il caricamento della quietanza</button></div>
+          <p class="note" id="q-log" style="margin-top:10px" aria-live="polite"></p>
+        </div>
+        <div class="screen" aria-label="Esempio: F24 della prima rata">
+          <div class="bar"><i></i><i></i><i></i><em id="f24-titolo">F24 · rata 1</em><span style="margin-left:auto" id="f24-stato"></span></div>
+          <div class="body"><table id="f24"></table></div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="panel" role="tabpanel" id="s6" aria-labelledby="t6">
+        <div>
+          <p class="eyebrow">Step 6 · Calcola il tuo netto</p>
+          <h3>Quanto ti resta davvero, al mese</h3>
+          <p>L'ultimo step è quello per cui è nato tutto. Dall'incassato togli INPS e imposta e ottieni il netto, annuo e mensile. E siccome i soldi arrivano prima delle tasse, FiscalNinja tiene un <b>fondo tasse</b>: di ogni euro incassato ne accantona una quota, e ogni F24 pagato la libera.</p>
+          <p>Così «quanto posso spendere?» ha una risposta: <b>cassa meno fondo tasse</b>. L'app completa aggiunge la previsione di cassa a 6–36 mesi, con incassi attesi, spese fisse e scadenze già note.</p>
+        </div>
+        <div class="screen" aria-label="Esempio: netto">
+          <div class="bar"><i></i><i></i><i></i><em>cruscotto · dove vanno i tuoi incassi</em></div>
+          <div class="body">
+            <div class="stack" aria-hidden="true"><i id="st-net" style="background:var(--accent)"></i><i id="st-inps" style="background:var(--inps)"></i><i id="st-tax" style="background:var(--tax)"></i></div>
+            <div class="legend"><span style="--c:var(--accent)">Netto</span><span style="--c:var(--inps)">INPS</span><span style="--c:var(--tax)">Imposta</span></div>
+            <div class="kpis">
+              <div class="kpi"><small>Incassato 2025</small><b data-v="inc"></b></div>
+              <div class="kpi"><small>Imposta + INPS</small><b data-v="dovuto"></b></div>
+              <div class="kpi"><small>Netto annuo</small><b data-v="netto"></b></div>
+              <div class="kpi hl"><small>Netto al mese</small><b data-v="nettoMese"></b></div>
+              <div class="kpi wide"><small>Fondo tasse</small><b data-v="fondo"></b> <span class="note">di ogni euro incassato da tenere da parte</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stepfoot">
+        <button type="button" class="btn" id="prev">← Indietro</button>
+        <div class="prog" aria-hidden="true"><i id="prog"></i></div>
+        <button type="button" class="btn primary" id="next">Avanti →</button>
+      </div>
+    </div>
   </section>
 
-  <footer>FiscalNinja · un progetto di <a href="/">Alberto Broggi</a> · calcoli indicativi su parametri 2026 (GS 26,07%, limite 85.000 €, tasso legale 1,60%) · non è consulenza fiscale</footer>
+  <!-- Cancello email -->
+  <section class="card gate" id="prova" aria-labelledby="prova-h">
+    <div>
+      <p class="eyebrow">Provalo sui tuoi numeri</p>
+      <h2 id="prova-h">Vuoi vedere FiscalNinja sulla tua partita IVA?</h2>
+      <p>La demo qui sopra usa dati di esempio. L'app vera gira su un'istanza tua, collegata al tuo gestionale. Lasciami l'email: ti scrivo io, ti spiego come funziona e, se fa per te, la accendiamo insieme.</p>
+      <ol>
+        <li>Mi lasci l'email: trenta secondi.</li>
+        <li>Ti scrivo e ci sentiamo per una breve call.</li>
+        <li>Ti mostro FiscalNinja sui tuoi numeri.</li>
+      </ol>
+    </div>
+    <div>
+      <form id="gate-form" novalidate>
+        <label for="g-email">La tua email</label>
+        <input type="email" id="g-email" autocomplete="email" placeholder="nome@email.it" required />
+        <label for="g-prof">Chi sei</label>
+        <select id="g-prof">
+          <option value="forfettario-gs">Forfettario · Gestione Separata INPS</option>
+          <option value="forfettario-artcom">Forfettario · Artigiani o Commercianti</option>
+          <option value="ordinario">Partita IVA in regime ordinario</option>
+          <option value="commercialista">Commercialista o consulente</option>
+          <option value="curioso">Curioso / altro</option>
+        </select>
+        <p class="err" id="g-err" role="alert" hidden></p>
+        <button type="submit" class="btn" id="g-btn">Voglio provarlo →</button>
+        <p class="small">Uso l'email solo per ricontattarti su FiscalNinja: niente spam, nessuna cessione a terzi. Scrivi a bebroggi@gmail.com per farla cancellare. <a href="/privacy.html" style="color:inherit">Privacy</a></p>
+      </form>
+      <div class="thanks" id="gate-ok" hidden>
+        <b>Fatto, grazie! 🥷</b>
+        <p style="margin-top:8px">Ti scrivo io nei prossimi giorni per raccontarti come funziona. Se vuoi accelerare, prenota subito una call.</p>
+        <a class="btn" href="/#contatti">Prenota una call →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq" aria-labelledby="faq-h">
+    <h2 id="faq-h">Domande frequenti</h2>
+    <details><summary>È un commercialista automatico?</summary><p>No. FiscalNinja calcola, organizza e ti avvisa; la dichiarazione la firma chi la firmava prima. Il vantaggio è arrivare dal commercialista (o fare da solo, se già lo fai) con numeri verificati e un piano chiaro.</p></details>
+    <details><summary>Per chi funziona oggi?</summary><p>Partite IVA in regime forfettario iscritte alla Gestione Separata INPS, con fatture su Fatture in Cloud. Artigiani e commercianti, altri gestionali e regime ordinario sono i prossimi passi: dimmi nel modulo qual è il tuo caso.</p></details>
+    <details><summary>Che accesso ha ai miei dati?</summary><p>Al gestionale in sola lettura, con token cifrato. Login con Google, un'istanza per persona, nessuna credenziale SPID, Entratel o INPS gestita dall'app: dichiarazione e quietanze le carichi tu.</p></details>
+    <details><summary>Quanto costa?</summary><p>Per ora è in prova con un gruppo ristretto di persone. Lascia l'email e ne parliamo.</p></details>
+  </section>
+
+  <footer>FiscalNinja · un progetto di <a href="/">Alberto Broggi</a> · dati di esempio, calcolo semplificato · parametri 2026 (Gestione Separata 26,07%, limite 85.000 €, interessi di rateazione 0,33% al mese) · non è consulenza fiscale</footer>
 </div>
 
 <script>
@@ -169,39 +445,142 @@
   const $=id=>document.getElementById(id);
   const eur=(n,d=0)=>new Intl.NumberFormat("it-IT",{style:"currency",currency:"EUR",minimumFractionDigits:d,maximumFractionDigits:d,useGrouping:"always"}).format(n);
   const r2=n=>Math.round(n*100)/100;
-  const state={paid:new Set()};
-  function calc(){
-    const inc=+$("inc").value||0, coef=+$("coef").value, aliq=+$("aliq").value, gest=$("gest").value, ded=+$("ded").value||0, prev=+$("prev").value||0;
-    const lordo=r2(inc*coef), imp=Math.max(0,r2(lordo-ded)), tax=r2(imp*aliq);
-    let inps, inpsSub;
-    if(gest==="gs"){inps=r2(lordo*0.2607);inpsSub="26,07% del reddito lordo";}
-    else{const minimale=4460; const soglia=18555; inps=r2(minimale+Math.max(0,lordo-soglia)*0.24);inpsSub="minimale "+eur(minimale)+" + 24% oltre "+eur(soglia)+" (−35% su richiesta)";}
-    const tot=r2(tax+inps);
-    $("k-lordo").textContent=eur(lordo);$("k-imp").textContent=eur(imp);$("k-tax").textContent=eur(tax);$("k-tax-sub").textContent=(aliq*100)+"% su "+eur(imp);
-    $("k-inps").textContent=eur(inps);$("k-inps-sub").textContent=inpsSub;$("k-tot").textContent=eur(tot);$("k-press").textContent="pressione effettiva "+(inc?Math.round(tot/inc*1000)/10:0)+"% dell'incassato";
-    $("k-lim").textContent=Math.round(inc/85000*100)+"%";$("k-bar").style.width=Math.min(100,inc/85000*100)+"%";$("k-bar").style.background=inc>85000?"var(--crit)":"var(--accent)";
-    // acconti
-    const storico=r2(prev*0.9); // approssimazione: imposta 100% + INPS 80% ≈ 90% del totale anno precedente
-    const previs=r2(tax+inps*0.8);
-    const min=Math.min(storico,previs);
-    $("a-st").textContent=eur(storico);$("a-pr").textContent=eur(previs);$("a-min").textContent=eur(min);$("a-save").textContent=eur(Math.max(0,storico-min));
-    // piano: saldo anno prima (ipotesi: 15% del dovuto prev) + 1° acconto (min/2) in N rate
-    const saldo=r2(prev*0.15), primo=r2(min/2), base=r2((saldo+primo)*1.004), n=+$("nrate").value;
-    const rate=[]; let tot2=0;
-    for(let i=0;i<n;i++){const cap=r2(base/n); const interessi=r2(cap*0.0033*i); const imp=r2(cap+interessi); tot2=r2(tot2+imp);
-      const d=new Date(2026,6,30); d.setMonth(6+i); if(i>0){d.setDate(16);} const id="r"+(i+1);
-      rate.push({id,lab:"Rata "+(i+1)+"/"+n,date:d.toLocaleDateString("it-IT"),imp,paid:state.paid.has(id)});}
-    rate.push({id:"nov",lab:"2° acconto (30/11) — metodo previsionale",date:"30/11/2026",imp:r2(min-primo),paid:state.paid.has("nov"),nov:true});
-    const t=$("piano"); t.innerHTML="<tr><th>Scadenza</th><th>Cosa</th><th class=num>Importo</th><th>Stato</th><th></th></tr>"+rate.map(x=>`<tr><td><b>${x.date}</b></td><td>${x.lab}${x.nov?"":" — saldo + 1° acconto"}</td><td class=num>${eur(x.imp,2)}</td><td>${x.paid?'<span class="pill go">✅ pagata · quietanza</span>':'<span class="pill warn">da pagare</span>'}</td><td>${x.paid?'<button data-undo="'+x.id+'" class="btn" style="padding:4px 10px;font-size:.8rem">annulla</button>':'<button data-q="'+x.id+'" data-imp="'+x.imp+'" class="btn" style="padding:4px 10px;font-size:.8rem">📄 carica quietanza</button>'}</td></tr>`).join("");
-    const totale=r2(rate.reduce((s,x)=>s+x.imp,0)), paid=r2(rate.filter(x=>x.paid).reduce((s,x)=>s+x.imp,0));
-    $("p-tot").textContent=eur(totale);$("p-paid").textContent=eur(paid);$("p-pct").textContent=totale?Math.round(paid/totale*100)+"% del piano":"";$("p-res").textContent=eur(totale-paid);
-    t.querySelectorAll("[data-q]").forEach(b=>b.onclick=()=>{const imp=+b.dataset.imp; state.paid.add(b.dataset.q);
-      $("q-log").innerHTML=`<div class="alert ok"><b>Quietanza letta.</b> Protocollo B0329601601<i>ggmmaa</i> · saldo delega ${eur(imp,2)} · righe: Erario 1792/1790/1668 + INPS PXXR/DPPI → abbinata a <b>${b.closest("tr").children[1].textContent}</b> per importo e data. Stato aggiornato, totali ricalcolati.</div>`; calc();});
-    t.querySelectorAll("[data-undo]").forEach(b=>b.onclick=()=>{state.paid.delete(b.dataset.undo);$("q-log").innerHTML="";calc();});
+  const GS=0.2607;
+  // Titolari di P.IVA, prima rata al 30/6: interessi di rateazione cumulati (0,33% al mese, tabella AdE).
+  const RATE=[{d:"30/06",i:0},{d:"16/07",i:0.0018},{d:"20/08",i:0.0051},{d:"16/09",i:0.0084},{d:"16/10",i:0.0117},{d:"16/11",i:0.0150}];
+  const st={aliq:0.15,n:6,pagata:false,step:0};
+
+  function conti(){
+    const inc=+$("inc").value, inc26=+$("inc26").value, coef=+$("coef").value, aliq=st.aliq;
+    // Anno dichiarato (2025). Esempio: contributi dedotti ≈ 80% dei contributi dell'anno, acconti versati ≈ 85% del dovuto.
+    const lordo=r2(inc*coef), inps=r2(lordo*GS), ded=r2(inps*0.8), imp=Math.max(0,r2(lordo-ded)), tax=r2(imp*aliq), dovuto=r2(tax+inps);
+    const versati=r2(dovuto*0.85), saldo=r2(dovuto-versati);
+    const accSt=r2(tax+inps*0.8);                         // storico: imposta 100%, INPS 80%
+    const l26=inc26*coef, inps26=l26*GS, accPr=r2(Math.max(0,l26-inps*0.8)*aliq+inps26*0.8);
+    const primo=r2(accSt/2);                              // 1° acconto: sempre sullo storico
+    const novSt=r2(accSt-primo), novPr=Math.max(0,r2(accPr-primo)), prev=novPr<novSt, nov=prev?novPr:novSt;
+    return {inc,lordo,inps,ded,imp,tax,dovuto,versati,saldo,accSt,accPr,primo,nov,prev,giugno:r2(saldo+primo),risp:r2(novSt-nov),netto:r2(inc-dovuto),coef,aliq};
   }
-  ["inc","coef","aliq","gest","ded","prev","nrate"].forEach(id=>$(id).addEventListener("input",()=>{if(id==="inc")$("incr").value=$("inc").value;calc();}));
-  $("incr").addEventListener("input",()=>{$("inc").value=$("incr").value;calc();});
-  calc();
+
+  function piano(c){
+    const n=st.n, cap=r2(c.giugno/n); let interessi=0;
+    const rate=RATE.slice(0,n).map((r,i)=>{const imp=i===n-1?r2(c.giugno-cap*(n-1)):cap, int=r2(imp*r.i); interessi=r2(interessi+int); return {d:r.d+"/2026",lab:n===1?"Saldo 2025 + 1° acconto 2026":`Rata ${i+1}/${n}`,cap:imp,int,tot:r2(imp+int)};});
+    return {rate,interessi,tot:r2(rate.reduce((s,r)=>s+r.tot,0)+c.nov)};
+  }
+
+  const set=(k,v)=>document.querySelectorAll(`[data-v="${k}"]`).forEach(e=>e.textContent=v);
+
+  function render(){
+    const c=conti(), p=piano(c);
+    $("o-inc").textContent=eur(c.inc); $("o-inc26").textContent=eur(+$("inc26").value);
+    set("lordo",eur(c.lordo)); set("ded",eur(c.ded)); set("imp",eur(c.imp)); set("tax",eur(c.tax)); set("inps",eur(c.inps));
+    set("dovuto",eur(c.dovuto)); set("versati",eur(c.versati)); set("versatiNeg","− "+eur(c.versati)); set("saldo",eur(c.saldo));
+    set("accSt",eur(c.accSt)); set("accPr",eur(c.accPr)); set("giugno",eur(c.giugno)); set("nov",eur(c.nov));
+    set("metodo",c.prev?"previsionale":"storico");
+    set("risparmio",c.prev?`${eur(c.risp)} in meno da versare`:"lo storico è già il minimo");
+    set("interessi",eur(p.interessi,2)); set("totPiano",eur(p.tot));
+    set("inc",eur(c.inc)); set("netto",eur(c.netto)); set("nettoMese",eur(c.netto/12));
+    set("fondo",Math.round(c.coef*(GS+c.aliq)*100)+"%");
+
+    // Step 2: fatture di esempio che sommano all'incassato
+    const quote=[.31,.24,.19], clienti=["Cliente Alfa srl","Studio Beta","Gamma SpA","Delta coop"];
+    let resto=c.inc; const imp=quote.map(q=>{const v=Math.round(c.inc*q/10)*10; resto-=v; return v;}).concat(resto);
+    $("fatture").innerHTML=`<tr><th>Cliente</th><th class="num">Importo</th><th>Stato</th></tr>`+
+      imp.map((v,i)=>`<tr><td>${clienti[i]}</td><td class="num">${eur(v)}</td><td><span class="pill go">incassata</span></td></tr>`).join("")+
+      `<tr><td>Epsilon srl · dicembre</td><td class="num">${eur(2400)}</td><td><span class="pill warn">incassata a gennaio → conta nel 2026</span></td></tr>`+
+      `<tr><td>Nota di credito su fattura mai pagata</td><td class="num">${eur(-600)}</td><td><span class="pill">non riduce l'incassato</span></td></tr>`+
+      `<tr class="tot"><td>Incassato 2025</td><td class="num">${eur(c.inc)}</td><td></td></tr>`;
+    const pct=c.inc/85000*100; $("lim-pct").textContent=Math.round(pct)+"%"; $("lim-bar").style.width=Math.min(100,pct)+"%";
+
+    // Step 4: calendario
+    $("timeline").innerHTML=p.rate.map(r=>`<li><b>${r.d}</b> · ${r.lab} · <b>${eur(r.tot,2)}</b>${r.int?` <span class="note">(interessi ${eur(r.int,2)})</span>`:""}<div class="alarm">🔔 promemoria 3 giorni prima</div></li>`).join("")+
+      `<li class="nov"><b>30/11/2026</b> · 2° acconto, metodo ${c.prev?"previsionale":"storico"} · <b>${eur(c.nov,2)}</b><div class="alarm">🔔 scelta storico/previsionale ricalcolata a ogni incasso</div></li>`;
+
+    // Step 5: F24 della prima rata, saldo e acconto divisi fra imposta e INPS
+    const n=st.n, rateaz=n===1?"—":"01"+String(n).padStart(2,"0");
+    const f24=[
+      ["Erario","1792",rateaz,"2025",r2(c.saldo*c.tax/c.dovuto/n)],
+      ["Erario","1790",rateaz,"2026",r2(c.tax/2/n)],
+      ["INPS","PXX","—","01/2025–12/2025",r2(c.saldo*c.inps/c.dovuto/n)],
+      ["INPS","PXX","—","01/2026–12/2026",r2(c.inps*0.4/n)]
+    ];
+    const tot=r2(f24.reduce((s,x)=>s+x[4],0));
+    $("f24-titolo").textContent=n===1?"F24 · 30/06/2026":`F24 · rata 1/${n} · 30/06/2026`;
+    $("f24").innerHTML=`<tr><th>Sezione</th><th>Codice</th><th>Rateaz.</th><th>Periodo</th><th class="num">Importo</th></tr>`+
+      f24.map(x=>`<tr><td>${x[0]}</td><td class="mono">${x[1]}</td><td class="mono">${x[2]}</td><td class="mono">${x[3]}</td><td class="num">${eur(x[4],2)}</td></tr>`).join("")+
+      `<tr class="tot"><td colspan="4">Saldo delega</td><td class="num">${eur(tot,2)}</td></tr>`;
+    $("f24-stato").innerHTML=st.pagata?'<span class="pill go">✅ pagata</span>':'<span class="pill warn">da pagare</span>';
+    $("q-log").innerHTML=st.pagata?`<b>Quietanza letta.</b> Protocollo, data e 4 righe tributo riconosciute, saldo ${eur(tot,2)}: abbinata alla <b>rata 1</b> per importo e data. Stato aggiornato, piano ricalcolato. <a href="#" id="q-undo">Annulla</a>`:"";
+    if(st.pagata) $("q-undo").onclick=e=>{e.preventDefault();st.pagata=false;render();$("btn-q").focus();};
+    $("btn-q").disabled=st.pagata;
+
+    // Step 6: dove vanno gli incassi
+    const w=v=>Math.max(0,v/c.inc*100)+"%";
+    $("st-net").style.width=w(c.netto); $("st-inps").style.width=w(c.inps); $("st-tax").style.width=w(c.tax);
+    return c;
+  }
+
+  // Stepper
+  const tabs=[...document.querySelectorAll('[role="tab"]')], panels=[...document.querySelectorAll('[role="tabpanel"]')], nav=$("stepnav");
+  function go(i,{focus=false,hash=true}={}){
+    st.step=Math.max(0,Math.min(5,i));
+    tabs.forEach((t,k)=>{const on=k===st.step; t.setAttribute("aria-selected",String(on)); t.tabIndex=on?0:-1; t.classList.toggle("done",k<st.step); panels[k].hidden=!on;});
+    $("prev").disabled=st.step===0;
+    $("next").textContent=st.step===5?"Voglio provarlo →":"Avanti →";
+    $("prog").style.width=((st.step+1)/6*100)+"%";
+    nav.scrollLeft=tabs[st.step].offsetLeft-16;
+    if(focus) tabs[st.step].focus();
+    if(hash){try{history.replaceState(null,"","#step-"+(st.step+1));}catch(e){}}
+  }
+  const toDemo=()=>$("demo").scrollIntoView({block:"start"});
+  tabs.forEach((t,i)=>{
+    t.addEventListener("click",()=>go(i));
+    t.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(st.step+1,{focus:true});} if(e.key==="ArrowLeft"){e.preventDefault();go(st.step-1,{focus:true});}});
+  });
+  $("prev").onclick=()=>{go(st.step-1);toDemo();};
+  $("next").onclick=()=>{if(st.step===5){$("prova").scrollIntoView();$("g-email").focus({preventScroll:true});return;} go(st.step+1);toDemo();};
+  function daHash(){const m=location.hash.match(/^#step-([1-6])$/); if(m){go(+m[1]-1,{hash:false});toDemo();return true;} return false;}
+  window.addEventListener("hashchange",daHash);
+
+  ["inc","inc26","coef"].forEach(id=>$(id).addEventListener("input",render));
+  document.querySelectorAll("[data-aliq]").forEach(b=>b.onclick=()=>{st.aliq=+b.dataset.aliq;document.querySelectorAll("[data-aliq]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();});
+  document.querySelectorAll("#seg-rate [data-n]").forEach(b=>b.onclick=()=>{st.n=+b.dataset.n;st.pagata=false;document.querySelectorAll("#seg-rate [data-n]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();});
+  $("btn-q").onclick=()=>{st.pagata=true;render();};
+
+  render();
+  if(!daHash()) go(0,{hash:false});
+
+  /* ─── Cancello email ───
+     Stesso progetto Firestore del calcolatore rendite/affitti (`rendita-affitti`,
+     collezione `rendita-leads`, regole: solo create, chiavi fisse). I lead di
+     FiscalNinja si riconoscono da `vincitore` = "fiscalninja:<profilo>";
+     `citta` porta la sorgente ("fonte:linkedin" da ?utm_source=linkedin, o il referrer).
+     La chiave web non è un segreto: a proteggere i dati sono le regole. */
+  const FIREBASE_CONFIG={apiKey:"AIzaSyC-sTKfut6O0jyz7PbrgGoavW3E-yloqzE",authDomain:"rendita-affitti.firebaseapp.com",projectId:"rendita-affitti",appId:"1:612899040029:web:64b02f9d0f3ae36faecff4"};
+  let fonte="diretto";
+  try{fonte=new URLSearchParams(location.search).get("utm_source")||(document.referrer?new URL(document.referrer).hostname:"diretto");}catch(e){}
+  fonte=fonte.slice(0,60);
+
+  async function salvaLead(email,profilo){
+    const [{initializeApp,getApps},{getFirestore,collection,addDoc,serverTimestamp}]=await Promise.all([
+      import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js")
+    ]);
+    const app=getApps().length?getApps()[0]:initializeApp(FIREBASE_CONFIG);
+    await addDoc(collection(getFirestore(app),"rendita-leads"),{email,lingua:"it",citta:"fonte:"+fonte,vincitore:"fiscalninja:"+profilo,netto:Math.round(conti().netto),creato:serverTimestamp()});
+  }
+  function grazie(){$("gate-form").hidden=true;$("gate-ok").hidden=false;}
+  try{if(localStorage.getItem("fn-lead"))grazie();}catch(e){}
+  $("gate-form").addEventListener("submit",async e=>{
+    e.preventDefault();
+    const email=$("g-email").value.trim(), err=$("g-err"), b=$("g-btn");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)||email.length>=200){err.textContent="Controlla l'indirizzo email: non sembra valido.";err.hidden=false;$("g-email").focus();return;}
+    err.hidden=true; b.disabled=true; b.textContent="Invio…";
+    try{await salvaLead(email,$("g-prof").value);}
+    catch(x){console.error("Lead non salvato:",x);b.disabled=false;b.textContent="Voglio provarlo →";err.textContent="Non sono riuscito a registrare l'email. Riprova, oppure scrivimi a bebroggi@gmail.com.";err.hidden=false;return;}
+    try{localStorage.setItem("fn-lead","1");}catch(x){}
+    grazie();
+  });
 })();
 </script>
 </body>
