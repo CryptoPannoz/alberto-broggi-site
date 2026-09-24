@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FiscalNinja — dalla dichiarazione al netto in 6 step</title>
-  <meta name="description" content="FiscalNinja è il cruscotto fiscale per partite IVA forfettarie: legge dichiarazione e fatture incassate, calcola imposta e INPS, pianifica le scadenze, compila l'F24 e ti dice quanto ti resta davvero. Guarda i 6 step e chiedi di provarlo." />
+  <meta name="description" content="FiscalNinja è un esercizio di software su misura per partite IVA forfettarie entro 85.000 € (non è consulenza fiscale): legge dichiarazione e fatture incassate, calcola imposta e INPS, pianifica le scadenze, compila l'F24 e ti dice quanto ti resta davvero. Guarda i 6 step e chiedi di provarlo." />
   <meta name="robots" content="index, follow" />
   <meta name="author" content="Alberto Broggi" />
   <link rel="canonical" href="https://bebroggi.it/fiscalninja/" />
@@ -149,6 +149,11 @@
     .gate ol{margin:0;padding-left:20px}
     .gate li{margin-bottom:6px}
     .thanks b{font-size:1.25rem}
+    .gate .check{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;font-weight:500;opacity:.95;margin:6px 0 0;cursor:pointer}
+    .gate .check input{margin-top:3px;width:18px;height:18px;flex:none;accent-color:var(--accent-ink)}
+    .disclaimer{border:2px solid var(--warn);background:var(--warn-soft);border-radius:var(--radius);padding:20px 22px}
+    .disclaimer .eyebrow{color:var(--warn)}
+    .disclaimer p:last-child{margin:0}
 
     .faq details{padding:14px 0;border-bottom:1px solid var(--line)}
     .faq summary{cursor:pointer;font-weight:600}
@@ -165,14 +170,14 @@
   <!-- Che cos'è -->
   <header class="hero">
     <div>
-      <p class="eyebrow">🥷 FiscalNinja · per partite IVA forfettarie</p>
+      <p class="eyebrow">🥷 FiscalNinja · solo forfettari entro 85.000 €</p>
       <h1>Dalla dichiarazione al tuo netto mensile, in 6 step.</h1>
-      <p class="lead">FiscalNinja è un cruscotto fiscale che legge la tua dichiarazione e le fatture <b>incassate</b>, calcola imposta sostitutiva e INPS, mette in calendario ogni F24, lo compila riga per riga e ti dice quanto dei soldi sul conto è davvero tuo.</p>
+      <p class="lead">FiscalNinja è un esercizio di software su misura: un cruscotto che legge la tua dichiarazione e le fatture <b>incassate</b>, calcola imposta sostitutiva e INPS, mette in calendario ogni F24, lo compila riga per riga e ti dice quanto dei soldi sul conto è davvero tuo.</p>
       <div class="row" style="margin-top:20px">
         <a class="btn primary" href="#step-1">Guarda i 6 step →</a>
-        <a class="btn" href="#prova">Voglio provarlo sui miei numeri</a>
+        <a class="btn" href="#prova">Voglio provarlo</a>
       </div>
-      <p class="note" style="margin-top:14px">Strumento di calcolo e organizzazione, <b>non</b> consulenza fiscale: il commercialista resta il tuo commercialista. FiscalNinja gli porta i numeri già in ordine.</p>
+      <p class="note" style="margin-top:14px"><b>Non è consulenza fiscale</b> e non sostituisce il commercialista: leggi l'avvertenza qui sotto.</p>
     </div>
     <nav class="card flow" aria-label="I 6 step di FiscalNinja">
       <p class="eyebrow">Il percorso</p>
@@ -186,6 +191,12 @@
       </ol>
     </nav>
   </header>
+
+  <aside class="disclaimer" role="note" aria-label="Avvertenza importante">
+    <p class="eyebrow">⚠️ Leggi prima di tutto</p>
+    <p><b>Non sono un commercialista e non sono un fiscalista.</b> FiscalNinja non sostituisce in alcun modo commercialisti o consulenti fiscali, non è consulenza fiscale e non va usato per decidere quanto versare senza il parere di un professionista.</p>
+    <p>È un <b>esercizio</b>: un progetto personale per sperimentare il cloud e gli strumenti di oggi (Claude, Firebase, API dei gestionali) nella costruzione di software su misura. Funziona solo per <b>partite IVA in regime forfettario entro 85.000 € di incassi</b>, e i numeri della demo sono di esempio.</p>
+  </aside>
 
   <!-- La storia -->
   <section class="story" aria-labelledby="storia-h">
@@ -201,8 +212,8 @@
     </div>
     <div>
       <p>Sono un forfettario in Gestione Separata INPS e fatturo con Fatture in Cloud. Il regime si chiama «semplificato», ma ogni anno si ripete la stessa scena: il saldo dell'anno prima, il primo acconto, le rate con gli interessi, i contributi calcolati su un reddito che nel frattempo è cambiato, e a novembre la domanda da un milione: <b>acconto storico o previsionale?</b></p>
-      <p>Le risposte stavano sparse fra il cassetto fiscale, il gestionale, i PDF delle quietanze e un foglio Excel riscritto ogni anno. Così ho fatto quello che faccio per lavoro con i dati: li ho messi in fila. Prima uno script, poi un'app vera, costruita insieme a Claude.</p>
-      <p>Oggi FiscalNinja gestisce la mia partita IVA: legge le fatture incassate in diretta, tiene il piano dei versamenti, legge le quietanze dell'Agenzia delle Entrate e mi dice, ogni giorno, quanto posso spendere senza sorprese. Qui sotto ti mostro come lavora, step per step, con dati di esempio.</p>
+      <p>Le risposte stavano sparse fra il cassetto fiscale, il gestionale, i PDF delle quietanze e un foglio Excel riscritto ogni anno. Così ho fatto quello che faccio per lavoro con i dati: li ho messi in fila. Prima uno script, poi un'app vera, costruita insieme a Claude: un esercizio per capire fin dove si arriva oggi con il cloud e l'AI nel costruire software su misura.</p>
+      <p>Oggi FiscalNinja mi aiuta a tenere in ordine la mia partita IVA, sempre insieme al mio commercialista: legge le fatture incassate in diretta, tiene il piano dei versamenti, legge le quietanze dell'Agenzia delle Entrate e mi dice, ogni giorno, quanto posso spendere senza sorprese. Qui sotto ti mostro come lavora, step per step, con dati di esempio.</p>
     </div>
   </section>
 
@@ -261,10 +272,10 @@
           <p>FiscalNinja si collega al gestionale (oggi Fatture in Cloud, in sola lettura) e scarica fatture, note di credito e <b>stato di incasso</b>. Il forfettario è tassato per cassa: una fattura di dicembre pagata a gennaio conta l'anno dopo.</p>
           <ul>
             <li>le note di credito riducono l'incassato solo se la fattura stornata era stata pagata;</li>
-            <li>la barra del <b>limite di 85.000 €</b> si aggiorna a ogni incasso;</li>
+            <li>la barra del <b>limite di 85.000 €</b> si aggiorna a ogni incasso: oltre quella soglia FiscalNinja non si applica;</li>
             <li>le fatture scadute e non incassate finiscono in evidenza.</li>
           </ul>
-          <p class="note"><b>E la dichiarazione IVA?</b> Il forfettario non applica l'IVA ed è esonerato dalla dichiarazione annuale IVA. FiscalNinja lo sa: al suo posto controlla quello che per te conta davvero, cioè incassato e limite. Il modulo IVA per il regime ordinario è in lavorazione.</p>
+          <p class="note"><b>E la dichiarazione IVA?</b> Il forfettario non applica l'IVA ed è esonerato dalla dichiarazione annuale IVA. FiscalNinja lo sa: al suo posto controlla quello che per te conta davvero, cioè incassato e limite. </p>
         </div>
         <div class="screen" aria-label="Esempio: fatture e incassi">
           <div class="bar"><i></i><i></i><i></i><em>fatture · 2025 · Fatture in Cloud</em></div>
@@ -396,13 +407,13 @@
   <!-- Cancello email -->
   <section class="card gate" id="prova" aria-labelledby="prova-h">
     <div>
-      <p class="eyebrow">Provalo sui tuoi numeri</p>
-      <h2 id="prova-h">Vuoi vedere FiscalNinja sulla tua partita IVA?</h2>
-      <p>La demo qui sopra usa dati di esempio. L'app vera gira su un'istanza tua, collegata al tuo gestionale. Lasciami l'email: ti scrivo io, ti spiego come funziona e, se fa per te, la accendiamo insieme.</p>
+      <p class="eyebrow">Solo forfettari entro 85.000 €</p>
+      <h2 id="prova-h">Vuoi provare FiscalNinja?</h2>
+      <p>La demo qui sopra usa dati di esempio. Se sei un forfettario entro 85.000 € e vuoi vedere il sistema all'opera, lasciami l'email: ti scrivo io e ti spiego come funziona. Ricorda: è un esercizio di software su misura, non un servizio fiscale.</p>
       <ol>
         <li>Mi lasci l'email: trenta secondi.</li>
         <li>Ti scrivo e ci sentiamo per una breve call.</li>
-        <li>Ti mostro FiscalNinja sui tuoi numeri.</li>
+        <li>Ti mostro come funziona FiscalNinja e com'è costruito.</li>
       </ol>
     </div>
     <div>
@@ -413,11 +424,10 @@
         <select id="g-prof">
           <option value="forfettario-gs">Forfettario · Gestione Separata INPS</option>
           <option value="forfettario-artcom">Forfettario · Artigiani o Commercianti</option>
-          <option value="ordinario">Partita IVA in regime ordinario</option>
-          <option value="commercialista">Commercialista o consulente</option>
-          <option value="curioso">Curioso / altro</option>
+          <option value="software-custom">Mi interessa il software su misura</option>
         </select>
         <p class="err" id="g-err" role="alert" hidden></p>
+        <label class="check"><input type="checkbox" id="g-ok" required /> <span>Ho capito che FiscalNinja è un esercizio e non sostituisce un commercialista o un consulente fiscale.</span></label>
         <button type="submit" class="btn" id="g-btn">Voglio provarlo →</button>
         <p class="small">Uso l'email solo per ricontattarti su FiscalNinja: niente spam, nessuna cessione a terzi. Scrivi a bebroggi@gmail.com per farla cancellare. <a href="/privacy.html" style="color:inherit">Privacy</a></p>
       </form>
@@ -431,13 +441,13 @@
 
   <section class="faq" aria-labelledby="faq-h">
     <h2 id="faq-h">Domande frequenti</h2>
-    <details><summary>È un commercialista automatico?</summary><p>No. FiscalNinja calcola, organizza e ti avvisa; la dichiarazione la firma chi la firmava prima. Il vantaggio è arrivare dal commercialista (o fare da solo, se già lo fai) con numeri verificati e un piano chiaro.</p></details>
-    <details><summary>Per chi funziona oggi?</summary><p>Partite IVA in regime forfettario iscritte alla Gestione Separata INPS, con fatture su Fatture in Cloud. Artigiani e commercianti, altri gestionali e regime ordinario sono i prossimi passi: dimmi nel modulo qual è il tuo caso.</p></details>
+    <details><summary>Sostituisce il commercialista?</summary><p>No, in nessun modo. Non sono un commercialista né un fiscalista: FiscalNinja è un esercizio di costruzione di software su misura con il cloud. Calcoli, scadenze e codici tributo vanno sempre verificati con il tuo commercialista o consulente fiscale.</p></details>
+    <details><summary>Per chi funziona?</summary><p>Solo per partite IVA in regime forfettario entro 85.000 € di incassi. La demo calcola i contributi con la Gestione Separata INPS; l'app legge le fatture da Fatture in Cloud. Regime ordinario, IVA e soglie superiori sono fuori dal perimetro.</p></details>
     <details><summary>Che accesso ha ai miei dati?</summary><p>Al gestionale in sola lettura, con token cifrato. Login con Google, un'istanza per persona, nessuna credenziale SPID, Entratel o INPS gestita dall'app: dichiarazione e quietanze le carichi tu.</p></details>
-    <details><summary>Quanto costa?</summary><p>Per ora è in prova con un gruppo ristretto di persone. Lascia l'email e ne parliamo.</p></details>
+    <details><summary>Perché l'hai costruito?</summary><p>Per esercizio: volevo capire quanto velocemente si passa da un problema reale a un software su misura usando il cloud e l'AI. Non è un prodotto in vendita. Se ti incuriosisce il metodo, per FiscalNinja o per un tuo problema, lasciami l'email.</p></details>
   </section>
 
-  <footer>FiscalNinja · un progetto di <a href="/">Alberto Broggi</a> · dati di esempio, calcolo semplificato · parametri 2026 (Gestione Separata 26,07%, limite 85.000 €, interessi di rateazione 0,33% al mese) · non è consulenza fiscale</footer>
+  <footer>FiscalNinja · un progetto di <a href="/">Alberto Broggi</a> · dati di esempio, calcolo semplificato · parametri 2026 (Gestione Separata 26,07%, limite 85.000 €, interessi di rateazione 0,33% al mese) · <b>non sono un commercialista né un fiscalista: non è consulenza fiscale e non sostituisce commercialisti o consulenti</b></footer>
 </div>
 
 <script>
@@ -551,15 +561,15 @@
   if(!daHash()) go(0,{hash:false});
 
   /* ─── Cancello email ───
-     Stesso progetto Firestore del calcolatore rendite/affitti (`rendita-affitti`,
-     collezione `rendita-leads`, regole: solo create, chiavi fisse). I lead di
-     FiscalNinja si riconoscono da `vincitore` = "fiscalninja:<profilo>";
-     `citta` porta la sorgente ("fonte:linkedin" da ?utm_source=linkedin, o il referrer).
-     La chiave web non è un segreto: a proteggere i dati sono le regole. */
-  const FIREBASE_CONFIG={apiKey:"AIzaSyC-sTKfut6O0jyz7PbrgGoavW3E-yloqzE",authDomain:"rendita-affitti.firebaseapp.com",projectId:"rendita-affitti",appId:"1:612899040029:web:64b02f9d0f3ae36faecff4"};
+     Progetto Firebase `fiscalninja-bebroggi` (Firestore eur3), collezione
+     `fiscalninja-leads`: regole solo create con chiavi fisse (email, profilo, fonte,
+     lingua, creato), nessuna lettura dal browser. `fonte` = ?utm_source (es. linkedin)
+     o il referrer. La chiave web non è un segreto: a proteggere i dati sono le regole.
+     La mail di benvenuto la manda l'Apps Script "Benvenuto lead FiscalNinja". */
+  const FIREBASE_CONFIG={apiKey:"AIzaSyAOqPAqbxLJc4ib14sDKg4gsK2ql_O6whg",authDomain:"fiscalninja-bebroggi.firebaseapp.com",projectId:"fiscalninja-bebroggi",appId:"1:852731739163:web:bacf471153f0825467ccbe"};
   let fonte="diretto";
   try{fonte=new URLSearchParams(location.search).get("utm_source")||(document.referrer?new URL(document.referrer).hostname:"diretto");}catch(e){}
-  fonte=fonte.slice(0,60);
+  fonte=fonte.slice(0,70);
 
   async function salvaLead(email,profilo){
     const [{initializeApp,getApps},{getFirestore,collection,addDoc,serverTimestamp}]=await Promise.all([
@@ -567,13 +577,14 @@
       import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js")
     ]);
     const app=getApps().length?getApps()[0]:initializeApp(FIREBASE_CONFIG);
-    await addDoc(collection(getFirestore(app),"rendita-leads"),{email,lingua:"it",citta:"fonte:"+fonte,vincitore:"fiscalninja:"+profilo,netto:Math.round(conti().netto),creato:serverTimestamp()});
+    await addDoc(collection(getFirestore(app),"fiscalninja-leads"),{email,profilo,fonte,lingua:"it",creato:serverTimestamp()});
   }
   function grazie(){$("gate-form").hidden=true;$("gate-ok").hidden=false;}
   try{if(localStorage.getItem("fn-lead"))grazie();}catch(e){}
   $("gate-form").addEventListener("submit",async e=>{
     e.preventDefault();
     const email=$("g-email").value.trim(), err=$("g-err"), b=$("g-btn");
+    if(!$("g-ok").checked){err.textContent="Spunta la casella: FiscalNinja è un esercizio, non consulenza fiscale.";err.hidden=false;$("g-ok").focus();return;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)||email.length>=200){err.textContent="Controlla l'indirizzo email: non sembra valido.";err.hidden=false;$("g-email").focus();return;}
     err.hidden=true; b.disabled=true; b.textContent="Invio…";
     try{await salvaLead(email,$("g-prof").value);}
