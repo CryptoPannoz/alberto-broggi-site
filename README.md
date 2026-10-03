@@ -6,6 +6,7 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 - `index.html` — one-page site (hero, what-I-do, work history, projects, hobbies, companies, contact)
   - Work history entries open as **modal pop-ups** — content lives in `<template>` blocks at the bottom of `index.html` (no page navigation).
 - `assets/` — `style.css`, `img/` (photos, posters, `img/logos/` company logos), `video/` clips
+  - `eventi.js` — click events ("Prenota una call", outbound links, modals…) counted in GoatCounter (`bebroggi.goatcounter.com`, loaded in every page `<head>`, no cookies)
 - `jobs/` — legacy standalone detail pages (kept as deep-link fallback; no longer linked from the timeline)
 - `hobbies/` — wingfoil page + full link list
 - `tools/` — standalone interactive tools, self-contained (own `<style>`/`<script>`, only `assets/style.css` for design tokens)
