@@ -754,7 +754,7 @@ footer a { color: white; }
 .radar-mock__track i.br { top: 0; height: 11px; background: none; border: 1px solid #b45309; }
 
 /* Progetti speciali: vetrina Vento Barcolana (mockup cliccabile verso la pagina live) */
-.project-showcase { margin-top: 14px; border: 1px solid rgba(255,255,255,.12); background: #161c1b; }
+.project-showcase { margin-bottom: 14px; border: 1px solid rgba(255,255,255,.12); background: #161c1b; }
 .project-showcase__visual { min-height: 600px; color: white; background: radial-gradient(circle at 18% 8%, #1f6fc0 0, #003770 42%, #001630 85%); }
 .project-showcase__visual::after { content: ""; position: absolute; inset: auto 0 0; height: 4px; background: #e30613; }
 .browser-shell--bcn { width: 88%; margin-right: 12%; }
