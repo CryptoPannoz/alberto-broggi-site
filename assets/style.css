@@ -752,3 +752,44 @@ footer a { color: white; }
 .radar-mock__track i.soft { opacity: .42; }
 .radar-mock__track i.pub { top: 0; width: 2px; height: 11px; border-radius: 1px; background: #0f766e; }
 .radar-mock__track i.br { top: 0; height: 11px; background: none; border: 1px solid #b45309; }
+
+/* Progetti speciali: vetrina Vento Barcolana (mockup cliccabile verso la pagina live) */
+.project-showcase { margin-top: 14px; border: 1px solid rgba(255,255,255,.12); background: #161c1b; }
+.project-showcase__visual { min-height: 600px; color: white; background: radial-gradient(circle at 18% 8%, #1f6fc0 0, #003770 42%, #001630 85%); }
+.project-showcase__visual::after { content: ""; position: absolute; inset: auto 0 0; height: 4px; background: #e30613; }
+.browser-shell--bcn { width: 88%; margin-right: 12%; }
+.browser-shell--bcn > img { height: auto; aspect-ratio: 16 / 10; }
+.phone-shell--bcn {
+  position: absolute; z-index: 4; right: 28px; bottom: 30px; width: 172px; height: 352px;
+  transform: rotate(2.5deg); transition: transform .45s cubic-bezier(.2,.8,.2,1);
+}
+.project-showcase__visual:hover .browser-shell--bcn { transform: translateY(-5px); box-shadow: 0 36px 90px rgba(0,0,0,.52); }
+.project-showcase__visual:hover .phone-shell--bcn { transform: rotate(1deg) translateY(-7px); }
+.project-showcase .micro-label { display: inline-flex; align-items: center; gap: 10px; color: #aeb3ae; }
+.project-showcase .micro-label b { padding: 4px 8px; border-radius: 999px; background: var(--orange); color: white; font-weight: 600; }
+.project-showcase .dev-tags { color: #aeb3ae; }
+.project-showcase__links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
+.project-showcase__cta {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 24px; border-radius: 999px;
+  background: var(--orange); color: white; font-size: .95rem; font-weight: 700; letter-spacing: -.01em;
+  box-shadow: 0 10px 24px rgba(255,91,53,.28); transition: transform .18s ease, box-shadow .18s ease;
+}
+.project-showcase__cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,91,53,.38); }
+.project-showcase__alt { padding-bottom: 4px; border-bottom: 1px solid currentColor; color: #ccd1cd; font-size: .82rem; font-weight: 650; }
+.project-showcase__alt:hover { color: white; }
+@media (max-width: 1050px) {
+  .project-showcase__visual { min-height: 560px; }
+  .phone-shell--bcn { right: 14px; width: 150px; height: 305px; }
+}
+@media (max-width: 780px) {
+  .project-showcase__visual { min-height: 480px; }
+}
+@media (max-width: 480px) {
+  .project-showcase__visual { min-height: 400px; padding: 60px 16px 38px; }
+  .browser-shell--bcn { width: 100%; margin-right: 0; border-radius: 13px; }
+  .browser-shell--bcn .browser-bar { height: 32px; }
+  .phone-shell--bcn { right: 8px; bottom: 30px; width: 108px; height: 218px; border-width: 5px; border-radius: 26px; }
+  .phone-shell--bcn .phone-notch { top: 5px; height: 11px; }
+  .project-showcase__visual .device-caption { left: 16px; bottom: 17px; }
+  .project-showcase__cta { width: 100%; justify-content: center; }
+}
