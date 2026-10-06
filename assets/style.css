@@ -181,7 +181,7 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
 .work-section .past-card strong { color: #3f443f; }
 /* Experience */
 .experience-section { background: var(--paper); }
-.experience-now { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.experience-now { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 .role-card {
   min-height: 320px; text-align: left; position: relative; background: var(--white); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 24px; cursor: pointer; display: flex; flex-direction: column;
@@ -192,11 +192,12 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
 .role-card__logo, .role-card__duo { min-height: 128px; display: flex; align-items: center; justify-content: center; margin: auto 0; }
 .role-card__logo img { width: min(72%, 210px); max-height: 78px; object-fit: contain; object-position: center; }
 .role-card__logo--vst img { width: 112px; max-height: 112px; }
+.role-card__logo--round img { width: 104px; max-height: 104px; }
 .role-card__duo { flex-direction: column; gap: 22px; }
 .role-card__duo img { width: auto; max-width: 220px; max-height: 58px; object-fit: contain; }
 .role-card__duo img:first-child { width: 190px; }
 .role-card__duo img:last-child { width: 220px; }
-.role-card__title { max-width: 24ch; font-size: 1.05rem; font-weight: 650; line-height: 1.2; }
+.role-card__title { max-width: 24ch; padding-right: 26px; font-size: 1.05rem; font-weight: 650; line-height: 1.2; }
 .role-card__arrow { position: absolute; right: 24px; bottom: 22px; font-size: 1.1rem; transition: transform .2s; }
 .role-card:hover .role-card__arrow { transform: translate(3px, -3px); color: var(--blue); }
 .micro-label { margin: 54px 0 18px; }
@@ -523,6 +524,12 @@ html[lang="it"] .hero h1 { max-width: 18ch; font-size: clamp(3.6rem, 5.7vw, 5.8r
 .life-card--latest .life-card__expand { top: auto; bottom: 52px; }
 .life-card--latest { outline: 3px solid var(--lime); outline-offset: -3px; }
 .life-card__badge { position: absolute; z-index: 2; top: 16px; left: 16px; padding: 8px 12px; border-radius: 999px; background: var(--lime); color: var(--ink); font-family: var(--mono); font-size: .58rem; font-weight: 650; text-transform: uppercase; letter-spacing: .07em; pointer-events: none; }
+/* Gallery post: one card, several photos (lightbox reuses the main caption) */
+.life-post { grid-column: span 12; grid-row: span 2; display: grid; grid-template-columns: 7fr 5fr; grid-template-rows: 1fr 1fr; gap: 3px; }
+.life-post__item { margin: 0; position: relative; overflow: hidden; min-height: 0; }
+.life-post__item--main { grid-row: span 2; }
+.life-post:hover img { transform: none; }
+.life-post__item:hover img { transform: scale(1.035); }
 .life-card--latest .life-card__cap strong { font-size: 1.35rem; }
 .life-card--latest .life-card__cap span { font-size: .82rem; }
 .life-card--links { display: flex; align-items: flex-end; background: var(--blue); padding: 24px; }
@@ -584,6 +591,12 @@ footer a { color: white; }
 .modal__panel .skills { padding-left: 0; }
 .modal__panel .skills li { margin: 0; }
 .modal__panel .ext { display: inline-block; margin-top: 22px; color: var(--blue); border-bottom: 1px solid currentColor; font-weight: 650; font-size: .8rem; }
+.modal-shots { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 30px 0 4px; }
+.modal-shot { display: block; overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--paper); }
+.modal-shot--wide { grid-column: 1 / -1; }
+.modal-shot img { display: block; width: 100%; height: auto; transition: transform .3s ease; }
+.modal-shot:hover img { transform: scale(1.02); }
+.modal__panel .modal-shots__note { grid-column: 1 / -1; margin: 2px 0 0; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .06em; }
 
 /* Lightbox */
 .lightbox {
@@ -618,6 +631,7 @@ footer a { color: white; }
   .dev-feature { grid-template-columns: 1fr 1fr; }
   .dev-feature__visual { min-height: 620px; }
   .phone-shell--mini { right: 14px; width: 150px; height: 305px; }
+  .experience-now { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 780px) {
@@ -655,6 +669,7 @@ footer a { color: white; }
   .life-card, .life-card--hero, .life-card--tall, .life-card--panorama, .life-card--compact, .life-card--video-wide, .life-card--links-wide { grid-column: span 1; grid-row: span 1; }
   .life-card--hero, .life-card--video-wide { grid-column: 1 / -1; grid-row: span 2; }
   .life-card--tall { grid-row: span 2; }
+  .life-post { grid-column: 1 / -1; grid-row: span 2; }
   .contact__links { align-items: flex-start; flex-direction: column; }
   footer .container { align-items: flex-start; flex-direction: column; }
 }
@@ -716,6 +731,8 @@ footer a { color: white; }
   .life-card--tall { grid-row: span 2; }
   .life-card--video-wide, .life-card--links-wide { grid-column: 1 / -1; }
   .life-card--video-wide { grid-row: span 2; }
+  .life-post { grid-column: 1 / -1; grid-row: span 3; grid-template-columns: 1fr 1fr; grid-template-rows: 2fr 1fr; }
+  .life-post__item--main { grid-column: 1 / -1; grid-row: auto; }
   .lightbox__nav { width: 40px; height: 40px; font-size: 1.5rem; }
   .lightbox__nav--prev { left: 6px; }
   .lightbox__nav--next { right: 6px; }

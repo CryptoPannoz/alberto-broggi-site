@@ -27,9 +27,9 @@ data-heavy business.
 - Hero: positioning, three proof metrics and current-company logo strip
 - What I build: three compact capability groups
 - Selected impact: Lucca/Wengen, Trieste Villas and Vertical Sailing Tour
-- Experience: three current logo cards, six compact earlier roles, nine full modal stories
+- Experience: four current logo cards (Noura CRM, Trieste Villas, Lucca/Wengen, VST), six compact earlier roles, full modal stories (Noura with anonymised CRM screenshots)
 - Projects: five visual project cards
-- Off the clock: four lead stories plus eight preserved stories in an expandable gallery
+- Off the clock: the latest post on top (`.life-post`: a multi-photo gallery card, outlined in lime, one caption shared by the lightbox), then the photo/video grid
 
 ## Local preview
 Open `index.html` in a browser, or:
