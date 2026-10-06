@@ -783,7 +783,7 @@ footer a { color: white; }
 .project-showcase__visual:hover .browser-shell--bcn { transform: translateY(-5px); box-shadow: 0 36px 90px rgba(0,0,0,.52); }
 .project-showcase__visual:hover .phone-shell--bcn { transform: rotate(1deg) translateY(-7px); }
 .project-showcase .micro-label { display: inline-flex; align-items: center; gap: 10px; color: #aeb3ae; }
-.project-showcase .micro-label b { padding: 4px 8px; border-radius: 999px; background: var(--orange); color: white; font-weight: 600; }
+.project-showcase .micro-label b { white-space: nowrap; padding: 4px 8px; border-radius: 999px; background: var(--orange); color: white; font-weight: 600; }
 .project-showcase .dev-tags { color: #aeb3ae; }
 .project-showcase__links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 30px; }
 .project-showcase__cta {
@@ -794,6 +794,12 @@ footer a { color: white; }
 .project-showcase__cta:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(255,91,53,.38); }
 .project-showcase__alt { padding-bottom: 4px; border-bottom: 1px solid currentColor; color: #ccd1cd; font-size: .82rem; font-weight: 650; }
 .project-showcase__alt:hover { color: white; }
+/* Variante RealEstate AI: blu notte e sabbia, i colori di ai4realestate.it */
+.project-showcase--ai .project-showcase__visual { background: radial-gradient(circle at 78% 12%, #3a4a63 0, #142033 40%, #070c16 85%); }
+.project-showcase--ai .project-showcase__visual::after { background: #e9d3a4; }
+.project-showcase--ai .micro-label b { background: #e9d3a4; color: var(--ink); }
+.project-showcase--ai .project-showcase__cta { background: #e9d3a4; color: var(--ink); box-shadow: 0 10px 24px rgba(233,211,164,.22); }
+.project-showcase--ai .project-showcase__cta:hover { box-shadow: 0 14px 30px rgba(233,211,164,.34); }
 @media (max-width: 1050px) {
   .project-showcase__visual { min-height: 560px; }
   .phone-shell--bcn { right: 14px; width: 150px; height: 305px; }
