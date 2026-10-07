@@ -848,6 +848,14 @@
     <span class="when">2010 — oggi</span>
     <h2 id="modal-title">CV Velico</h2>
     <p class="sub">Alberto Broggi · Skipper — patente nautica oltre le 12 miglia (2013)</p>
+    <!-- Contatore miglia: somma da solo i data-nm delle regate qui sotto (vedi initSeaMiles) -->
+    <div class="sea-miles" data-sea-miles>
+      <p class="sea-miles__label">Miglia nautiche in regata</p>
+      <p class="sea-miles__value"><small>≈</small><span data-sea-total>0</span></p>
+      <p class="sea-miles__meta"><span data-sea-count></span> regate · <span data-sea-years></span> · stima a spanne</p>
+      <div class="sea-miles__bar" aria-hidden="true"><i></i></div>
+      <p class="sea-miles__note">≈ <span data-sea-pct></span> di un giro del mondo all’equatore (21.600 miglia)</p>
+    </div>
     <p>Sono cresciuto navigando con mio nonno su un ketch di 6,9 m al Lago d’Orta, poi cinque stagioni come istruttore di windsurf a Porto Pollo, in Sardegna. Dal 2013 navigo come skipper ed equipaggio tra Mediterraneo e Atlantico — dalle vacanze in flottiglia alle regate su maxi yacht.</p>
     <h4>Crociere ed esperienze lavorative</h4>
     <ul>
@@ -861,14 +869,17 @@
       <li><strong>Ancilla Domini · Farr 80</strong> — trasferimenti vari Atene → Trieste — 2024 · 2025 · 2026</li>
     </ul>
     <h4>Regate</h4>
+    <!-- Ogni edizione = uno <span data-nm="miglia stimate">…anno…</span>: il contatore in alto si aggiorna da solo.
+         Nuova regata? Aggiungi lo span con le sue miglia (anche a spanne) e l'anno nel testo. -->
     <ul>
-      <li><strong>Le Grifon · First 29</strong> — drizze — Trofeo Formenton 2011 · 2012 · 2013</li>
-      <li><strong>Lunz am Meer · Swan 65</strong> — prua — Vulcano Race, Capri 2013 · Maxi Yacht Rolex Cup, Porto Cervo 2014/2015 · Swan Cup 2014/2016/2018 · Giraglia 2015 · Rolex Middle Sea Race 2015/2016</li>
-      <li><strong>BrainStrom · Beneteau 29</strong> — prodiere — Campionato Invernale del Tigullio, Chiavari 2015</li>
-      <li><strong>Nashorn · Baltic 51</strong> — secondo — ARC 2017, regata transatlantica Gran Canaria → Santa Lucia (2.700 nm)</li>
-      <li><strong>Prosecco DOC · Reichel/Pugh 90 (ex Alfa Romeo)</strong> — volanti, main sheet traveller e impianti idraulici — Barcolana 2022 · 2023 · 2024 · 2025 · Tre Golfi 2024 · Record Brindisi–Corfù 2026 · Aegean 600 2026 (Line Honours)</li>
-      <li><strong>Viriella · Maxi Dolphin 128</strong> — prodiere — Maxi Yacht Rolex Cup 2024 · 2025</li>
-      <li><strong>Ancilla Domini · Farr 80</strong> — trimmer jib — Veleziana 2024 · 2025</li>
+      <li><strong>Le Grifon · First 29</strong> — drizze — Trofeo Formenton <span data-nm="21">2011</span> · <span data-nm="21">2012</span> · <span data-nm="21">2013</span></li>
+      <li><strong>Lunz am Meer · Swan 65</strong> — prua — <span data-nm="400">Vulcano Race, Capri 2013</span> · Maxi Yacht Rolex Cup, Porto Cervo <span data-nm="120">2014</span>/<span data-nm="120">2015</span> · Swan Cup <span data-nm="100">2014</span>/<span data-nm="100">2016</span>/<span data-nm="100">2018</span> · <span data-nm="280">Giraglia 2015</span> · Rolex Middle Sea Race <span data-nm="606">2015</span>/<span data-nm="606">2016</span></li>
+      <li><strong>BrainStrom · Beneteau 29</strong> — prodiere — <span data-nm="60">Campionato Invernale del Tigullio, Chiavari 2015</span></li>
+      <li><strong>Nashorn · Baltic 51</strong> — secondo — <span data-nm="2700">ARC 2017</span>, regata transatlantica Gran Canaria → Santa Lucia (2.700 nm)</li>
+      <li><strong>Prosecco DOC · Reichel/Pugh 90 (ex Alfa Romeo)</strong> — volanti, main sheet traveller e impianti idraulici — Barcolana <span data-nm="13">2022</span> · <span data-nm="13">2023</span> · <span data-nm="13">2024</span> · <span data-nm="13">2025</span> · <span data-nm="13">2026</span> · <span data-nm="150">Tre Golfi 2024</span> · <span data-nm="105">Record Brindisi–Corfù 2026</span> · <span data-nm="600">Aegean 600 2026</span> (Line Honours) · <span data-nm="16">Trofeo Bernetti 2026</span> (vittoria) · <span data-nm="10">Veleziana 2026</span></li>
+      <li><strong>Viriella · Maxi Dolphin 128</strong> — prodiere — Maxi Yacht Rolex Cup <span data-nm="120">2024</span> · <span data-nm="120">2025</span></li>
+      <li><strong>Ancilla Domini · Farr 80</strong> — trimmer jib — Veleziana <span data-nm="10">2024</span> · <span data-nm="10">2025</span></li>
+      <li><strong>Duan · Swan 80</strong> — <span data-nm="100">Swan Cup 2026</span></li>
     </ul>
     <h4>Formazione e sicurezza</h4>
     <ul>
@@ -877,7 +888,7 @@
       <li>Istruttore di windsurf, Porto Pollo (Sardegna) — 5 stagioni</li>
     </ul>
     <h4>Condividi</h4>
-    <p>Link diretto: <a class="ext" href="https://bebroggi.it/#cv-velico">bebroggi.it/#cv-velico</a></p>
+    <p>Link diretto: <a class="ext" href="https://bebroggi.it/cv-velico/">bebroggi.it/cv-velico</a></p>
   </template>
 
   <script>
@@ -893,6 +904,7 @@
       if (!tpl) return;
       modalBody.innerHTML = '';
       modalBody.appendChild(tpl.content.cloneNode(true));
+      initSeaMiles(modalBody);
       modal.hidden = false;
       document.body.classList.add('modal-open');
       modal.querySelector('.modal__panel').scrollTop = 0;
@@ -904,6 +916,43 @@
       document.body.classList.remove('modal-open');
       modalBody.innerHTML = '';
       if (lastFocus) lastFocus.focus();
+    }
+
+    // ---- CV Velico: contatore miglia in regata ----
+    // Somma i data-nm di ogni edizione: totale, numero di regate e anni si ricalcolano da soli.
+    function initSeaMiles(root) {
+      const box = root.querySelector('[data-sea-miles]');
+      if (!box) return;
+      const fmt = function (n) { return n.toLocaleString('it-IT', { useGrouping: 'always' }); };
+      let total = 0;
+      const years = [];
+      root.querySelectorAll('[data-nm]').forEach(function (el) {
+        const nm = Number(el.getAttribute('data-nm')) || 0;
+        total += nm;
+        el.title = '≈ ' + fmt(nm) + ' miglia';
+        const y = el.textContent.match(/(19|20)\d\d/);
+        if (y) years.push(Number(y[0]));
+      });
+      const pct = total / 21600 * 100;
+      box.querySelector('[data-sea-count]').textContent = root.querySelectorAll('[data-nm]').length;
+      box.querySelector('[data-sea-years]').textContent = years.length ? Math.min.apply(null, years) + '—' + Math.max.apply(null, years) : '';
+      box.querySelector('[data-sea-pct]').textContent = Math.round(pct) + '%';
+      const out = box.querySelector('[data-sea-total]');
+      const bar = box.querySelector('.sea-miles__bar i');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        out.textContent = fmt(total);
+        bar.style.width = Math.min(pct, 100) + '%';
+        return;
+      }
+      const t0 = performance.now();
+      const dur = 1400;
+      (function tick(now) {
+        const k = Math.min((now - t0) / dur, 1);
+        out.textContent = fmt(Math.round(total * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(tick);
+      })(t0);
+      // Doppio frame: la barra parte da 0 solo dopo che il pannello è visibile, così la transizione si vede.
+      requestAnimationFrame(function () { requestAnimationFrame(function () { bar.style.width = Math.min(pct, 100) + '%'; }); });
     }
 
     document.querySelectorAll('[data-open]').forEach(function (btn) {

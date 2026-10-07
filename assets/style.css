@@ -607,6 +607,15 @@ footer a { color: white; }
 .modal-shot img { display: block; width: 100%; height: auto; transition: transform .3s ease; }
 .modal-shot:hover img { transform: scale(1.02); }
 .modal__panel .modal-shots__note { grid-column: 1 / -1; margin: 2px 0 0; color: var(--muted); font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .06em; }
+/* CV Velico — contatore miglia in regata (valori calcolati da initSeaMiles) */
+.sea-miles { margin: -6px 0 30px; padding: 24px 26px 22px; border-radius: var(--radius); background: var(--ink); color: var(--white); }
+.modal__panel .sea-miles__label { margin: 0; color: var(--lime); font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .08em; }
+.modal__panel .sea-miles__value { display: flex; align-items: baseline; gap: 8px; margin: 8px 0 0; color: var(--white); font-size: clamp(3rem, 10vw, 4.6rem); font-weight: 620; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.sea-miles__value small { color: #989e98; font-size: .45em; font-weight: 400; }
+.modal__panel .sea-miles__meta { margin: 12px 0 0; color: #c9cdc8; font-family: var(--mono); font-size: .62rem; text-transform: uppercase; letter-spacing: .06em; }
+.sea-miles__bar { position: relative; height: 4px; margin-top: 18px; border-radius: 999px; background: rgba(255,254,250,.14); overflow: hidden; }
+.sea-miles__bar i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: inherit; background: var(--lime); transition: width 1.4s cubic-bezier(.2,.8,.2,1); }
+.modal__panel .sea-miles__note { margin: 8px 0 0; color: #989e98; font-size: .76rem; }
 
 /* Lightbox */
 .lightbox {
