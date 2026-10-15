@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Sandbox Alloggiati Web</title>
+<meta name="description" content="Ho automatizzato le schedine per Alloggiati Web nella mia casa vacanze. Prova il percorso con ospiti finti: documento, controllo, righe da 168 caratteri, Test e invio simulati. Niente lascia il tuo browser." />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="Alberto Broggi" />
+<link rel="canonical" href="https://bebroggi.it/tools/alloggiati-web/" />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:site_name" content="Alberto Broggi" />
+<meta property="og:title" content="Ho automatizzato le schedine per Alloggiati Web" />
+<meta property="og:description" content="Dal documento fotografato alla Questura senza ricopiare niente. Provalo con ospiti finti: niente lascia il tuo browser." />
+<meta property="og:url" content="https://bebroggi.it/tools/alloggiati-web/" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪪</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
+<style>
+  /* Layout: una colonna di lettura (testo ~65 caratteri) con la sandbox a tutta larghezza; la riga da 168 caratteri è il filo che lega tutto.
+     Token dal sistema dei tool di bebroggi.it (carta, inchiostro, blu, lime), con il tema scuro in più. */
+  :root {
+    --paper: #f3f1ea; --paper-2: #e8e6dd; --card: #fffefa; --ink: #111615; --muted: #5f645f; --line: rgba(17,22,21,.15);
+    --blue: #165dff; --lime: #c7ff39; --on-lime: #111615; --orange: #d9441f; --ok: #0f7a4f; --warn: #a3600a; --bad: #c0362c;
+    --g-stay: #dbe6ff; --g-stay-2: #c5d6ff; --g-who: #ece9dc; --g-who-2: #e0dccb; --g-where: #d6efe7; --g-where-2: #c2e6da; --g-doc: #ffe2d6; --g-doc-2: #ffd0be;
+    --sans: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+    --radius: 18px; --maxw: 1120px; --read: 40rem;
+    /* console e CTA restano scuri in tutti e due i temi */
+    --night: #0e1211; --night-fg: #eceae2; --night-ok: #9be7b9; --night-ko: #ffb4a8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #121514; --paper-2: #1b1f1d; --card: #181c1a; --ink: #ecebe4; --muted: #a2a7a1; --line: rgba(236,235,228,.16);
+      --blue: #7ea2ff; --orange: #ff8a66; --ok: #4fd09a; --warn: #f0b45a; --bad: #ff7b6e;
+      --g-stay: #213664; --g-stay-2: #2c4682; --g-who: #353b33; --g-who-2: #454c41; --g-where: #194a3d; --g-where-2: #22604f; --g-doc: #5a2e1e; --g-doc-2: #713b27;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #121514; --paper-2: #1b1f1d; --card: #181c1a; --ink: #ecebe4; --muted: #a2a7a1; --line: rgba(236,235,228,.16);
+    --blue: #7ea2ff; --orange: #ff8a66; --ok: #4fd09a; --warn: #f0b45a; --bad: #ff7b6e;
+    --g-stay: #213664; --g-stay-2: #2c4682; --g-who: #353b33; --g-who-2: #454c41; --g-where: #194a3d; --g-where-2: #22604f; --g-doc: #5a2e1e; --g-doc-2: #713b27;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; }
+  a:hover { color: var(--blue); }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  h1, h2, h3 { margin: 0; line-height: 1.02; letter-spacing: -.035em; text-wrap: balance; }
+  p { margin: 0; }
+  .wrap { width: min(100% - 32px, var(--maxw)); margin-inline: auto; }
+  .read { max-width: var(--read); }
+  .label { font-family: var(--mono); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* testata */
+  .top { border-bottom: 1px solid var(--line); }
+  .top .wrap { min-height: 60px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .top a { font-size: .82rem; font-weight: 650; text-decoration: none; }
+  .top .pill { margin-left: auto; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border: 1px solid var(--line); border-radius: 999px; font-family: var(--mono); font-size: .68rem; letter-spacing: .04em; }
+  .pill i { width: 7px; height: 7px; border-radius: 50%; background: var(--orange); }
+
+  /* apertura */
+  .hero { padding-block: clamp(36px, 7vw, 76px) 28px; display: grid; gap: 22px; }
+  .hero h1 { font-size: clamp(2.3rem, 6.4vw, 4.6rem); font-weight: 650; max-width: 15ch; }
+  .hero h1 em { font-family: var(--serif); font-weight: 400; font-style: italic; color: var(--blue); letter-spacing: -.01em; }
+  .lead { font-size: clamp(1.05rem, 1.6vw, 1.22rem); max-width: 38rem; color: var(--ink); }
+  .lead b { font-weight: 650; }
+  .byline { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  /* la riga */
+  .line168 { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; display: grid; gap: 12px; min-width: 0; }
+  .line168 header { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+  .scroll { overflow-x: auto; min-width: 0; -webkit-overflow-scrolling: touch; }
+  .rec { font-family: var(--mono); font-size: .86rem; white-space: pre; display: inline-flex; line-height: 1; padding-block: 4px; }
+  .rec span { padding: 7px 0; position: relative; cursor: default; }
+  .rec span[data-g="stay"] { background: var(--g-stay); } .rec span[data-g="stay"].alt { background: var(--g-stay-2); }
+  .rec span[data-g="who"] { background: var(--g-who); } .rec span[data-g="who"].alt { background: var(--g-who-2); }
+  .rec span[data-g="where"] { background: var(--g-where); } .rec span[data-g="where"].alt { background: var(--g-where-2); }
+  .rec span[data-g="doc"] { background: var(--g-doc); } .rec span[data-g="doc"].alt { background: var(--g-doc-2); }
+  .rec span.hl { outline: 2px solid var(--blue); outline-offset: -2px; z-index: 1; }
+  .ruler { font-family: var(--mono); font-size: .62rem; color: var(--muted); white-space: pre; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .78rem; }
+  .legend b { font-weight: 600; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .fieldinfo { font-family: var(--mono); font-size: .76rem; color: var(--muted); min-height: 1.3em; }
+
+  /* sezioni */
+  section.block { padding-block: clamp(40px, 6vw, 72px); border-top: 1px solid var(--line); display: grid; gap: 22px; }
+  section.block > h2 { font-size: clamp(1.7rem, 3.6vw, 2.6rem); font-weight: 650; }
+  section.block > h2 em { font-family: var(--serif); font-weight: 400; font-style: italic; }
+  .prose { display: grid; gap: 14px; max-width: var(--read); }
+  .prose h3 { font-size: 1.15rem; letter-spacing: -.02em; margin-top: 10px; }
+  .prose ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+  .prose code, .mono { font-family: var(--mono); font-size: .86em; }
+
+  /* sandbox */
+  .steps { display: grid; gap: 18px; }
+  .step { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: clamp(16px, 2.4vw, 26px); display: grid; gap: 16px; min-width: 0; }
+  .step > header { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+  .step > header .n { font-family: var(--mono); font-size: .74rem; padding: 3px 9px; border-radius: 999px; background: var(--ink); color: var(--paper); }
+  .step > header h3 { font-size: 1.3rem; }
+  .step > header p { color: var(--muted); font-size: .92rem; flex-basis: 100%; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; }
+  .fld { display: grid; gap: 4px; min-width: 0; }
+  .fld > span { font-size: .78rem; color: var(--muted); }
+  input, select { font: inherit; font-size: .95rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; min-height: 42px; padding: 0 10px; min-width: 0; }
+  input:focus, select:focus { outline: 2px solid var(--blue); outline-offset: 0; border-color: transparent; }
+  button { font: inherit; cursor: pointer; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--ink); font-weight: 600; font-size: .9rem; }
+  .btn:hover { border-color: var(--ink); }
+  .btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.lime { background: var(--lime); color: var(--on-lime); border-color: var(--lime); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .seg button { border: 0; background: transparent; padding: 0 14px; min-height: 40px; font-size: .86rem; color: var(--ink); }
+  .seg button.on { background: var(--ink); color: var(--paper); }
+
+  .guests { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); }
+  .guest { border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 12px; background: var(--paper); min-width: 0; }
+  .guest header { display: flex; justify-content: space-between; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .guest header b { font-size: 1rem; }
+  .state { font-family: var(--mono); font-size: .66rem; letter-spacing: .05em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; border: 1px solid currentColor; }
+  .state.ok { color: var(--ok); } .state.warn { color: var(--warn); } .state.idle { color: var(--muted); }
+  .specimens { display: grid; gap: 8px; }
+  .specimens button { text-align: left; border: 1px dashed var(--line); background: var(--card); border-radius: 10px; padding: 9px 12px; color: var(--ink); font-size: .88rem; display: grid; gap: 2px; }
+  .specimens button:hover { border-color: var(--blue); }
+  .specimens button small { color: var(--muted); font-size: .76rem; }
+  .ocr { font-size: .84rem; border-radius: 10px; padding: 9px 12px; background: var(--card); border: 1px solid var(--line); display: grid; gap: 4px; }
+  .ocr.low { border-color: var(--warn); }
+  .ocr .bar { height: 4px; border-radius: 4px; background: var(--paper-2); overflow: hidden; }
+  .ocr .bar i { display: block; height: 100%; width: 0; background: var(--blue); animation: scan 1.1s ease-out forwards; }
+  @keyframes scan { to { width: 100%; } }
+  .grid2 { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .grid2 .full { grid-column: 1 / -1; }
+  @media (max-width: 420px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+  .note { font-size: .82rem; color: var(--muted); }
+  .warnline { font-size: .84rem; color: var(--warn); }
+
+  .file { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 6px; }
+  .file .rec { font-size: .78rem; }
+
+  .console { background: var(--night); color: var(--night-fg); border-radius: 14px; padding: 14px 16px; font-family: var(--mono); font-size: .78rem; line-height: 1.6; overflow-x: auto; white-space: pre; min-height: 3.4em; }
+  .console .ok { color: var(--night-ok); } .console .ko { color: var(--night-ko); } .console .dim { opacity: .62; }
+  .result { display: grid; gap: 8px; }
+  .resrow { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; font-size: .9rem; }
+  .resrow .state { justify-self: start; }
+
+  .after { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+  .after div { border-left: 2px solid var(--line); padding: 2px 0 2px 12px; display: grid; gap: 4px; font-size: .9rem; }
+  .after div b { font-family: var(--mono); font-size: .72rem; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+
+  /* tabella del percorso vero */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--card); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: .9rem; }
+  th, td { text-align: left; vertical-align: top; padding: 11px 14px; border-bottom: 1px solid var(--line); }
+  th { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+
+  /* regole e critiche */
+  .rules { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+  .rules div { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 6px; align-content: start; }
+  .rules b { font-size: 1rem; letter-spacing: -.01em; }
+  .rules p { font-size: .9rem; color: var(--muted); }
+  details.faq { border-top: 1px solid var(--line); max-width: 48rem; }
+  details.faq:last-of-type { border-bottom: 1px solid var(--line); }
+  details.faq summary { cursor: pointer; padding: 15px 0; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq summary::after { content: "+"; font-family: var(--mono); color: var(--muted); }
+  details.faq[open] summary::after { content: "−"; }
+  details.faq .a { padding-bottom: 16px; display: grid; gap: 10px; font-size: .96rem; }
+  .tag { display: inline-block; font-family: var(--mono); font-size: .64rem; letter-spacing: .05em; text-transform: uppercase; padding: 2px 7px; border-radius: 6px; margin-right: 6px; vertical-align: 1px; }
+  .tag.done { background: var(--g-where); color: var(--ink); }
+  .tag.open { background: var(--g-doc); color: var(--ink); }
+
+  /* CTA */
+  .cta { background: var(--night); color: var(--night-fg); border: 1px solid var(--line); border-radius: 26px; padding: clamp(24px, 4vw, 44px); display: grid; gap: 16px; }
+  .cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 650; max-width: 18ch; }
+  .cta h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--lime); }
+  .cta p { max-width: 38rem; opacity: .86; }
+  .cta form { display: flex; flex-wrap: wrap; gap: 10px; }
+  .cta input[type="email"] { flex: 1 1 240px; min-height: 50px; border-radius: 999px; padding: 0 18px; background: transparent; color: var(--night-fg); border: 1px solid color-mix(in srgb, var(--night-fg) 40%, transparent); font-family: var(--mono); }
+  .cta input[type="email"]::placeholder { color: color-mix(in srgb, var(--night-fg) 50%, transparent); }
+  .cta .btn.lime { min-height: 50px; padding: 0 24px; font-size: .98rem; }
+  .cta small { font-size: .78rem; opacity: .7; max-width: 40rem; }
+  .cta .msg { font-weight: 600; }
+  .cta .msg.err { color: var(--night-ko); }
+
+  footer.foot { padding-block: 34px 50px; border-top: 1px solid var(--line); margin-top: 40px; display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: .82rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <a href="https://bebroggi.it/">← Alberto Broggi</a>
+    <a href="https://bebroggi.it/#dev">Tool</a>
+    <span class="pill"><i></i> Sandbox · ospiti finti · niente parte</span>
+  </div>
+</div>
+
+<main>
+  <div class="wrap hero">
+    <div class="byline"><span class="label">Villa Volpe · Lago d'Orta · ottobre 2026</span></div>
+    <h1>Ho automatizzato le schedine per <em>Alloggiati Web</em>.</h1>
+    <p class="lead">Chi affitta deve comunicare ogni ospite alla Questura entro 24 ore dall'arrivo. Nella mia casa vacanze ora lo fa il gestionale: <b>l'ospite fotografa il documento dal telefono, controlla i dati e la schedina parte da sola</b>, dopo un Test con la Questura. Qui sotto puoi provare lo stesso percorso con ospiti finti. Niente lascia il tuo browser e niente arriva alla Questura.</p>
+
+    <div class="line168" aria-label="Una schedina di esempio">
+      <header>
+        <span class="label">Una schedina = una riga di 168 caratteri</span>
+        <span class="label" id="hero-who">ospite di prova</span>
+      </header>
+      <div class="scroll">
+        <div class="ruler" id="hero-ruler"></div>
+        <div class="rec" id="hero-rec"></div>
+      </div>
+      <div class="fieldinfo" id="hero-info">Passa sopra la riga (o toccala) per vedere ogni campo.</div>
+      <div class="legend">
+        <span><i style="background:var(--g-stay-2)"></i><b>Soggiorno</b> tipo, arrivo, giorni</span>
+        <span><i style="background:var(--g-who-2)"></i><b>Persona</b> cognome, nome, sesso, nascita</span>
+        <span><i style="background:var(--g-where-2)"></i><b>Luoghi</b> comune, provincia, Stato, cittadinanza</span>
+        <span><i style="background:var(--g-doc-2)"></i><b>Documento</b> tipo, numero, rilascio</span>
+      </div>
+    </div>
+  </div>
+
+  <section class="block wrap" id="sandbox" aria-labelledby="sb-title">
+    <h2 id="sb-title">Provalo: <em>quattro passi</em>, come in casa mia</h2>
+    <p class="prose note" style="font-size:.95rem">I documenti qui sotto sono inventati. Non caricare documenti veri: la sandbox non legge foto e non le chiede.</p>
+    <div class="steps">
+
+      <article class="step" id="step1">
+        <header><span class="n">1</span><h3>La prenotazione</h3><p>Il gestionale crea un link personale per ogni prenotazione e lo manda all'ospite con l'email di check-in.</p></header>
+        <div class="row">
+          <label class="fld"><span>Arrivo</span><input type="date" id="arrival" /></label>
+          <label class="fld"><span>Notti</span><input type="number" id="nights" min="1" max="30" value="3" style="width:6rem" /></label>
+          <label class="fld"><span>Ospiti</span>
+            <select id="count"><option value="1">1, da solo</option><option value="2" selected>2</option><option value="3">3</option><option value="4">4</option></select>
+          </label>
+          <div class="fld"><span>Chi viaggia</span>
+            <div class="seg" id="kind"><button type="button" data-k="famiglia" class="on">Famiglia</button><button type="button" data-k="gruppo">Gruppo</button></div>
+          </div>
+        </div>
+        <p class="note" id="roles-note"></p>
+      </article>
+
+      <article class="step" id="step2">
+        <header><span class="n">2</span><h3>Il modulo dell'ospite</h3><p>Sul telefono dell'ospite: foto del documento, lettura automatica, controllo, conferma. Chi non vuole la foto scrive a mano. Familiari e membri del gruppo non hanno bisogno del documento.</p></header>
+        <div class="guests" id="guests"></div>
+      </article>
+
+      <article class="step" id="step3">
+        <header><span class="n">3</span><h3>Le righe per la Questura</h3><p>Il tracciato ufficiale: una riga di 168 caratteri per ospite, il titolare per primo, i codici delle tabelle di Alloggiati Web al posto dei nomi. È lo stesso codice che uso in produzione.</p></header>
+        <div class="file">
+          <div class="scroll" id="file-lines"></div>
+          <div class="fieldinfo" id="file-info"></div>
+        </div>
+        <div class="row"><button type="button" class="btn" id="copy-file">Copia le righe</button><span class="note" id="copy-msg"></span></div>
+      </article>
+
+      <article class="step" id="step4">
+        <header><span class="n">4</span><h3>Test, poi invio (simulati)</h3><p>Prima il Test: la Questura controlla le righe senza registrarle. Solo se passano tutte parte l'invio vero. Qui il servizio web è simulato, con gli stessi controlli di formato e di codice.</p></header>
+        <div class="row">
+          <button type="button" class="btn primary" id="btn-test">Test</button>
+          <button type="button" class="btn lime" id="btn-send" disabled>Invia (simulato)</button>
+          <span class="note" id="send-note"></span>
+        </div>
+        <div class="console" id="console" aria-live="polite"><span class="dim">// la risposta del servizio web comparirà qui</span></div>
+        <div class="result" id="result"></div>
+        <div class="after" id="after" hidden>
+          <div><b>Subito</b>Notifica sul telefono del gestore con l'esito. Le schedine non si rimandano più da sole.</div>
+          <div><b>Domani alle 07:00</b>Il gestionale scarica la ricevuta della Questura e la archivia.</div>
+          <div><b>Dopo la ricevuta</b>Schedine e foto del documento si cancellano. Le foto comunque entro 30 giorni dalla partenza.</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="block wrap" aria-labelledby="how-title">
+    <h2 id="how-title">Come funziona <em>davvero</em></h2>
+    <div class="prose">
+      <p>Il gestionale è un'app che ho scritto per Villa Volpe, una casa vacanze sul Lago d'Orta: prenotazioni, pagamenti, email agli ospiti e, da ottobre 2026, le schedine di Alloggiati Web. Usa il servizio web ufficiale del portale della Polizia di Stato, lo stesso che usano i gestionali alberghieri: chiede un token con le credenziali e una chiave dedicata, manda le righe con <code>Test</code>, poi con <code>Send</code>, e il giorno dopo scarica la ricevuta.</p>
+      <p>Questo è il percorso dei dati, passo per passo.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Passo</th><th>Cosa succede</th><th>Dove finiscono i dati</th><th>Quanto restano</th></tr></thead>
+        <tbody>
+          <tr><td>Link</td><td>Un indirizzo personale e non indovinabile per la prenotazione, mandato con l'email di check-in.</td><td>Solo il codice del link, nel database.</td><td>Il link si chiude a modulo completo e scade 7 giorni dopo la partenza.</td></tr>
+          <tr><td>Foto</td><td>L'ospite fotografa il documento. Il telefono riduce l'immagine prima di mandarla.</td><td>Database (Postgres in Germania), cifrata AES-256-GCM.</td><td>Cancellata dopo la ricevuta della Questura, al massimo 30 giorni dopo la partenza.</td></tr>
+          <tr><td>Lettura</td><td>Claude, il modello di Anthropic, legge il documento e restituisce i campi in un formato fisso, controllati con la zona MRZ.</td><td>La foto va all'API di Anthropic (USA) solo per la lettura; i campi letti tornano nel database.</td><td>Nel gestionale fino alla cancellazione delle schedine. Per l'API vale la politica di conservazione di Anthropic.</td></tr>
+          <tr><td>Conferma</td><td>L'ospite controlla e corregge i campi. Senza la sua conferma la schedina non parte.</td><td>Database, solo i campi della schedina.</td><td>Fino alla ricevuta della Questura.</td></tr>
+          <tr><td>Invio</td><td>Test e poi Send, tutta la prenotazione o niente. Parte appena l'ultimo ospite conferma, dal giorno dell'arrivo, oppure alle 07:00 del giorno dopo.</td><td>Questura. Nel gestionale restano data e esito, senza dati personali.</td><td>Il registro degli invii resta.</td></tr>
+          <tr><td>Ricevuta</td><td>Il giorno dopo il gestionale scarica il PDF della ricevuta e cancella schedine e foto.</td><td>Database.</td><td>La ricevuta si conserva come prova dell'invio.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>Le credenziali di Alloggiati Web le inserisco solo io: password e chiave del servizio restano cifrate. Le copie del database che tengo sul mio Mac escludono schedine e foto dei documenti.</p>
+    </div>
+  </section>
+
+  <section class="block wrap" aria-labelledby="rules-title">
+    <h2 id="rules-title">Le regole che il codice <em>non salta mai</em></h2>
+    <div class="rules">
+      <div><b>Test prima di Send</b><p>Ogni invio passa prima dal Test della Questura. Se una riga non va, non parte niente.</p></div>
+      <div><b>Tutto o niente</b><p>Una prenotazione parte intera: mai metà famiglia oggi e il resto domani.</p></div>
+      <div><b>Mai un secondo invio da solo</b><p>Send non si annulla. Se la risposta è incerta (rete, timeout), il gestionale si ferma e avvisa: decido io.</p></div>
+      <div><b>Solo dati confermati</b><p>Quello che ha letto l'AI non parte finché l'ospite non l'ha controllato. Una nuova foto toglie la conferma.</p></div>
+      <div><b>Un invio alla volta</b><p>Se il modulo e il giro del mattino arrivano insieme, uno aspetta l'altro: niente schedine doppie.</p></div>
+      <div><b>Solo oggi o ieri</b><p>Il servizio accetta arrivi del giorno o del giorno prima. Per il resto restano il portale o la PEC.</p></div>
+    </div>
+  </section>
+
+  <section class="block wrap" aria-labelledby="faq-title">
+    <h2 id="faq-title">Le critiche giuste, <em>prima che me le fate</em></h2>
+    <p class="prose note" style="font-size:.95rem">Prima di scrivere questa pagina ho fatto una revisione di codice e flusso. Dove c'è <span class="tag done">sistemato</span> l'ho già corretto; dove c'è <span class="tag open">aperto</span> ci sto lavorando.</p>
+    <div>
+      <details class="faq"><summary>Mandi le foto dei documenti a un'AI americana?</summary><div class="a">
+        <p>Sì. La lettura usa Claude di Anthropic, un'azienda statunitense, tramite API. App e database stanno a Francoforte, ma la foto per essere letta va ad Anthropic. È il punto più delicato e non lo nascondo.</p>
+        <p><span class="tag open">aperto</span>L'informativa che vede l'ospite deve dirlo con chiarezza, insieme alla scelta di scrivere i dati a mano senza foto. Sto anche verificando gli accordi sul trattamento dei dati con i fornitori.</p>
+      </div></details>
+      <details class="faq"><summary>L'obbligo di legge copre la schedina, non la foto.</summary><div class="a">
+        <p>Vero. La comunicazione alla Questura è un obbligo (art. 109 TULPS). Fotografare il documento e farlo leggere da un'AI è una comodità per l'ospite e per me, e va trattata come tale: facoltativa, spiegata, con un'alternativa a mano.</p>
+      </div></details>
+      <details class="faq"><summary>E se l'AI legge male una cifra?</summary><div class="a">
+        <p>Può succedere. Per questo l'ospite vede i campi letti e li conferma prima dell'invio, e la Questura con il Test blocca codici e formati sbagliati. Il Test però non sa se il numero del documento è giusto: per quello conta la conferma dell'ospite.</p>
+        <p><span class="tag done">sistemato</span>Prima della revisione, l'invio delle 07:00 poteva mandare anche dati letti dall'AI e mai confermati. Ora parte solo chi ha confermato, e una nuova lettura toglie la conferma.</p>
+        <p><span class="tag done">sistemato</span>Nomi come Łukasz o Sørensen perdevano le lettere senza accento (diventavano «UKASZ», «S RENSEN»). Ora si traslitterano: LUKASZ, SORENSEN. Provalo nella sandbox.</p>
+      </div></details>
+      <details class="faq"><summary>La legge vuole che il gestore identifichi l'ospite di persona.</summary><div class="a">
+        <p>L'automazione compila e manda la schedina, non sostituisce l'accoglienza. Oggi però la schedina può partire la mattina dell'arrivo, prima che l'ospite entri in casa. Se l'ospite non arriva, alla Questura risulta un arrivo che non c'è stato.</p>
+        <p><span class="tag open">aperto</span>Sto valutando di far partire l'invio solo dopo la conferma «arrivati» di chi accoglie gli ospiti. Sul tema dell'identificazione da remoto ci sono state circolari e sentenze negli ultimi due anni: prima di cambiare il flusso lo verifico con un legale.</p>
+      </div></details>
+      <details class="faq"><summary>Chi risponde se la schedina è sbagliata o in ritardo?</summary><div class="a">
+        <p>Il gestore, cioè io. L'automazione non sposta la responsabilità. Mi toglie il lavoro di ricopiare i documenti e mi avvisa sul telefono quando qualcosa non va.</p>
+      </div></details>
+      <details class="faq"><summary>Dove stanno i dati degli ospiti, e per quanto?</summary><div class="a">
+        <p>In un database Postgres a Francoforte. Le foto sono cifrate e si cancellano dopo la ricevuta della Questura, al massimo 30 giorni dopo la partenza. Le schedine si cancellano con la ricevuta. Le copie di sicurezza sul mio Mac non contengono né schedine né foto.</p>
+        <p><span class="tag open">aperto</span>Due cose da migliorare: i campi delle schedine nel database non sono cifrati, e una schedina mai inviata dal servizio web (per esempio caricata a mano sul portale) oggi resta finché non la segno come inviata. Aggiungo una cancellazione a scadenza fissa.</p>
+      </div></details>
+      <details class="faq"><summary>Le credenziali di Alloggiati Web in un'app in cloud?</summary><div class="a">
+        <p>Il servizio web esiste proprio per i gestionali: si usa con utente, password e una chiave dedicata generata sul portale. Nel mio gestionale password e chiave sono cifrate e le inserisce solo il proprietario. La chiave va rigenerata a ogni cambio password.</p>
+      </div></details>
+      <details class="faq"><summary>Esiste già: Octorate, Smoobu, Kross e tante app lo fanno.</summary><div class="a">
+        <p>Vero, diversi gestionali e app di check-in online fanno già l'invio ad Alloggiati Web. Il mio non è un'alternativa a un PMS: è il modulo che ho costruito per la mia casa, integrato con il resto della gestione, e il codice si può leggere riga per riga.</p>
+      </div></details>
+      <details class="faq"><summary>Quanto costa? E se qualcosa si rompe?</summary><div class="a">
+        <p>La lettura di un documento costa pochi centesimi di API. Se la lettura non va, l'ospite scrive a mano. Se il servizio della Questura non risponde, l'esito è «incerto» e nessuno rimanda da solo. In ogni caso il gestionale prepara il file da caricare sul portale: il piano B è a un clic.</p>
+      </div></details>
+      <details class="faq"><summary>Verifica che il documento sia vero?</summary><div class="a">
+        <p>No. Il gestionale legge il documento, non ne verifica l'autenticità. Non fa nemmeno ISTAT, imposta di soggiorno o Ross1000: solo Alloggiati Web.</p>
+      </div></details>
+      <details class="faq"><summary>Da quanto lo usi?</summary><div class="a">
+        <p>L'invio automatico è acceso da metà ottobre 2026 sulla mia casa. È un sistema giovane: fra qualche settimana aggiornerò questa pagina con i numeri veri.</p>
+      </div></details>
+    </div>
+  </section>
+
+  <section class="block wrap" id="codice" aria-labelledby="cta-title" style="border-top:0">
+    <div class="cta">
+      <span class="label" style="color:inherit;opacity:.7">Il codice</span>
+      <h2 id="cta-title">Vuoi il codice? <em>Lascia la mail e te lo mando.</em></h2>
+      <p>Il modulo Alloggiati Web del mio gestionale, in TypeScript: il tracciato a 168 caratteri con le tabelle ufficiali, il client del servizio web (token, Test, Send, ricevuta) e i test. Ti scrivo io con il pacchetto e due righe su come usarlo.</p>
+      <form id="lead-form" novalidate>
+        <input type="email" id="lead-email" autocomplete="email" placeholder="la-tua@email.it" aria-label="La tua email" required />
+        <button type="submit" class="btn lime" id="lead-btn">Mandami il codice</button>
+      </form>
+      <p class="msg" id="lead-msg" aria-live="polite" hidden></p>
+      <small>Uso l'email solo per mandarti il codice e rispondere su questo strumento. Niente newsletter, nessuna cessione a terzi. Per farla cancellare scrivi a bebroggi@gmail.com.</small>
+    </div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <span>© Alberto Broggi · <a href="https://bebroggi.it/">bebroggi.it</a></span>
+  <span>Tabelle ufficiali di Alloggiati Web (Polizia di Stato), versione di ottobre 2026.</span>
+  <span>Sandbox: niente cookie, niente dati inviati. L'email del modulo qui sopra è l'unica cosa che esce dalla pagina.</span>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+  // ── tracciato Alloggiati Web: stesso codice del gestionale (src/lib/alloggiati.ts) ──────────────
+  const ITALIA = "100000100";
+  const LATIN = { "Ł": "L", "Ø": "O", "Æ": "AE", "Œ": "OE", "Đ": "D", "Ð": "D", "Þ": "TH", "Ħ": "H", "Ŧ": "T", "Ŀ": "L", "Ŋ": "NG", "ẞ": "SS" };
+  const latin = (s) => s.toUpperCase().replace(/[ŁØÆŒĐÐÞĦŦĿŊẞ]/g, (c) => LATIN[c] || c).normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const field = (v, len) => latin(String(v ?? "")).replace(/[^A-Z' -]/g, " ").replace(/\s+/g, " ").trim().slice(0, len).padEnd(len, " ");
+  const raw = (v, len) => String(v ?? "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, len).padEnd(len, " ");
+  const dmy = (iso) => `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(0, 4)}`;
+  const DAY = 86400000;
+  const isoToMs = (iso) => Date.UTC(+iso.slice(0, 4), +iso.slice(5, 7) - 1, +iso.slice(8, 10));
+  const diffDays = (a, b) => Math.round((isoToMs(b) - isoToMs(a)) / DAY);
+  const addDays = (iso, n) => new Date(isoToMs(iso) + n * DAY).toISOString().slice(0, 10);
+  const needsDocument = (role) => role === "16" || role === "17" || role === "18";
+  const roleFor = (pos, count, kind) => (count <= 1 ? "16" : pos === 1 ? (kind === "gruppo" ? "18" : "17") : kind === "gruppo" ? "20" : "19");
+  const ROLES = { "16": "Ospite singolo", "17": "Capofamiglia", "18": "Capogruppo", "19": "Familiare", "20": "Membro del gruppo" };
+
+  // Campi del tracciato: [da, lunghezza, nome, gruppo]
+  const FIELDS = [
+    [0, 2, "Tipo alloggiato", "stay"], [2, 10, "Data di arrivo", "stay"], [12, 2, "Giorni di permanenza", "stay"],
+    [14, 50, "Cognome", "who"], [64, 30, "Nome", "who"], [94, 1, "Sesso (1 M, 2 F)", "who"], [95, 10, "Data di nascita", "who"],
+    [105, 9, "Comune di nascita (solo Italia)", "where"], [114, 2, "Provincia di nascita", "where"], [116, 9, "Stato di nascita", "where"], [125, 9, "Cittadinanza", "where"],
+    [134, 5, "Tipo documento", "doc"], [139, 20, "Numero documento", "doc"], [159, 9, "Luogo di rilascio", "doc"],
+  ];
+
+  function record(p, arrival, departure) {
+    const days = Math.min(30, Math.max(1, diffDays(arrival, departure)));
+    const doc = needsDocument(p.role);
+    const italy = p.birthCountry === ITALIA;
+    const line =
+      p.role.padStart(2, "0") + dmy(arrival) + String(days).padStart(2, "0") +
+      field(p.surname, 50) + field(p.name, 30) + (p.sex === "F" ? "2" : "1") + dmy(p.birthDate) +
+      (italy ? raw(p.birthPlace, 9) : " ".repeat(9)) + (italy ? raw(p.birthProvince, 2) : " ".repeat(2)) +
+      raw(p.birthCountry, 9) + raw(p.citizenship, 9) +
+      (doc ? raw(p.docType, 5) : " ".repeat(5)) + (doc ? raw(p.docNumber, 20) : " ".repeat(20)) + (doc ? raw(p.docIssuePlace, 9) : " ".repeat(9));
+    if (line.length !== 168) throw new Error(`Riga di ${line.length} caratteri invece di 168`);
+    return line;
+  }
+  function missing(p) {
+    const m = [];
+    if (!p.surname) m.push("cognome");
+    if (!p.name) m.push("nome");
+    if (p.sex !== "M" && p.sex !== "F") m.push("sesso");
+    if (!p.birthDate) m.push("data di nascita");
+    if (!p.birthCountry) m.push("stato di nascita");
+    if (p.birthCountry === ITALIA && !p.birthPlace) m.push("comune di nascita");
+    if (!p.citizenship) m.push("cittadinanza");
+    if (needsDocument(p.role)) {
+      if (!p.docType) m.push("tipo documento");
+      if (!p.docNumber) m.push("numero documento");
+      if (!p.docIssuePlace) m.push("luogo di rilascio");
+    }
+    return m;
+  }
+
+  // ── tabelle ufficiali ───────────────────────────────────────────────────────
+  let STATI = [], COMUNI = [], DOCS = [];
+  const byIso = new Map(), statoByCode = new Map(), comuneByCode = new Map(), docByCode = new Map();
+  const stateOfIso = (iso) => byIso.get(iso) || null;
+  const comune = (name, prov) => COMUNI.find((c) => c.name === name && (!prov || c.prov === prov)) || null;
+  const placeName = (code) => statoByCode.get(code)?.name || (comuneByCode.get(code) ? `${comuneByCode.get(code).name} (${comuneByCode.get(code).prov})` : code || "");
+
+  // ── documenti di prova (inventati) ─────────────────────────────────────────
+  // Ognuno è quello che la lettura automatica restituirebbe: campi + affidabilità. Il nome ESEMPIO è voluto.
+  const SPECIMENS = [
+    { id: "deu", label: "Passaporto tedesco di prova", sub: "Erika Mustermann, nata in Germania", conf: "alta",
+      read: () => ({ surname: "Mustermann", name: "Erika", sex: "F", birthDate: "1983-08-12", birthCountry: iso("DEU"), citizenship: iso("DEU"), docType: "PASOR", docNumber: "C01X00T47", docIssuePlace: iso("DEU") }) },
+    { id: "ita", label: "Carta d'identità elettronica di prova", sub: "Mario Esempio, nato a Omegna (VB)", conf: "alta",
+      read: () => { const om = comune("OMEGNA", "VB"); return { surname: "Esempio", name: "Mario", sex: "M", birthDate: "1978-03-15", birthCountry: ITALIA, birthPlace: om?.code || null, birthProvince: "VB", citizenship: ITALIA, docType: "IDELE", docNumber: "CA00000AA", docIssuePlace: om?.code || null }; } },
+    { id: "pol", label: "Passaporto polacco di prova", sub: "Łukasz Wójcik: lettere che non sono accenti", conf: "alta",
+      read: () => ({ surname: "Wójcik", name: "Łukasz", sex: "M", birthDate: "1990-11-02", birthCountry: iso("POL"), citizenship: iso("POL"), docType: "PASOR", docNumber: "EA0000000", docIssuePlace: iso("POL") }) },
+    { id: "dnk", label: "Foto storta: lettura incerta", sub: "Astrid Sørensen, una cifra letta male", conf: "bassa",
+      read: () => ({ surname: "Sørensen", name: "Astrid", sex: "F", birthDate: "1995-06-31", birthCountry: iso("DNK"), citizenship: iso("DNK"), docType: "PASOR", docNumber: "2O6000000", docIssuePlace: iso("DNK") }),
+      note: "Affidabilità bassa: la data di nascita non esiste (31 giugno) e nel numero c'è una O al posto di uno 0. Correggi prima di confermare." },
+  ];
+  function iso(code) { return stateOfIso(code)?.code || null; }
+
+  // ── stato della sandbox ─────────────────────────────────────────────────────
+  const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  const S = { arrival: today, nights: 3, count: 2, kind: "famiglia", people: [], tested: null };
+  const emptyPerson = () => ({ surname: "", name: "", sex: "", birthDate: "", birthCountry: "", birthPlace: "", birthProvince: "", citizenship: "", docType: "", docNumber: "", docIssuePlace: "", confirmed: false, via: null, conf: null, note: null, reading: false });
+
+  function syncPeople() {
+    while (S.people.length < S.count) S.people.push(emptyPerson());
+    S.people.length = S.count;
+    S.people.forEach((p, i) => (p.role = roleFor(i + 1, S.count, S.kind)));
+    S.tested = null;
+  }
+
+  // ── passo 1 ─────────────────────────────────────────────────────────────────
+  $("arrival").value = S.arrival;
+  $("arrival").addEventListener("change", (e) => { S.arrival = e.target.value || today; S.tested = null; renderAll(); });
+  $("nights").addEventListener("input", (e) => { S.nights = Math.min(30, Math.max(1, Number(e.target.value) || 1)); S.tested = null; renderLines(); renderSend(); });
+  $("count").addEventListener("change", (e) => { S.count = Number(e.target.value); syncPeople(); renderAll(); });
+  $("kind").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-k]"); if (!b) return;
+    S.kind = b.dataset.k; [...$("kind").children].forEach((x) => x.classList.toggle("on", x === b)); syncPeople(); renderAll();
+  });
+  function renderRoles() {
+    const roles = S.people.map((p) => `${ROLES[p.role]} (${p.role})`);
+    $("roles-note").textContent = `Tipi di alloggiato: ${roles.join(" · ")}. ${S.count > 1 ? "Il documento serve solo al titolare." : ""}`;
+  }
+
+  // ── passo 2 ─────────────────────────────────────────────────────────────────
+  const statoOptions = () => `<option value="">Scegli…</option>` + STATI.map((s) => `<option value="${s.code}">${esc(s.name)}</option>`).join("");
+  const docOptions = () => {
+    const common = ["IDENT", "IDELE", "PASOR", "PATEN"];
+    const list = [...common.map((c) => docByCode.get(c)).filter(Boolean), ...DOCS.filter((d) => !common.includes(d.code))];
+    return `<option value="">Scegli…</option>` + list.map((d) => `<option value="${d.code}">${esc(d.name)}</option>`).join("");
+  };
+  let STATO_OPTS = "", DOC_OPTS = "";
+
+  function guestCard(p, i) {
+    const doc = needsDocument(p.role);
+    const m = missing(p);
+    const st = p.confirmed ? `<span class="state ok">confermato</span>` : p.via ? `<span class="state warn">da confermare</span>` : `<span class="state idle">vuoto</span>`;
+    const specimens = SPECIMENS.map((s) => `<button type="button" data-spec="${s.id}"><span>${esc(s.label)}</span><small>${esc(s.sub)}</small></button>`).join("");
+    const head = `<header><b>Ospite ${i + 1} · ${ROLES[p.role]}</b>${st}</header>`;
+    if (!p.via) {
+      return `<div class="guest" data-i="${i}">${head}
+        ${doc ? `<div class="specimens"><span class="note">Fotografa il documento (qui: scegli un documento di prova)</span>${specimens}</div>` : `<p class="note">Per un ${ROLES[p.role].toLowerCase()} la schedina non chiede il documento.</p>`}
+        <div><button type="button" class="btn" data-manual>${doc ? "Scrivo i dati a mano" : "Inserisci i dati"}</button></div>
+        ${doc ? "" : `<div class="specimens"><span class="note">oppure usa i dati di un documento di prova</span>${specimens.replace(/data-spec=/g, "data-spec-nodoc=")}</div>`}
+      </div>`;
+    }
+    if (p.reading) {
+      return `<div class="guest" data-i="${i}">${head}<div class="ocr"><span>Lettura del documento…</span><div class="bar"><i></i></div><span class="note">Nel gestionale vero qui la foto va a Claude (Anthropic), che restituisce i campi. Nella sandbox non esce niente: i campi sono già nel documento di prova.</span></div></div>`;
+    }
+    const italy = p.birthCountry === ITALIA;
+    const issueIsItaly = p.docIssuePlace && comuneByCode.has(p.docIssuePlace);
+    return `<div class="guest" data-i="${i}">${head}
+      ${p.via === "ocr" ? `<div class="ocr ${p.conf === "bassa" ? "low" : ""}"><span>Dati letti dal documento · affidabilità <b>${p.conf}</b>. Controlla che siano giusti.</span>${p.note ? `<span class="warnline">${esc(p.note)}</span>` : ""}</div>` : ""}
+      <div class="grid2">
+        <label class="fld"><span>Cognome</span><input data-f="surname" value="${esc(p.surname)}" autocomplete="off" /></label>
+        <label class="fld"><span>Nome</span><input data-f="name" value="${esc(p.name)}" autocomplete="off" /></label>
+        <label class="fld"><span>Sesso</span><select data-f="sex"><option value="">Scegli…</option><option value="M" ${p.sex === "M" ? "selected" : ""}>M</option><option value="F" ${p.sex === "F" ? "selected" : ""}>F</option></select></label>
+        <label class="fld"><span>Data di nascita</span><input data-f="birthDate" value="${esc(p.birthDate)}" placeholder="AAAA-MM-GG" inputmode="numeric" /></label>
+        <label class="fld"><span>Stato di nascita</span><select data-f="birthCountry">${STATO_OPTS}</select></label>
+        <label class="fld"><span>Cittadinanza</span><select data-f="citizenship">${STATO_OPTS}</select></label>
+        ${italy ? `<label class="fld full"><span>Comune di nascita</span><input data-f="birthPlaceName" list="comuni-list" value="${esc(comuneByCode.get(p.birthPlace)?.name || "")}" placeholder="Scrivi le prime lettere" autocomplete="off" /></label>` : ""}
+        ${doc ? `<label class="fld"><span>Documento</span><select data-f="docType">${DOC_OPTS}</select></label>
+        <label class="fld"><span>Numero</span><input data-f="docNumber" value="${esc(p.docNumber)}" autocomplete="off" /></label>
+        <label class="fld full"><span>Rilasciato da (Stato, o comune se in Italia)</span><input data-f="docIssueName" list="luoghi-list" value="${esc(issueIsItaly ? comuneByCode.get(p.docIssuePlace).name : statoByCode.get(p.docIssuePlace)?.name || "")}" autocomplete="off" /></label>` : ""}
+      </div>
+      <div class="row">
+        <button type="button" class="btn primary" data-confirm ${p.confirmed ? "disabled" : ""}>${p.confirmed ? "Confermato" : "Conferma i dati"}</button>
+        <button type="button" class="btn" data-reset>Ricomincia</button>
+      </div>
+      <p class="note" data-msg>${p.confirmed ? "Dati confermati dall'ospite: questa schedina può partire." : m.length ? `Mancano: ${m.join(", ")}.` : "Tutto compilato: manca solo la conferma."}</p>
+    </div>`;
+  }
+
+  function renderGuests() {
+    $("guests").innerHTML = S.people.map(guestCard).join("");
+    $("guests").querySelectorAll(".guest").forEach((card) => {
+      const p = S.people[Number(card.dataset.i)];
+      card.querySelectorAll("select[data-f]").forEach((sel) => (sel.value = p[sel.dataset.f] || ""));
+    });
+  }
+
+  function validDate(iso) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return false;
+    const d = new Date(`${iso}T12:00:00Z`);
+    return !isNaN(d) && d.toISOString().slice(0, 10) === iso;
+  }
+
+  $("guests").addEventListener("click", (e) => {
+    const card = e.target.closest(".guest"); if (!card) return;
+    const i = Number(card.dataset.i), p = S.people[i];
+    const spec = e.target.closest("[data-spec],[data-spec-nodoc]");
+    if (spec) {
+      const s = SPECIMENS.find((x) => x.id === (spec.dataset.spec || spec.dataset.specNodoc));
+      Object.assign(p, emptyPerson(), { role: p.role, via: "ocr", reading: true, conf: s.conf, note: s.note || null });
+      renderGuests(); renderLines(); renderSend();
+      setTimeout(() => { Object.assign(p, s.read(), { reading: false }); if (!needsDocument(p.role)) Object.assign(p, { docType: "", docNumber: "", docIssuePlace: "" }); renderGuests(); renderLines(); renderSend(); }, matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1150);
+      return;
+    }
+    if (e.target.closest("[data-manual]")) { Object.assign(p, emptyPerson(), { role: p.role, via: "mano" }); renderGuests(); renderLines(); renderSend(); return; }
+    if (e.target.closest("[data-reset]")) { Object.assign(p, emptyPerson(), { role: p.role }); S.tested = null; renderGuests(); renderLines(); renderSend(); return; }
+    if (e.target.closest("[data-confirm]")) {
+      const m = missing(p);
+      const msg = card.querySelector("[data-msg]");
+      if (m.length) { msg.textContent = `Non posso confermare: mancano ${m.join(", ")}.`; msg.className = "warnline"; return; }
+      if (!validDate(p.birthDate)) { msg.textContent = "La data di nascita non esiste: correggila (formato AAAA-MM-GG)."; msg.className = "warnline"; return; }
+      p.confirmed = true; S.tested = null; renderGuests(); renderLines(); renderSend();
+    }
+  });
+
+  $("guests").addEventListener("change", (e) => { if (e.target.matches("select[data-f]")) onEdit(e, false); });
+  $("guests").addEventListener("input", (e) => { if (e.target.matches("input[data-f]")) onEdit(e, true); });
+  function onEdit(e, typing) {
+    const el = e.target.closest("[data-f]"); if (!el) return;
+    const card = el.closest(".guest"); const p = S.people[Number(card.dataset.i)];
+    const f = el.dataset.f, v = el.value;
+    if (f === "birthPlaceName") { const c = COMUNI.find((x) => x.name === v.toUpperCase().trim()); p.birthPlace = c?.code || ""; p.birthProvince = c?.prov || ""; }
+    else if (f === "docIssueName") { const n = v.toUpperCase().trim(); p.docIssuePlace = (STATI.find((s) => s.name === n) || COMUNI.find((c) => c.name === n))?.code || ""; }
+    else p[f] = v;
+    // ogni modifica toglie la conferma, come nel gestionale
+    const wasConfirmed = p.confirmed;
+    p.confirmed = false; S.tested = null;
+    if (!typing || wasConfirmed || f === "birthCountry") { const pos = typing ? [el.dataset.f, el.selectionStart] : null; renderGuests(); if (pos) { const again = $("guests").querySelector(`.guest[data-i="${card.dataset.i}"] [data-f="${pos[0]}"]`); if (again) { again.focus(); try { again.setSelectionRange(pos[1], pos[1]); } catch {} } } }
+    else { const msg = card.querySelector("[data-msg]"); const m = missing(p); if (msg) { msg.className = "note"; msg.textContent = m.length ? `Mancano: ${m.join(", ")}.` : "Tutto compilato: manca solo la conferma."; } }
+    renderLines(); renderSend();
+  }
+
+  // ── passo 3 ─────────────────────────────────────────────────────────────────
+  function segmented(line, id) {
+    return `<div class="rec" data-rec="${id}">` + FIELDS.map(([from, len, name, g], k) => {
+      const prevSame = k > 0 && FIELDS[k - 1][3] === g;
+      const alt = prevSame && FIELDS.slice(0, k).filter((x) => x[3] === g).length % 2 === 1;
+      return `<span data-g="${g}" class="${alt ? "alt" : ""}" data-k="${k}">${esc(line.slice(from, from + len))}</span>`;
+    }).join("") + `</div>`;
+  }
+  function describe(line, k) {
+    const [from, len, name] = FIELDS[k];
+    const v = line.slice(from, from + len);
+    const t = v.trim();
+    let meaning = "";
+    if (k === 0) meaning = ROLES[t] || "";
+    else if ([7, 9, 10, 13].includes(k) && t) meaning = placeName(t);
+    else if (k === 11 && t) meaning = docByCode.get(t)?.name || "";
+    else if (k === 5) meaning = t === "2" ? "femmina" : "maschio";
+    return `${from + 1}–${from + len} · ${name}${t ? ` · «${t}»` : " · vuoto"}${meaning ? ` = ${meaning}` : ""}`;
+  }
+  function bindHover(container, info, getLine) {
+    const show = (e) => { const s = e.target.closest(".rec span[data-k]"); if (!s) return; container.querySelectorAll(".hl").forEach((x) => x.classList.remove("hl")); s.classList.add("hl"); info.textContent = describe(getLine(s.closest(".rec")), Number(s.dataset.k)); };
+    container.addEventListener("mouseover", show);
+    container.addEventListener("click", show);
+  }
+
+  const lines = () => {
+    const dep = addDays(S.arrival, S.nights);
+    return S.people.map((p) => (missing(p).length || !validDate(p.birthDate) ? null : record(p, S.arrival, dep)));
+  };
+  let LINES = [];
+  function renderLines() {
+    LINES = lines();
+    $("file-lines").innerHTML = LINES.map((l, i) => l ? segmented(l, i) : `<div class="note" style="padding:6px 0">Ospite ${i + 1}: la riga compare quando i dati sono completi.</div>`).join("");
+    if (!$("file-info").textContent) $("file-info").textContent = "Passa sopra (o tocca) un campo per leggerlo.";
+  }
+  bindHover($("file-lines"), $("file-info"), (rec) => LINES[Number(rec.dataset.rec)]);
+  $("copy-file").addEventListener("click", async () => {
+    const txt = LINES.filter(Boolean).join("\r\n");
+    if (!txt) { $("copy-msg").textContent = "Prima completa almeno un ospite."; return; }
+    try { await navigator.clipboard.writeText(txt); $("copy-msg").textContent = "Righe copiate: è il formato di «Invio file» sul portale."; }
+    catch { $("copy-msg").textContent = "Il browser non permette di copiare: seleziona le righe a mano."; }
+  });
+
+  // ── passo 4: servizio web simulato ──────────────────────────────────────────
+  // Controlli di formato e di codice come il Test vero; i messaggi della Questura reale sono diversi.
+  function checkRow(line, i, all) {
+    const errs = [];
+    const role = line.slice(0, 2), arr = line.slice(2, 12), days = Number(line.slice(12, 14));
+    const bd = line.slice(95, 105), comuneN = line.slice(105, 114).trim(), prov = line.slice(114, 116).trim();
+    const stato = line.slice(116, 125).trim(), citt = line.slice(125, 134).trim();
+    const dt = line.slice(134, 139).trim(), dn = line.slice(139, 159).trim(), dl = line.slice(159, 168).trim();
+    if (!ROLES[role]) errs.push("tipo alloggiato non valido");
+    if (i === 0 && !["16", "17", "18"].includes(role)) errs.push("la prima riga deve essere il titolare (16, 17 o 18)");
+    if (role === "16" && all.length > 1) errs.push("un ospite singolo non può avere accompagnatori");
+    if (role === "19" && all[0].slice(0, 2) !== "17") errs.push("un familiare va dopo il suo capofamiglia");
+    if (role === "20" && all[0].slice(0, 2) !== "18") errs.push("un membro del gruppo va dopo il suo capogruppo");
+    if (!(days >= 1 && days <= 30)) errs.push("giorni di permanenza fuori da 1–30");
+    if (!line.slice(14, 64).trim()) errs.push("cognome vuoto");
+    if (!line.slice(64, 94).trim()) errs.push("nome vuoto");
+    const bdIso = `${bd.slice(6, 10)}-${bd.slice(3, 5)}-${bd.slice(0, 2)}`, arrIso = `${arr.slice(6, 10)}-${arr.slice(3, 5)}-${arr.slice(0, 2)}`;
+    if (!validDate(bdIso)) errs.push("data di nascita non valida");
+    else if (bdIso >= arrIso) errs.push("data di nascita dopo l'arrivo");
+    if (!statoByCode.has(stato)) errs.push("stato di nascita non in tabella");
+    if (stato === ITALIA) { const c = comuneByCode.get(comuneN); if (!c) errs.push("comune di nascita non in tabella"); else if (c.prov !== prov) errs.push("provincia non coerente col comune"); }
+    if (!statoByCode.has(citt)) errs.push("cittadinanza non in tabella");
+    if (needsDocument(role)) {
+      if (!docByCode.has(dt)) errs.push("tipo documento non in tabella");
+      if (!dn) errs.push("numero documento vuoto");
+      if (!statoByCode.has(dl) && !comuneByCode.has(dl)) errs.push("luogo di rilascio non in tabella");
+    }
+    return errs;
+  }
+  const out = (html) => ($("console").innerHTML = html);
+  function sendRule() {
+    const y = addDays(today, -1);
+    if (S.arrival > today) return "Si può inviare solo dal giorno dell'arrivo: il servizio accetta arrivi di oggi o di ieri. Nel gestionale vero partirebbe da sola alle 07:00 del giorno dopo l'arrivo.";
+    if (S.arrival < y) return "Arrivo di più di un giorno fa: il servizio non lo accetta più. Resta il portale (Invio file) o la PEC alla Questura.";
+    return null;
+  }
+  function renderSend() {
+    const ready = S.people.every((p) => p.confirmed) && LINES.every(Boolean);
+    const unconfirmed = S.people.filter((p) => !p.confirmed && p.via && !missing(p).length).length;
+    const rule = sendRule();
+    $("btn-test").disabled = !LINES.some(Boolean);
+    $("btn-send").disabled = !(S.tested === "ok" && ready && !rule);
+    $("send-note").textContent = !ready
+      ? unconfirmed ? `${unconfirmed} ${unconfirmed === 1 ? "ospite ha" : "ospiti hanno"} i dati letti ma non confermati: non partono.` : "Completa e conferma tutti gli ospiti."
+      : rule ? rule : S.tested === "ok" ? "Test superato: ora si può inviare." : "Prima il Test.";
+    if (S.tested === null) { $("result").innerHTML = ""; $("after").hidden = true; }
+  }
+  function envelope(op, rows) {
+    return `<soap12:Envelope xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">\n  <soap12:Body>\n    <${op} xmlns="AlloggiatiService">\n      <Utente>DEMO0000</Utente>\n      <token>••••••••••••</token>\n      <ElencoSchedine>\n${rows.map((r) => `        <string>${esc(r)}</string>`).join("\n")}\n      </ElencoSchedine>\n    </${op}>\n  </soap12:Body>\n</soap12:Envelope>`;
+  }
+  $("btn-test").addEventListener("click", () => {
+    const rows = LINES.filter(Boolean);
+    const results = rows.map((r, i) => checkRow(r, i, rows));
+    const ok = results.every((e) => !e.length) && rows.length === S.people.length;
+    S.tested = ok ? "ok" : "ko";
+    out(`<span class="dim">POST https://alloggiatiweb.poliziadistato.it/service/Service.asmx  (simulato)\n${esc(envelope("Test", rows))}</span>\n\n` +
+      `&lt;TestResult&gt;&lt;esito&gt;${ok ? '<span class="ok">true</span>' : '<span class="ko">false</span>'}&lt;/esito&gt;&lt;/TestResult&gt;\n` +
+      `&lt;SchedineValide&gt;${results.filter((e) => !e.length).length}&lt;/SchedineValide&gt;`);
+    $("result").innerHTML = results.map((e, i) => `<div class="resrow"><span class="state ${e.length ? "warn" : "ok"}">riga ${i + 1}</span><span>${e.length ? esc(e.join(" · ")) : "corretta"}</span></div>`).join("") +
+      (rows.length < S.people.length ? `<div class="resrow"><span class="state warn">mancano</span><span>${S.people.length - rows.length} ospiti senza riga: tutta la prenotazione o niente.</span></div>` : "");
+    $("after").hidden = true;
+    renderSend();
+  });
+  $("btn-send").addEventListener("click", () => {
+    const rows = LINES.filter(Boolean);
+    out(`<span class="dim">POST …/Service.asmx  (simulato: niente arriva alla Questura)\n${esc(envelope("Send", rows))}</span>\n\n&lt;SendResult&gt;&lt;esito&gt;<span class="ok">true</span>&lt;/esito&gt;&lt;/SendResult&gt;\n&lt;SchedineValide&gt;${rows.length}&lt;/SchedineValide&gt;`);
+    $("result").innerHTML = `<div class="resrow"><span class="state ok">inviate</span><span>${rows.length} ${rows.length === 1 ? "schedina comunicata" : "schedine comunicate"} (simulazione). Da qui il gestionale non le rimanda più, nemmeno se qualcuno le modifica.</span></div>`;
+    $("after").hidden = false;
+    $("btn-send").disabled = true; $("btn-test").disabled = true;
+    $("send-note").textContent = "Fatto. Cambia un ospite o le date per ricominciare.";
+  });
+
+  // ── apertura: la riga di esempio ────────────────────────────────────────────
+  let HERO = "";
+  function renderHero() {
+    const p = { role: "17", ...SPECIMENS[1].read() };
+    HERO = record(p, today, addDays(today, 3));
+    $("hero-rec").outerHTML = segmented(HERO, "hero").replace('class="rec"', 'class="rec" id="hero-rec"');
+    $("hero-ruler").textContent = ("1" + " ".repeat(8) + Array.from({ length: 16 }, (_, k) => String((k + 1) * 10).padEnd(10, " ")).join("")).slice(0, 168);
+    $("hero-who").textContent = "Mario Esempio · capofamiglia · documento di prova";
+  }
+  bindHover(document.querySelector(".line168"), $("hero-info"), () => HERO);
+
+  function renderAll() { renderRoles(); renderGuests(); renderLines(); renderSend(); }
+
+  // ── dati: tabelle ufficiali (stessi file del gestionale) ────────────────────
+  Promise.all(["stati", "comuni", "documenti"].map((n) => fetch(`data/${n}.json`).then((r) => { if (!r.ok) throw new Error(n); return r.json(); })))
+    .then(([stati, comuni, docs]) => {
+      STATI = stati; COMUNI = comuni; DOCS = docs;
+      stati.forEach((s) => { statoByCode.set(s.code, s); if (s.iso3) byIso.set(s.iso3, s); });
+      comuni.forEach((c) => comuneByCode.set(c.code, c));
+      docs.forEach((d) => docByCode.set(d.code, d));
+      STATO_OPTS = statoOptions(); DOC_OPTS = docOptions();
+      const dl1 = document.createElement("datalist"); dl1.id = "comuni-list"; dl1.innerHTML = comuni.map((c) => `<option value="${esc(c.name)}">${esc(c.prov)}</option>`).join("");
+      const dl2 = document.createElement("datalist"); dl2.id = "luoghi-list"; dl2.innerHTML = stati.map((s) => `<option value="${esc(s.name)}"></option>`).join("") + dl1.innerHTML;
+      document.body.append(dl1, dl2);
+      // la sandbox si apre già al lavoro: il titolare letto da un documento di prova, il secondo ospite da fare
+      syncPeople();
+      Object.assign(S.people[0], SPECIMENS[1].read(), { via: "ocr", conf: "alta" });
+      renderHero(); renderAll();
+    })
+    .catch(() => { $("guests").innerHTML = `<p class="warnline">Non riesco a caricare le tabelle ufficiali. Ricarica la pagina.</p>`; });
+
+  // ── CTA: email per ricevere il codice ───────────────────────────────────────
+  // Stesso archivio del calcolatore di rendita (Firestore, solo scrittura; regole in tools/rendita-affitti/README.md).
+  const FIREBASE_CONFIG = { apiKey: "AIzaSyC-sTKfut6O0jyz7PbrgGoavW3E-yloqzE", authDomain: "rendita-affitti.firebaseapp.com", projectId: "rendita-affitti", appId: "1:612899040029:web:64b02f9d0f3ae36faecff4" };
+  $("lead-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = $("lead-email").value.trim();
+    const msg = $("lead-msg");
+    msg.hidden = false; msg.className = "msg";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = "Controlla l'indirizzo: non sembra un'email valida."; msg.classList.add("err"); return; }
+    const btn = $("lead-btn"); btn.disabled = true; btn.textContent = "Un attimo…";
+    try {
+      const [{ initializeApp, getApps }, { getFirestore, collection, addDoc, serverTimestamp }] = await Promise.all([
+        import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
+        import("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js"),
+      ]);
+      const app = getApps().length ? getApps()[0] : initializeApp(FIREBASE_CONFIG);
+      await addDoc(collection(getFirestore(app), "rendita-leads"), { email, lingua: "it", citta: "", vincitore: "alloggiati-web", netto: 0, creato: serverTimestamp() });
+      msg.textContent = `Fatto: ti scrivo a ${email} con il codice.`;
+      $("lead-form").hidden = true;
+    } catch {
+      msg.textContent = "Non sono riuscito a salvare l'email. Scrivimi direttamente a bebroggi@gmail.com.";
+      msg.classList.add("err");
+      btn.disabled = false; btn.textContent = "Mandami il codice";
+    }
+  });
+})();
+</script>
+</body>
+</html>
