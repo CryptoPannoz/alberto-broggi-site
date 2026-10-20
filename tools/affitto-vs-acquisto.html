@@ -98,7 +98,7 @@
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..1000&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/style.css?v=portrait-1" />
   <script src="data/omi-capoluoghi.js?v=2025-2"></script>
   <!-- GoatCounter (statistiche anonime, senza cookie): bebroggi.goatcounter.com -->
@@ -1466,20 +1466,20 @@
       for (var g = lo; g <= hi + 1e-6; g += step) {
         var yy = y(g);
         s += '<line x1="' + ml + '" y1="' + yy.toFixed(1) + '" x2="' + (W - mr) + '" y2="' + yy.toFixed(1) + '" stroke="' + (Math.abs(g) < 1e-6 ? 'rgba(17,22,21,.34)' : 'rgba(17,22,21,.10)') + '" stroke-width="1"/>';
-        s += '<text x="' + (ml - 9) + '" y="' + (yy + 3.5).toFixed(1) + '" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#686d68">' + num0.format(Math.round(g / 1000)) + 'k</text>';
+        s += '<text x="' + (ml - 9) + '" y="' + (yy + 3.5).toFixed(1) + '" text-anchor="end" font-family="DM Sans, monospace" font-size="10" fill="#686d68">' + num0.format(Math.round(g / 1000)) + 'k</text>';
       }
       var tickStep = lastYear <= 10 ? 1 : (lastYear <= 20 ? 2 : 5);
       for (var t = 0; t <= lastYear; t += tickStep) {
-        s += '<text x="' + x(t).toFixed(1) + '" y="' + (H - 12) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#686d68">' + t + '</text>';
+        s += '<text x="' + x(t).toFixed(1) + '" y="' + (H - 12) + '" text-anchor="middle" font-family="DM Sans, monospace" font-size="10" fill="#686d68">' + t + '</text>';
       }
-      s += '<text x="' + (W - mr) + '" y="' + (H - 12) + '" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">ANNI</text>';
+      s += '<text x="' + (W - mr) + '" y="' + (H - 12) + '" text-anchor="end" font-family="DM Sans, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">ANNI</text>';
 
       var path = function (key) {
         return serie.map(function (p, i) { return (i ? 'L' : 'M') + x(p.anno).toFixed(1) + ' ' + y(p[key]).toFixed(1); }).join(' ');
       };
       if (be !== null && be > 0 && be <= lastYear) {
         s += '<line x1="' + x(be).toFixed(1) + '" y1="' + mt + '" x2="' + x(be).toFixed(1) + '" y2="' + (mt + ih) + '" stroke="#9aa09a" stroke-width="1.5" stroke-dasharray="4 4"/>';
-        s += '<text x="' + (x(be) + 7).toFixed(1) + '" y="' + (mt + 13) + '" font-family="IBM Plex Mono, monospace" font-size="10" fill="#686d68">pareggio · anno ' + be.toFixed(1).replace('.', ',') + '</text>';
+        s += '<text x="' + (x(be) + 7).toFixed(1) + '" y="' + (mt + 13) + '" font-family="DM Sans, monospace" font-size="10" fill="#686d68">pareggio · anno ' + be.toFixed(1).replace('.', ',') + '</text>';
       }
       s += '<path d="' + path('rent') + '" fill="none" stroke="#ff5b35" stroke-width="2.5" stroke-linejoin="round"/>';
       s += '<path d="' + path('buy') + '" fill="none" stroke="#165dff" stroke-width="2.5" stroke-linejoin="round"/>';
@@ -1532,21 +1532,21 @@
       var x = function (v) { return ml + ((v - min) / (max - min)) * iw; };
 
       var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Impatto delle singole ipotesi sul verdetto">';
-      s += '<text x="0" y="12" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">IPOTESI · VALORE ORA · PAREGGIO</text>';
-      s += '<text x="' + ml + '" y="12" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">AFFITTO MEGLIO</text>';
-      s += '<text x="' + (W - mr) + '" y="12" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">ACQUISTO MEGLIO</text>';
+      s += '<text x="0" y="12" font-family="DM Sans, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">IPOTESI · VALORE ORA · PAREGGIO</text>';
+      s += '<text x="' + ml + '" y="12" font-family="DM Sans, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">AFFITTO MEGLIO</text>';
+      s += '<text x="' + (W - mr) + '" y="12" text-anchor="end" font-family="DM Sans, monospace" font-size="9" fill="#9aa09a" letter-spacing="1">ACQUISTO MEGLIO</text>';
 
       var y0 = top - 4, y1 = top + rows.length * rowH + 4;
       s += '<line x1="' + x(base).toFixed(1) + '" y1="' + y0 + '" x2="' + x(base).toFixed(1) + '" y2="' + y1 + '" stroke="#9aa09a" stroke-width="1.5" stroke-dasharray="3 4"/>';
       s += '<line x1="' + x(0).toFixed(1) + '" y1="' + y0 + '" x2="' + x(0).toFixed(1) + '" y2="' + y1 + '" stroke="#111615" stroke-width="1.5"/>';
-      s += '<text x="' + x(0).toFixed(1) + '" y="' + (y1 + 16) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#111615">PARITÀ</text>';
-      s += '<text x="' + x(base).toFixed(1) + '" y="' + (y1 + 29) + '" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="#686d68">oggi ' + (base >= 0 ? '+' : '−') + num0.format(Math.round(Math.abs(base) / 1000)) + 'k</text>';
+      s += '<text x="' + x(0).toFixed(1) + '" y="' + (y1 + 16) + '" text-anchor="middle" font-family="DM Sans, monospace" font-size="9" fill="#111615">PARITÀ</text>';
+      s += '<text x="' + x(base).toFixed(1) + '" y="' + (y1 + 29) + '" text-anchor="middle" font-family="DM Sans, monospace" font-size="9" fill="#686d68">oggi ' + (base >= 0 ? '+' : '−') + num0.format(Math.round(Math.abs(base) / 1000)) + 'k</text>';
 
       rows.forEach(function (r, i) {
         var cy = top + i * rowH + rowH / 2;
-        s += '<text x="0" y="' + (cy - 3) + '" font-family="Instrument Sans, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#111615">' + r.nome + '</text>';
+        s += '<text x="0" y="' + (cy - 3) + '" font-family="DM Sans, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#111615">' + r.nome + '</text>';
         var soglia = r.soglia === null ? 'non ribalta il verdetto' : 'pareggio a ' + r.f(r.soglia);
-        s += '<text x="0" y="' + (cy + 12) + '" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#686d68">ora ' + r.ora + ' · ' + soglia + '</text>';
+        s += '<text x="0" y="' + (cy + 12) + '" font-family="DM Sans, monospace" font-size="9.5" fill="#686d68">ora ' + r.ora + ' · ' + soglia + '</text>';
 
         var a = Math.min(r.lo, r.hi), b = Math.max(r.lo, r.hi);
         var xa = x(a), xb = x(b), xbase = x(base);
@@ -1554,7 +1554,7 @@
         s += '<rect x="' + Math.min(xa, xbase).toFixed(1) + '" y="' + (cy - bh / 2) + '" width="' + Math.max(1, Math.abs(xbase - xa)).toFixed(1) + '" height="' + bh + '" fill="' + (a < base ? '#ff5b35' : '#165dff') + '" opacity=".82" rx="2"/>';
         s += '<rect x="' + Math.min(xb, xbase).toFixed(1) + '" y="' + (cy - bh / 2) + '" width="' + Math.max(1, Math.abs(xb - xbase)).toFixed(1) + '" height="' + bh + '" fill="' + (b > base ? '#165dff' : '#ff5b35') + '" opacity=".82" rx="2"/>';
         var lab = function (v, xv, anchor, dx) {
-          return '<text x="' + (xv + dx).toFixed(1) + '" y="' + (cy + 3.5) + '" text-anchor="' + anchor + '" font-family="IBM Plex Mono, monospace" font-size="9" fill="#686d68">' + (r.lo === v ? r.loV : r.hiV) + '</text>';
+          return '<text x="' + (xv + dx).toFixed(1) + '" y="' + (cy + 3.5) + '" text-anchor="' + anchor + '" font-family="DM Sans, monospace" font-size="9" fill="#686d68">' + (r.lo === v ? r.loV : r.hiV) + '</text>';
         };
         s += lab(a, xa, 'end', -6) + lab(b, xb, 'start', 6);
       });

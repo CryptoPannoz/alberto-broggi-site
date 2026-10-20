@@ -88,7 +88,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..1000&amp;display=swap" rel="stylesheet" />
   <script src="data/omi-capoluoghi.js"></script>
   <script src="data/mercato-breve.js"></script>
   <script src="data/stagionalita.js"></script>
@@ -97,9 +97,9 @@
       --paper: #f3f1ea; --paper-2: #e8e6dd; --white: #fffefa; --ink: #111615;
       --muted: #686d68; --line: rgba(17,22,21,.15); --blue: #165dff; --orange: #ff5b35;
       --lime: #c7ff39; --radius: 18px; --radius-lg: 28px; --maxw: 1180px;
-      --sans: "Instrument Sans", Arial, sans-serif;
-      --serif: "Instrument Serif", Georgia, serif;
-      --mono: "IBM Plex Mono", monospace;
+      --sans: "DM Sans", Arial, sans-serif;
+      --serif: "DM Sans", Arial, sans-serif;
+      --mono: "DM Sans", monospace;
       --breve: #7a3ff2; --medio: #0d9488; --lib44: #165dff; --conc: #b8860b;
     }
     * { box-sizing: border-box; }
@@ -1297,7 +1297,7 @@
         const y = i * (H + GAP);
         return `<text x="0" y="${y + H / 2 + 4}" font-size="13" font-weight="650" fill="#111615" font-family="Instrument Sans, sans-serif">${s.nome}</text>
           <rect x="${LAB}" y="${y}" width="${w}" height="${H}" rx="8" fill="${colori[s.k]}" opacity="${s === best ? 1 : .5}"></rect>
-          <text x="${LAB + w + 10}" y="${y + H / 2 + 4}" font-size="13" font-weight="${s === best ? 650 : 400}" font-family="IBM Plex Mono, monospace" fill="#111615">${eur(s.netto)}</text>`;
+          <text x="${LAB + w + 10}" y="${y + H / 2 + 4}" font-size="13" font-weight="${s === best ? 650 : 400}" font-family="DM Sans, monospace" fill="#111615">${eur(s.netto)}</text>`;
       }).join('') + '</svg>';
 
     // KPI
