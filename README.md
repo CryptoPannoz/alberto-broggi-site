@@ -8,6 +8,7 @@ One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pa
 - `assets/` — `style.css`, `img/` (photos, posters, `img/logos/` company logos), `video/` clips
 - `jobs/` — legacy standalone detail pages (kept as deep-link fallback; no longer linked from the timeline)
 - `hobbies/` — wingfoil page + full link list
+- `cv-velico/`, `en/cv-velico/` — short-URL stubs (bebroggi.it/cv-velico) that open the Sailing CV modal (`/#cv-velico`). The race-mile counter at the top of that modal sums the `data-nm` spans in the Regattas list: add a regatta = add a span with its estimated miles.
 - `tools/` — standalone interactive tools, self-contained (own `<style>`/`<script>`, only `assets/style.css` for design tokens)
   - `affitto-vs-acquisto.html` — rent vs buy calculator: net-worth simulation over the horizon, break-even year, tornado sensitivity on the assumptions, market scenarios. State is shareable via query string and persisted in `localStorage`.
 
@@ -27,9 +28,9 @@ data-heavy business.
 - Hero: positioning, three proof metrics and current-company logo strip
 - What I build: three compact capability groups
 - Selected impact: Lucca/Wengen, Trieste Villas and Vertical Sailing Tour
-- Experience: three current logo cards, six compact earlier roles, nine full modal stories
+- Experience: four current logo cards (Noura CRM, Trieste Villas with the group websites, Wengen, VST), seven compact earlier roles (Lucca first), full modal stories (Noura with anonymised CRM screenshots)
 - Projects: five visual project cards
-- Off the clock: four lead stories plus eight preserved stories in an expandable gallery
+- Off the clock: the latest post on top (`.life-post`: a multi-photo gallery card, outlined in lime, one caption shared by the lightbox), then the photo/video grid
 
 ## Local preview
 Open `index.html` in a browser, or:
