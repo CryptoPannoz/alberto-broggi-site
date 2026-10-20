@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alberto Broggi — Il mondo di cartone</title>
-  <meta name="description" content="Il sito-mondo di Alberto Broggi: un diorama di cartone da esplorare. Dentro ci sono le mie app (VentoTrieste, FiscalNinja, Holiday Radar…), i progetti di hospitality, la vela, le montagne e il blog. Dati, database e automazione — Trieste, Italia." />
+  <title>Alberto Broggi — Il mondo di mattoncini</title>
+  <meta name="description" content="Il sito-mondo di Alberto Broggi: un diorama di mattoncini da esplorare. Dentro ci sono le mie app (VentoTrieste, FiscalNinja, Holiday Radar…), i progetti di hospitality, la vela, le montagne e il blog. Dati, database e automazione — Trieste, Italia." />
   <link rel="alternate" hreflang="en" href="https://bebroggi.it/en/" />
   <link rel="alternate" hreflang="it" href="https://bebroggi.it/" />
   <link rel="alternate" hreflang="x-default" href="https://bebroggi.it/" />
@@ -12,35 +12,33 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="it_IT" />
   <meta property="og:site_name" content="Alberto Broggi" />
-  <meta property="og:title" content="Alberto Broggi — Il mondo di cartone" />
-  <meta property="og:description" content="Un diorama di cartone da esplorare: app, progetti, vela, montagne e blog di Alberto Broggi." />
+  <meta property="og:title" content="Alberto Broggi — Il mondo di mattoncini" />
+  <meta property="og:description" content="Un diorama di mattoncini da esplorare: app, progetti, vela, montagne e blog di Alberto Broggi." />
   <meta property="og:url" content="https://bebroggi.it/" />
   <meta property="og:image" content="https://bebroggi.it/assets/img/og-mondo.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Alberto Broggi — Il mondo di cartone" />
-  <meta name="twitter:description" content="Un diorama di cartone da esplorare: app, progetti, vela, montagne e blog." />
+  <meta name="twitter:title" content="Alberto Broggi — Il mondo di mattoncini" />
+  <meta name="twitter:description" content="Un diorama di mattoncini da esplorare: app, progetti, vela, montagne e blog." />
   <meta name="twitter:image" content="https://bebroggi.it/assets/img/og-mondo.jpg" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..1000&amp;display=swap" rel="stylesheet" />
   <script data-goatcounter="https://bebroggi.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Person","name":"Alberto Broggi","url":"https://bebroggi.it/","email":"mailto:bebroggi@gmail.com","jobTitle":"Vacation Rental and Travel Business Developer","address":{"@type":"PostalAddress","addressLocality":"Trieste","addressCountry":"IT"},"sameAs":["https://www.linkedin.com/in/bebroggi/","https://github.com/CryptoPannoz"]}
   </script>
   <style>
     :root{
-      --mono:'IBM Plex Mono',monospace;
-      --sans:'Instrument Sans',system-ui,sans-serif;
-      --serif:'Instrument Serif',serif;
-      --room:#1e1812;
-      --room-2:#2a2118;
-      --paper:#f6efe0;
-      --ink:#241a0e;
-      --kraft:#c9a26b;
-      --kraft-d:#9c7840;
-      --lime:#c7ff39;
-      --muted:#8d8273;
+      --mono:'DM Sans',system-ui,sans-serif;
+      --sans:'DM Sans',system-ui,sans-serif;
+      --serif:'DM Sans',system-ui,sans-serif;
+      --room:#17191f;
+      --room-2:#23262e;
+      --paper:#ffffff;
+      --ink:#202124;
+      --lime:#ffd500;
+      --muted:#9aa0a6;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -53,7 +51,7 @@
     /* ===== HUD ===== */
     .hud{position:fixed;inset:0 0 auto 0;z-index:60;display:flex;align-items:center;gap:18px;padding:12px 20px;background:linear-gradient(180deg,rgba(20,15,9,.92),rgba(20,15,9,.65) 70%,transparent);pointer-events:none}
     .hud>*{pointer-events:auto}
-    .hud__brand{font-family:var(--mono);font-weight:600;font-size:.95rem;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+    .hud__brand{font-family:var(--mono);font-weight:700;font-size:.95rem;letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
     .hud__brand i{color:var(--lime);font-style:normal}
     .hud__tabs{display:flex;gap:4px;margin:0 auto;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:4px}
     .hud__tabs button{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;padding:7px 13px;border-radius:999px;color:#cfc4ae;transition:.2s}
@@ -107,7 +105,7 @@
     .spot__ring{fill:rgba(18,14,8,.55);stroke:#fff;stroke-width:2}
     .spot__dot{fill:var(--lime)}
     .spot__plus{fill:#131008;font:700 15px var(--mono);text-anchor:middle;dominant-baseline:central;pointer-events:none}
-    .spot__tag{font:600 15px var(--mono);letter-spacing:.06em;text-transform:uppercase;fill:#fff;stroke:#131008;stroke-width:4;paint-order:stroke;opacity:0;transition:opacity .2s;pointer-events:none}
+    .spot__tag{font:700 15px var(--mono);letter-spacing:.06em;text-transform:uppercase;fill:#fff;stroke:#131008;stroke-width:4;paint-order:stroke;opacity:0;transition:opacity .2s;pointer-events:none}
     .spot:hover .spot__tag,.spot:focus .spot__tag,.spot:focus-visible .spot__tag{opacity:1}
     .spot:hover .spot__ring,.spot:focus .spot__ring{stroke:var(--lime)}
     .spot:focus-visible .spot__ring{stroke:var(--lime);stroke-width:3}
@@ -135,50 +133,48 @@
 
     /* ===== Intro ===== */
     .intro{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:
-      radial-gradient(120% 100% at 50% 10%,#33281b 0%,#211910 60%,#15100a 100%);transition:opacity .8s,visibility .8s}
+      radial-gradient(120% 100% at 50% 10%,#2a2d36 0%,#1b1e24 60%,#121419 100%);transition:opacity .8s,visibility .8s}
     .intro.gone{opacity:0;visibility:hidden}
     .intro__inner{text-align:center;padding:24px;max-width:680px}
     .intro__box{width:min(300px,62vw);margin:0 auto 26px}
     .intro__kicker{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:14px}
     .intro h1{font-family:var(--sans);font-weight:700;font-size:clamp(1.7rem,4.6vw,3rem);letter-spacing:-.03em;line-height:1.05}
-    .intro h1 em{font-family:var(--serif);font-style:italic;font-weight:400}
+    .intro h1 em{font-style:normal;font-weight:500;color:var(--lime)}
     .intro p{color:#cbbfa8;margin:16px auto 26px;max-width:46ch;font-size:.98rem}
     .intro__open{font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;font-weight:600;background:var(--lime);color:#131008;padding:14px 26px;border-radius:999px;box-shadow:0 10px 30px -8px rgba(199,255,57,.4)}
     .intro__open:hover{transform:translateY(-2px)}
     .intro__skip{display:block;margin:18px auto 0;font-family:var(--mono);font-size:.66rem;color:var(--muted);text-decoration:underline}
-    .flapL,.flapR{transform-box:fill-box;transition:transform .9s cubic-bezier(.6,0,.3,1)}
-    .flapL{transform-origin:left center}.flapR{transform-origin:right center}
-    .intro.opening .flapL{transform:rotate(-78deg) scaleX(.92)}
-    .intro.opening .flapR{transform:rotate(78deg) scaleX(.92)}
+    .flapL{transform-box:fill-box;transform-origin:center;transition:transform .9s cubic-bezier(.6,0,.3,1)}
+    .intro.opening .flapL{transform:translateY(-84px) rotate(-10deg)}
 
     /* ===== Modal ===== */
     .modal{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:20px}
     .modal[hidden]{display:none}
     .modal__backdrop{position:absolute;inset:0;background:rgba(12,9,5,.72);backdrop-filter:blur(3px)}
-    .modal__panel{position:relative;background:var(--paper);color:var(--ink);width:min(680px,100%);max-height:min(82svh,760px);overflow:auto;border-radius:12px;padding:34px 34px 30px;box-shadow:0 40px 80px -20px rgba(0,0,0,.8);border:1px solid #d9c9a6}
-    .modal__panel::before{content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-2deg);width:110px;height:26px;background:rgba(214,197,160,.8);box-shadow:inset 0 0 6px rgba(140,110,60,.3)}
-    .modal__close{position:sticky;top:0;float:right;margin:-18px -14px 0 0;width:38px;height:38px;border-radius:50%;background:#241a0e;color:#fff;font-size:1.2rem;z-index:2}
-    .modal__panel .when{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:#8a6d3d;display:block;margin-bottom:8px}
+    .modal__panel{position:relative;background:var(--paper);color:var(--ink);width:min(680px,100%);max-height:min(82svh,760px);overflow:auto;border-radius:22px;padding:36px 36px 32px;box-shadow:0 40px 80px -20px rgba(0,0,0,.7);border:1px solid #e8eaed}
+    .modal__panel::before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:96px;height:10px;background:radial-gradient(circle 5px at 12% 50%,#ffd500 97%,transparent),radial-gradient(circle 5px at 38% 50%,#ffd500 97%,transparent),radial-gradient(circle 5px at 64% 50%,#ffd500 97%,transparent),radial-gradient(circle 5px at 90% 50%,#ffd500 97%,transparent)}
+    .modal__close{position:sticky;top:0;float:right;margin:-18px -14px 0 0;width:38px;height:38px;border-radius:50%;background:#202124;color:#fff;font-size:1.2rem;z-index:2}
+    .modal__panel .when{font-family:var(--mono);font-weight:700;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#1a73e8;display:block;margin-bottom:8px}
     .modal__panel h2{font-size:1.65rem;letter-spacing:-.02em;line-height:1.1}
-    .modal__panel .sub{font-family:var(--serif);font-style:italic;color:#6d5c40;margin:6px 0 14px;font-size:1.05rem}
+    .modal__panel .sub{font-weight:500;color:#5f6368;margin:6px 0 14px;font-size:1rem}
     .modal__panel p{line-height:1.6;margin-bottom:12px;font-size:.95rem}
-    .modal__panel h4{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;margin:18px 0 8px;color:#8a6d3d}
+    .modal__panel h4{font-family:var(--mono);font-weight:700;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;margin:18px 0 8px;color:#5f6368}
     .modal__panel ul{padding-left:20px;margin-bottom:12px}
     .modal__panel ul li{margin-bottom:6px;line-height:1.5;font-size:.93rem}
     .modal__panel ul.skills{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:7px}
-    .modal__panel ul.skills li{margin:0;font-family:var(--mono);font-size:.66rem;background:#efe4c8;border:1px solid #dcc9a0;padding:4px 10px;border-radius:999px}
-    .modal__panel img{max-width:100%;border-radius:8px;margin:8px 0 12px}
+    .modal__panel ul.skills li{margin:0;font-family:var(--mono);font-weight:500;font-size:.7rem;background:#f1f3f4;border:1px solid #e8eaed;color:#3c4043;padding:4px 11px;border-radius:999px}
+    .modal__panel img{max-width:100%;border-radius:14px;margin:8px 0 12px}
     .modal__panel .ext,.modal__panel .go{display:inline-block;font-family:var(--mono);font-size:.78rem;font-weight:600;margin-top:6px;margin-right:14px}
-    .modal__panel .go{background:#241a0e;color:var(--lime);padding:10px 16px;border-radius:999px;text-decoration:none}
+    .modal__panel .go{background:#202124;color:var(--lime);padding:11px 18px;border-radius:999px;text-decoration:none}
     .modal__panel .go:hover{background:#000}
-    .modal__panel .ext{color:#241a0e}
+    .modal__panel .ext{color:#1a73e8}
     body.modal-open{overflow:hidden}
 
     /* ===== Below stage: la mappa (SEO + no-JS) ===== */
     .atlas{background:#171209;border-top:1px solid rgba(255,255,255,.08);padding:72px 20px 30px}
     .atlas__inner{max-width:1100px;margin:0 auto}
     .atlas h2{font-size:clamp(1.5rem,3.4vw,2.3rem);letter-spacing:-.02em;margin-bottom:8px}
-    .atlas h2 em{font-family:var(--serif);font-style:italic;font-weight:400}
+    .atlas h2 em{font-style:normal;font-weight:400;color:var(--lime)}
     .atlas>p{color:var(--muted)}
     .atlas__lead{max-width:680px;margin:0 auto 34px;color:#bdb09a;line-height:1.6}
     .atlas__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:30px;margin:34px 0 40px}
@@ -205,19 +201,24 @@
     <div class="intro__inner">
       <svg class="intro__box" viewBox="0 0 300 210" aria-hidden="true">
         <defs>
-          <linearGradient id="bx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d7b27c"/><stop offset="1" stop-color="#b58a52"/></linearGradient>
+          <linearGradient id="bx" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffdf3d"/><stop offset="1" stop-color="#f0b400"/></linearGradient>
+          <linearGradient id="bl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e53935"/><stop offset="1" stop-color="#c62828"/></linearGradient>
         </defs>
-        <rect x="40" y="80" width="220" height="110" rx="6" fill="url(#bx)" class="edge"/>
-        <rect x="40" y="80" width="220" height="16" fill="#8f6b3f" opacity=".35"/>
-        <g class="flapL"><path d="M40 82 L150 82 L150 60 L52 52 Z" fill="#cfa770" class="edge"/></g>
-        <g class="flapR"><path d="M260 82 L150 82 L150 60 L248 52 Z" fill="#c69d66" class="edge"/></g>
-        <rect x="142" y="80" width="16" height="110" fill="#efe3c5" opacity=".55"/>
-        <text x="150" y="150" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" fill="#5f4524" letter-spacing="2">FRAGILE ↑</text>
-        <g class="bob"><path d="M150 36 q-10 -18 2 -24 q12 6 2 24" fill="none" stroke="#c7ff39" stroke-width="2.5" opacity=".9"/></g>
+        <rect x="46" y="96" width="208" height="92" rx="8" fill="url(#bx)"/>
+        <rect x="46" y="96" width="208" height="14" fill="#c99700" opacity=".35"/>
+        <g class="flapL">
+          <rect x="38" y="52" width="224" height="46" rx="8" fill="url(#bl)"/>
+          <ellipse cx="80" cy="52" rx="19" ry="8" fill="#ef5350"/>
+          <ellipse cx="127" cy="52" rx="19" ry="8" fill="#ef5350"/>
+          <ellipse cx="174" cy="52" rx="19" ry="8" fill="#ef5350"/>
+          <ellipse cx="221" cy="52" rx="19" ry="8" fill="#ef5350"/>
+        </g>
+        <text x="150" y="150" text-anchor="middle" font-family="DM Sans" font-weight="700" font-size="15" fill="#8a6d00" letter-spacing="3">2 × 4</text>
+        <g class="bob"><path d="M150 28 q-10 -18 2 -24 q12 6 2 24" fill="none" stroke="#ffd500" stroke-width="2.5" opacity=".9"/></g>
       </svg>
       <p class="intro__kicker">bebroggi.it · Trieste, Italia</p>
-      <h1>Il mondo di cartone<br /><em>di Alberto Broggi.</em></h1>
-      <p>Dati, database e automazione — ma raccontati come un diorama. Esplora le cinque scene: ogni punto luminoso è un progetto, un'app, una passione o una storia.</p>
+      <h1>Il mondo di mattoncini<br /><em>di Alberto Broggi.</em></h1>
+      <p>Dati, database e automazione — ma costruiti mattoncino su mattoncino. Esplora le cinque scene: ogni punto luminoso è un progetto, un'app, una passione o una storia.</p>
       <button class="intro__open" id="open-box" type="button">Apri la scatola →</button>
       <button class="intro__skip" id="skip-box" type="button">salta l'animazione</button>
     </div>
@@ -244,7 +245,7 @@
       <!-- ===================== SCENA 1 · IL GOLFO ===================== -->
       <section class="scene" id="golfo" aria-label="Scena: il Golfo di Trieste">
         <div class="scene__box">
-          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di cartone del Golfo di Trieste: regata, faro, castello, boe del vento">
+          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di mattoncini del Golfo di Trieste: regata, faro, castello, boe del vento">
             <defs>
               <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3e3bd"/><stop offset=".55" stop-color="#eed9b4"/><stop offset="1" stop-color="#dfc89f"/></linearGradient>
               <linearGradient id="seaFar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9ec7d4"/><stop offset="1" stop-color="#7fb0c2"/></linearGradient>
@@ -278,32 +279,32 @@
             </g>
             <!-- ===== hotspots ===== -->
             <g class="spot" data-open="t-vento-barcolana" tabindex="0" role="button" aria-label="Vento Barcolana — il vento in tempo reale sul percorso">
-              <circle class="spot__halo" cx="1184" cy="640" r="26"/><circle class="spot__ring" cx="1184" cy="640" r="17"/><circle class="spot__dot" cx="1184" cy="640" r="7"/>
-              <text class="spot__tag" x="1184" y="600" text-anchor="middle">Vento Barcolana</text>
+              <circle class="spot__halo" cx="1040" cy="720" r="26"/><circle class="spot__ring" cx="1040" cy="720" r="17"/><circle class="spot__dot" cx="1040" cy="720" r="7"/>
+              <text class="spot__tag" x="1040" y="680" text-anchor="middle">Vento Barcolana</text>
             </g>
             <g class="spot" data-open="t-ventotrieste" tabindex="0" role="button" aria-label="VentoTrieste.info — il vento del golfo in tempo reale">
-              <circle class="spot__halo" cx="444" cy="448" r="26"/><circle class="spot__ring" cx="444" cy="448" r="17"/><circle class="spot__dot" cx="444" cy="448" r="7"/>
-              <text class="spot__tag" x="444" y="408" text-anchor="middle">VentoTrieste.info</text>
+              <circle class="spot__halo" cx="348" cy="416" r="26"/><circle class="spot__ring" cx="348" cy="416" r="17"/><circle class="spot__dot" cx="348" cy="416" r="7"/>
+              <text class="spot__tag" x="348" y="376" text-anchor="middle">VentoTrieste.info</text>
             </g>
             <g class="spot" data-open="barcolana" tabindex="0" role="button" aria-label="Barcolana — direttore sportivo 2018–2020">
-              <circle class="spot__halo" cx="632" cy="544" r="26"/><circle class="spot__ring" cx="632" cy="544" r="17"/><circle class="spot__dot" cx="632" cy="544" r="7"/>
-              <text class="spot__tag" x="632" y="504" text-anchor="middle">Barcolana</text>
+              <circle class="spot__halo" cx="560" cy="512" r="26"/><circle class="spot__ring" cx="560" cy="512" r="17"/><circle class="spot__dot" cx="560" cy="512" r="7"/>
+              <text class="spot__tag" x="560" y="472" text-anchor="middle">Barcolana</text>
             </g>
             <g class="spot" data-open="cv-velico" tabindex="0" role="button" aria-label="CV velico — regate e crociere">
-              <circle class="spot__halo" cx="912" cy="606" r="26"/><circle class="spot__ring" cx="912" cy="606" r="17"/><circle class="spot__dot" cx="912" cy="606" r="7"/>
-              <text class="spot__tag" x="912" y="648" text-anchor="middle">CV velico</text>
+              <circle class="spot__halo" cx="784" cy="696" r="26"/><circle class="spot__ring" cx="784" cy="696" r="17"/><circle class="spot__dot" cx="784" cy="696" r="7"/>
+              <text class="spot__tag" x="784" y="738" text-anchor="middle">CV velico</text>
             </g>
             <g class="spot" data-open="vst" tabindex="0" role="button" aria-label="Vertical Sailing Tour — arrampicata e vela">
-              <circle class="spot__halo" cx="1488" cy="524" r="26"/><circle class="spot__ring" cx="1488" cy="524" r="17"/><circle class="spot__dot" cx="1488" cy="524" r="7"/>
-              <text class="spot__tag" x="1488" y="484" text-anchor="middle">Vertical Sailing</text>
+              <circle class="spot__halo" cx="1440" cy="352" r="26"/><circle class="spot__ring" cx="1440" cy="352" r="17"/><circle class="spot__dot" cx="1440" cy="352" r="7"/>
+              <text class="spot__tag" x="1440" y="312" text-anchor="middle">Vertical Sailing</text>
             </g>
             <g class="spot" data-open="life-wingfoil" tabindex="0" role="button" aria-label="Wingfoil nel golfo">
-              <circle class="spot__halo" cx="344" cy="744" r="26"/><circle class="spot__ring" cx="344" cy="744" r="17"/><circle class="spot__dot" cx="344" cy="744" r="7"/>
-              <text class="spot__tag" x="344" y="704" text-anchor="middle">Wingfoil</text>
+              <circle class="spot__halo" cx="264" cy="776" r="26"/><circle class="spot__ring" cx="264" cy="776" r="17"/><circle class="spot__dot" cx="264" cy="776" r="7"/>
+              <text class="spot__tag" x="264" y="826" text-anchor="middle">Wingfoil</text>
             </g>
-            <g class="spot" data-open="trieste" tabindex="0" role="button" aria-label="Trieste Villas — dati e arricchimento database">
-              <circle class="spot__halo" cx="1324" cy="404" r="26"/><circle class="spot__ring" cx="1324" cy="404" r="17"/><circle class="spot__dot" cx="1324" cy="404" r="7"/>
-              <text class="spot__tag" x="1324" y="364" text-anchor="middle">Trieste Villas</text>
+            <g class="spot" data-open="trieste" tabindex="0" role="button" aria-label="Trieste Villas — dati e siti del gruppo">
+              <circle class="spot__halo" cx="1116" cy="328" r="26"/><circle class="spot__ring" cx="1116" cy="328" r="17"/><circle class="spot__dot" cx="1116" cy="328" r="7"/>
+              <text class="spot__tag" x="1116" y="288" text-anchor="middle">Trieste Villas</text>
             </g>
           </svg>
           <p class="scene__title">Scena 01 — Il Golfo di Trieste · vento, regate e dati</p>
@@ -313,7 +314,7 @@
       <!-- ===================== SCENA 2 · LO STUDIO ===================== -->
       <section class="scene" id="studio" aria-label="Scena: lo studio, dove nascono le app">
         <div class="scene__box">
-          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di cartone dello studio: scrivania, monitor con dashboard, scaffale degli strumenti, bacheca della carriera">
+          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di mattoncini dello studio: scrivania, monitor con dashboard, scaffale degli strumenti, bacheca della carriera">
             <defs>
               <linearGradient id="wall2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9d6ae"/><stop offset="1" stop-color="#d4ba8c"/></linearGradient>
               <linearGradient id="desk2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b98f58"/><stop offset="1" stop-color="#9a7340"/></linearGradient>
@@ -323,44 +324,40 @@
             </g>
             <!-- hotspots -->
             <g class="spot" data-open="noura" tabindex="0" role="button" aria-label="Noura CRM — il CRM su misura per 600 clienti">
-              <circle class="spot__halo" cx="956" cy="416" r="26"/><circle class="spot__ring" cx="956" cy="416" r="17"/><circle class="spot__dot" cx="956" cy="416" r="7"/>
-              <text class="spot__tag" x="956" y="376" text-anchor="middle">Noura CRM</text>
-            </g>
-            <g class="spot" data-open="t-crm" tabindex="0" role="button" aria-label="Demo CRM — dai dati grezzi alle decisioni">
-              <circle class="spot__halo" cx="672" cy="528" r="24"/><circle class="spot__ring" cx="672" cy="528" r="16"/><circle class="spot__dot" cx="672" cy="528" r="6"/>
-              <text class="spot__tag" x="672" y="586" text-anchor="middle">Demo CRM</text>
+              <circle class="spot__halo" cx="932" cy="384" r="26"/><circle class="spot__ring" cx="932" cy="384" r="17"/><circle class="spot__dot" cx="932" cy="384" r="7"/>
+              <text class="spot__tag" x="932" y="344" text-anchor="middle">Noura CRM</text>
             </g>
             <g class="spot" data-open="t-realestate" tabindex="0" role="button" aria-label="RealEstate AI — il sito che si scrive da solo">
-              <circle class="spot__halo" cx="1132" cy="532" r="24"/><circle class="spot__ring" cx="1132" cy="532" r="16"/><circle class="spot__dot" cx="1132" cy="532" r="6"/>
-              <text class="spot__tag" x="1132" y="590" text-anchor="middle">RealEstate AI</text>
-            </g>
-            <g class="spot" data-open="t-fiscal" tabindex="0" role="button" aria-label="FiscalNinja — tasse del forfettario in tempo reale">
-              <circle class="spot__halo" cx="1392" cy="160" r="26"/><circle class="spot__ring" cx="1392" cy="160" r="17"/><circle class="spot__dot" cx="1392" cy="160" r="7"/>
-              <text class="spot__tag" x="1392" y="120" text-anchor="middle">FiscalNinja</text>
+              <circle class="spot__halo" cx="1228" cy="520" r="26"/><circle class="spot__ring" cx="1228" cy="520" r="17"/><circle class="spot__dot" cx="1228" cy="520" r="7"/>
+              <text class="spot__tag" x="1228" y="578" text-anchor="middle">RealEstate AI</text>
             </g>
             <g class="spot" data-open="t-rendita" tabindex="0" role="button" aria-label="Rendita Affitti — quanto rende il tuo immobile">
-              <circle class="spot__halo" cx="788" cy="164" r="25"/><circle class="spot__ring" cx="788" cy="164" r="16"/><circle class="spot__dot" cx="788" cy="164" r="6"/>
-              <text class="spot__tag" x="788" y="124" text-anchor="middle">Rendita affitti</text>
+              <circle class="spot__halo" cx="852" cy="132" r="25"/><circle class="spot__ring" cx="852" cy="132" r="16"/><circle class="spot__dot" cx="852" cy="132" r="6"/>
+              <text class="spot__tag" x="852" y="92" text-anchor="middle">Rendita affitti</text>
             </g>
             <g class="spot" data-open="t-affitto" tabindex="0" role="button" aria-label="Affitto o acquisto — il calcolatore">
-              <circle class="spot__halo" cx="1004" cy="152" r="25"/><circle class="spot__ring" cx="1004" cy="152" r="16"/><circle class="spot__dot" cx="1004" cy="152" r="6"/>
-              <text class="spot__tag" x="1004" y="112" text-anchor="middle">Affitto o acquisto?</text>
+              <circle class="spot__halo" cx="1040" cy="132" r="25"/><circle class="spot__ring" cx="1040" cy="132" r="16"/><circle class="spot__dot" cx="1040" cy="132" r="6"/>
+              <text class="spot__tag" x="1040" y="92" text-anchor="middle">Affitto o acquisto?</text>
             </g>
             <g class="spot" data-open="t-radar" tabindex="0" role="button" aria-label="Holiday Radar — le vacanze dei tuoi mercati">
-              <circle class="spot__halo" cx="1180" cy="180" r="25"/><circle class="spot__ring" cx="1180" cy="180" r="16"/><circle class="spot__dot" cx="1180" cy="180" r="6"/>
-              <text class="spot__tag" x="1180" y="140" text-anchor="middle">Holiday Radar</text>
+              <circle class="spot__halo" cx="1224" cy="136" r="25"/><circle class="spot__ring" cx="1224" cy="136" r="16"/><circle class="spot__dot" cx="1224" cy="136" r="6"/>
+              <text class="spot__tag" x="1224" y="96" text-anchor="middle">Holiday Radar</text>
             </g>
             <g class="spot" data-open="t-consumi" tabindex="0" role="button" aria-label="Consumi di casa — quanto costano le bollette">
-              <circle class="spot__halo" cx="1284" cy="164" r="25"/><circle class="spot__ring" cx="1284" cy="164" r="16"/><circle class="spot__dot" cx="1284" cy="164" r="6"/>
-              <text class="spot__tag" x="1284" y="124" text-anchor="middle">Consumi di casa</text>
+              <circle class="spot__halo" cx="1328" cy="196" r="25"/><circle class="spot__ring" cx="1328" cy="196" r="16"/><circle class="spot__dot" cx="1328" cy="196" r="6"/>
+              <text class="spot__tag" x="1328" y="248" text-anchor="middle">Consumi di casa</text>
+            </g>
+            <g class="spot" data-open="t-fiscal" tabindex="0" role="button" aria-label="FiscalNinja — tasse del forfettario in tempo reale">
+              <circle class="spot__halo" cx="1432" cy="128" r="25"/><circle class="spot__ring" cx="1432" cy="128" r="16"/><circle class="spot__dot" cx="1432" cy="128" r="6"/>
+              <text class="spot__tag" x="1432" y="88" text-anchor="middle">FiscalNinja</text>
             </g>
             <g class="spot" data-open="t-desideri" tabindex="0" role="button" aria-label="101 Desideri — la PWA del metodo Sibaldi">
-              <circle class="spot__halo" cx="1504" cy="172" r="25"/><circle class="spot__ring" cx="1504" cy="172" r="16"/><circle class="spot__dot" cx="1504" cy="172" r="6"/>
-              <text class="spot__tag" x="1504" y="132" text-anchor="middle">101 Desideri</text>
+              <circle class="spot__halo" cx="1532" cy="144" r="25"/><circle class="spot__ring" cx="1532" cy="144" r="16"/><circle class="spot__dot" cx="1532" cy="144" r="6"/>
+              <text class="spot__tag" x="1532" y="200" text-anchor="middle">101 Desideri</text>
             </g>
             <g class="spot" data-open="carriera" tabindex="0" role="button" aria-label="La carriera — dal 2016 a oggi">
-              <circle class="spot__halo" cx="536" cy="312" r="26"/><circle class="spot__ring" cx="536" cy="312" r="17"/><circle class="spot__dot" cx="536" cy="312" r="7"/>
-              <text class="spot__tag" x="536" y="272" text-anchor="middle">La strada fin qui</text>
+              <circle class="spot__halo" cx="512" cy="264" r="26"/><circle class="spot__ring" cx="512" cy="264" r="17"/><circle class="spot__dot" cx="512" cy="264" r="7"/>
+              <text class="spot__tag" x="512" y="224" text-anchor="middle">La strada fin qui</text>
             </g>
           </svg>
           <p class="scene__title">Scena 02 — Lo Studio · dove nascono le app</p>
@@ -370,7 +367,7 @@
       <!-- ===================== SCENA 3 · IL LAGO ===================== -->
       <section class="scene" id="lago" aria-label="Scena: il lago e l'ospitalità">
         <div class="scene__box">
-          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di cartone del lago: Villa Volpe, le vigne del Metrone, le cartoline di Malta e dell'hotel NFT">
+          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di mattoncini del lago: Villa Volpe, le vigne del Metrone, le cartoline di Malta e dell'hotel NFT">
             <defs>
               <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7e6c0"/><stop offset="1" stop-color="#e5cda2"/></linearGradient>
               <linearGradient id="lake3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fa3b5"/><stop offset="1" stop-color="#4b7f99"/></linearGradient>
@@ -380,24 +377,24 @@
             </g>
             <!-- hotspots -->
             <g class="spot" data-open="h-villa" tabindex="0" role="button" aria-label="Villa Volpe — la villa sul Lago d'Orta">
-              <circle class="spot__halo" cx="448" cy="360" r="26"/><circle class="spot__ring" cx="448" cy="360" r="17"/><circle class="spot__dot" cx="448" cy="360" r="7"/>
-              <text class="spot__tag" x="448" y="320" text-anchor="middle">Villa Volpe</text>
+              <circle class="spot__halo" cx="376" cy="528" r="26"/><circle class="spot__ring" cx="376" cy="528" r="17"/><circle class="spot__dot" cx="376" cy="528" r="7"/>
+              <text class="spot__tag" x="376" y="488" text-anchor="middle">Villa Volpe</text>
             </g>
             <g class="spot" data-open="h-metrone" tabindex="0" role="button" aria-label="Il Metrone — web e prenotazioni in Custoza">
-              <circle class="spot__halo" cx="1396" cy="496" r="26"/><circle class="spot__ring" cx="1396" cy="496" r="17"/><circle class="spot__dot" cx="1396" cy="496" r="7"/>
-              <text class="spot__tag" x="1396" y="456" text-anchor="middle">Il Metrone</text>
+              <circle class="spot__halo" cx="1376" cy="520" r="26"/><circle class="spot__ring" cx="1376" cy="520" r="17"/><circle class="spot__dot" cx="1376" cy="520" r="7"/>
+              <text class="spot__tag" x="1376" y="480" text-anchor="middle">Il Metrone</text>
             </g>
             <g class="spot" data-open="h-malta" tabindex="0" role="button" aria-label="Dame Malta — consulenza privata">
-              <circle class="spot__halo" cx="1224" cy="232" r="25"/><circle class="spot__ring" cx="1224" cy="232" r="16"/><circle class="spot__dot" cx="1224" cy="232" r="6"/>
-              <text class="spot__tag" x="1224" y="192" text-anchor="middle">Dame Malta</text>
+              <circle class="spot__halo" cx="1200" cy="240" r="25"/><circle class="spot__ring" cx="1200" cy="240" r="16"/><circle class="spot__dot" cx="1200" cy="240" r="6"/>
+              <text class="spot__tag" x="1200" y="200" text-anchor="middle">Dame Malta</text>
             </g>
             <g class="spot" data-open="h-trips" tabindex="0" role="button" aria-label="Trips Community — il primo hotel NFT prenotabile">
-              <circle class="spot__halo" cx="1432" cy="264" r="25"/><circle class="spot__ring" cx="1432" cy="264" r="16"/><circle class="spot__dot" cx="1432" cy="264" r="6"/>
-              <text class="spot__tag" x="1432" y="224" text-anchor="middle">Hotel NFT</text>
+              <circle class="spot__halo" cx="1464" cy="224" r="25"/><circle class="spot__ring" cx="1464" cy="224" r="16"/><circle class="spot__dot" cx="1464" cy="224" r="6"/>
+              <text class="spot__tag" x="1464" y="184" text-anchor="middle">Hotel NFT</text>
             </g>
             <g class="spot" data-open="lucca" tabindex="0" role="button" aria-label="Lucca Apartments e Villas — consulente digitale e dati 2025–26">
-              <circle class="spot__halo" cx="832" cy="640" r="26"/><circle class="spot__ring" cx="832" cy="640" r="17"/><circle class="spot__dot" cx="832" cy="640" r="7"/>
-              <text class="spot__tag" x="832" y="700" text-anchor="middle">Lucca Apartments</text>
+              <circle class="spot__halo" cx="872" cy="656" r="26"/><circle class="spot__ring" cx="872" cy="656" r="17"/><circle class="spot__dot" cx="872" cy="656" r="7"/>
+              <text class="spot__tag" x="872" y="716" text-anchor="middle">Lucca Apartments</text>
             </g>
           </svg>
           <p class="scene__title">Scena 03 — Il Lago · ospitalità fatta in casa</p>
@@ -407,7 +404,7 @@
       <!-- ===================== SCENA 4 · LA MONTAGNA ===================== -->
       <section class="scene" id="montagna" aria-label="Scena: la montagna, fuori ufficio">
         <div class="scene__box">
-          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di cartone della montagna: snowboard, wingfoil in quota, bagno di ghiaccio e treenet">
+          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di mattoncini della montagna: snowboard, wingfoil in quota, bagno di ghiaccio e treenet">
             <defs>
               <linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efdfc0"/><stop offset="1" stop-color="#ddc69e"/></linearGradient>
               <linearGradient id="rock4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b79468"/><stop offset="1" stop-color="#93703f"/></linearGradient>
@@ -416,25 +413,25 @@
               <image href="assets/mondo/montagna.webp" x="-26" y="-15" width="1652" height="930" preserveAspectRatio="xMidYMid slice"/>
             </g>
             <!-- hotspots -->
+            <g class="spot" data-open="wengen" tabindex="0" role="button" aria-label="Wengen Apartments — 80 unità nelle Alpi svizzere">
+              <circle class="spot__halo" cx="888" cy="448" r="26"/><circle class="spot__ring" cx="888" cy="448" r="17"/><circle class="spot__dot" cx="888" cy="448" r="7"/>
+              <text class="spot__tag" x="888" y="408" text-anchor="middle">Wengen Apartments</text>
+            </g>
             <g class="spot" data-open="life-snow" tabindex="0" role="button" aria-label="Snowboard — maestro, Giappone e Monte Bianco">
-              <circle class="spot__halo" cx="1324" cy="640" r="26"/><circle class="spot__ring" cx="1324" cy="640" r="17"/><circle class="spot__dot" cx="1324" cy="640" r="7"/>
-              <text class="spot__tag" x="1324" y="600" text-anchor="middle">Snowboard</text>
+              <circle class="spot__halo" cx="1468" cy="608" r="26"/><circle class="spot__ring" cx="1468" cy="608" r="17"/><circle class="spot__dot" cx="1468" cy="608" r="7"/>
+              <text class="spot__tag" x="1468" y="568" text-anchor="middle">Snowboard</text>
             </g>
             <g class="spot" data-open="life-wingfoil" tabindex="0" role="button" aria-label="Wingfoil in quota al Lago di Verney">
-              <circle class="spot__halo" cx="312" cy="684" r="26"/><circle class="spot__ring" cx="312" cy="684" r="17"/><circle class="spot__dot" cx="312" cy="684" r="7"/>
-              <text class="spot__tag" x="312" y="644" text-anchor="middle">Foil a 2000 m</text>
-            </g>
-            <g class="spot" data-open="wengen" tabindex="0" role="button" aria-label="Wengen Apartments — 80 unità nelle Alpi svizzere">
-              <circle class="spot__halo" cx="952" cy="492" r="26"/><circle class="spot__ring" cx="952" cy="492" r="17"/><circle class="spot__dot" cx="952" cy="492" r="7"/>
-              <text class="spot__tag" x="952" y="452" text-anchor="middle">Wengen Apartments</text>
+              <circle class="spot__halo" cx="240" cy="608" r="26"/><circle class="spot__ring" cx="240" cy="608" r="17"/><circle class="spot__dot" cx="240" cy="608" r="7"/>
+              <text class="spot__tag" x="240" y="568" text-anchor="middle">Foil a 2000 m</text>
             </g>
             <g class="spot" data-open="life-ice" tabindex="0" role="button" aria-label="Bagno nel ghiaccio in stile Wim Hof">
-              <circle class="spot__halo" cx="1048" cy="712" r="26"/><circle class="spot__ring" cx="1048" cy="712" r="17"/><circle class="spot__dot" cx="1048" cy="712" r="7"/>
-              <text class="spot__tag" x="1048" y="772" text-anchor="middle">Bagno di ghiaccio</text>
+              <circle class="spot__halo" cx="916" cy="672" r="26"/><circle class="spot__ring" cx="916" cy="672" r="17"/><circle class="spot__dot" cx="916" cy="672" r="7"/>
+              <text class="spot__tag" x="916" y="732" text-anchor="middle">Bagno di ghiaccio</text>
             </g>
             <g class="spot" data-open="life-treenet" tabindex="0" role="button" aria-label="Treenet — reti sugli alberi">
-              <circle class="spot__halo" cx="632" cy="632" r="26"/><circle class="spot__ring" cx="632" cy="632" r="17"/><circle class="spot__dot" cx="632" cy="632" r="7"/>
-              <text class="spot__tag" x="632" y="592" text-anchor="middle">Treenet</text>
+              <circle class="spot__halo" cx="472" cy="520" r="26"/><circle class="spot__ring" cx="472" cy="520" r="17"/><circle class="spot__dot" cx="472" cy="520" r="7"/>
+              <text class="spot__tag" x="472" y="480" text-anchor="middle">Treenet</text>
             </g>
           </svg>
           <p class="scene__title">Scena 04 — La Montagna · fuori ufficio</p>
@@ -444,7 +441,7 @@
       <!-- ===================== SCENA 5 · L'EDICOLA ===================== -->
       <section class="scene" id="edicola" aria-label="Scena: l'edicola, il blog">
         <div class="scene__box">
-          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di cartone di un'edicola: i giornali appesi sono gli articoli del blog">
+          <svg viewBox="0 0 1600 900" role="img" aria-label="Diorama di mattoncini di un'edicola: i giornali appesi sono gli articoli del blog">
             <defs>
               <linearGradient id="sky5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eedcb6"/><stop offset="1" stop-color="#dcc294"/></linearGradient>
               <linearGradient id="kiosk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9a26b"/><stop offset="1" stop-color="#a87f49"/></linearGradient>
@@ -455,37 +452,37 @@
             <!-- hotspots -->
             <a href="blog/" aria-label="Apri il blog — tutti gli articoli">
               <g class="spot">
-                <circle class="spot__halo" cx="824" cy="184" r="27"/><circle class="spot__ring" cx="824" cy="184" r="18"/><circle class="spot__dot" cx="824" cy="184" r="7"/>
-                <text class="spot__tag" x="824" y="136" text-anchor="middle">Tutti gli articoli →</text>
+                <circle class="spot__halo" cx="824" cy="192" r="27"/><circle class="spot__ring" cx="824" cy="192" r="18"/><circle class="spot__dot" cx="824" cy="192" r="7"/>
+                <text class="spot__tag" x="824" y="144" text-anchor="middle">Tutti gli articoli →</text>
               </g>
             </a>
             <a href="blog/vento-barcolana.html" aria-label="Articolo: Vento Barcolana">
               <g class="spot">
-                <circle class="spot__halo" cx="532" cy="680" r="23"/><circle class="spot__ring" cx="532" cy="680" r="14"/><circle class="spot__dot" cx="532" cy="680" r="6"/>
-                <text class="spot__tag" x="532" y="644" text-anchor="middle">Vento Barcolana</text>
+                <circle class="spot__halo" cx="584" cy="696" r="23"/><circle class="spot__ring" cx="584" cy="696" r="14"/><circle class="spot__dot" cx="584" cy="696" r="6"/>
+                <text class="spot__tag" x="584" y="760" text-anchor="middle">Vento Barcolana</text>
               </g>
             </a>
             <a href="blog/fiscalninja.html" aria-label="Articolo: FiscalNinja">
               <g class="spot">
-                <circle class="spot__halo" cx="748" cy="684" r="23"/><circle class="spot__ring" cx="748" cy="684" r="14"/><circle class="spot__dot" cx="748" cy="684" r="6"/>
-                <text class="spot__tag" x="748" y="648" text-anchor="middle">FiscalNinja</text>
+                <circle class="spot__halo" cx="768" cy="704" r="23"/><circle class="spot__ring" cx="768" cy="704" r="14"/><circle class="spot__dot" cx="768" cy="704" r="6"/>
+                <text class="spot__tag" x="768" y="768" text-anchor="middle">FiscalNinja</text>
               </g>
             </a>
             <a href="blog/rendita-affitti.html" aria-label="Articolo: Rendita Affitti">
               <g class="spot">
-                <circle class="spot__halo" cx="920" cy="684" r="23"/><circle class="spot__ring" cx="920" cy="684" r="14"/><circle class="spot__dot" cx="920" cy="684" r="6"/>
-                <text class="spot__tag" x="920" y="648" text-anchor="middle">Rendita affitti</text>
+                <circle class="spot__halo" cx="884" cy="704" r="23"/><circle class="spot__ring" cx="884" cy="704" r="14"/><circle class="spot__dot" cx="884" cy="704" r="6"/>
+                <text class="spot__tag" x="884" y="648" text-anchor="middle">Rendita affitti</text>
               </g>
             </a>
             <a href="blog/holiday-radar.html" aria-label="Articolo: Holiday Radar">
               <g class="spot">
-                <circle class="spot__halo" cx="1076" cy="680" r="23"/><circle class="spot__ring" cx="1076" cy="680" r="14"/><circle class="spot__dot" cx="1076" cy="680" r="6"/>
-                <text class="spot__tag" x="1076" y="644" text-anchor="middle">Holiday Radar</text>
+                <circle class="spot__halo" cx="1056" cy="696" r="23"/><circle class="spot__ring" cx="1056" cy="696" r="14"/><circle class="spot__dot" cx="1056" cy="696" r="6"/>
+                <text class="spot__tag" x="1056" y="760" text-anchor="middle">Holiday Radar</text>
               </g>
             </a>
             <g class="spot" data-open="contatti" tabindex="0" role="button" aria-label="Contatti — scrivimi o prenota una call">
-              <circle class="spot__halo" cx="1440" cy="524" r="26"/><circle class="spot__ring" cx="1440" cy="524" r="17"/><circle class="spot__dot" cx="1440" cy="524" r="7"/>
-              <text class="spot__tag" x="1440" y="480" text-anchor="middle">Contatti</text>
+              <circle class="spot__halo" cx="1468" cy="492" r="26"/><circle class="spot__ring" cx="1468" cy="492" r="17"/><circle class="spot__dot" cx="1468" cy="492" r="7"/>
+              <text class="spot__tag" x="1468" y="452" text-anchor="middle">Contatti</text>
             </g>
           </svg>
           <p class="scene__title">Scena 05 — L'Edicola · il blog, un articolo per ogni app</p>
@@ -576,7 +573,7 @@
         <a class="plain" href="https://www.linkedin.com/in/bebroggi/" target="_blank" rel="noopener">LinkedIn ↗</a>
       </div>
       <footer>
-        <p>© <span id="y"></span> Alberto Broggi — fatto di cartone, codice e bora</p>
+        <p>© <span id="y"></span> Alberto Broggi — fatto di mattoncini, codice e bora</p>
         <p>Trieste · 45.65° N, 13.77° E</p>
         <a href="#top">Torna al diorama ↑</a>
       </footer>
@@ -688,7 +685,7 @@
     <h2 id="modal-title">Villa Volpe</h2>
     <p class="sub">La villa di lusso con le migliori recensioni sul Lago d'Orta.</p>
     <img src="assets/img/villa-volpe.jpg" alt="Villa Volpe sul Lago d'Orta" loading="lazy" />
-    <p>Dalla gestione quotidiana ai dati, tutto in casa: sito, prenotazioni, automazioni e persino i social. La volpe di cartone qui accanto è d'obbligo.</p>
+    <p>Dalla gestione quotidiana ai dati, tutto in casa: sito, prenotazioni, automazioni e persino i social. La volpe di mattoncini qui accanto è d'obbligo.</p>
     <a class="go" href="https://www.villa-volpe.com" target="_blank" rel="noopener">Visita villa-volpe.com ↗</a>
   </template>
 
@@ -777,6 +774,7 @@
     <img src="assets/img/noura-crm-dashboard.jpg" alt="Pagina Oggi del trainer nel CRM Noura, con promemoria e lezioni del giorno (dati di esempio)" loading="lazy" />
     <ul class="skills"><li>CRM su misura</li><li>600+ clienti</li><li>15 trainer</li><li>Permessi per ruolo</li></ul>
     <a class="go" href="portfolio.html">Dettagli nel portfolio →</a>
+    <a class="ext" href="https://cryptopannoz.github.io/str-onboarding-crm/" target="_blank" rel="noopener">La mia demo CRM con dati sintetici ↗</a>
   </template>
 
   <template data-job="t-realestate">

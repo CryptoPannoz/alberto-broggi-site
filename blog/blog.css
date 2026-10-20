@@ -10,9 +10,9 @@
   --orange: #ff5b35;
   --lime: #c7ff39;
   --radius: 18px;
-  --sans: "Instrument Sans", Arial, sans-serif;
-  --serif: "Instrument Serif", Georgia, serif;
-  --mono: "IBM Plex Mono", monospace;
+  --sans: "DM Sans", Arial, sans-serif;
+  --serif: "DM Sans", Arial, sans-serif;
+  --mono: 'DM Sans', sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -67,10 +67,10 @@ img { max-width: 100%; }
   font-size: clamp(2.1rem, 6vw, 3.1rem);
   font-weight: 640; line-height: 1.04; letter-spacing: -.045em;
 }
-.post h1 em { font-family: var(--serif); font-weight: 400; font-style: italic; }
+.post h1 em { font-family: var(--serif); font-weight: 400; font-style: normal; }
 .post__summary {
   margin: 0 0 36px;
-  font-family: var(--serif); font-style: italic;
+  font-family: var(--serif); font-style: normal;
   font-size: 1.3rem; line-height: 1.4; color: #4d524e;
 }
 
@@ -136,7 +136,7 @@ img { max-width: 100%; }
   font-size: clamp(2.6rem, 8vw, 4rem);
   font-weight: 640; line-height: .98; letter-spacing: -.05em;
 }
-.blog-hero h1 em { font-family: var(--serif); font-weight: 400; font-style: italic; }
+.blog-hero h1 em { font-family: var(--serif); font-weight: 400; font-style: normal; }
 .blog-hero > .wrap > p { margin: 0; max-width: 46ch; color: #4d524e; font-size: 1.08rem; }
 
 .post-list { list-style: none; margin: 0; padding: 12px 0 30px; }
