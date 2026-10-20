@@ -68,6 +68,7 @@
         </div>
         <figure class="portrait">
           <img src="assets/portrait-borlenghi-2023.jpg" alt="Ritratto in bianco e nero di Alberto Broggi" />
+          <video class="portrait__live" autoplay muted loop playsinline preload="metadata" poster="assets/portrait-borlenghi-2023.jpg" aria-hidden="true" tabindex="-1"><source src="assets/video/portrait-live.mp4" type="video/mp4" /></video>
           <figcaption>
             <span>Alberto Broggi</span>
             <span>Da remoto · CET</span>
@@ -1132,6 +1133,33 @@
       if (!lightbox.hidden) closeLightbox();
       else if (!modal.hidden) closeModal();
     });
+  </script>
+
+  <script>
+    // Scroll reveal: progressivo, con stagger per i figli delle griglie
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) return;
+      var singles = document.querySelectorAll('.section-heading, .contact__inner, .hero__copy, .portrait, .dev-feature, .experience-divider, .skills-drawer, .blog-more');
+      var groups = document.querySelectorAll('.capability-grid, .experience-now, .experience-past, .project-grid, .toolgrid, .dev-grid, .blog-grid, .life-grid');
+      singles.forEach(function (el) { el.classList.add('reveal'); });
+      groups.forEach(function (g) {
+        Array.prototype.forEach.call(g.children, function (el, i) {
+          el.classList.add('reveal');
+          el.style.setProperty('--d', Math.min(i * 70, 420) + 'ms');
+        });
+      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      // Rete di sicurezza: dopo 2,5 s tutto visibile comunque (tab in background, observer mancato)
+      setTimeout(function () {
+        document.querySelectorAll('.reveal:not(.is-in)').forEach(function (el) { el.classList.add('is-in'); });
+      }, 2500);
+    })();
   </script>
 </body>
 </html>

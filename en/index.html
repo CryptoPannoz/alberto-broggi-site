@@ -46,6 +46,7 @@
       <nav class="topnav" aria-label="Primary navigation">
         <a href="#work">Projects</a>
         <a href="#dev">Dev</a>
+        <a href="#blog">Blog</a>
         <a href="#life">Off the clock</a>
       </nav>
       <div class="lang-switch" aria-label="Language"><a href="/en/" lang="en" aria-current="page">EN</a><span>/</span><a href="/" lang="it">IT</a></div>
@@ -67,6 +68,7 @@
         </div>
         <figure class="portrait">
           <img src="../assets/portrait-borlenghi-2023.jpg" alt="Black and white portrait of Alberto Broggi" />
+          <video class="portrait__live" autoplay muted loop playsinline preload="metadata" poster="../assets/portrait-borlenghi-2023.jpg" aria-hidden="true" tabindex="-1"><source src="../assets/video/portrait-live.mp4" type="video/mp4" /></video>
           <figcaption>
             <span>Alberto Broggi</span>
             <span>Full remote · CET</span>
@@ -361,7 +363,7 @@
             <p class="pitch">One local question, answered at a glance: <strong>where is the wind working now?</strong> Stations, gusts, forecasts, sea and webcams for the Gulf of Trieste.</p>
             <div class="toolcard__viz" style="padding:0;overflow:hidden">
               <span class="tcv__frame">
-                <img src="../assets/img/dev-vento-trieste.png" alt="VentoTrieste.info live wind dashboard" width="1280" height="720" loading="lazy" />
+                <video class="tcv__video" autoplay muted loop playsinline preload="metadata" poster="../assets/img/dev-vento-trieste.png" width="1280" height="720" aria-label="Bora gusts drawing patterns on the gulf, seen from above"><source src="../assets/video/bora-sul-mare.mp4" type="video/mp4" /></video>
                 <span class="tcv__wind" aria-hidden="true"><i></i><i></i><i></i></span>
               </span>
             </div>
@@ -514,12 +516,57 @@
       </div>
     </section>
 
+    <section id="blog" class="section blog-section">
+      <div class="container">
+        <div class="section-heading section-heading--row">
+          <div>
+            <div class="section-kicker"><span>05</span><p>Logbook</p></div>
+            <h2>One article per app.<br /><em>Dated.</em></h2>
+          </div>
+          <p>The blog where I tell why and how I built each tool — the problem, the choices, the real numbers. Articles are in Italian.</p>
+        </div>
+        <div class="blog-grid">
+          <a class="blog-card" href="../blog/vento-barcolana.html" hreflang="it">
+            <small>5 October 2026 · With Barcolana</small>
+            <strong>Vento Barcolana: real-time wind on the race course</strong>
+            <em>The course map with live wind from 6 stations and buoys across the Gulf — in Italian. →</em>
+          </a>
+          <a class="blog-card" href="../blog/fiscalninja.html" hreflang="it">
+            <small>21 August 2026 · Web app</small>
+            <strong>FiscalNinja: taxes computed at every invoice you cash in</strong>
+            <em>From Fatture in Cloud to tax, INPS and the F24 plan — cash basis, automatic. In Italian. →</em>
+          </a>
+          <a class="blog-card" href="../blog/rendita-affitti.html" hreflang="it">
+            <small>18 August 2026 · Tool</small>
+            <strong>What does a property really yield? Four rental regimes compared</strong>
+            <em>Occupancy, flat tax and IMU included, with OMI + Airbnb data. In Italian. →</em>
+          </a>
+          <a class="blog-card" href="../blog/holiday-radar.html" hreflang="it">
+            <small>5 August 2026 · Tool</small>
+            <strong>Holiday Radar: when your reachable markets go on holiday</strong>
+            <em>Real driving times and 1,318 holidays, one demand score per week. In Italian. →</em>
+          </a>
+          <a class="blog-card" href="../blog/affitto-vs-acquisto.html" hreflang="it">
+            <small>27 July 2026 · Tool</small>
+            <strong>Buy or rent? The honest comparison is net worth</strong>
+            <em>Not mortgage vs rent: what you own after N years if the renter invests the difference. In Italian. →</em>
+          </a>
+          <a class="blog-card" href="../blog/ventotrieste.html" hreflang="it">
+            <small>25 July 2025 · Web app</small>
+            <strong>Real-time wind in Trieste: why I built VentoTrieste.info</strong>
+            <em>Live stations, gusts, sea state and webcams of the gulf in one page. In Italian. →</em>
+          </a>
+        </div>
+        <div class="blog-more"><a class="btn btn--ghost" href="../blog/">All the logbook articles <span aria-hidden="true">→</span></a></div>
+      </div>
+    </section>
+
     <section id="life" class="section life-section">
       <span id="hobbies" class="anchor-alias" aria-hidden="true"></span>
       <div class="container">
         <div class="section-heading section-heading--row">
           <div>
-            <div class="section-kicker"><span>05</span><p>Off the clock</p></div>
+            <div class="section-kicker"><span>06</span><p>Off the clock</p></div>
             <h2>Wind, water<br /><em>&amp; mountains.</em></h2>
           </div>
           <p>Sport is the backbone. A visual log of the things that keep me sane.<br />
@@ -561,8 +608,11 @@
     </section>
 
     <section id="contact" class="contact">
+      <div class="contact__bg" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="metadata"><source src="../assets/video/regata-golfo.mp4" type="video/mp4" /></video>
+      </div>
       <div class="container contact__inner">
-        <div class="section-kicker section-kicker--light"><span>06</span><p>Contact</p></div>
+        <div class="section-kicker section-kicker--light"><span>07</span><p>Contact</p></div>
         <p class="contact__eyebrow">Have messy data or an operation that no longer scales?</p>
         <h2>Let's build the<br /><em>system behind it.</em></h2>
         <a class="book-call" href="https://calendar.app.google/XtuWJkDKGouTjfJy7" target="_blank" rel="noopener">Book a 30-minute call <span aria-hidden="true">↗</span></a>
@@ -1065,6 +1115,33 @@
       if (!lightbox.hidden) closeLightbox();
       else if (!modal.hidden) closeModal();
     });
+  </script>
+
+  <script>
+    // Scroll reveal: progressivo, con stagger per i figli delle griglie
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!('IntersectionObserver' in window)) return;
+      var singles = document.querySelectorAll('.section-heading, .contact__inner, .hero__copy, .portrait, .dev-feature, .experience-divider, .skills-drawer, .blog-more');
+      var groups = document.querySelectorAll('.capability-grid, .experience-now, .experience-past, .project-grid, .toolgrid, .dev-grid, .blog-grid, .life-grid');
+      singles.forEach(function (el) { el.classList.add('reveal'); });
+      groups.forEach(function (g) {
+        Array.prototype.forEach.call(g.children, function (el, i) {
+          el.classList.add('reveal');
+          el.style.setProperty('--d', Math.min(i * 70, 420) + 'ms');
+        });
+      });
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+      // Rete di sicurezza: dopo 2,5 s tutto visibile comunque (tab in background, observer mancato)
+      setTimeout(function () {
+        document.querySelectorAll('.reveal:not(.is-in)').forEach(function (el) { el.classList.add('is-in'); });
+      }, 2500);
+    })();
   </script>
 </body>
 </html>
