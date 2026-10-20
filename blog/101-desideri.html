@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>101 Desideri: l'app per il metodo di Igor Sibaldi, dalla brutta alla lettura quotidiana</title>
+  <meta name="description" content="Ho costruito una PWA che guida il metodo dei 101 desideri di Igor Sibaldi: 150 desideri in brutta, selezione dei 101 definitivi, verifica delle regole mentre scrivi, lettura quotidiana, offline, in tre lingue.">
+  <link rel="canonical" href="https://bebroggi.it/blog/101-desideri.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="101 Desideri: l'app per il metodo di Igor Sibaldi">
+  <meta property="og:description" content="Una PWA che guida il metodo dei 101 desideri: brutta da 150, selezione dei 101, verifica delle regole mentre scrivi, lettura quotidiana, offline, IT/EN/DE.">
+  <meta property="og:url" content="https://bebroggi.it/blog/101-desideri.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2026-07-17">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="101 Desideri: l'app per il metodo di Igor Sibaldi">
+  <meta name="twitter:description" content="Una PWA che guida il metodo dei 101 desideri: brutta da 150, selezione dei 101, verifica delle regole mentre scrivi, lettura quotidiana, offline, IT/EN/DE.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "101 Desideri: l'app per il metodo di Igor Sibaldi, dalla brutta alla lettura quotidiana",
+    "description": "Una PWA che guida il metodo dei 101 desideri di Igor Sibaldi: 150 desideri in brutta, selezione dei 101 definitivi, verifica delle regole mentre scrivi, lettura quotidiana, offline, IT/EN/DE.",
+    "datePublished": "2026-07-17",
+    "dateModified": "2026-07-17",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/101-desideri.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2026-07-17">17 luglio 2026</time> <span class="tag">PWA</span></p>
+      <h1>101 Desideri: l'app per il metodo di Igor Sibaldi, <em>dalla brutta alla lettura quotidiana</em></h1>
+      <p class="post__summary">Il metodo dei 101 desideri è semplice da spiegare e sorprendentemente difficile da eseguire bene su carta. Ho costruito una PWA che lo guida passo per passo — e corregge gli errori mentre scrivi, non dopo.</p>
+
+      <h2>Il problema: il metodo è rigoroso, il quaderno no</h2>
+      <p>Il metodo di Igor Sibaldi ha regole precise: si parte da una brutta copia di circa <strong>150 desideri</strong>, si sfoltisce fino ai <strong>101 definitivi</strong>, e ogni desiderio deve rispettare una forma esatta — iniziare con <strong>"io voglio"</strong>, stare entro <strong>14 parole</strong>, essere formulato in positivo, riguardare te e non gli altri. Poi i 101 vanno riletti ogni giorno.</p>
+      <p>Su carta queste regole si rompono subito. Scopri al desiderio numero 70 che metà dei primi erano formulati male, riscrivi, perdi il conto, e la rilettura quotidiana muore alla seconda settimana perché il quaderno è rimasto a casa. Il metodo non fallisce per mancanza di volontà: fallisce per attrito logistico.</p>
+
+      <h2>Come l'ho costruita</h2>
+      <p>Ho fatto una <strong>PWA mobile-first</strong>: si installa dal browser, sta sulla home del telefono e <strong>funziona offline</strong> — i desideri sono una cosa privata e devono essere leggibili anche in aereo. I dati stanno su <strong>Firebase</strong>, così la lista sopravvive al cambio di telefono.</p>
+      <p>La parte a cui tengo di più è la <strong>verifica delle regole in tempo reale</strong>: mentre scrivi, l'app controlla che il desiderio inizi con "io voglio", conta le parole e ti ferma al quattordicesimo sforamento, segnala le formulazioni da rivedere. Non un correttore a posteriori, ma un vincolo gentile durante la scrittura — come un editor che ti guarda da sopra la spalla, senza giudicare il contenuto.</p>
+      <p>L'app è in <strong>italiano, inglese e tedesco</strong>, perché il metodo circola molto anche fuori dall'Italia.</p>
+
+      <h2>Cosa fa, nell'ordine del metodo</h2>
+      <ol>
+        <li><strong>Brutta copia</strong> — scrivi liberamente fino a ~150 desideri, con il contatore che ti dice a che punto sei;</li>
+        <li><strong>Selezione</strong> — riordini, unisci, scarti, fino ad arrivare esattamente ai 101 definitivi;</li>
+        <li><strong>Lettura quotidiana</strong> — la modalità lettura ti ripresenta i 101 ogni giorno, in un formato pensato per essere scorso in pochi minuti;</li>
+        <li><strong>Revisione</strong> — quando un desiderio si realizza o smette di interessarti, lo sostituisci e il ciclo continua.</li>
+      </ol>
+
+      <h2>Cosa ho imparato</h2>
+      <p>Digitalizzare un metodo non vuol dire trasferirlo su schermo: vuol dire capire <strong>dove si rompe nella pratica</strong> e mettere il software esattamente lì. Le regole di forma erano il punto di rottura, e infatti la validazione in scrittura è la funzione che fa la differenza rispetto al quaderno.</p>
+      <p>Ho anche imparato ad apprezzare le PWA per quello che sono: per un'app personale, quotidiana, senza bisogno di notifiche push aggressive, il binomio "installabile + offline" batte lo store. Zero recensioni da gestire, zero attese di approvazione, un solo codebase per tre lingue.</p>
+      <p>È stato anche il progetto che mi ha dato il ritmo per i tool successivi, come il <a href="affitto-vs-acquisto.html">calcolatore affitto vs acquisto</a>: un problema vero, un'interfaccia essenziale, e la disciplina di non aggiungere funzioni che il metodo non chiede.</p>
+
+      <div class="cta-box">
+        <p><strong>101 Desideri</strong> è gratuita, si installa dal browser e funziona offline — in italiano, inglese e tedesco.</p>
+        <a href="https://cryptopannoz.github.io/101-desideri/">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="affitto-vs-acquisto.html">Affitto o acquisto: il calcolatore che confronta il patrimonio, non la rata</a></li>
+          <li><a href="ventotrieste.html">VentoTrieste.info: il vento del golfo di Trieste in tempo reale</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>

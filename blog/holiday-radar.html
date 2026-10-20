@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Holiday Radar: il calendario delle festività dei mercati che possono raggiungere il tuo affitto breve</title>
+  <meta name="description" content="Quando sono in vacanza i mercati che possono davvero arrivare alla tua casa? Holiday Radar incrocia 1.318 festività europee con i tempi di guida reali e dà un punteggio di domanda per settimana. Export CSV e .ics.">
+  <link rel="canonical" href="https://bebroggi.it/blog/holiday-radar.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Holiday Radar: le festività dei mercati che possono raggiungere il tuo affitto breve">
+  <meta property="og:description" content="1.318 festività europee incrociate con i tempi di guida reali verso la tua casa vacanze: un punteggio di domanda per settimana, con export CSV e .ics.">
+  <meta property="og:url" content="https://bebroggi.it/blog/holiday-radar.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2026-08-05">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Holiday Radar: le festività dei mercati che possono raggiungere il tuo affitto breve">
+  <meta name="twitter:description" content="1.318 festività europee incrociate con i tempi di guida reali verso la tua casa vacanze: un punteggio di domanda per settimana.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Holiday Radar: il calendario delle festività dei mercati che possono raggiungere il tuo affitto breve",
+    "description": "Holiday Radar incrocia 1.318 festività europee con i tempi di guida reali verso la tua casa vacanze e assegna un punteggio di domanda per settimana, con export CSV e .ics.",
+    "datePublished": "2026-08-05",
+    "dateModified": "2026-08-05",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/holiday-radar.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2026-08-05">5 agosto 2026</time> <span class="tag">Affitti brevi</span></p>
+      <h1>Holiday Radar: <em>quando sono in vacanza i mercati che possono raggiungere la tua casa?</em></h1>
+      <p class="post__summary">Un ponte bavarese riempie il Garda, uno sloveno riempie Trieste, e un host che guarda solo il calendario italiano non se ne accorge. Holiday Radar incrocia le festività europee con i tempi di guida reali verso la tua casa.</p>
+
+      <h2>Il problema: la domanda arriva da calendari che non guardi</h2>
+      <p>Chi gestisce un affitto breve conosce le festività italiane a memoria. Ma la domanda vera arriva da un raggio di qualche ora d'auto, e quel raggio attraversa i confini: Austria, Germania, Slovenia, Svizzera, Croazia — ognuno con i suoi ponti, le sue vacanze scolastiche, le sue festività regionali (in Germania cambiano Land per Land).</p>
+      <p>Il risultato è che i prezzi vengono alzati per Ferragosto, quando lo farebbe chiunque, e restano piatti nel weekend di Pfingsten, quando mezza Baviera si mette in macchina verso sud. L'informazione esiste, ma è sparsa su decine di calendari nazionali che nessun host consulta davvero.</p>
+
+      <h2>Come l'ho costruito</h2>
+      <p>Holiday Radar fa una cosa sola, in tre passaggi:</p>
+      <ol>
+        <li><strong>Raggiungibilità reale</strong> — inserisci la posizione della casa e il tool calcola i <strong>tempi di guida reali con OSRM</strong> (il motore di routing di OpenStreetMap) dalle principali città e regioni europee. Non cerchi in linea d'aria: 200 km di autostrada e 200 km di passi alpini sono due mercati diversi;</li>
+        <li><strong>Festività</strong> — incrocia <strong>1.318 festività</strong> da OpenHolidays API: nazionali, regionali e vacanze scolastiche dei paesi nel raggio utile;</li>
+        <li><strong>Punteggio</strong> — per ogni settimana dell'anno assegna un <strong>punteggio di domanda</strong> che pesa quante persone, da quali mercati e con che facilità possono raggiungerti in quel periodo.</li>
+      </ol>
+      <p>L'output è pensato per finire nel flusso di lavoro dell'host, non per restare nel tool: <strong>export CSV</strong> per chi ragiona su fogli di calcolo e pricing, ed <strong>export .ics</strong> per chi vuole le settimane calde direttamente nel proprio calendario, accanto alle prenotazioni.</p>
+
+      <h2>Cosa ho imparato</h2>
+      <p>La parte difficile non erano le festività: era la <strong>raggiungibilità</strong>. Il primo prototipo usava la distanza in linea d'aria e produceva classifiche assurde — mercati "vicini" separati da una catena montuosa. Passare a OSRM e ai minuti di guida reali ha cambiato la qualità del risultato più di qualsiasi altra scelta.</p>
+      <p>Seconda lezione: i dati pubblici europei sono migliori della loro reputazione. OpenHolidays copre le festività con una granularità regionale che non mi aspettavo; il lavoro vero è stato normalizzare e pesare, non raccogliere.</p>
+      <p>Terza: un punteggio sintetico batte una tabella completa. La prima versione mostrava tutto — ogni festività, ogni mercato, ogni data. Era accurata e inutilizzabile. La versione buona risponde alla domanda dell'host in un numero per settimana, e tiene il dettaglio un click sotto.</p>
+      <p>Holiday Radar è il tassello "domanda" di un ragionamento più ampio sui rendimenti degli affitti: per il tassello "ricavi e regimi" c'è <a href="rendita-affitti.html">Rendita Affitti</a>, e per i costi di gestione <a href="consumi-casa.html">Consumi di Casa</a>.</p>
+
+      <div class="cta-box">
+        <p><strong>Holiday Radar</strong> è gratuito: inserisci la posizione della tua casa e scopri le settimane in cui i tuoi mercati sono in vacanza.</p>
+        <a href="https://bebroggi.it/tools/holiday-radar/">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="rendita-affitti.html">Quanto rende un immobile in affitto: 4 regimi a confronto</a></li>
+          <li><a href="consumi-casa.html">Quanto costano le bollette all'anno: lo stimatore dei consumi di casa</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>

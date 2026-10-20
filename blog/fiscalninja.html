@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FiscalNinja: calcolo tasse per forfettari da Fatture in Cloud a F24, in automatico</title>
+  <meta name="description" content="Sto costruendo FiscalNinja: una web app per partite IVA forfettarie entro 85.000 € che legge gli incassi da Fatture in Cloud, calcola imposta sostitutiva, INPS e acconti per cassa, pianifica gli F24 e legge le quietanze. Con sezione cripto.">
+  <link rel="canonical" href="https://bebroggi.it/blog/fiscalninja.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="FiscalNinja: calcolo tasse per forfettari, da Fatture in Cloud a F24">
+  <meta property="og:description" content="Web app per forfettari entro 85.000 €: incassi da Fatture in Cloud, imposta sostitutiva, INPS e acconti per cassa, piano F24 a rate, quietanze lette in automatico.">
+  <meta property="og:url" content="https://bebroggi.it/blog/fiscalninja.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2026-08-21">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FiscalNinja: calcolo tasse per forfettari, da Fatture in Cloud a F24">
+  <meta name="twitter:description" content="Web app per forfettari entro 85.000 €: incassi, imposta sostitutiva, INPS e acconti per cassa, piano F24 a rate, quietanze lette in automatico.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "FiscalNinja: calcolo tasse per forfettari da Fatture in Cloud a F24, in automatico",
+    "description": "FiscalNinja è una web app per partite IVA forfettarie entro 85.000 €: legge gli incassi da Fatture in Cloud, calcola per cassa imposta sostitutiva, INPS e acconti, pianifica gli F24 a rate e legge le quietanze dell'Agenzia delle Entrate. In sviluppo.",
+    "datePublished": "2026-08-21",
+    "dateModified": "2026-08-21",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/fiscalninja.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2026-08-21">21 agosto 2026</time> <span class="tag">Fisco · in sviluppo</span></p>
+      <h1>FiscalNinja: <em>il calcolo delle tasse del forfettario, dagli incassi all'F24</em></h1>
+      <p class="post__summary">Il regime forfettario è il più semplice del fisco italiano, eppure il titolare medio non sa mai quante tasse sta accumulando mentre incassa. Sto costruendo una web app che glielo dice in tempo reale — leggendo i dati che esistono già.</p>
+
+      <h2>Il problema: regime semplice, visibilità zero</h2>
+      <p>Per una partita IVA forfettaria entro gli <strong>85.000 €</strong> le regole sono poche: coefficiente di redditività, imposta sostitutiva, contributi INPS, acconti e saldi. Il calcolo è meccanico. Il problema è <strong>quando</strong> lo scopri: di solito a giugno, dal commercialista, tutto insieme — saldo dell'anno prima più primo acconto, in un F24 che non avevi previsto.</p>
+      <p>Nel frattempo gli incassi erano lì, dentro Fatture in Cloud, fattura per fattura con la sua data di pagamento. Tutti i dati per sapere in ogni momento "quanto del mio conto è davvero mio" esistono già. Mancava solo il software che li leggesse.</p>
+
+      <h2>Come la sto costruendo</h2>
+      <p>FiscalNinja è una web app in <strong>Next.js, deploy su Vercel</strong>, ancora <strong>in sviluppo</strong>. Il flusso è questo:</p>
+      <ul>
+        <li><strong>legge gli incassi da Fatture in Cloud</strong> via API — niente inserimento manuale, niente doppia contabilità;</li>
+        <li><strong>calcola per cassa</strong>: imposta sostitutiva, contributi INPS e acconti maturano man mano che gli incassi entrano, non a consuntivo. In ogni momento vedi il "debito fiscale maturato" accanto al saldo;</li>
+        <li><strong>pianifica gli F24</strong>: scadenze, rateazioni, quanto accantonare al mese per non farsi sorprendere a giugno e novembre;</li>
+        <li><strong>legge da sola le quietanze</strong> dell'Agenzia delle Entrate: carichi il PDF del versamento e l'app riconcilia il pagato con il dovuto, così il piano resta allineato alla realtà.</li>
+      </ul>
+      <p>C'è poi una <strong>sezione cripto</strong>, nata dalle mie esigenze: registro degli acquisti, supporto alla compilazione del quadro RW e calcolo delle plusvalenze. Due contabilità noiose, stessa app.</p>
+      <p>Una cosa va detta chiaramente, e la dico anche dentro l'app: <strong>FiscalNinja è un esercizio, non una consulenza fiscale</strong>. Il fisco italiano ha abbastanza casi particolari da riempire una carriera; l'app copre il caso ordinario del forfettario e per tutto il resto c'è il commercialista, che non sto cercando di sostituire.</p>
+
+      <h2>Cosa sto imparando</h2>
+      <p>Primo: il principio di cassa è un vincolo di design, non solo una regola fiscale. Appena ragioni per incassi reali invece che per fatturato emesso, l'interfaccia giusta diventa un flusso temporale, non una tabella annuale.</p>
+      <p>Secondo: la riconciliazione automatica delle quietanze è la funzione meno appariscente e più preziosa. Un piano fiscale che non sa cosa hai già pagato diventa rumore nel giro di due scadenze.</p>
+      <p>Terzo: rispetto ai calcolatori una-pagina come <a href="rendita-affitti.html">Rendita Affitti</a> o <a href="consumi-casa.html">Consumi di Casa</a>, un'app con dati persistenti e integrazioni è un altro mestiere — autenticazione, API di terzi, stati intermedi. È il motivo per cui questa è "in sviluppo" mentre gli altri sono online da un pezzo: la complessità vera di un prodotto fiscale non è il calcolo, è tenere il calcolo sincronizzato con il mondo.</p>
+
+      <div class="cta-box">
+        <p><strong>FiscalNinja</strong> è in sviluppo: sulla pagina del progetto trovi lo stato dei lavori e puoi lasciare il tuo contatto per provarla.</p>
+        <a href="https://bebroggi.it/fiscalninja/">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="rendita-affitti.html">Quanto rende un immobile in affitto: 4 regimi a confronto (cedolare e IMU incluse)</a></li>
+          <li><a href="consumi-casa.html">Quanto costano le bollette all'anno: lo stimatore dei consumi di casa</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>

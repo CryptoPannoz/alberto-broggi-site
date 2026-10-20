@@ -9,3 +9,6 @@ CV & Bando/
 
 # Stato locale Wrangler / Cloudflare
 .wrangler/
+
+# dati personali, mai su GitHub
+Personal/

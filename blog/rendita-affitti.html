@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quanto rende un immobile in affitto? Il calcolatore che confronta affitto breve, medio termine, 4+4 e 3+2</title>
+  <meta name="description" content="Ho costruito un calcolatore della rendita immobiliare che confronta i 4 regimi di locazione — affitto breve, medio termine, 4+4 libero e 3+2 concordato — con occupazione, cedolare secca e IMU. Dati OMI e Airbnb, stagionalità Eurostat.">
+  <link rel="canonical" href="https://bebroggi.it/blog/rendita-affitti.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Quanto rende un immobile in affitto? 4 regimi a confronto">
+  <meta property="og:description" content="Affitto breve, medio termine, 4+4 libero e 3+2 concordato a confronto, con occupazione, cedolare secca e IMU. Dati OMI e Airbnb, stagionalità Eurostat.">
+  <meta property="og:url" content="https://bebroggi.it/blog/rendita-affitti.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2026-08-18">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Quanto rende un immobile in affitto? 4 regimi a confronto">
+  <meta name="twitter:description" content="Affitto breve, medio termine, 4+4 libero e 3+2 concordato a confronto, con occupazione, cedolare secca e IMU.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Quanto rende un immobile in affitto? Il calcolatore che confronta affitto breve, medio termine, 4+4 e 3+2",
+    "description": "Un calcolatore della rendita immobiliare che confronta i 4 regimi di locazione con occupazione, cedolare secca e IMU. Dati OMI e Airbnb, stagionalità Eurostat, motore testato.",
+    "datePublished": "2026-08-18",
+    "dateModified": "2026-08-18",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/rendita-affitti.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2026-08-18">18 agosto 2026</time> <span class="tag">Immobiliare</span></p>
+      <h1>Quanto rende un immobile in affitto? <em>4 regimi a confronto, al netto di tutto</em></h1>
+      <p class="post__summary">Affitto breve, medio termine, 4+4 libero o 3+2 concordato? La risposta onesta è "dipende da occupazione, tasse e città" — così ho costruito un calcolatore che fa i conti su tutti e quattro i regimi insieme.</p>
+
+      <h2>Il problema: ogni regime ha i suoi numeri, e nessuno li confronta</h2>
+      <p>Il proprietario italiano che deve mettere a reddito un appartamento sceglie quasi sempre per sentito dire: "l'affitto breve rende il doppio", "il 4+4 è più sicuro", "col concordato paghi meno tasse". Tutte frasi vere a metà, perché ogni regime ha una struttura diversa di ricavi, vuoti e imposte:</p>
+      <ul>
+        <li><strong>affitto breve</strong> — tariffa alta ma occupazione variabile, forte stagionalità, costi di gestione e pulizie;</li>
+        <li><strong>medio termine</strong> — contratti transitori per studenti e lavoratori, meno vuoti del breve, meno gestione;</li>
+        <li><strong>4+4 canone libero</strong> — canone di mercato, occupazione quasi piena, cedolare al 21%;</li>
+        <li><strong>3+2 concordato</strong> — canone calmierato ma cedolare al 10% e <strong>IMU ridotta</strong>, che nei comuni ad alta tensione abitativa ribalta spesso la classifica.</li>
+      </ul>
+      <p>Confrontare a mente quattro strutture del genere è impossibile. Serviva un motore che facesse i conti fino al netto, non fino al lordo da brochure.</p>
+
+      <h2>Come l'ho costruito</h2>
+      <p>Rendita Affitti parte dai dati, non dalle opinioni: quotazioni <strong>OMI</strong> (Osservatorio del Mercato Immobiliare) per i canoni di lungo periodo, dati <strong>Airbnb</strong> per tariffe e occupazione del breve, e <strong>stagionalità Eurostat</strong> per distribuire la domanda turistica sui mesi dell'anno invece di usare una media piatta.</p>
+      <p>Sopra i dati c'è il motore fiscale: per ogni regime applica l'occupazione attesa, la <strong>cedolare secca</strong> con l'aliquota corretta (21% o 10% sul concordato) e l'<strong>IMU</strong> con le riduzioni dove spettano. Il motore è <strong>coperto da test</strong> — con quattro regimi, tre aliquote e casi particolari comunali, senza test avrei già spedito errori, lo so perché i test ne hanno fermati parecchi.</p>
+      <p>Il risultato è una classifica: quattro righe, un netto annuo per regime, e il vincitore evidenziato. Il tool è in <strong>italiano e inglese</strong>, perché una parte di chi compra per mettere a reddito in Italia non è italiana.</p>
+
+      <h2>Cosa ho imparato</h2>
+      <p>La lezione più interessante è nei risultati: <strong>l'affitto breve non vince sempre</strong>, e nemmeno quasi sempre. Appena l'occupazione scende sotto certe soglie o si è in una città dove il concordato gode di aliquote di favore, il 3+2 o il medio termine lo superano al netto — con molto meno lavoro. Il "doppio dei ricavi" lordo si sgonfia tra vuoti, gestione e fisco.</p>
+      <p>Seconda lezione: i dati pubblici italiani (OMI) e quelli di piattaforma raccontano storie diverse ed è il confronto a renderli utili. Da soli, entrambi mentono per omissione.</p>
+      <p>Questo tool chiude il cerchio con gli altri due calcolatori immobiliari: <a href="affitto-vs-acquisto.html">Affitto vs Acquisto</a> risponde a "ha senso comprare?", Rendita Affitti a "e se compro per affittare, in che regime?", e <a href="consumi-casa.html">Consumi di Casa</a> stima i costi di gestione che mangiano la rendita. Per il lato domanda degli affitti brevi c'è <a href="holiday-radar.html">Holiday Radar</a>.</p>
+
+      <div class="cta-box">
+        <p><strong>Rendita Affitti</strong> è gratuito: inserisci città e dimensioni dell'immobile e confronta il netto annuo dei 4 regimi di locazione.</p>
+        <a href="https://bebroggi.it/tools/rendita-affitti/">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="affitto-vs-acquisto.html">Affitto o acquisto: il calcolatore che confronta il patrimonio, non la rata</a></li>
+          <li><a href="consumi-casa.html">Quanto costano le bollette all'anno: lo stimatore dei consumi di casa</a></li>
+          <li><a href="holiday-radar.html">Holiday Radar: le festività dei mercati che raggiungono il tuo affitto breve</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>

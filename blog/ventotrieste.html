@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vento a Trieste in tempo reale: perché ho costruito VentoTrieste.info</title>
+  <meta name="description" content="Bora, raffiche, stato mare e webcam del golfo di Trieste in un'unica pagina. La storia di VentoTrieste.info: una web app meteo-vento nata per il wingfoil a Barcola e Duino.">
+  <link rel="canonical" href="https://bebroggi.it/blog/ventotrieste.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Vento a Trieste in tempo reale: perché ho costruito VentoTrieste.info">
+  <meta property="og:description" content="Bora, raffiche, stato mare e webcam del golfo di Trieste in un'unica pagina. Com'è nata la web app VentoTrieste.info.">
+  <meta property="og:url" content="https://bebroggi.it/blog/ventotrieste.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2025-07-25">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Vento a Trieste in tempo reale: perché ho costruito VentoTrieste.info">
+  <meta name="twitter:description" content="Bora, raffiche, stato mare e webcam del golfo di Trieste in un'unica pagina. Com'è nata la web app VentoTrieste.info.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Vento a Trieste in tempo reale: perché ho costruito VentoTrieste.info",
+    "description": "Bora, raffiche, stato mare e webcam del golfo di Trieste in un'unica pagina. La storia di VentoTrieste.info, web app meteo-vento nata per il wingfoil a Barcola e Duino.",
+    "datePublished": "2025-07-25",
+    "dateModified": "2025-07-25",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/ventotrieste.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2025-07-25">25 luglio 2025</time> <span class="tag">Meteo & vento</span></p>
+      <h1>Vento a Trieste in tempo reale: <em>perché ho costruito VentoTrieste.info</em></h1>
+      <p class="post__summary">Faccio wingfoil a Barcola e a Duino. La domanda è sempre la stessa: dove sta lavorando il vento adesso? Non trovavo una risposta in un colpo d'occhio, così me la sono costruita.</p>
+
+      <h2>Il problema: cinque schede aperte per una decisione da trenta secondi</h2>
+      <p>Il golfo di Trieste è un posto strano per il vento. La bora entra a raffiche violente e disomogenee, il borino estivo lavora al mattino, la brezza pomeridiana riempie Barcola quando a Duino è già piatto. Due spot a quindici minuti di macchina possono avere 8 e 25 nodi nello stesso momento.</p>
+      <p>Prima di uscire in acqua controllavo: un sito per le centraline, un altro per le previsioni, un terzo per lo stato del mare, poi un paio di webcam per vedere con i miei occhi. Cinque schede per decidere se caricare l'ala in macchina. Ogni volta. La decisione in sé richiede trenta secondi, la raccolta dati dieci minuti.</p>
+
+      <h2>Come l'ho costruita</h2>
+      <p>VentoTrieste.info è una web app costruita su Google Apps Script. Scelta poco glamour e molto pratica: niente server da mantenere, niente costi fissi, e un backend che aggrega i dati delle stazioni meteo del golfo e li serve già pronti al frontend.</p>
+      <p>Il principio guida era uno solo: <strong>mobile first, una schermata, zero click</strong>. La uso dal parcheggio di Barcola con il telefono in una mano, quindi tutto quello che serve deve stare sopra la piega: vento attuale per stazione, raffica, direzione, tendenza. Se devi scrollare per capire se c'è vento, ho sbagliato qualcosa.</p>
+
+      <h2>Cosa fa</h2>
+      <ul>
+        <li><strong>Stazioni live</strong> — le centraline del golfo con intensità, direzione e soprattutto le <strong>raffiche</strong>, che con la bora contano più della media;</li>
+        <li><strong>Previsioni</strong> — per pianificare la sessione di domani, non solo quella di adesso;</li>
+        <li><strong>Stato del mare</strong> — onda e condizioni, perché 20 nodi con mare incrociato e 20 nodi con mare ordinato sono due sport diversi;</li>
+        <li><strong>Webcam</strong> — il controllo finale: i numeri dicono una cosa, le bandiere e le creste bianche la confermano.</li>
+      </ul>
+      <p>Il tutto in una pagina che si apre in un paio di secondi anche con la rete ballerina del lungomare.</p>
+
+      <h2>Cosa ho imparato</h2>
+      <p>Primo: un tool nato per me funziona meglio di un tool nato per un pubblico immaginario. Ogni scelta di layout l'ho validata sul mio caso d'uso reale — parcheggio, telefono, fretta — e si vede.</p>
+      <p>Secondo: i dati esistono già quasi sempre. Il valore non sta nel produrne di nuovi ma nel metterli insieme nel posto giusto al momento giusto. VentoTrieste non misura niente: aggrega, pulisce e presenta.</p>
+      <p>Terzo: il vento di Trieste è un argomento che interessa a molta più gente di quanta ne immaginassi — velisti, winger, kiter, canoisti, gente che deve solo decidere se stendere il bucato. Un'esigenza personale, se è vera, raramente è solo tua.</p>
+      <p>Da questa base, un anno dopo, è nato anche <a href="vento-barcolana.html">il modulo per la Barcolana</a>: la mappa del percorso di regata con il vento in tempo reale, costruito proprio sopra VentoTrieste.info.</p>
+
+      <div class="cta-box">
+        <p><strong>VentoTrieste.info</strong> è gratuito e funziona da qualsiasi telefono: stazioni live, raffiche, previsioni, stato mare e webcam del golfo di Trieste.</p>
+        <a href="https://ventotrieste.info/">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="vento-barcolana.html">Vento Barcolana in tempo reale: il tool costruito con Barcolana</a></li>
+          <li><a href="holiday-radar.html">Holiday Radar: le festività dei mercati che raggiungono la tua casa vacanze</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>

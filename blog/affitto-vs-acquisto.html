@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conviene comprare casa o affittare? Il calcolatore che confronta il patrimonio, non la rata</title>
+  <meta name="description" content="Ho costruito un calcolatore affitto o acquisto che risponde alla domanda giusta: quanto patrimonio netto ti resta dopo N anni, se chi affitta investe la differenza in BTP, ETF o Bitcoin. Gratuito, scenari condivisibili via link.">
+  <link rel="canonical" href="https://bebroggi.it/blog/affitto-vs-acquisto.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Conviene comprare casa o affittare? Il calcolatore che confronta il patrimonio, non la rata">
+  <meta property="og:description" content="Non rata contro affitto: quanto patrimonio netto resta dopo N anni, con chi affitta che investe la differenza in BTP, ETF o Bitcoin. Scenari condivisibili via link.">
+  <meta property="og:url" content="https://bebroggi.it/blog/affitto-vs-acquisto.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2026-07-27">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Conviene comprare casa o affittare? Il calcolatore che confronta il patrimonio, non la rata">
+  <meta name="twitter:description" content="Non rata contro affitto: quanto patrimonio netto resta dopo N anni, con chi affitta che investe la differenza. Scenari condivisibili via link.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Conviene comprare casa o affittare? Il calcolatore che confronta il patrimonio, non la rata",
+    "description": "Un calcolatore affitto o acquisto che risponde alla domanda giusta: quanto patrimonio netto resta dopo N anni, se chi affitta investe la differenza in BTP, ETF o Bitcoin.",
+    "datePublished": "2026-07-27",
+    "dateModified": "2026-07-27",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/affitto-vs-acquisto.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2026-07-27">27 luglio 2026</time> <span class="tag">Finanza personale</span></p>
+      <h1>Conviene comprare casa o affittare? <em>Il calcolatore che confronta il patrimonio, non la rata</em></h1>
+      <p class="post__summary">"La rata costa quanto l'affitto, quindi tanto vale comprare" è il confronto sbagliato. La domanda giusta è: dopo vent'anni, chi dei due ha più patrimonio netto? Ho costruito un calcolatore che risponde a quella.</p>
+
+      <h2>Il problema: il confronto che fanno tutti è monco</h2>
+      <p>Il dibattito affitto-o-acquisto in Italia si gioca quasi sempre su rata contro canone. Ma quel confronto ignora metà dell'equazione: l'anticipo immobilizzato, le imposte d'acquisto, il notaio, la manutenzione, l'IMU se non è prima casa — e soprattutto cosa farebbe l'inquilino con i soldi che <strong>non</strong> ha messo nel mattone.</p>
+      <p>Se chi affitta investe l'anticipo risparmiato e ogni mese la differenza tra rata e canone, dopo vent'anni può trovarsi con un portafoglio che compete con il valore della casa. Oppure no: dipende dai numeri. Ed è esattamente il punto — <strong>dipende dai numeri</strong>, non dagli slogan, né in un verso né nell'altro.</p>
+
+      <h2>Come l'ho costruito</h2>
+      <p>Il calcolatore simula i due percorsi anno per anno, in parallelo, su un orizzonte che scegli tu:</p>
+      <ul>
+        <li><strong>chi compra</strong>: anticipo, mutuo con ammortamento reale, costi d'acquisto, manutenzione, rivalutazione dell'immobile, e alla fine il valore della casa meno il debito residuo;</li>
+        <li><strong>chi affitta</strong>: canone che cresce nel tempo, e la differenza — anticipo incluso — investita in un portafoglio a scelta tra <strong>BTP, ETF 60/40, ETF azionario globale o Bitcoin</strong>, ognuno con il suo profilo di rendimento.</li>
+      </ul>
+      <p>Il risultato è una cifra sola per parte: il patrimonio netto dopo N anni. Vince chi ne ha di più, e vedi anche di quanto e in quale anno le curve si incrociano.</p>
+      <p>Tecnicamente è <strong>JavaScript puro, zero dipendenze</strong>: niente framework, niente build, una pagina che si apre istantanea. E ogni scenario è <strong>condivisibile via link</strong> — i parametri vivono nell'URL, così una discussione al bar può finire con "guarda, con i tuoi numeri viene così" e un link che si apre già compilato.</p>
+
+      <h2>Cosa ho imparato</h2>
+      <p>Primo: appena metti dentro il costo-opportunità dell'anticipo, i risultati diventano molto meno scontati di come li racconta sia il partito del mattone sia quello dell'investitore. In tante combinazioni realistiche vince l'acquisto; in altre, altrettanto realistiche, vince l'affitto con disciplina d'investimento. La parola chiave è "disciplina": il modello assume che la differenza venga investita davvero, ogni mese.</p>
+      <p>Secondo: gli scenari condivisibili via URL sono la funzione più usata. La gente non vuole solo calcolare — vuole <strong>mostrare</strong> il proprio calcolo a qualcuno. Costa pochissimo da implementare e moltiplica la circolazione del tool.</p>
+      <p>Terzo: questo calcolatore ha aperto un filone. Dal lato del proprietario, la stessa domanda diventa "quanto rende un immobile messo a reddito?" — e lì è nato <a href="rendita-affitti.html">Rendita Affitti</a>. E per stimare i costi di gestione di una casa è arrivato <a href="consumi-casa.html">Consumi di Casa</a>. I tool buoni generano i tool successivi.</p>
+
+      <div class="cta-box">
+        <p><strong>Affitto vs Acquisto</strong> è gratuito: inserisci i tuoi numeri, scegli il portafoglio alternativo e condividi lo scenario via link.</p>
+        <a href="https://bebroggi.it/tools/affitto-vs-acquisto.html">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="rendita-affitti.html">Quanto rende un immobile in affitto: 4 regimi a confronto</a></li>
+          <li><a href="consumi-casa.html">Quanto costano le bollette all'anno: lo stimatore dei consumi di casa</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>

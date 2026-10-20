@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quanto costano le bollette all'anno? Lo stimatore dei consumi di casa</title>
+  <meta name="description" content="Luce, gas, acqua e Wi-Fi: ho costruito uno stimatore delle utenze annue che parte dal numero di occupanti — circa 600 € fissi più 450 € a persona — e si corregge con le tue bollette reali. Gratuito, link condivisibile, IT/EN.">
+  <link rel="canonical" href="https://bebroggi.it/blog/consumi-casa.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Quanto costano le bollette all'anno? Lo stimatore dei consumi di casa">
+  <meta property="og:description" content="Luce, gas, acqua e Wi-Fi stimati dal numero di occupanti — ~600 € fissi + ~450 € a persona — con ogni voce correggibile con le bollette reali.">
+  <meta property="og:url" content="https://bebroggi.it/blog/consumi-casa.html">
+  <meta property="og:locale" content="it_IT">
+  <meta property="article:published_time" content="2026-08-20">
+  <meta property="article:author" content="Alberto Broggi">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Quanto costano le bollette all'anno? Lo stimatore dei consumi di casa">
+  <meta name="twitter:description" content="Luce, gas, acqua e Wi-Fi stimati dal numero di occupanti, con ogni voce correggibile con le bollette reali.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Quanto costano le bollette all'anno? Lo stimatore dei consumi di casa",
+    "description": "Uno stimatore delle utenze annue — luce, gas, acqua, Wi-Fi — che parte dal numero di occupanti e si corregge con le bollette reali. Circa 600 € fissi più 450 € a occupante come punto di partenza.",
+    "datePublished": "2026-08-20",
+    "dateModified": "2026-08-20",
+    "inLanguage": "it",
+    "author": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "publisher": { "@type": "Person", "name": "Alberto Broggi", "url": "https://bebroggi.it/" },
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://bebroggi.it/blog/consumi-casa.html" }
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a href="https://bebroggi.it/">← bebroggi.it</a>
+      <a href="index.html">Blog</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class="post__meta"><time datetime="2026-08-20">20 agosto 2026</time> <span class="tag">Casa</span></p>
+      <h1>Quanto costano le bollette all'anno? <em>Uno stimatore che parte dagli occupanti</em></h1>
+      <p class="post__summary">Chi va a vivere da solo, chi valuta una casa più grande, chi affitta una stanza: tutti prima o poi chiedono "ma di bollette quanto si spende?". Ho costruito uno stimatore che risponde subito e si raffina con le bollette vere.</p>
+
+      <h2>Il problema: la risposta esiste, ma è sepolta nelle bollette</h2>
+      <p>La spesa annua per le utenze è uno dei numeri più richiesti e meno disponibili della finanza domestica. I comparatori ti dicono quale offerta costa meno, non quanto spenderai in totale. Le medie nazionali mescolano monolocali e ville. E le bollette vere — l'unica fonte affidabile — arrivano a cadenze diverse, con conguagli, e nessuno le somma mai su base annua.</p>
+      <p>Eppure la domanda è concreta: serve per il budget di un trasloco, per decidere un affitto, per stimare i costi di gestione di un immobile a reddito. Serviva un punto di partenza onesto, correggibile, in una pagina.</p>
+
+      <h2>Come l'ho costruito</h2>
+      <p>L'osservazione di base è che i consumi domestici hanno una struttura semplice: una <strong>quota fissa</strong> che paghi anche a casa vuota (canoni, oneri di rete, Wi-Fi, minimi contrattuali) e una <strong>quota variabile</strong> che cresce con le persone che ci vivono — docce, lavatrici, fornelli, riscaldamento percepito.</p>
+      <p>Il modello di partenza è dichiarato ed esplicito: <strong>circa 600 € all'anno di costi fissi più circa 450 € per occupante</strong>, ripartiti tra luce, gas, acqua e Wi-Fi. Una coppia parte quindi da ~1.500 € l'anno; una famiglia di quattro da ~2.400 €. Non è una verità assoluta: è un punto di partenza ragionevole, dichiarato in chiaro invece che nascosto in un algoritmo.</p>
+      <p>Poi viene la parte che rende il tool utile davvero: <strong>ogni voce è correggibile</strong>. Hai in mano la bolletta della luce? Sostituisci la stima con il numero vero, e il totale si ricalcola mantenendo stimate solo le voci che non conosci. È un modello ibrido: parte da euristiche, converge sui tuoi dati.</p>
+      <p>Il risultato si condivide <strong>via link</strong> — i parametri stanno nell'URL, come nel <a href="affitto-vs-acquisto.html">calcolatore affitto vs acquisto</a> — e il tool esiste in <strong>italiano e inglese</strong>.</p>
+
+      <h2>Cosa ho imparato</h2>
+      <p>Primo: dichiarare le assunzioni vale più che raffinarle. "600 fissi + 450 a persona" è un modello criticabile, ed è un pregio: chi lo critica lo sta già correggendo con i suoi numeri, che è esattamente l'uso previsto.</p>
+      <p>Secondo: la correggibilità voce per voce è ciò che trasforma una stima in uno strumento. Un numero calato dall'alto genera diffidenza; un numero che puoi sovrascrivere genera confronto.</p>
+      <p>Terzo: questo è il tool più "piccolo" che ho fatto, ed è quello che spiego in meno tempo. C'è una correlazione, e non è un caso: il perimetro stretto è una funzione, non una mancanza. Nel quadro degli strumenti sulla casa, Consumi di Casa copre i costi di gestione che vanno sottratti sia nel confronto <a href="affitto-vs-acquisto.html">affitto/acquisto</a> sia nel calcolo della <a href="rendita-affitti.html">rendita da locazione</a>.</p>
+
+      <div class="cta-box">
+        <p><strong>Consumi di Casa</strong> è gratuito: parti dagli occupanti, correggi con le tue bollette e condividi la stima via link.</p>
+        <a href="https://bebroggi.it/tools/consumi-casa/">Prova il tool →</a>
+      </div>
+
+      <nav class="related" aria-label="Articoli correlati">
+        <p>Articoli correlati</p>
+        <ul>
+          <li><a href="affitto-vs-acquisto.html">Affitto o acquisto: il calcolatore che confronta il patrimonio, non la rata</a></li>
+          <li><a href="rendita-affitti.html">Quanto rende un immobile in affitto: 4 regimi a confronto</a></li>
+        </ul>
+      </nav>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>© Alberto Broggi</p>
+      <p><a href="https://bebroggi.it/">bebroggi.it</a> · <a href="index.html">Blog</a></p>
+    </div>
+  </footer>
+</body>
+</html>
