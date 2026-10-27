@@ -3,13 +3,15 @@
 One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pages.
 
 ## Structure
-- `index.html` (IT) / `en/index.html` (EN) — one-page site, laid out like a CV: section label on the left, content on the right
+- `index.html` (IT) / `en/index.html` (EN) — one-page site, laid out like a CV: section label (with its signal flag) on the left, content on the right
   - Work history rows are native `<details>`: click a row to read the full story inline. Each row has an id (`#noura`, `#trieste`, `#barcolana`…), so `/#noura` opens it directly.
-- `assets/` — `site.css` (homepage + links pages), `style.css` (legacy, still used by `jobs/` and `tools/affitto-vs-acquisto.html`), `img/` photos, `video/` clips
-- `blog/` — articles with their own `blog.css`, same black-and-white language as the homepage
+- `assets/site.css` + `assets/site.js` — homepage and links pages (shared behaviours; the small tool demos keep their own inline script per language)
+- `assets/style.css` — legacy, still used by `jobs/` and `tools/affitto-vs-acquisto.html`
+- `assets/img/` photos, logos, project screenshots · `assets/video/` clips
+- `blog/` — articles with their own `blog.css`, same palette and fonts as the homepage
 - `jobs/` — legacy standalone detail pages (kept as deep-link fallback; not linked from the homepage)
 - `hobbies/` — wingfoil page + full link list
-- `cv-velico/`, `en/cv-velico/` — short-URL stubs (bebroggi.it/cv-velico) that jump to the Sailing section (`/#cv-velico`). The race-mile counter at the top of that section sums the `data-nm` spans in the Regattas table: add a regatta = add a span with its estimated miles and the year in its text.
+- `cv-velico/`, `en/cv-velico/` — short-URL stubs (bebroggi.it/cv-velico) that jump to the Sailing section (`/#cv-velico`). The race-mile counter and the "lap of the world" ring sum the `data-nm` spans in the Regattas table: add a regatta = add a span with its estimated miles and the year in its text.
 - `tools/` — standalone interactive tools, self-contained (own `<style>`/`<script>`)
   - `affitto-vs-acquisto.html` — rent vs buy calculator: net-worth simulation over the horizon, break-even year, tornado sensitivity on the assumptions, market scenarios. State is shareable via query string and persisted in `localStorage`.
 
@@ -19,20 +21,23 @@ In the industry since 2016: first revenue, channels and operations, now the soft
 Copy stays factual: numbers and names, no slogans.
 
 ## Design
-- Black and white only: `#000` on `#fff`, one grey for secondary text, 1px rules instead of cards
-- One typeface: Newsreader (Google Fonts), tabular figures for years and numbers; small labels in spaced capitals
-- Every photo rendered in grayscale via CSS (`filter: grayscale(1)`), so the originals stay untouched
-- No animations, no scroll effects, no buttons: underlined text links only
-- Minimal JS: open a `<details>` row from the URL hash, sum the sailing miles, a `<dialog>` photo viewer
+- Clean, white page; navy ink text; accents from the International Code of Signals: red, yellow, blue
+- Each section has its signal flag (initial letter: L = Lavoro, P = Progetti…); the hero hoists C·I·A·O in flags next to the portrait; the brand mark is A + B
+- Type: Newsreader (text and headings) + IBM Plex Mono (labels, data, buttons)
+- Square buttons that flip to signal yellow; table rows highlighted in yellow on hover/open
+- Motion (all off with `prefers-reduced-motion`): headline words rising, yellow marker under the key words, section rules drawing in, paper curtains lifting off images, odometer digits, the sea-miles ring, flags fluttering, the "data machine" typing a messy record and returning a clean row
+- The data machine's examples live in the `#machine-data` JSON at the bottom of each page
 
 ## Homepage information architecture
-1. Intro: portrait, one plain sentence, a short fact list (now, before, tools, base, contact)
-2. Work: one table, current roles then earlier ones; each row = years · company · role · numbers, expandable
-3. Projects: three groups (with clients & partners, tools & apps, hospitality), each row links to the live thing and its article
-4. Blog (Diario): the five latest articles, then the full index
-5. Sailing (CV velico): miles counter, regattas, cruises & deliveries, training — as tables
-6. Off the clock: 12 grayscale photos with captions, link to the links page
-7. Contact: email, call booking, LinkedIn, GitHub
+1. Hero: one plain sentence, call/CTA, stack, Borlenghi portrait (live video) with the flag hoist
+2. Data machine: four sample records (booking, real estate lead, medical certificate, regatta entry) cleaned live
+3. Work: one table, current roles then earlier ones; each row = years · logo · company · role · numbers, expandable
+4. Projects: Vento Barcolana and RealEstate AI showcases (browser + phone mockups), then hospitality cards
+5. Tools: six live mini-demos (rental yield, rent vs buy, Holiday Radar, utilities, VentoTrieste, FiscalNinja), then 101 Desideri and the CRM dashboard
+6. Blog (Diario): six latest articles in newspaper columns
+7. Sailing (CV velico): odometer + ring, regattas table, cruises/deliveries/training behind a fold
+8. Off the clock: photo and video grid with a viewer (arrows, swipe, Esc)
+9. Contact: blue duotone section over the Barcolana video
 
 ## Local preview
 Open `index.html` in a browser, or:

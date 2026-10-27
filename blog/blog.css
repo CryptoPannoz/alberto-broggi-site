@@ -1,12 +1,17 @@
-/* Blog bebroggi.it — stylesheet autonomo, in bianco e nero come la home (assets/site.css) */
+/* Blog bebroggi.it — stylesheet autonomo, stesso stile della home (assets/site.css):
+   blu notte per il testo, rosso, giallo e blu delle bandiere nautiche per gli accenti. */
 
 :root {
   --paper: #fff;
-  --ink: #000;
-  --muted: #5f5f5f;
-  --text: #1a1a1a;
-  --hair: #d6d6d6;
+  --ink: #0e1a2b;
+  --muted: #5d6470;
+  --text: #1c2738;
+  --hair: #dde0e5;
+  --red: #d7262e;
+  --yellow: #f6c519;
+  --blue: #1446a0;
   --serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 
 * { box-sizing: border-box; }
@@ -21,18 +26,18 @@ body {
   font-variant-numeric: lining-nums;
   -webkit-font-smoothing: antialiased;
 }
-::selection { background: var(--ink); color: var(--paper); }
+::selection { background: var(--yellow); color: var(--ink); }
 a { color: inherit; }
 img { max-width: 100%; }
 :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 /* Etichette piccole: maiuscolo spaziato */
 .topbar a, .post__meta, .related p, .footer p, .footer a, .post-card time {
-  font-size: .75rem; letter-spacing: .09em; text-transform: uppercase;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
 }
 
 /* ─── Testata ─── */
-.topbar { border-bottom: 1px solid var(--ink); }
+.topbar { border-bottom: 2px solid var(--red); }
 .topbar__inner {
   max-width: 720px; margin-inline: auto; padding: 18px 20px 14px;
   display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
@@ -48,8 +53,7 @@ img { max-width: 100%; }
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
   margin: 0 0 20px; color: var(--muted);
 }
-.post__meta .tag { color: var(--ink); }
-.post__meta time + .tag::before { content: "· "; color: var(--muted); }
+.post__meta .tag { padding: 2px 7px; background: var(--yellow); color: var(--ink); }
 .post h1 {
   margin: 0 0 18px;
   font-size: clamp(2rem, 5.5vw, 2.9rem);
@@ -70,7 +74,7 @@ img { max-width: 100%; }
 .post li { margin-bottom: 7px; }
 .post strong { color: var(--ink); font-weight: 600; }
 .post a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
-.post a:hover { text-decoration-thickness: 2px; }
+.post a:hover { text-decoration-thickness: 2px; text-decoration-color: var(--red); }
 
 /* ─── Immagini nell'articolo ─── */
 .post figure { margin: 30px 0 32px; }
@@ -79,17 +83,18 @@ img { max-width: 100%; }
 
 /* ─── Box contatto ─── */
 .cta-box {
-  margin: 44px 0 10px; padding: 22px 0 4px;
-  border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink);
+  margin: 44px 0 10px; padding: 24px 24px 26px;
+  background: var(--ink); color: var(--paper);
 }
-.cta-box p { margin: 0 0 16px; color: var(--text); font-size: 1rem; }
-.cta-box strong { color: var(--ink); }
+.cta-box p { margin: 0 0 16px; color: #d6deea; font-size: 1rem; }
+.cta-box strong { color: var(--paper); }
 .cta-box a {
-  display: inline-block; margin-bottom: 16px;
-  color: var(--ink); font-size: 1.05rem;
-  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em;
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px;
+  background: var(--yellow); color: var(--ink); text-decoration: none;
+  font-family: var(--mono); font-size: .76rem; letter-spacing: .06em; text-transform: uppercase;
+  transition: background .2s ease;
 }
-.cta-box a:hover { text-decoration-thickness: 2px; }
+.cta-box a:hover { background: var(--paper); }
 
 /* ─── Articoli correlati ─── */
 .related { margin: 34px 0 0; padding: 0; }
@@ -118,7 +123,7 @@ img { max-width: 100%; }
 .blog-hero h1 em { font-style: normal; }
 .blog-hero > .wrap > p { margin: 0; max-width: 46ch; color: var(--muted); font-size: 1.1rem; }
 
-.post-list { list-style: none; margin: 0; padding: 0 0 30px; border-top: 1px solid var(--ink); }
+.post-list { list-style: none; margin: 0; padding: 0 0 30px; border-top: 2px solid var(--ink); }
 .post-list li { margin: 0; border-bottom: 1px solid var(--hair); }
 .post-card { display: block; padding: 16px 0 18px; text-decoration: none; }
 .post-card time { display: block; margin-bottom: 4px; color: var(--muted); }
@@ -126,9 +131,10 @@ img { max-width: 100%; }
   display: block; font-size: 1.3rem; font-weight: 500;
   letter-spacing: -.01em; line-height: 1.25; color: var(--ink);
 }
-.post-card:hover strong { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em; }
+.post-card:hover strong { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--red); text-underline-offset: .18em; }
 .post-card span { display: block; margin-top: 6px; color: var(--muted); font-size: 1rem; line-height: 1.5; }
-.post-card .arrow { display: inline; margin-left: 6px; color: var(--ink); }
+.post-card .arrow { display: inline-block; margin-left: 6px; color: var(--red); transition: transform .3s ease; }
+.post-card:hover .arrow { transform: translateX(4px); }
 
 @media (max-width: 480px) {
   .post { padding-top: 36px; }
