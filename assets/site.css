@@ -153,6 +153,29 @@ button { font: inherit; color: inherit; }
 .print figcaption { display: flex; justify-content: space-between; gap: 12px; margin-top: 10px; color: var(--grey); font-family: var(--font); font-size: .64rem; letter-spacing: .05em; text-transform: uppercase; }
 @media (max-width: 899px) { .hero .print { max-width: 19rem; } }
 
+/* Laser eyes: si accendono solo mentre sorrido nel video (finestra in data-from/data-to, vedi site.js).
+   Le posizioni delle pupille sono misurate sul video e date in % del riquadro. */
+.laser { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .3s ease; }
+.laser.on { opacity: 1; }
+.laser i { position: absolute; left: var(--x); top: var(--y); width: 0; height: 0; }
+.laser i::before {
+  content: ""; position: absolute; left: -15px; top: -15px; width: 30px; height: 30px; border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 14%, #ff3b3b 30%, rgba(255, 20, 20, .55) 50%, rgba(255, 0, 0, 0) 72%);
+  animation: laser-pulse .16s steps(2, end) infinite alternate;
+}
+.laser i::after, .laser b {
+  content: ""; position: absolute; left: -110px; top: -2px; width: 220px; height: 4px; border-radius: 50%;
+  background: radial-gradient(ellipse at center, #fff 0 6%, rgba(255, 50, 50, .95) 20%, rgba(255, 0, 0, 0) 70%);
+}
+.laser b { transform: rotate(-24deg) scaleX(.7); }
+.laser em {
+  position: absolute; right: 10px; bottom: 10px; padding: 4px 8px; background: #f7931a; color: #fff;
+  font-style: normal; font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+  transform: translateY(6px); transition: transform .3s var(--ease);
+}
+.laser.on em { transform: none; }
+@keyframes laser-pulse { to { transform: scale(1.18); filter: brightness(1.25); } }
+
 /* ─── La macchina: un dato disordinato diventa una riga pulita ─── */
 .machine { margin-top: clamp(40px, 6vw, 72px); background: var(--ink); color: var(--paper); }
 .machine .wrap { padding-block: 22px 28px; }

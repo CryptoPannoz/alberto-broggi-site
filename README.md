@@ -27,6 +27,7 @@ Copy stays factual: numbers and names, no slogans.
 - Square buttons that flip to signal yellow; table rows highlighted in yellow on hover/open
 - Motion (all off with `prefers-reduced-motion`): headline words rising, yellow marker under the key words, section rules drawing in, paper curtains lifting off images, odometer digits, the sea-miles ring, flags fluttering, the "data machine" typing a messy record and returning a clean row
 - The data machine's examples live in the `#machine-data` JSON at the bottom of each page
+- Laser eyes (Bitcoin holder): `.laser` over the hero video lights up only while I smile, between `data-from` and `data-to` seconds of `portrait-live.mp4`; the pupil positions were measured on the video with OpenCV and are given as % of the 820×1000 frame
 
 ## Homepage information architecture
 1. Hero: one plain sentence, call/CTA, stack, Borlenghi portrait (live video) with the flag hoist
