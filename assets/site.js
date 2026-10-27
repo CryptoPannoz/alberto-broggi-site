@@ -165,6 +165,26 @@
     vids.forEach(function (v) { vIO.observe(v); });
   }
 
+  /* ── Laser eyes: accesi solo nella finestra del video in cui sorrido ── */
+  (function () {
+    var laser = $('.laser');
+    var v = laser && laser.parentNode.querySelector('video');
+    if (!v || still) return;
+    var from = Number(laser.getAttribute('data-from')), to = Number(laser.getAttribute('data-to'));
+    var on = false;
+    function check() {
+      var t = v.currentTime, s = t >= from && t <= to;
+      if (s !== on) { on = s; laser.classList.toggle('on', s); }
+    }
+    if ('requestVideoFrameCallback' in v) {
+      var loop = function () { check(); v.requestVideoFrameCallback(loop); };
+      v.requestVideoFrameCallback(loop);
+    } else {
+      v.addEventListener('timeupdate', check);
+    }
+    v.addEventListener('pause', function () { on = false; laser.classList.remove('on'); });
+  })();
+
   /* ── Righe del lavoro: /#noura (o un vecchio link ai pop-up) apre la scheda ── */
   function openFromHash() {
     var id = decodeURIComponent(location.hash.slice(1));
