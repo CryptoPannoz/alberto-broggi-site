@@ -23,7 +23,7 @@ Copy stays factual: numbers and names, no slogans.
 ## Design
 - Clean, white page; navy ink text; accents from the International Code of Signals: red, yellow, blue
 - Each section has its signal flag (initial letter: L = Lavoro, P = Progetti…); the hero hoists C·I·A·O in flags next to the portrait; the brand mark is A + B
-- Type: Newsreader (text and headings) + IBM Plex Mono (labels, data, buttons)
+- Type: one family only, Google Sans (Google Fonts, 400–700) for text, headings, labels and numbers; labels are small spaced capitals
 - Square buttons that flip to signal yellow; table rows highlighted in yellow on hover/open
 - Motion (all off with `prefers-reduced-motion`): headline words rising, yellow marker under the key words, section rules drawing in, paper curtains lifting off images, odometer digits, the sea-miles ring, flags fluttering, the "data machine" typing a messy record and returning a clean row
 - The data machine's examples live in the `#machine-data` JSON at the bottom of each page
