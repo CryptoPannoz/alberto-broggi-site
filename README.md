@@ -3,34 +3,36 @@
 One-page personal website. Static HTML/CSS, no build step. Hostable on GitHub Pages.
 
 ## Structure
-- `index.html` — one-page site (hero, what-I-do, work history, projects, hobbies, companies, contact)
-  - Work history entries open as **modal pop-ups** — content lives in `<template>` blocks at the bottom of `index.html` (no page navigation).
-- `assets/` — `style.css`, `img/` (photos, posters, `img/logos/` company logos), `video/` clips
-- `jobs/` — legacy standalone detail pages (kept as deep-link fallback; no longer linked from the timeline)
+- `index.html` (IT) / `en/index.html` (EN) — one-page site, laid out like a CV: section label on the left, content on the right
+  - Work history rows are native `<details>`: click a row to read the full story inline. Each row has an id (`#noura`, `#trieste`, `#barcolana`…), so `/#noura` opens it directly.
+- `assets/` — `site.css` (homepage + links pages), `style.css` (legacy, still used by `jobs/` and `tools/affitto-vs-acquisto.html`), `img/` photos, `video/` clips
+- `blog/` — articles with their own `blog.css`, same black-and-white language as the homepage
+- `jobs/` — legacy standalone detail pages (kept as deep-link fallback; not linked from the homepage)
 - `hobbies/` — wingfoil page + full link list
-- `cv-velico/`, `en/cv-velico/` — short-URL stubs (bebroggi.it/cv-velico) that open the Sailing CV modal (`/#cv-velico`). The race-mile counter at the top of that modal sums the `data-nm` spans in the Regattas list: add a regatta = add a span with its estimated miles.
-- `tools/` — standalone interactive tools, self-contained (own `<style>`/`<script>`, only `assets/style.css` for design tokens)
+- `cv-velico/`, `en/cv-velico/` — short-URL stubs (bebroggi.it/cv-velico) that jump to the Sailing section (`/#cv-velico`). The race-mile counter at the top of that section sums the `data-nm` spans in the Regattas table: add a regatta = add a span with its estimated miles and the year in its text.
+- `tools/` — standalone interactive tools, self-contained (own `<style>`/`<script>`)
   - `affitto-vs-acquisto.html` — rent vs buy calculator: net-worth simulation over the horizon, break-even year, tornado sensitivity on the assumptions, market scenarios. State is shareable via query string and persisted in `localStorage`.
 
 ## Focus / positioning
-**Database Enrichment & Data Engineering** — forged in vacation rental & real estate
-(Trieste Villas · real estate agency, Villa Volpe · Lake Orta) and applicable to any
-data-heavy business.
+Databases, CRMs and internal tools for short-term rental, real estate and travel companies.
+In the industry since 2016: first revenue, channels and operations, now the software.
+Copy stays factual: numbers and names, no slogans.
 
 ## Design
-- Editorial data/operator identity: Instrument Sans + Instrument Serif, with IBM Plex Mono for metrics and metadata
-- Warm paper, ink, Adriatic blue and small lime/orange accents
-- Results and company logos appear before biography; full experience details remain available in slide-over modals
-- Compact mobile layout uses horizontal, scroll-snapping card collections instead of a very long stack
-- Projects and off-the-clock stories are image-led; secondary hobbies sit behind a native expandable control
+- Black and white only: `#000` on `#fff`, one grey for secondary text, 1px rules instead of cards
+- One typeface: Newsreader (Google Fonts), tabular figures for years and numbers; small labels in spaced capitals
+- Every photo rendered in grayscale via CSS (`filter: grayscale(1)`), so the originals stay untouched
+- No animations, no scroll effects, no buttons: underlined text links only
+- Minimal JS: open a `<details>` row from the URL hash, sum the sailing miles, a `<dialog>` photo viewer
 
 ## Homepage information architecture
-- Hero: positioning, three proof metrics and current-company logo strip
-- What I build: three compact capability groups
-- Selected impact: Lucca/Wengen, Trieste Villas and Vertical Sailing Tour
-- Experience: four current logo cards (Noura CRM, Trieste Villas with the group websites, Wengen, VST), seven compact earlier roles (Lucca first), full modal stories (Noura with anonymised CRM screenshots)
-- Projects: five visual project cards
-- Off the clock: the latest post on top (`.life-post`: a multi-photo gallery card, outlined in lime, one caption shared by the lightbox), then the photo/video grid
+1. Intro: portrait, one plain sentence, a short fact list (now, before, tools, base, contact)
+2. Work: one table, current roles then earlier ones; each row = years · company · role · numbers, expandable
+3. Projects: three groups (with clients & partners, tools & apps, hospitality), each row links to the live thing and its article
+4. Blog (Diario): the five latest articles, then the full index
+5. Sailing (CV velico): miles counter, regattas, cruises & deliveries, training — as tables
+6. Off the clock: 12 grayscale photos with captions, link to the links page
+7. Contact: email, call booking, LinkedIn, GitHub
 
 ## Local preview
 Open `index.html` in a browser, or:
@@ -42,4 +44,3 @@ python3 -m http.server 8080
 
 ## TODO
 - Add real links for treenet weaving & bread baking when ready
-- Push to GitHub + enable Pages
