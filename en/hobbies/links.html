@@ -7,25 +7,30 @@
   <link rel="alternate" hreflang="en" href="https://bebroggi.it/en/hobbies/links.html" />
   <link rel="alternate" hreflang="it" href="https://bebroggi.it/hobbies/links.html" />
   <link rel="canonical" href="https://bebroggi.it/en/hobbies/links.html" />
-  <link rel="stylesheet" href="../../assets/style.css?v=portrait-1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../assets/site.css?v=gs-1" />
   <!-- GoatCounter (statistiche anonime, senza cookie): bebroggi.goatcounter.com -->
   <script data-goatcounter="https://bebroggi.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 
 </head>
 <body>
-  <header class="hero">
-    <div class="container">
-      <p><a href="../index.html">← Back to home</a> · <strong>EN</strong> / <a href="../../hobbies/links.html" lang="it">IT</a></p>
-      <h1>Links I love</h1>
-      <p class="tagline">A few rabbit holes, projects and people worth your time</p>
+  <header class="masthead">
+    <div class="wrap">
+      <a class="brand" href="../" aria-label="Alberto Broggi, home"><svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><path d="M0 0H15V20H0Z" fill="#fff"/><path d="M15 0H30L22 10L30 20H15Z" fill="#1446a0"/><path d="M15 .4H.4V19.6H15" fill="none" stroke="#0e1a2b" stroke-width=".8"/></svg><svg class="flag" viewBox="0 0 30 20" aria-hidden="true"><path d="M0 0H30L22 10L30 20H0Z" fill="#d7262e"/></svg><span>Alberto Broggi</span></a>
+      <nav class="nav mono" aria-label="Sections"><a href="../#work">Work</a><a href="../#projects">Projects</a><a href="../#blog">Blog</a><a href="../#cv-velico">Sailing</a><a href="../#contact">Contact</a></nav>
+      <p class="lang mono" aria-label="Language"><a href="../../hobbies/links.html" lang="it">IT</a> / <a href="./links.html" lang="en" aria-current="page">EN</a></p>
     </div>
   </header>
 
-  <section class="section">
-    <div class="container">
+  <main class="page">
+    <div class="wrap">
+      <h1>Links I love</h1>
+      <p>A few rabbit holes, projects and people worth your time.</p>
       <h2>Me, elsewhere</h2>
-      <ul class="link-list">
+      <ul>
         <li><a href="https://www.linkedin.com/in/bebroggi/" target="_blank" rel="noopener">LinkedIn</a></li>
         <li><a href="https://github.com/CryptoPannoz" target="_blank" rel="noopener">GitHub</a></li>
         <li><a href="https://cryptopannoz.github.io/meteo-trieste/" target="_blank" rel="noopener">Meteo Trieste — wingfoil weather page</a></li>
@@ -33,7 +38,7 @@
       </ul>
 
       <h2>Projects</h2>
-      <ul class="link-list">
+      <ul>
         <li><a href="https://www.villa-volpe.com" target="_blank" rel="noopener">Villa Volpe — Lake Orta</a></li>
         <li><a href="https://verticalsailingtour.com/" target="_blank" rel="noopener">Vertical Sailing Tour</a> — climb &amp; sail expeditions (I'm Director).</li>
         <li><a href="https://metronecustoza.com" target="_blank" rel="noopener">Il Metrone — Custoza</a></li>
@@ -41,28 +46,28 @@
       </ul>
 
       <h2>Sailing &amp; the sea</h2>
-      <ul class="link-list">
+      <ul>
         <li><a href="https://pressmare.it/amp/it/team/prosecco-doc-shockwave/2026-06-05/prosecco-doc-shockwave3-inizia-stagione-40-brindisi-corfu-90542" target="_blank" rel="noopener">Prosecco DOC Shockwave3</a> — the maxi yacht I crew on.</li>
         <li><a href="https://www.windy.com/" target="_blank" rel="noopener">Windy</a> — the wind map.</li>
         <li><a href="https://www.barcolana.it/" target="_blank" rel="noopener">Barcolana</a> — the world's biggest regatta.</li>
       </ul>
 
       <h2>Bitcoin &amp; Web3</h2>
-      <ul class="link-list">
+      <ul>
         <li><a href="https://www.lopp.net/bitcoin-information.html" target="_blank" rel="noopener">Jameson Lopp — Bitcoin resources</a></li>
         <li><a href="https://bitcoin.org/bitcoin.pdf" target="_blank" rel="noopener">The Bitcoin whitepaper</a></li>
       </ul>
 
       <h2>Treenet weaving</h2>
-      <ul class="link-list">
+      <ul>
         <li><a href="https://canopycraft.thinkific.com/" target="_blank" rel="noopener">CanopyCraft</a> — the online school where I'm learning to weave tree nets.</li>
       </ul>
 
-      <p class="section-lead" style="margin-top:2.5rem;">More to come — links on bread baking are on the way.</p>
+      <p class="note">More to come — links on bread baking are on the way.</p>
     </div>
-  </section>
+  </main>
 
-  <footer><div class="container"><p>© <span id="y"></span> Alberto Broggi · Trieste, Italy</p></div></footer>
+  <footer class="foot"><div class="wrap mono"><span>© <span id="y"></span> Alberto Broggi</span><span>Trieste · 45.65° N, 13.77° E</span></div></footer>
   <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
