@@ -37,8 +37,30 @@
     var setP = function () {
       var h = doc.scrollHeight - innerHeight;
       mast.style.setProperty('--p', h > 0 ? Math.min(1, scrollY / h).toFixed(4) : 0);
+      mast.classList.toggle('is-up', scrollY > 4);
+      if (Math.abs(scrollY - lastY) > 40) gust();
+      lastY = scrollY;
       ticking = false;
     };
+
+    /* ── Raffica sulle bandiere A·B: scroll veloce, mouse che passa sulla testata ── */
+    var brand = $('.brand', mast), lastY = scrollY, lastX = null;
+    var gust = function () {
+      if (still || !brand || brand.classList.contains('gust')) return;
+      brand.classList.add('gust');
+    };
+    if (brand) {
+      brand.addEventListener('animationend', function (e) {
+        if (e.animationName === 'gust' && e.target === brand.querySelector('.flag:last-of-type')) brand.classList.remove('gust');
+      });
+      brand.addEventListener('mouseenter', gust);
+      mast.addEventListener('mousemove', function (e) {
+        if (lastX !== null && Math.abs(e.clientX - lastX) > 60) gust();
+        lastX = e.clientX;
+      });
+      mast.addEventListener('mouseleave', function () { lastX = null; });
+    }
+
     addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(setP); } }, { passive: true });
     setP();
   }
