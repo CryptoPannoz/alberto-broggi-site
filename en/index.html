@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../assets/site.css?v=gs-3" />
+  <link rel="stylesheet" href="../assets/site.css?v=gs-4" />
   <script>document.documentElement.classList.add('js');</script>
   <!-- GoatCounter (statistiche anonime, senza cookie): bebroggi.goatcounter.com -->
   <script data-goatcounter="https://bebroggi.goatcounter.com/count"
@@ -80,7 +80,7 @@
         </figure>
       </div>
 
-      <div class="machine" data-machine aria-label="Example: messy data becomes a clean row">
+      <div class="machine" data-machine role="region" aria-label="Example: messy data becomes a clean row">
         <div class="wrap">
           <div class="machine__head mono"><span>What I do, in practice: from raw data to a clean row</span><div class="machine__tabs" role="tablist"></div></div>
           <div class="machine__body">
@@ -508,7 +508,7 @@
             </article>
             <article class="devcard" data-rise style="--d:.1s">
               <a class="devcard__visual" href="https://cryptopannoz.github.io/str-onboarding-crm/" target="_blank" rel="noopener" aria-label="Open the public dashboard demo">
-                <span class="browser"><span class="browser__bar"><span class="browser__dots"><i></i><i></i><i></i></span><span class="browser__url">CRM demo with synthetic data</span></span><img src="../assets/img/dev-dashboard-full.png" alt="Onboarding operations dashboard with demo KPIs and Kanban stages" loading="lazy" /></span>
+                <span class="browser"><span class="browser__bar"><span class="browser__dots"><i></i><i></i><i></i></span><span class="browser__url">CRM demo with synthetic data</span></span><img src="../assets/img/dev-dashboard-full.png" alt="Onboarding operations dashboard with demo KPIs and Kanban stages" width="1280" height="720" loading="lazy" /></span>
               </a>
               <div class="devcard__body">
                 <p class="mono">Operational scripts · Dashboard</p>
@@ -717,12 +717,28 @@
     function radarSel(i) {
       document.getElementById('tcr-label').textContent = 'Week of ' + weeks[i] + ' · demand';
       document.getElementById('tcr-score').textContent = scores[i];
+      sel = i;
+      bars.setAttribute('aria-valuenow', i);
+      bars.setAttribute('aria-valuetext', 'Week of ' + weeks[i] + ' · demand' + ' ' + scores[i]);
       bars.querySelectorAll('i').forEach(function (el, j) { el.classList.toggle('on', j === i); });
     }
     bars.addEventListener('mouseover', function (e) { if (e.target.dataset.i) radarSel(+e.target.dataset.i); });
     bars.addEventListener('click', function (e) { if (e.target.dataset.i) radarSel(+e.target.dataset.i); });
+    /* Da tastiera: frecce, Home e Fine scorrono le settimane */
+    var sel = 6;
+    bars.tabIndex = 0;
+    bars.setAttribute('role', 'slider');
+    bars.setAttribute('aria-valuemin', 0);
+    bars.setAttribute('aria-valuemax', scores.length - 1);
+    bars.addEventListener('keydown', function (e) {
+      var k = { ArrowRight: sel + 1, ArrowUp: sel + 1, ArrowLeft: sel - 1, ArrowDown: sel - 1, Home: 0, End: scores.length - 1 }[e.key];
+      if (k === undefined) return;
+      e.preventDefault();
+      radarSel(Math.max(0, Math.min(scores.length - 1, k)));
+    });
+    radarSel(6);
   })();
   </script>
-  <script src="../assets/site.js?v=gs-3"></script>
+  <script src="../assets/site.js?v=gs-4"></script>
 </body>
 </html>

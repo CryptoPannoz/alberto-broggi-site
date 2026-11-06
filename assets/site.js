@@ -4,7 +4,13 @@
   var doc = document.documentElement;
   var lang = doc.lang === 'en' ? 'en' : 'it';
   var locale = lang === 'en' ? 'en-GB' : 'it-IT';
-  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* «Ferma il movimento»: la scelta del visitatore vale come prefers-reduced-motion e resta ricordata */
+  var calm = false;
+  try { calm = localStorage.getItem('bb-calm') === '1'; } catch (e) {}
+  var still = reduce || calm;
+  if (calm) doc.classList.add('calm');
+  var onStill = [];
   var hasIO = 'IntersectionObserver' in window;
 
   function $(s, r) { return (r || document).querySelector(s); }
@@ -177,15 +183,22 @@
   /* ── Video: girano solo quando si vedono ── */
   var vids = $$('video[data-auto]');
   vids.forEach(function (v) { v.muted = true; });
-  if (hasIO) {
+    if (hasIO) {
     var vIO = new IntersectionObserver(function (en) {
       en.forEach(function (e) {
+        e.target._seen = e.isIntersecting;
         if (e.isIntersecting && !still) { var p = e.target.play(); if (p) p.catch(function () {}); }
         else e.target.pause();
       });
     }, { threshold: .25 });
     vids.forEach(function (v) { vIO.observe(v); });
   }
+  onStill.push(function () {
+    vids.forEach(function (v) {
+      if (still) v.pause();
+      else if (v._seen) { var p = v.play(); if (p) p.catch(function () {}); }
+    });
+  });
 
   /* ── Laser eyes: accesi solo nella finestra del video in cui sorrido ── */
   (function () {
@@ -220,7 +233,7 @@
   $$('.flow').forEach(function (f) {
     var steps = $$('span', f), k = 0;
     if (still || !steps.length) return;
-    setInterval(function () { steps.forEach(function (s, i) { s.classList.toggle('on', i === k); }); k = (k + 1) % steps.length; }, 900);
+    setInterval(function () { if (doc.classList.contains('calm')) return; steps.forEach(function (s, i) { s.classList.toggle('on', i === k); }); k = (k + 1) % steps.length; }, 900);
   });
 
   /* ── La macchina: un dato disordinato diventa una riga pulita ── */
@@ -233,9 +246,19 @@
     var bar = $('.machine__bar i', box), count = $('[data-machine-count]', box);
     var cur = 0, timers = [], visible = false;
 
+    var body = $('.machine__body', box);
+    body.id = 'machine-panel';
+    body.setAttribute('role', 'tabpanel');
     tabs.innerHTML = data.map(function (d, i) {
-      return '<button type="button" role="tab" aria-selected="' + (i === 0) + '" data-i="' + i + '">' + d.tab + '</button>';
+      return '<button type="button" role="tab" id="machine-tab-' + i + '" aria-controls="machine-panel" aria-selected="' + (i === 0) + '" tabindex="' + (i === 0 ? 0 : -1) + '" data-i="' + i + '">' + d.tab + '</button>';
     }).join('');
+    // Sotto il mouse o il focus la macchina non passa da sola all'esempio successivo
+    var held = false, pending = false;
+    var release = function () { held = false; if (pending && visible && !still) render((cur + 1) % data.length, true); };
+    box.addEventListener('mouseenter', function () { held = true; });
+    box.addEventListener('mouseleave', function () { if (!box.contains(document.activeElement)) release(); });
+    box.addEventListener('focusin', function () { held = true; });
+    box.addEventListener('focusout', function (e) { if (!box.contains(e.relatedTarget) && !box.matches(':hover')) release(); });
 
     function clear() { timers.forEach(clearTimeout); timers = []; }
     function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
@@ -243,9 +266,11 @@
 
     function render(i, animate) {
       clear();
+      pending = false;
       cur = i;
       var d = data[i];
-      $$('button', tabs).forEach(function (b, j) { b.setAttribute('aria-selected', j === i ? 'true' : 'false'); });
+      $$('button', tabs).forEach(function (b, j) { b.setAttribute('aria-selected', j === i ? 'true' : 'false'); b.tabIndex = j === i ? 0 : -1; });
+      body.setAttribute('aria-labelledby', 'machine-tab-' + i);
       if (count) count.textContent = (i + 1) + ' / ' + data.length;
       out.innerHTML = d.out.map(function (r) { return '<div><dt>' + esc(r[0]) + '</dt><dd data-v="' + esc(r[1]) + '"></dd></div>'; }).join('');
       var rows = $$('div', out);
@@ -270,24 +295,56 @@
       later(function () {
         if (bar) { bar.style.transition = 'transform 3.2s linear'; bar.style.transform = 'scaleX(1)'; }
       }, t);
-      later(function () { if (visible) render((cur + 1) % data.length, true); }, t + 3400);
+      later(function () {
+        if (!visible || still) return;
+        if (held) pending = true; else render((cur + 1) % data.length, true);
+      }, t + 3400);
     }
 
     tabs.addEventListener('click', function (e) {
       var b = e.target.closest('button[data-i]');
       if (b) render(Number(b.getAttribute('data-i')), !still);
     });
+    tabs.addEventListener('keydown', function (e) {
+      var n = data.length, k = { ArrowRight: cur + 1, ArrowLeft: cur - 1, Home: 0, End: n - 1 }[e.key];
+      if (k === undefined) return;
+      e.preventDefault();
+      k = (k + n) % n;
+      render(k, !still);
+      $$('button', tabs)[k].focus();
+    });
+    onStill.push(function () { render(cur, visible && !still); });
 
     render(0, false);
-    if (still) return;
-    if (!hasIO) { visible = true; render(0, true); return; }
+    if (!hasIO) { visible = true; if (!still) render(0, true); return; }
     // Riparte dall'esempio corrente quando torna in vista; si ferma (a riga completa) quando esce.
     new IntersectionObserver(function (en) {
       var v = en[en.length - 1].isIntersecting;
       if (v === visible) return;
       visible = v;
-      if (visible) render(cur, true); else render(cur, false);
+      render(cur, visible && !still);
     }, { threshold: .35 }).observe(box);
+  })();
+
+  /* ── «Ferma il movimento»: pulsante nel piede (WCAG 2.2.2, video in loop e animazioni continue) ── */
+  (function () {
+    var foot = $('.foot .wrap');
+    if (!foot || reduce) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    var label = function () {
+      b.textContent = lang === 'en' ? (calm ? 'Motion paused' : 'Pause motion') : (calm ? 'Movimento fermo' : 'Ferma il movimento');
+      b.setAttribute('aria-pressed', calm ? 'true' : 'false');
+    };
+    label();
+    b.addEventListener('click', function () {
+      calm = !calm; still = calm;
+      doc.classList.toggle('calm', calm);
+      try { localStorage.setItem('bb-calm', calm ? '1' : '0'); } catch (e) {}
+      label();
+      onStill.forEach(function (fn) { fn(); });
+    });
+    foot.insertBefore(b, foot.lastElementChild);
   })();
 
   /* ── Visore per foto e video di "Fuori ufficio" ── */
